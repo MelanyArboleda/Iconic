@@ -1,8 +1,9 @@
 var config = {
 	host : 'localhost',
-	user : '',
-	password : '',
-	database : '' 
+	user : 'postgres',
+	password : 'root',
+	database : 'poli',
+	port : 5432
 };
 
 module.exports = config;

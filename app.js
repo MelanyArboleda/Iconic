@@ -5,10 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var engines = require('consolidate');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+require('./passport/passport')(passport);
 
 var routes = require('./routes/routes');
-
 var app = express();
+app.use(cookieParser());
+app.use(session({
+	secret: 'secret',
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,8 +30,10 @@ app.set('view engine', 'html');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 
