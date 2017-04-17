@@ -1,0 +1,63 @@
+body{
+	overflow-x: hidden;
+	background-color: #eeeeee;
+}
+
+.nav-wrapper{ 
+	color: #fff;
+	background-color: #196844;  
+
+}
+
+nav{ 
+	height: 93px;
+
+}
+
+.logopoli{
+	width: 100%;
+	max-width: 65px; 
+	padding-top: 3%; 
+}
+
+
+#logincontainer{  
+ 	padding-top: 10vh; 
+ 	width: 100%;
+ 	padding-left: 12%;
+ 	padding-right: 12%;
+}
+
+div.input-field.col.s12.cajasombra{ 
+	padding-left: 20px; 
+	padding-right: 30px;
+}
+
+div.col.s12.right-align.cajasombra{
+	padding-right: 30px;
+}
+
+.cajasombra{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.waves-effect {
+	background-color: #196844;
+
+
+}
+
+div.card-action.amber.lighten-1.footerlogin{
+	padding-top: 0px;
+	height: 50px;
+	color: #424242;
+
+}
+
+.olvidoclave{
+	color: #388e3c;
+}
+
+
+

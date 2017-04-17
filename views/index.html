@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link rel="stylesheet" type="text/css" href="css/index.css">
+      <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	  <title>Polidocentes | Politécnico JIC</title>
+    </head>
+
+    <body>
+
+    <header id="header">
+		<div class="navbar-fixed">
+			<nav>
+			    <div class="nav-wrapper">	    	
+				    <div class="brand-logo center"><img class="logopoli" src="img/logopoli.png"> <span>Polidocentes</span></div>	   
+			    </div>
+		  	</nav>
+	  	</div>
+  	</header> 
+
+
+	<div class="container">
+  		<div class="row">
+    		<div class="col s12" id="logincontainer">
+      			<div class="card z-depth-5 ">
+           			<div class="card-content">
+           				<p class="center flow-text "><strong>Ingreso al Sistema</strong></p> 
+          				<form method="POST">
+          					<div class="row">
+								<div class="input-field col s12 cajasombra">
+									<i class="material-icons prefix cajasombra">account_circle</i>
+									<input class="validate" type="text" id="username" name="username">
+									<label class="cajasombra" for="username">Usuario</label>
+								</div> 
+							</div> 
+							<div class="row ">
+								<div class="input-field col s12 cajasombra">
+									<i class="material-icons prefix cajasombra">&#xE0DA;</i>
+									<input class="validate" type="password" id="password" name="password">
+									<label class="cajasombra" for="password">Contraseña</label>
+								</div>
+
+								<div class="col s12 right-align cajasombra"> 
+						    		<a class=" modal-action modal-close modal-trigger" href="#modal1">¿Olvidaste la contraseña?</a>
+						    	</div> 
+
+						    	
+ 
+							</div>
+							<div class="row">
+								<div class="input-field col s12 center">
+									<a class="waves-effect waves-light btn" >Iniciar Sesión</a>
+								</div>
+							</div>
+						</form>	
+					</div> 
+					<div class="card-action amber lighten-1 footerlogin"> 
+              			<p class="left">Polidocentes <i class="tiny material-icons">&#xE90C;</i> 2017</p>
+            		</div>
+				</div>
+          	</div>
+        </div>
+    </div>
+
+    	<div id="modal1" class="modal"> 
+								<div class="modal-content">
+								      <h4>Modal Header</h4>
+								      <p>A bunch of text</p>
+								    </div>
+								    <div class="modal-footer">
+								      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+								    </div>
+								</div>
+
+    
+   	
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	  <script type="text/javascript" src="js/materialize.min.js"></script>
+	  <script type="text/javascript" src="js/modals.action.js"></script> 
+      
+    </body>
+  </html>
