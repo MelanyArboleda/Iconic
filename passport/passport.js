@@ -24,7 +24,6 @@ module.exports = function(passport) {
 
 			if (result.rows.length > 0) {
 				var user = result.rows[0];
-				console.log(user, password)
 
 				if (bcrypt.compareSync(password, user.clave)) {
 					return done(null, {
