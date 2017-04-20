@@ -3,7 +3,8 @@ var config = {
 	user : 'postgres',
 	password : 'root',
 	database : 'poli',
-	port : 5432 
+	port : 5432
+
 };
 
 module.exports = config;

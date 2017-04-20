@@ -33,6 +33,9 @@
       			<div class="card z-depth-5 ">
            			<div class="card-content">
            				<p class="center flow-text "><strong>Ingreso al Sistema</strong></p> 
+
+          				<form autocomplete="off" method="POST" action="http://localhost:3000/auth/index">
+
           				<form method="POST" autocomplete="off">
           					<div class="row">
 								<div class="input-field col s12 cajasombra">
@@ -57,7 +60,7 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12 center">
-									<a class="waves-effect waves-light btn" >Iniciar Sesión</a>
+									<button type="submit" class="waves-effect waves-light btn" >Iniciar Sesión</button>
 								</div>
 							</div>
 						</form>	
