@@ -3,7 +3,6 @@ var postgresql = require('pg').Pool;
 var bcrypt = require('bcryptjs');
 
 module.exports = function(passport) {
-	
 	passport.serializeUser(function(user, done){
 		done(null, user);
 	});
@@ -18,7 +17,6 @@ module.exports = function(passport) {
 		
 		var config = require('.././database/config');
 		var pool = new postgresql(config);
-
 		pool.query('SELECT * FROM tbl_usuarios WHERE usuario = $1', [user], function(err, result){
 			if (err) throw err;
 

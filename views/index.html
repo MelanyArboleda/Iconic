@@ -34,7 +34,7 @@
            			<div class="card-content">
            				<p class="center flow-text "><strong>Ingreso al Sistema</strong></p> 
 
-          				<form autocomplete="off" method="POST" action="http://localhost:3000/auth/index">
+          				<form autocomplete="off" method="POST" action="/auth/index">
 
           				<form method="POST" autocomplete="off">
           					<div class="row">
@@ -72,26 +72,26 @@
           	</div>
         </div>
     </div>
-
-    	<div id="modal1" class="modal"> 
-			<div class="modal-content">
-			<h4>Restablece tu Contraseña</h4>
-				<div class="row">
-					<p>Ingresa el correo asociado a la contraseña</p>
-				</div>
-			    <div class="row">
-					<div class="input-field col s12 cajasombra">
-						<i class="material-icons prefix cajasombra">account_circle</i>
-						<input class="validate" type="text" id="email" name="email">
-						<label class="cajasombra" for="email">Correo</label>
+    	<form autocomplete="off" method="POST" action="/auth/send">
+	    	<div id="modal1" class="modal"> 
+				<div class="modal-content">
+				<h4>Restablece tu Contraseña</h4>
+					<div class="row">
+						<p>Ingresa el correo asociado a la contraseña</p>
+					</div>
+				    <div class="row">
+						<div class="input-field col s12 cajasombra">
+							<i class="material-icons prefix cajasombra">account_circle</i>
+							<input class="validate" type="email" id="email" name="email">
+							<label class="cajasombra" for="email">Correo</label>
+						</div> 
 					</div> 
-				</div> 
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="modal-action modal-close waves-effect waves-light btn" >Acepto</button>
+				</div>
 			</div>
-			<div class="modal-footer">
-			    <a class="modal-action modal-close waves-effect waves-light btn" >Acepto</a>
-			</div>
-		</div>
-
+		</form>
     
    	
       <!--Import jQuery before materialize.js-->
