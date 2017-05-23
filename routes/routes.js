@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var controllers = require('.././controllers');
 var AuthMiddleware = require('.././middleware/auth');
+var inicial = require('.././database/inicial');
 
 router.get('/', AuthMiddleware.isLoggedInd, controllers.HomeController.index);
 router.get('/auth/singup', AuthMiddleware.isLogged, controllers.UserController.getSingUp);

@@ -1,5 +1,6 @@
 var localStrategy = require('passport-local').Strategy;
-var postgresql = require('pg').Pool;
+var admon = require('.././database/admon');
+var modelo = require('.././database/modelos');
 var bcrypt = require('bcryptjs');
 
 module.exports = function(passport) {
@@ -11,28 +12,26 @@ module.exports = function(passport) {
 		done(null, obj);
 	});
 
-	passport.use(new localStrategy({
-		passReqToCallback : true
-	}, function(req, user, password, done){
-		
-		var config = require('.././database/config');
-		var pool = new postgresql(config);
-		pool.query('SELECT * FROM tbl_usuarios WHERE usuario = $1', [user], function(err, result){
-			if (err) throw err;
-
-			if (result.rows.length > 0) {
-				var user = result.rows[0];
-
-				if (bcrypt.compareSync(password, user.clave)) {
-					return done(null, {
-						id : user.id,
-						user : user.user 
-					});
-				}
-			} 
-
+	passport.use(new localStrategy({passReqToCallback : true}, function(req, user, password, done){		
+		var dato = [{
+			correo: user
+		}];
+		admon.findAll(modelo.tbl_usuarios, dato, function(data) {
+			if (data !== undefined) {
+				if (bcrypt.compareSync(password, data.contraseña)) {
+			 		return done(null, {
+			 			id : data.id,
+			 			doc_identidad : data.doc_identidad,
+						nombre : data.nombre,
+			 			apellido_1 : data.apellido_1,
+						apellido_2 : data.apellido_2,
+						correo : data.correo,
+						tblEstadoId : data.tblEstadoId,
+						tblPerfileId : data.tblPerfileId
+			 		});
+		 		}
+			}
 			return done(null, false, req.flash('authmessage', 'Usuario y/o contraseña incorrecta.'));
 		});
-	}
-	));
+	}));
 };

@@ -4,5 +4,4 @@ function encriptar(clave) {
 	var password = bcrypt.hashSync(clave, salt);
 	return password;
 }
-
 module.exports = encriptar;

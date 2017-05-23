@@ -1,6 +1,7 @@
-var postgresql = require('pg').Pool;
 var encriptar = require('.././controllers/Encriptar_password');
-var idin;
+var admon = require('.././database/admon');
+var modelo = require('.././database/modelos');
+var user;
 module.exports = {
 	
 	getSingUp : function(req, res, next){
@@ -16,25 +17,61 @@ module.exports = {
 	},
 
 	recup : function(req, res, next){
-		idin = req.params[0];
-		res.render('users/recu');
+		var idin = req.params[0];
+		idin = idin.split("/");
+		user = idin[0];
+		var fecha = new Buffer(idin[1], 'base64');
+		fecha = fecha.toString();
+		var date = new Date();
+		var fecha_act = date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate();
+		for (var i = 0; i < 4; i++) {
+			b = new Buffer(user, 'base64')
+			user = b.toString();
+		}
+		var dato = [{
+			id: user
+		}];
+		admon.findAll(modelo.tbl_usuarios, dato, function(data) {
+			if (data !== undefined) {
+				if (fecha >= fecha_act){
+					var dato = [{
+						tblUsuarioId: user
+					}];
+					admon.findAll(modelo.tbl_recuperaciones, dato, function(data) {
+						if (data.recuperar == 1) {
+							res.render('users/recu');
+						}else{
+							res.redirect('/');
+						}
+		 			});	
+		 		}else{
+		 			res.redirect('/');
+		 		}
+			}else{
+				console.log(err);
+		 		res.redirect('/');
+			}
+		});
 	},
 
 	nueva : function(req, res, next){
-		for (var i = 0; i < 4; i++) {
-			b = new Buffer(idin, 'base64')
-			idin = b.toString();
-		}
-
-		var config = require('.././database/config');
-		var pool = new postgresql(config);
-		var password = encriptar(req.body.clave)
-		console.log(req.body[0	]);
-		pool.query('UPDATE tbl_usuarios set clave = $1 WHERE id = $2', [password,idin], function(err, result){
-			if (err) throw err;
-		 	if (!err) {
-		 		res.redirect('/');
-		 	}
+		var password = {
+			contraseña: encriptar(req.body.clave),
+		};
+		var dato = [{
+			id: user
+		}];
+		admon.update(modelo.tbl_usuarios, dato, password, function(data) {
+			if (data == 'update') {
+				var dato = [{
+					tblUsuarioId: user
+				}];
+				var datos ={
+					recuperar: 0
+				};
+				admon.update(modelo.tbl_recuperaciones, dato, datos, function(data) {});
+				res.redirect('/');
+			}
 		});
 	}
 }; 
