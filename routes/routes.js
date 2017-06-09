@@ -12,7 +12,7 @@ router.post('/auth/index', passport.authenticate('local',{
 	failureRedirect: '/'
 }));	
 router.get('/auth/logout',controllers.UserController.logout);
-router.post('/auth/send',controllers.sendMail.enviar);
+router.post('/auth/send',controllers.MailController.enviar);
 
 router.get('/auth/recu/*', AuthMiddleware.isLoggedInd, controllers.UserController.recup);
 router.post('/auth/recu', AuthMiddleware.isLoggedInd, controllers.UserController.nueva);

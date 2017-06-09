@@ -1,6 +1,7 @@
 var localStrategy = require('passport-local').Strategy;
 var admon = require('.././database/admon');
 var modelo = require('.././database/modelos');
+var mail = require('.././controllers/MailController');
 var bcrypt = require('bcryptjs');
 
 module.exports = function(passport) {
@@ -19,6 +20,9 @@ module.exports = function(passport) {
 		admon.findAll(modelo.tbl_usuarios, dato, function(data) {
 			if (data !== undefined) {
 				if (bcrypt.compareSync(password, data.contraseña)) {
+					if(password == "123"){
+						mail.codigo(data.correo,12345);
+					}
 			 		return done(null, {
 			 			id : data.id,
 			 			doc_identidad : data.doc_identidad,

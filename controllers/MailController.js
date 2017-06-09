@@ -5,18 +5,18 @@ fs = require('fs');
 var html = (fs.readFileSync("./views/correo.html")).toString();
 module.exports = {
 
-	enviar : function (req, res) {
+	enviar: function (req, res) {
 		var dato = [{
 			correo: req.body.email
 		}];
-		admon.findAll(modelo.tbl_usuarios, dato, function(data) {
+		admon.findAll(modelo.tbl_usuarios, dato, function (data) {
 			if (data !== undefined) {
-				var id = data.id.toString();
+				var doc_identidad = data.doc_identidad.toString();
 				var nombre = data.nombre;
 
 				for (var i = 0; i < 4; i++) {
-					var b = new Buffer(id);
-					var id = b.toString('base64');
+					var b = new Buffer(doc_identidad);
+					var doc_identidad = b.toString('base64');
 				}
 
 				let transporter = nodemailer.createTransport({
@@ -28,17 +28,17 @@ module.exports = {
 				});
 
 				var date = new Date();
-				var fecha = date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate();
+				var fecha = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
 				var dateEnt = new Buffer(fecha);
 				fecha = dateEnt.toString('base64');
-				html = html.replace("url", "http://localhost:3000/auth/recu/"+id+"/"+fecha);
-				html = html.replace("Usuario", ""+nombre);
+				html = html.replace("url", "http://localhost:3000/auth/recu/" + doc_identidad + "/" + fecha);
+				html = html.replace("Usuario", "" + nombre);
 
 				let mailOptions = {
 					from: '"no-reply@elpoli.edu.co" <gabotolosa97@gmail.com>',
 					to: req.body.email,
 					subject: 'Restablecer contraseña',
-					html:html
+					html: html
 				};
 
 				transporter.sendMail(mailOptions, (error, info) => {
@@ -46,23 +46,28 @@ module.exports = {
 						return console.log(error);
 					}
 					var datos = {
-					 	tblUsuarioId: data.id,
-					 	recuperar: 1
+						recuperar: true
 					};
 					var donde = {
-						tblUsuarioId: data.id
+						doc_identidad: data.doc_identidad
 					}
-					admon.findOrCreate(modelo.tbl_recuperaciones, datos,donde,function (data) {
-						if (!data) {
-							admon.update(modelo.tbl_recuperaciones, donde, datos, function(data) {});
-						}
+					modelo.tbl_usuarios.sync().then(function () {
+						admon.findOrCreate(modelo.tbl_usuarios, datos, donde, function (data) {
+							if (!data) {
+								admon.update(modelo.tbl_usuarios, donde, datos, function (data) { });
+							}
+						});
 					});
 					return res.redirect('/');
 				});
-			}else{
+			} else {
 				console.log('no se encontro el correo');
 				return res.redirect('/');
 			}
 		});
+	},
+
+	codigo: function (req) {
+		console.log('-----');
 	}
 };
