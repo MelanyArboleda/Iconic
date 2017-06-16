@@ -1,7 +1,8 @@
 var encriptar = require('.././controllers/EncriptarController');
 var modelo = require('.././database/modelos');
-var admon = require('.././database/admon');
-//vectores con los datos a insertar
+var admon = require('.././services/crudService');
+
+//vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [
   { id: 1, estado: "Activo" },
   { id: 2, estado: "Inactivo" }];
@@ -56,7 +57,8 @@ var areas = [
   { id: 6, area: "Instrumentación y Control", tblFacultadeId: 6 },
   { id: 7, area: "Área civil", tblFacultadeId: 6 },
   { id: 8, area: "Informática y Telecomunicaciones", tblFacultadeId: 6 },
-  { id: 9, area: "Administración", tblFacultadeId: 1 },];
+  { id: 9, area: "Administración", tblFacultadeId: 1 },
+  { id: 10, area: "Ingeniería", tblFacultadeId: 6 }];
 
 var sedes = [
   { id: 1, sede: "Medellin" },
@@ -110,7 +112,13 @@ var programas = [
   { codigo: "3348", tblSedeId: 1, programa: "Ingeniería Informática", tblAreaId: 8 },
   { codigo: "102595", tblSedeId: 1, programa: "Higiene Ocupacional y Ambiental", tblAreaId: 5 },
   { codigo: "53828", tblSedeId: 1, programa: "Seguridad en el Trabajo", tblAreaId: 5 },
-  { codigo: "103871", tblSedeId: 1, programa: "Maestría en Gestión Integral del Riesgo Laboral", tblAreaId: 5 }];
+  { codigo: "103871", tblSedeId: 1, programa: "Maestría en Gestión Integral del Riesgo Laboral", tblAreaId: 5 },
+  { codigo: "1", tblSedeId: 1, programa: "Administración", tblAreaId: 9 },
+  { codigo: "2", tblSedeId: 1, programa: "Ciencias Agrarias", tblAreaId: 1 },
+  { codigo: "3", tblSedeId: 1, programa: "Ciencias Básicas, Sociales y Humanas", tblAreaId: 2 },
+  { codigo: "4", tblSedeId: 1, programa: "Comunicación Audiovisual", tblAreaId: 3 },
+  { codigo: "5", tblSedeId: 1, programa: "Educación Física, Recreación y Deporte", tblAreaId: 4 },
+  { codigo: "6", tblSedeId: 1, programa: "Ingeniería", tblAreaId: 10 }];
 
 var usuarios = [{
   doc_identidad: "1039470240",
@@ -119,14 +127,21 @@ var usuarios = [{
   apellido_2: "Tolosa",
   correo: "gabriel_arboleda23151@elpoli.edu.co",
   contraseña: encriptar("123"),
+  contraseña_firma: encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 1,
+  tblEstadoId: 2,
   recuperar: false
+}];
+
+var usuario_doc = [{
+  doc_identidad: "1039470240"
 }];
 
 var vinculos = [
   { id: 1, vinculo: "Director" },
-  { id: 2, vinculo: "Miembro" }];
+  { id: 2, vinculo: "Miembro" },
+  { id: 3, vinculo: "Investigador Principal" },
+  { id: 4, vinculo: "Co-investigador" }];
 
 var actores = [
   { id: 1, actor: "Principal" },
@@ -148,6 +163,8 @@ var dias = [
   { id: 6, dia: "Viernes" },
   { id: 7, dia: "Sabado" },];
 
+
+//llamados de insercion para cada tabla
 llamado_insert(estados, modelo.tbl_estados, estados, () => {
   llamado_insert(dedicaciones, modelo.tbl_dedicaciones, dedicaciones, () => {
     llamado_insert(perfiles, modelo.tbl_perfiles, perfiles, () => {
@@ -157,7 +174,7 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
           llamado_insert(areas, modelo.tbl_areas, areas, () => {
             llamado_insert(sedes, modelo.tbl_sedes, sedes, () => {
               llamado_insert(programas, modelo.tbl_programas, programas, () => {
-                llamado_insert(usuarios, modelo.tbl_usuarios, usuarios, () => {
+                llamado_insert(usuarios, modelo.tbl_usuarios, usuario_doc, () => {
                   llamado_insert(vinculos, modelo.tbl_vinculos, vinculos, () => {
                     llamado_insert(actores, modelo.tbl_actores, actores, () => {
                       llamado_insert(etapas, modelo.tbl_etapas, etapas, () => {
@@ -180,7 +197,7 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
 
 //funcion que llama el metodo insertar
 function llamado_insert(datos, tabla, donde, callback) {
-  tabla.sync().then(function () {
+  tabla.sync({force : true}).then(function () {
     for (var i = 0; i < datos.length; i++) {
       admon.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
     }

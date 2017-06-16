@@ -1,73 +1,87 @@
-var nodemailer = require('nodemailer');
-var admon = require('.././database/admon');
+var admon = require('.././services/crudService');
 var modelo = require('.././database/modelos');
-fs = require('fs');
-var html = (fs.readFileSync("./views/correo.html")).toString();
+var mail = require('.././services/mailService')
+let fs = require('fs');
 module.exports = {
 
-	enviar: function (req, res) {
-		var dato = [{
-			correo: req.body.email
-		}];
-		admon.findAll(modelo.tbl_usuarios, dato, function (data) {
-			if (data !== undefined) {
-				var doc_identidad = data.doc_identidad.toString();
-				var nombre = data.nombre;
+    restablecer: function (req, res) {
+        var dato = [{
+            correo: req.body.email
+        }];
+        admon.findAll(modelo.tbl_usuarios, dato, function (data) {
+            //si data trae informacion es por que encontro alguna coinsidencia
+            if (data !== undefined) {
+                //si el usuario no se activo no se podra recuperar la contraseña
+                if (data.tblEstadoId == 1 && data.contraseña != '123') {
+                    //se saca alguna informacion del usuario
+                    var doc_identidad = data.doc_identidad.toString();
+                    var nombre = data.nombre;
 
-				for (var i = 0; i < 4; i++) {
-					var b = new Buffer(doc_identidad);
-					var doc_identidad = b.toString('base64');
-				}
+                    //se encripta el doc_identidad
+                    for (var i = 0; i < 4; i++) {
+                        var b = new Buffer(doc_identidad);
+                        var doc_identidad = b.toString('base64');
+                    }
 
-				let transporter = nodemailer.createTransport({
-					service: 'gmail',
-					auth: {
-						user: 'gabotolosa97@gmail.com',
-						pass: 'tolosa123'
-					}
-				});
+                    //se construlle una url con la fecha y el usuario
+                    var date = new Date();
+                    var fecha = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+                    var dateEnt = new Buffer(fecha);
+                    fecha = dateEnt.toString('base64');
+                    var asunto = 'restablecer contraseña';
+                    var html = (fs.readFileSync("./views/correo.html")).toString();
+                    html = html.replace("url", "http://localhost:3000/#!/recu/" + doc_identidad + "/" + fecha);
+                    html = html.replace("Usuario", "" + nombre);
 
-				var date = new Date();
-				var fecha = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-				var dateEnt = new Buffer(fecha);
-				fecha = dateEnt.toString('base64');
-				html = html.replace("url", "http://localhost:3000/auth/recu/" + doc_identidad + "/" + fecha);
-				html = html.replace("Usuario", "" + nombre);
+                    var resp = mail(req.body.email, asunto, html);
+                    if (resp = true) {
+                        var datos = {
+                            recuperar: true
+                        };
+                        var donde = {
+                            doc_identidad: data.doc_identidad
+                        }
+                        //se busca y crea o actualiza el campo recuperar del usuario
+                        modelo.tbl_usuarios.sync().then(function () {
+                            admon.findOrCreate(modelo.tbl_usuarios, datos, donde, function (data) {
+                                if (!data) {
+                                    admon.update(modelo.tbl_usuarios, donde, datos, function (data) { });
+                                }
+                            });
+                        });
+                    }
+                    return res.redirect('/');
+                } else {
+                    console.log('el usuario esta inactivo o no a actualizado su contraseña inicial');
+                    return res.redirect('/');
+                }
+            } else {
+                console.log('no se encontro el correo');
+                return res.redirect('/');
+            }
+        });
+    },
 
-				let mailOptions = {
-					from: '"no-reply@elpoli.edu.co" <gabotolosa97@gmail.com>',
-					to: req.body.email,
-					subject: 'Restablecer contraseña',
-					html: html
-				};
+    codigo: function (correo,nombre) {
 
-				transporter.sendMail(mailOptions, (error, info) => {
-					if (error) {
-						return console.log(error);
-					}
-					var datos = {
-						recuperar: true
-					};
-					var donde = {
-						doc_identidad: data.doc_identidad
-					}
-					modelo.tbl_usuarios.sync().then(function () {
-						admon.findOrCreate(modelo.tbl_usuarios, datos, donde, function (data) {
-							if (!data) {
-								admon.update(modelo.tbl_usuarios, donde, datos, function (data) { });
-							}
-						});
-					});
-					return res.redirect('/');
-				});
-			} else {
-				console.log('no se encontro el correo');
-				return res.redirect('/');
-			}
-		});
-	},
-
-	codigo: function (req) {
-		console.log('-----');
-	}
-};
+        var random = new Array('mayus', 'minus', 'numeros', 'mayus', 'minus');
+        var muyus = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        var minus = new Array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+        var codigo = "";
+        for (i = 0; i < 6; i++) {
+            var j = random[Math.floor(Math.random() * random.length)];
+            if (j == "numeros") {
+                codigo += "" + Math.floor(Math.random() * 10);
+            } else if (j == "minus") {
+                codigo += minus[Math.floor(Math.random() * minus.length)];
+            } else {
+                codigo += muyus[Math.floor(Math.random() * muyus.length)];
+            }
+        }
+        var html = (fs.readFileSync("./views/codigo.html")).toString();
+        html = html.replace("codigo", codigo);
+        html = html.replace("Usuario", nombre);
+        var resp = mail(correo,"Código de Activación", html);
+        return codigo;
+    }
+};        

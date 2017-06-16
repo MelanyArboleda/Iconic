@@ -214,6 +214,10 @@ var tbl_usuarios = sequelize.define('tbl_usuarios', {
     type: Sequelize.STRING(250),
     allowNull: false
   },
+  contraseña_firma: {
+    type: Sequelize.STRING(250),
+    allowNull: false
+  },
   tblDedicacioneId: {
     type: Sequelize.INTEGER
   },
@@ -243,6 +247,30 @@ tbl_dedicaciones.hasMany(tbl_usuarios);
 tbl_usuarios.belongsTo(tbl_dedicaciones);
 tbl_perfiles.hasMany(tbl_usuarios);
 tbl_usuarios.belongsTo(tbl_perfiles);
+
+var tbl_notificaciones = sequelize.define('tbl_notificaciones', {
+  mensaje: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  tblUsuarioDoc_identidad: {
+    type: Sequelize.STRING(15),
+    allowNull: false
+  },
+  fecha: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  visto: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
+  }
+}, {
+    freezeTableName: true
+  });
+
+tbl_usuarios.hasMany(tbl_notificaciones);
+tbl_notificaciones.belongsTo(tbl_usuarios);
 
 var tbl_usuario_programa = sequelize.define('tbl_usuario_programa', {
   tblUsuarioDoc_identidad: {
@@ -371,12 +399,12 @@ tbl_dodencias_directas.belongsTo(tbl_ptd);
 
 var tbl_vinculos = sequelize.define('tbl_vinculos', {
   vinculo: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(25),
     allowNull: false
   }
 });
 
-var tbl_investigaciones = sequelize.define('tbl_investigaciones', {
+var tbl_invertigaciones_proyectos = sequelize.define('tbl_invertigaciones_proyectos', {
   nombre_proyecto: {
     type: Sequelize.STRING(500),
     allowNull: false
@@ -410,10 +438,45 @@ var tbl_investigaciones = sequelize.define('tbl_investigaciones', {
   }
 });
 
-tbl_ptd.hasMany(tbl_investigaciones);
-tbl_investigaciones.belongsTo(tbl_ptd);
-tbl_vinculos.hasMany(tbl_investigaciones);
-tbl_investigaciones.belongsTo(tbl_vinculos);
+tbl_ptd.hasMany(tbl_invertigaciones_proyectos);
+tbl_invertigaciones_proyectos.belongsTo(tbl_ptd);
+tbl_vinculos.hasMany(tbl_invertigaciones_proyectos);
+tbl_invertigaciones_proyectos.belongsTo(tbl_vinculos);
+
+var tbl_invertigaciones_semilleros = sequelize.define('tbl_invertigaciones_semilleros', {
+  nombre_semillero: {
+    type: Sequelize.STRING(500),
+    allowNull: false
+  },
+  tblVinculoId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  actividad_desarrollada: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  producto: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  horas_semanales: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  aprobado: {
+    type: Sequelize.BOOLEAN
+  },
+  tblPtdId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+});
+
+tbl_ptd.hasMany(tbl_invertigaciones_semilleros);
+tbl_invertigaciones_semilleros.belongsTo(tbl_ptd);
+tbl_vinculos.hasMany(tbl_invertigaciones_semilleros);
+tbl_invertigaciones_semilleros.belongsTo(tbl_vinculos);
 
 var tbl_actividades_extension = sequelize.define('tbl_actividades_extension', {
   nombre_actividad: {
@@ -717,14 +780,16 @@ module.exports = {
   tbl_facultades: tbl_facultades,
   tbl_areas: tbl_areas,
   tbl_programas: tbl_programas,
-  tbl_sedes:tbl_sedes,
+  tbl_sedes: tbl_sedes,
   tbl_fechas_etapas: tbl_fechas_etapas,
   tbl_etapas: tbl_etapas,
   tbl_usuarios: tbl_usuarios,
+  tbl_notificaciones: tbl_notificaciones,
   tbl_usuario_programa: tbl_usuario_programa,
   tbl_ptd: tbl_ptd,
   tbl_dodencias_directas: tbl_dodencias_directas,
-  tbl_investigaciones: tbl_investigaciones,
+  tbl_invertigaciones_proyectos: tbl_invertigaciones_proyectos,
+  tbl_invertigaciones_semilleros: tbl_invertigaciones_semilleros,
   tbl_vinculos: tbl_vinculos,
   tbl_actividades_extension: tbl_actividades_extension,
   tbl_comision_estudios: tbl_comision_estudios,
