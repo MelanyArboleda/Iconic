@@ -1,5 +1,5 @@
 var encriptar = require('.././controllers/EncriptarController');
-var admon = require('.././services/crudService');
+var crud = require('.././services/crudService');
 var modelo = require('.././database/modelos');
 var fs = require('fs');
 var user;
@@ -43,7 +43,7 @@ module.exports = {
 			b = new Buffer(user, 'base64')
 			user = b.toString();
 		}
-		admon.findAll(modelo.tbl_usuarios, { doc_identidad: user }, function (data) {
+		crud.findAll(modelo.tbl_usuarios, { doc_identidad: user }, function (data) {
 			if (data !== undefined) {
 				if (fecha >= fecha_act) {
 					if (data.recuperar == true) {
@@ -55,7 +55,7 @@ module.exports = {
 					var datos = {
 						recuperar: false
 					};
-					admon.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) { });
+					crud.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) { });
 					res.redirect('/');
 				}
 			} else {
@@ -70,7 +70,7 @@ module.exports = {
 			contraseña: encriptar(req.body.contraseña),
 			recuperar: false
 		};
-		admon.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) {
+		crud.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) {
 			if (data == 'update') {
 				res.redirect('/');
 			}
@@ -87,7 +87,7 @@ module.exports = {
 	cambio: function (req, res, next) {
 		var codigo = req.body.codigo;
 		if (codigo == req.res.req.user.codigo) {
-			admon.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { tblEstadoId: 1 }, function (data) {
+			crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { tblEstadoId: 1 }, function (data) {
 				if (data == 'update') {
 					res.redirect('/auth/config');
 				}
@@ -107,7 +107,7 @@ module.exports = {
 
 	pinicial: function (req, res, next) {
 		if (req.body.contraseñaNew != '123') {
-			admon.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña: encriptar(req.body.contraseñaNew) }, function (data) {
+			crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña: encriptar(req.body.contraseñaNew) }, function (data) {
 				if (data == 'update') {
 					return true;
 				} else {
@@ -131,7 +131,7 @@ module.exports = {
 			}
 		});
 
-		admon.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
+		crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
 			if (data == 'update') {
 				return true
 			} else {
@@ -142,7 +142,7 @@ module.exports = {
 
 	cinicial: function (req, res, next) {
 		if (req.res.req.user.contraseña != req.body.contraseña_firma) {
-			admon.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña_firma: encriptar(req.body.contraseña_firma) }, function (data) {
+			crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña_firma: encriptar(req.body.contraseña_firma) }, function (data) {
 				if (data == 'update') {
 					return true
 				} else {

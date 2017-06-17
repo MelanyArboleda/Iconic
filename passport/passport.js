@@ -1,5 +1,5 @@
 var localStrategy = require('passport-local').Strategy;
-var admon = require('.././services/crudService');
+var crud = require('.././services/crudService');
 var modelo = require('.././database/modelos');
 var mail = require('.././controllers/MailController');
 var bcrypt = require('bcryptjs');
@@ -19,7 +19,7 @@ module.exports = function(passport) {
 			correo: user
 		}];
 		//busca conicidencias el la base de datos para poder iniciar sesion
-		admon.findAll(modelo.tbl_usuarios, dato, function(data) {			
+		crud.findAll(modelo.tbl_usuarios, dato, function(data) {			
 			if (data !== undefined) {
 				//si esta activa las cuenta o las fechas de creado y actualizado del usuario son las mismas de ja seguir con el proceso
 				if (data.estado == 1 || data.createdAt.toString() == data.updatedAt.toString()) {

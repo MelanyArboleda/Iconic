@@ -1,4 +1,4 @@
-var admon = require('.././services/crudService');
+var crud = require('.././services/crudService');
 var modelo = require('.././database/modelos');
 module.exports = {
 

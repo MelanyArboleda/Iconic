@@ -1,4 +1,4 @@
-var admon = require('.././services/crudService');
+var crud = require('.././services/crudService');
 var modelo = require('.././database/modelos');
 var mail = require('.././services/mailService')
 let fs = require('fs');
@@ -8,7 +8,7 @@ module.exports = {
         var dato = [{
             correo: req.body.email
         }];
-        admon.findAll(modelo.tbl_usuarios, dato, function (data) {
+        crud.findAll(modelo.tbl_usuarios, dato, function (data) {
             //si data trae informacion es por que encontro alguna coinsidencia
             if (data !== undefined) {
                 //si el usuario no se activo no se podra recuperar la contraseña
@@ -43,9 +43,9 @@ module.exports = {
                         }
                         //se busca y crea o actualiza el campo recuperar del usuario
                         modelo.tbl_usuarios.sync().then(function () {
-                            admon.findOrCreate(modelo.tbl_usuarios, datos, donde, function (data) {
+                            crud.findOrCreate(modelo.tbl_usuarios, datos, donde, function (data) {
                                 if (!data) {
-                                    admon.update(modelo.tbl_usuarios, donde, datos, function (data) { });
+                                    crud.update(modelo.tbl_usuarios, donde, datos, function (data) { });
                                 }
                             });
                         });

@@ -1,6 +1,6 @@
 var encriptar = require('.././controllers/EncriptarController');
 var modelo = require('.././database/modelos');
-var admon = require('.././services/crudService');
+var crud = require('.././services/crudService');
 
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [
@@ -199,7 +199,7 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
 function llamado_insert(datos, tabla, donde, callback) {
   tabla.sync({force : true}).then(function () {
     for (var i = 0; i < datos.length; i++) {
-      admon.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
+      crud.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
     }
     callback()
   });
