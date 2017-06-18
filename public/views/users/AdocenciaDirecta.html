@@ -1,0 +1,82 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+
+<div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
+	<div class="row">
+        <div class="col s12"> 
+                        <form ng-submit="mnuPVm.addNewDD()">
+                            <table class="table responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllDD()" /></th>
+                                        <th id="asig">Nombre Asignatura</th>
+                                        <th id="cod">Código</th>
+                                        <th class="num">Grupo</th>
+                                        <th class="num">Número de Estudiantes</th>
+                                        <th class="num">Horas Semanales</th>
+                                        <th class="num">Horas Semestre</th>
+                                        <th class="eval">Evaluación Estudiante</th>
+                                        <th class="eval">Evaluación Jefe</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr ng-repeat="dd in mnuPVm.docenciaDirecta">
+                                        <td>
+                                            <input type="checkbox" ng-model="dd.selected"/></td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="dd.nAsignatura" required/></td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="dd.codigo" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.grupo" required/></td>
+
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.numEstudiantes" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.hSemana" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.hSemestreD" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.evaluacionestudiante" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="dd.evaluacionjefe" required/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group">
+                            <div class="fixed-action-btn cancel">
+                                <input type="button" class="btn-floating btn-danger pull-right" ng-click="mnuPVm.removeDD()" value="">
+                                </div>
+                        <div class="fixed-action-btn">
+                        
+                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left" data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
+                        </div>
+                    </div>
+                        </form>
+            </div>
+        </div>
+</div>
+
+<br>
+
+<div class="container white contenido">
+	<div class="row">
+        <div class="input-field col s12 areaO" style="padding-right:3%;">
+        	<textarea id="observacionesDD" class="materialize-textarea" data-length="500"></textarea>
+            <label for="observacionesDD">Observaciones</label>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('textarea#observacionesDD').characterCounter();
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+</script>

@@ -1,0 +1,117 @@
+.cabezaptd{
+	padding-top: 1%;
+	padding-left: 1%;
+}
+
+.contenido{
+	height: 100%;
+	width: 96%;
+	padding-left: 2%;
+}
+
+div.planesDeTrabajo{
+	height: 100%;
+	width: 100%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+div.vistaPTD{
+	height: 100%;
+	width: 100%;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+div.buscaPTD{
+	height: 100%;
+	width: 100%;
+	padding-left: 4.2%;
+    padding-right: 2.8%;
+}
+
+.col.s11{
+	padding-left: 5%;
+	padding-top: 1%;
+}
+
+.btn-primary{
+    margin-right: 10px;
+}
+
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+	opacity: 1;
+	position: static;
+}
+
+.fixed-action-btn{
+	bottom: 45px; 
+	right: 24px;
+}
+
+.fixed-action-btn.cancel{
+	bottom: 115px;
+    right: 42px;
+}
+
+#asig {
+   width: 40%;
+}
+
+#cod {
+   width: 12%;
+}
+
+.num {
+  width: 3%;
+}
+
+.eval {
+	width: 3%;
+}
+
+.invnum {
+  width: 3%;
+}
+
+#gvinculo {
+	width: 12%;
+}
+
+#pvinculo {
+	width: 21%;
+}
+
+.invgr {
+	width: 35%;
+}
+
+.act {
+	width: 25%;
+}
+
+.prod {
+	width: 25%;
+}
+
+div.areaO{
+	margin-top: 3%;
+	padding-right: 3%;
+}
+
+nav .input-field label i{
+	color: #616161;
+}
+
+.collection .collection-item.avatar{
+	min-height: 80px;
+}
+
+.collection.with-header .collection-item.avatar{
+	padding-left: 82px;
+}
+
+button, input, optgroup, select, textarea{
+	color: black;
+}

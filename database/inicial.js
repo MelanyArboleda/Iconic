@@ -5,7 +5,9 @@ var crud = require('.././services/crudService');
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [
   { id: 1, estado: "Activo" },
-  { id: 2, estado: "Inactivo" }];
+  { id: 2, estado: "Inactivo" },
+  { id: 3, estado: "Espera" },
+  { id: 4, estado: "contraseña" }];
 
 var dedicaciones = [
   { id: 1, dedicacion: "Tiempo Completo" },

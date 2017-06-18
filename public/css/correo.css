@@ -1,0 +1,21 @@
+.superior{
+	height: 50%;
+	width: 20%;
+	background-color: yellow;
+}
+
+#iconic{
+	position: fixed;
+}
+
+.mensaje{
+
+}
+
+.texto1{
+ text-align: justify;
+}
+
+.texto2{
+ font-size: 100%;
+}

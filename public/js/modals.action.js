@@ -1,3 +1,14 @@
 $(document).ready(function() {
-	$('#modal1').modal(); 
-});
+	$('#modalolvidoclave').modal(); 
+ });
+
+ $(document).ready(function() {
+ 	$('#modalfirmacontraseña').modal({
+ 		dismissible: false
+ 	}); 
+
+ });
+
+ $(document).ready(function() {
+ 	$('#modalfirma').modal(); 
+ });

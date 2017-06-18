@@ -9,6 +9,12 @@
             "request": "launch",
             "name": "Iniciar programa",
             "program": "${workspaceRoot}\\bin\\www"
+        }, 
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Iniciar programa linux",
+            "program": "${workspaceRoot}/bin/www"
         }
     ]
 }

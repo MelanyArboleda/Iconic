@@ -2,6 +2,12 @@ var crud = require('.././services/crudService');
 var modelo = require('.././database/modelos');
 var mail = require('.././services/mailService')
 let fs = require('fs');
+var path = require('path');
+
+const codigoVerificacionPath = path.join(__dirname, '..', 'public', 'codigo.html');
+const codigoVerificacionHtml = (fs.readFileSync(codigoVerificacionPath)).toString();
+const linkRecuperarPath = path.join(__dirname, '..', 'public', 'correo.html');
+const linkRecuperarHtml = (fs.readFileSync(linkRecuperarPath)).toString();
 module.exports = {
 
     restablecer: function (req, res) {
@@ -29,7 +35,7 @@ module.exports = {
                     var dateEnt = new Buffer(fecha);
                     fecha = dateEnt.toString('base64');
                     var asunto = 'restablecer contraseña';
-                    var html = (fs.readFileSync("./views/correo.html")).toString();
+                    var html = linkRecuperarHtml;
                     html = html.replace("url", "http://localhost:3000/#!/recu/" + doc_identidad + "/" + fecha);
                     html = html.replace("Usuario", "" + nombre);
 
@@ -62,7 +68,7 @@ module.exports = {
         });
     },
 
-    codigo: function (correo,nombre) {
+    codigo: function (correo, nombre) {
 
         var random = new Array('mayus', 'minus', 'numeros', 'mayus', 'minus');
         var muyus = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
@@ -78,10 +84,10 @@ module.exports = {
                 codigo += muyus[Math.floor(Math.random() * muyus.length)];
             }
         }
-        var html = (fs.readFileSync("./views/codigo.html")).toString();
+        var html = codigoVerificacionHtml;
         html = html.replace("codigo", codigo);
         html = html.replace("Usuario", nombre);
-        var resp = mail(correo,"Código de Activación", html);
+        var resp = mail(correo, "Código de Activación", html);
         return codigo;
     }
 };        

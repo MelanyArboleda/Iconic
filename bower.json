@@ -2,7 +2,10 @@
   "name": "polidocentes",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "^1.6.4"
+    "angular": "^1.6.4",
+    "angular-local-storage": "^0.6.0",
+    "angular-ui-router": "^1.0.4",
+    "angular-materialize": "^0.2.2"
   },
   "private": true
 }
