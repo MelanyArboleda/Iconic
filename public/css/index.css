@@ -147,8 +147,12 @@ p.titulo{
   bottom: 45%; 
   right: 14%;
 }
+
+.again{
+  padding-right: 2.9%;
+}
  
-.bdg{
+/*.bdg{
   position: relative;
 }
 
@@ -162,4 +166,4 @@ p.titulo{
   right: -10px;
   border-radius: 40%;
   box-shadow: 0 0 1px #33333;
-}
+}*/

@@ -1,105 +1,122 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
-	<div class="row">
-            <div class="col s12"> 
-                        <form ng-submit="mnuPVm.gInvAddNew()">
-                            <table class="table responsive-table">
-                                <thead>
-                                    <tr>
-                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.gInvCheckAll()" /></th>
-                                        <th class="invgr">Nombre del Semillero y/o Grupo</th>
-                                        <th id="gvinculo">Tipo de vínculo
-                                         <br>(Director ó Miembro)
-                                        </th>
-                                        <th class="act">Actividad desarrollada</th>
-                                        <th class="prod">Productos para cada actividad</th>
-                                        <th class="invnum">Horas Semanales</th>
-                                        <th class="invnum">Horas Semestre</th>
-                                        <th>Vo. Bo. Coordinación Investigación</th>
-                                    </tr>
-                                </thead> 
+<!--<div class="row ">
+    <div class="col s12">
+        <div class="col s12">
+            <ul tabs class="tabs">
+                <li class="tab col s6"><a href="#semillerogrupoI">Semillero/Grupo</a></li>
+                <li class="tab col s6"><a href="#proyecyoI">Proyecto</a></li>
+            </ul>
+        </div>
+    </div>
+</div>-->
 
-                                <tbody>
-                                    <tr ng-repeat="gruposInvestigacion in mnuPVm.gruposInvestigacion">
-                                        <td>
-                                            <input type="checkbox" ng-model="gruposInvestigacion.selected"/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="gruposInvestigacion.ngrupo" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="gruposInvestigacion.vinculo" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="gruposInvestigacion.actividad" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="gruposInvestigacion.productos" required/></td>
-                                        <td>
-                                            <input type="number" class="form-control" ng-model="gruposInvestigacion.hSemana" required/></td>
-                                        <td>
-                                            <input type="number" class="form-control" ng-model="gruposInvestigacion.hSemestre" required/></td>
-                                        <td>
-                                            <input type="checkbox" ng-model="gruposInvestigacion.selected"/></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="form-group">
-                                <input  type="button" class="btn btn-danger pull-right" ng-click="mnuPVm.gInvRemove()" value="Eliminar">
-
-                                <input type="submit" class="btn btn-primary addnew pull-right" value="Agregar">
-                            </div>
-                        </form>
-                       
-                        <br>
-                        <ul>
-			              <div class="divider" style="background-color: #26a69a;"></div>
-			            </ul>
-                        <br>
-
-                        <form ng-submit="mnuPVm.pInvAddNew()">
-                            <table class="table responsive-table">
-                                <thead>
+<div ng-controller="menuPrincipalCtrl as mnuPVm">
+<form>
+        <!--SEMILLERO GRUPO DE INVESTIGACIÓN-->
+        <div class="container white contenido" id="semillerogrupoI">
+            <div class="row">
+                <div class="col s12">
+                    <form ng-submit="mnuPVm.gInvAddNew()">
+                        <table class="table responsive-table">
+                            <thead>
                                 <tr>
-                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.gInvCheckAll()" /></th>
-                                        <th id="invgr">Nombre del Proyecto de Investigación (En ejecución)</th>
-                                        <th id="vinculo">Tipo de vínculo
-                                         <br>(Investigador principal ó Co-investigador)
-                                        </th>
-                                        <th class="act">Objetivo principal del trabajo de investigación</th>
-                                        <th class="prod">Productos finales de la investigación</th>
-                                        <th class="num">Horas Semanales</th>
-                                        <th class="num">Horas Semestre</th>
-                                        <th>Vo. Bo. Coordinación Investigación</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   <tr ng-repeat="proyectosInvestigacion in mnuPVm.proyectosInvestigacion">
-                                        <td>
-                                            <input type="checkbox" ng-model="proyectosInvestigacion.selected"/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="proyectosInvestigacion.nproyecto" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="proyectosInvestigacion.vinculo" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="proyectosInvestigacion.objetivo" required/></td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="proyectosInvestigacion.productos" required/></td>
-                                        <td>
-                                            <input type="number" class="form-control" ng-model="proyectosInvestigacion.hSemana" required/></td>
-                                        <td>
-                                            <input type="number" class="form-control" ng-model="proyectosInvestigacion.hSemestre" required/></td>
-                                        <td>
-                                            <input type="checkbox" ng-model="proyectosInvestigacion.selected"/></td>
-                                    </tr> 
-                                </tbody>
-                            </table>
-                            <div class="form-group">
-                                <input  type="button" class="btn btn-danger pull-right" ng-click="mnuPVm.pInvRemove()" value="Eliminar">
+                                    <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.gInvCheckAll()" /></th>
+                                    <th class="invgr">Nombre del Semillero y/o Grupo</th>
+                                    <th id="gvinculo">Tipo de vínculo
+                                        <br>(Director ó Miembro)
+                                    </th>
+                                    <th class="act">Actividad desarrollada</th>
+                                    <th class="prod">Productos para cada actividad</th>
+                                    <th class="invnum">Horas Semanales</th>
+                                    <th class="invnum">Horas Semestre</th>
+                                    <th>Vo. Bo. Coordinación Investigación</th>
+                                </tr>
+                            </thead>
 
-                                <input type="submit" class="btn btn-primary addnew pull-right" value="Agregar">
-                            </div>
-                        </form>
-                        
-                    
-                
+                            <tbody>
+                                <tr ng-repeat="gruposInvestigacion in mnuPVm.gruposInvestigacion">
+                                    <td>
+                                        <input type="checkbox" ng-model="gruposInvestigacion.selected" /></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="gruposInvestigacion.ngrupo" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="gruposInvestigacion.vinculo" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="gruposInvestigacion.actividad" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="gruposInvestigacion.productos" required/></td>
+                                    <td>
+                                        <input type="number" class="form-control" ng-model="gruposInvestigacion.hSemana" required/></td>
+                                    <td>
+                                        <input type="number" class="form-control" ng-model="gruposInvestigacion.hSemestre" required/></td>
+                                    <td>
+                                        <input type="checkbox" ng-model="gruposInvestigacion.selected" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-danger pull-right" ng-click="mnuPVm.gInvRemove()" value="Eliminar">
+
+                            <input type="submit" class="btn btn-primary addnew pull-right" value="Agregar">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+        <br>
+        <!--ROYECTOS DE INVESTIGACIÓN-->
+        <div class="container white contenido" id="proyectoI">
+            <div class="row">
+                <div class="col s12">
+                    <form ng-submit="mnuPVm.pInvAddNew()">
+                        <table class="table responsive-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.gInvCheckAll()" /></th>
+                                    <th id="invgr">Nombre del Proyecto de Investigación (En ejecución)</th>
+                                    <th id="vinculo">Tipo de vínculo
+                                        <br>(Investigador principal ó Co-investigador)
+                                    </th>
+                                    <th class="act">Objetivo principal del trabajo de investigación</th>
+                                    <th class="prod">Productos finales de la investigación</th>
+                                    <th class="num">Horas Semanales</th>
+                                    <th class="num">Horas Semestre</th>
+                                    <th>Vo. Bo. Coordinación Investigación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="proyectosInvestigacion in mnuPVm.proyectosInvestigacion">
+                                    <td>
+                                        <input type="checkbox" ng-model="proyectosInvestigacion.selected" /></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="proyectosInvestigacion.nproyecto" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="proyectosInvestigacion.vinculo" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="proyectosInvestigacion.objetivo" required/></td>
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="proyectosInvestigacion.productos" required/></td>
+                                    <td>
+                                        <input type="number" class="form-control" ng-model="proyectosInvestigacion.hSemana" required/></td>
+                                    <td>
+                                        <input type="number" class="form-control" ng-model="proyectosInvestigacion.hSemestre" required/></td>
+                                    <td>
+                                        <input type="checkbox" ng-model="proyectosInvestigacion.selected" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-danger pull-right" ng-click="mnuPVm.pInvRemove()" value="Eliminar">
+
+                            <input type="submit" class="btn btn-primary addnew pull-right" value="Agregar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row center" input-field>
+            <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+        </div>
+</form>
 </div>

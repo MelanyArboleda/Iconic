@@ -1,13 +1,13 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
 <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
-	<div class="row">
-        <div class="col s12"> 
+    <div class="row">
+        <div class="col s12">
             <form ng-submit="mnuPVm.addNewAse()">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllAse()"/></th>
+                            <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllAse()" /></th>
                             <th>Integrantes del Equipo</th>
                             <th>Título</th>
                             <th>Aspectos Reelevantes del Trabajo</th>
@@ -19,7 +19,7 @@
 
                     <tbody>
                         <tr ng-repeat="ase in mnuPVm.asesorias">
-                            <td><input type="checkbox" ng-model="ase.selected"/></td>
+                            <td><input type="checkbox" ng-model="ase.selected" /></td>
                             <td><input type="text" class="form-control" ng-model="ase.integrantes" required/></td>
                             <td> <input type="text" class="form-control" ng-model="ase.titulo" required/> </td>
                             <td> <input type="text" class="form-control" ng-model="ase.aspectosR" required/> </td>
@@ -29,20 +29,28 @@
                         </tr>
                     </tbody>
                 </table>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-danger pull-right" ng-click="mnuPVm.removeAse()" value="Eliminar">
-
-                        <div class="fixed-action-btn">
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left" data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
-                        </div>
+                <div class="form-group">
+                    <div class="fixed-action-btn cancel">
+                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="mnuPVm.removeAse()" value="">
                     </div>
-            </form>      
+                    <div class="fixed-action-btn">
+
+                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                            data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
+                    </div>
+                </div>
+                <br>
+                <div class="row center" input-field>
+                    <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-  });
+    $(document).ready(function () {
+        $('.tooltipped').tooltip({ delay: 50 });
+    });
+
 </script>

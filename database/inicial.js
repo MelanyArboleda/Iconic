@@ -133,10 +133,25 @@ var usuarios = [{
   tblPerfileId: 6,
   tblEstadoId: 3,
   recuperar: false
+},
+{
+  doc_identidad: "1152710692",
+  nombre: "Samuel Andrés",
+  apellido_1: "Vergara",
+  apellido_2: "Bedoya",
+  correo: "samuel_vergara23151@elpoli.edu.co",
+  contraseña: funciones.encriptar("1234"),
+  contraseña_firma: funciones.encriptar("0"),
+  tblPerfileId: 6,
+  tblEstadoId: 3,
+  recuperar: false
 }];
 
 var usuario_doc = [{
   doc_identidad: "1039470240"
+},
+{
+  doc_identidad: "1152710692"
 }];
 
 var vinculos = [
@@ -199,7 +214,7 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
 
 //funcion que llama el metodo insertar
 function llamado_insert(datos, tabla, donde, callback) {
-  tabla.sync({force : true}).then(function () {
+  tabla.sync({force: true}).then(function () {
     for (var i = 0; i < datos.length; i++) {
       crud.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
     }
