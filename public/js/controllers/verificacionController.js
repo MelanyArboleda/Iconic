@@ -1,5 +1,4 @@
-angular.module("iconic")
-.controller("verificacionCtrl", verificacionCtrl);
+angular.module("iconic").controller("verificacionCtrl", verificacionCtrl);
 
 verificacionCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$state"];
 
@@ -16,6 +15,7 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 		};
 		console.log("llamando al validar");
 		loginService.validarCodigo(data).then(function(resultado){
+			loginFactory.user = resultado.user;
 			console.log(resultado);
 			$state.go("configini");
 		}).catch(function(err){

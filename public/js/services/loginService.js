@@ -7,6 +7,7 @@ function loginService($http, $q) {
 	this.login = login;
 	this.sendCode = sendCode;
 	this.validarCodigo = validarCodigo;
+	this.compararcontraseñas = compararcontraseñas;
 
 	function login(user) {
 		// console.log(user);
@@ -20,14 +21,7 @@ function loginService($http, $q) {
 			console.log(err);
 		});
 
-		return deferred.promise;
-
-		// if (user.username === "melany") {
-		// 	user.name = "Melany A.";
-		// 	return user;
-		// } else {
-		// 	console.log("Bla bla bla");
-		// }		
+		return deferred.promise;	
 	}
 
 	function sendCode(user) {
@@ -48,6 +42,19 @@ function loginService($http, $q) {
 		var deferred = $q.defer();
 		console.log("validando tu tu tu");
 		$http.post("http://localhost:3000/auth/actic", data).then(function (res) {
+			console.log(res);
+			deferred.resolve(res.data);
+		}).catch(function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function compararcontraseñas(data) {
+		var deferred = $q.defer();
+		console.log("comparando tu tu tu");
+		$http.post("http://localhost:3000/auth/configp", data).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
 		}).catch(function (err) {

@@ -1,6 +1,4 @@
-var app = angular.module("iconic")
-
-.controller("menuPrincipalCtrl", function() {
+var app = angular.module("iconic").controller("menuPrincipalCtrl", function() {
 
 	var vm = this;
 

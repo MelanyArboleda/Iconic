@@ -1,4 +1,4 @@
-var encriptar = require('.././controllers/EncriptarController');
+var funciones = require('.././services/funciones');
 var modelo = require('.././database/modelos');
 var crud = require('.././services/crudService');
 
@@ -128,10 +128,10 @@ var usuarios = [{
   apellido_1: "Arboleda",
   apellido_2: "Tolosa",
   correo: "gabriel_arboleda23151@elpoli.edu.co",
-  contraseña: encriptar("123"),
-  contraseña_firma: encriptar("0"),
+  contraseña: funciones.encriptar("123"),
+  contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 2,
+  tblEstadoId: 3,
   recuperar: false
 }];
 

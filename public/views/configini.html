@@ -11,28 +11,28 @@
            					<p class="justify texto">¡Excelente!, tu cuenta se encuentra verificada, ahora deberás establecer la contraseña con la que ingresarás a partir de ahora a Iconic.</p>
            				</div>
 
-          				<form autocomplete="off">
+          				<form name="" autocomplete="off" ng-submit="configiniVm.configini()">
           					<div class="row">
 								<div class="input-field col s12 cajasombra">
-            						<input  id="contraseñaNew" type="password" name="contraseñaNew" required>
-            					<label class="cajasombra" for="contraseñaNew">Nueva Contraseña</label> 
+            						<input  ng-model="configiniVm.passwordNew" id="passwordNew" type="password" name="passwordNew" required>
+            					<label class="cajasombra" for="passwordNew">Nueva Contraseña</label> 
           						</div>	
 
           						<div class="input-field col s12 cajasombra">
-            						<input  id="repiteContraseña" type="password" name="repiteContraseña" required>
-            					<label class="cajasombra" for="repiteContraseña">Repite la Contraseña</label>
+            						<input  ng-model="configiniVm.repitepassword" id="repitepassword" type="password" name="repitepassword" required>
+            					<label class="cajasombra" for="repitepassword">Repite la Contraseña</label>
           						</div> 
           						<br>
           						<br>
           						<div class="input-field col s12 cajasombra">
-									<button type="submit" class="waves-effect waves-light btn" >Cambiar Contraseña</button>
+									<button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Cambiar Contraseña</button>
 
 									<a class="modal-action modal-close modal-trigger firma" href="#modalfirma">Subir firma digital</a>
 
 								</div>
 							</div> 
 							<div class="fixed-action-btn">
-							<button ui-sref="menuPrincipal.vistaPTD" tooltipped class="btn-floating btn-large waves-effect  pulse" data-position="right" data-delay="20" data-tooltip="Finalizar"><i class="material-icons">&#xE850;</i></button>
+							<button class="btn-floating btn-large waves-effect  pulse" data-position="right" data-delay="20" data-tooltip="Finalizar"><i class="material-icons">&#xE850;</i></button>
 							</div>
 						</form>	
 					</div> 

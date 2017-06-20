@@ -24,15 +24,16 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		url: "/verificacion",
 		controller: "verificacionCtrl as verificacionVm",
 		params: {
-			login: false
+			login: true
 		}
 	})
 	.state({
 		name: "configini",
 		templateUrl: 'views/configini.html',
 		url: "/configIni",
+		controller: "configiniCtrl as configiniVm",
 		params: {
-			login: false
+			login: true
 		}
 	})
 	.state({
