@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aProyectosForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todos tus proyectos y publicaciones antes de presionar el botón "Guardar Apartado".
+</div>
+
 <form name="aProyectosForm" autocomplete="off" ng-submit="proyectosVm.aProyectos()">
     <div class="container white contenido">
         <div class="row">
@@ -18,10 +23,13 @@
                     <tbody>
                         <tr ng-repeat="proy in proyectosVm.proyectos">
                             <td><input type="checkbox" ng-model="proy.selected" /></td>
-                            <td><input name="nombre_articulo" type="text" class="form-control" ng-model="proy.nombre_articulo" required/></td>
-                            <td> <input name="tblActoreId" type="text" class="form-control" ng-model="proy.tblActoreId" required/> </td>
-                            <td> <input name="tema_ppal" type="text" class="form-control" ng-model="proy.tema_ppal" required/> </td>
-                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="proy.horas_semestrales" required/> </td>
+                            <td><input name="nombre_articulo" type="text" class="form-control validate" ng-model="proy.nombre_articulo" required/></td>
+                            
+                            <td><select id="tblVinculoId" name="tblActoreId"ng-model="proy.tblActoreId" material-select watch required>
+                                    <option ng-repeat="actor in proyectosVm.actores">{{actor}}</option>
+                                 </select></td>
+                            <td> <input name="tema_ppal" type="text" class="form-control validate" ng-model="proy.tema_ppal" required/> </td>
+                            <td> <input name="horas_semestrales" type="number" class="form-control validate" ng-model="proy.horas_semestrales" required/> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -30,13 +38,13 @@
                         <input type="button" class="btn-floating btn-danger pull-right" ng-click="proyectosVm.removeProy()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" ng-click="proyectosVm.addNewProy()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="proyectosVm.addNewProy()" ng-disabled="aProyectosForm.$invalid" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
                 <br>
                 <div class="row center" input-field>
-                    <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+                    <button ng-disabled="aProyectosForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
                 </div>
             </div>
         </div>
@@ -48,4 +56,12 @@
         $('.tooltipped').tooltip({ delay: 50 });
     });
 
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on( "click", function() {
+			    $('.contenido-alert').remove(); 
+		 });
+    });
 </script>

@@ -21,14 +21,11 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
 				}
 			console.log("llama a servicio Save de docencia directa");
 			ptdService.save(data).then(function (resultado) {
-				console.log(resultado.apartado, 'aaaaaaaaaaaaaa');
-				console.log(ptdFactory.adocenciadirecta, 'bbbbbbbbbbbbbb');
-				console.log(resultado.apartado.id, 'iiiiiiiiiiiii');
 				ptdFactory.adocenciadirecta[resultado.apartado.id - 1] = resultado.apartado;
-				console.log(ptdFactory.adocenciadirecta, 'cccccccccccccc');
+				serviceNotification.success('Apartado guardado correctamente', 2000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error . ', 2000);
+				serviceNotification.error('No se guardó el apartado', 2000);
 			});
 		}
 		if (vm.observacion.observaciones_dd != null) {

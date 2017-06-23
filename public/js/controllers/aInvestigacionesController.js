@@ -8,38 +8,73 @@ function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification) {
     vm.gruposInvestigaciones = ptdFactory.ainvestigacionesgrupo;;
     vm.proyectosInvestigaciones = ptdFactory.ainvestigacionesproyecto;;
 
+    for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
+    if (vm.gruposInvestigaciones[i].tblVinculoId == 1) {
+        vm.gruposInvestigaciones[i].tblVinculoId = 'Director';
+    } else {
+        vm.gruposInvestigaciones[i].tblVinculoId = 'Miembro';
+    }}
+
+    for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
+     if (vm.proyectosInvestigaciones[i].tblVinculoId == 3) {
+        vm.proyectosInvestigaciones[i].tblVinculoId = 'Investigador Ppal';
+    } else {
+        vm.proyectosInvestigaciones[i].tblVinculoId = 'Co-Investigador';
+    }}
     function aInvestigaciones() {
         for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
-            vm.gruposInvestigaciones[i].tblPtdId= ptdFactory.ptd.id;
+            vm.gruposInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
+            if (vm.gruposInvestigaciones[i].tblVinculoId == 'Director') {
+                vm.gruposInvestigaciones[i].tblVinculoId = 1;
+            } else {
+                vm.gruposInvestigaciones[i].tblVinculoId = 2;
+            }
+            if(vm.gruposInvestigaciones[i].aprobado == ""){
+                vm.gruposInvestigaciones[i].aprobado = false;
+            }
+             
             data = {
-				datos: vm.gruposInvestigaciones[i],
-				tabla: 'tbl_invertigaciones_semilleros'
-			}
+                datos: vm.gruposInvestigaciones[i],
+                tabla: 'tbl_invertigaciones_semilleros'
+            }
             console.log("llama a servicio Save de investigaciones semilleros");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.ainvestigacionesgrupo[resultado.apartado.id-1]=resultado.apartado;
-				console.log(resultado);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('Error . ', 2000);
-			});
+            ptdService.save(data).then(function (resultado) {
+                ptdFactory.ainvestigacionesgrupo[resultado.apartado.id - 1] = resultado.apartado;
+                console.log(resultado);
+                serviceNotification.success('Apartado guardado correctamente', 2000);
+            }).catch(function (err) {
+                console.log(err);
+                serviceNotification.error('No se guardó el apartado', 2000);
+            });
         }
         for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-            vm.proyectosInvestigaciones[i].tblPtdId= ptdFactory.ptd.id;
+            vm.proyectosInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
+            if (vm.proyectosInvestigaciones[i].tblVinculoId == 'Investigador Ppal') {
+                vm.proyectosInvestigaciones[i].tblVinculoId = 3;
+            } else {
+                vm.proyectosInvestigaciones[i].tblVinculoId = 4;
+            }
+            if(vm.proyectosInvestigaciones[i].aprobado == ""){
+                vm.proyectosInvestigaciones[i].aprobado = false;
+            }
             data = {
-				datos: vm.proyectosInvestigaciones[i],
-				tabla: 'tbl_invertigaciones_proyectos'
-			}
+                datos: vm.proyectosInvestigaciones[i],
+                tabla: 'tbl_invertigaciones_proyectos'
+            }
             console.log("llama a servicio Save de investigaciones proyectos");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.ainvestigacionesproyecto[resultado.apartado.id-1]=resultado.apartado;
-				console.log(resultado);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('Error . ', 2000);
-			});
+            ptdService.save(data).then(function (resultado) {
+                ptdFactory.ainvestigacionesproyecto[resultado.apartado.id - 1] = resultado.apartado;
+                console.log(resultado);
+            }).catch(function (err) {
+                console.log(err);
+                serviceNotification.error('Error . ', 2000);
+            });
         }
     }
+
+
+    vm.vinculosG = ['Director', 'Miembro'];
+    vm.vinculosP = ['Investigador Ppal', 'Co-Investigador'];
 
     vm.gInvAddNew = function (gI) {
         vm.gruposInvestigaciones.push({
@@ -83,7 +118,7 @@ function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification) {
             'producto': "",
             'horas_semanales': "",
             'horas_semestrales': "",
-            'aprobado':"",
+            'aprobado': "",
         });
     };
 

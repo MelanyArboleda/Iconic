@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aAsesoriasForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus asesorías en proyectos antes de presionar el botón "Guardar Apartado".
+</div>
+
 <form name="aAsesoriasForm" autocomplete="off" ng-submit="asesoriasVm.aAsesorias()">
 <div class="container white contenido"> 
     <div class="row">
@@ -20,12 +25,12 @@
                     <tbody>
                         <tr ng-repeat="ase in asesoriasVm.asesorias">
                             <td><input name="" type="checkbox" ng-model="ase.selected" /></td>
-                            <td><input name="integrantes" type="text" class="form-control" ng-model="ase.integrantes" required/></td>
-                            <td> <input name="titulo" type="text" class="form-control" ng-model="ase.titulo" required/> </td>
-                            <td> <input name="aspectos" type="text" class="form-control" ng-model="ase.aspectos" required/> </td>
-                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="ase.horas_semestrales" required/> </td>
-                            <td> <input name="estudiante" type="number" class="form-control" ng-model="ase.estudiante" required/> </td>
-                            <td> <input name="jefe" type="number" class="form-control" ng-model="ase.jefe" required/> </td>
+                            <td><input name="integrantes" type="text" class="form-control validate" ng-model="ase.integrantes" required/></td>
+                            <td> <input name="titulo" type="text" class="form-control validate" ng-model="ase.titulo" required/> </td>
+                            <td> <input name="aspectos" type="text" class="form-control validate" ng-model="ase.aspectos" required/> </td>
+                            <td> <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="ase.horas_semestrales" required/> </td>
+                            <td> <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="ase.estudiante" /> </td>
+                            <td> <input name="jefe" type="number" class="form-control validate" min="1" max="5" ng-model="ase.jefe" /> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -35,13 +40,13 @@
                     </div>
                     <div class="fixed-action-btn">
 
-                        <button type="submit" ng-click="asesoriasVm.addNewAse()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="asesoriasVm.addNewAse()" ng-disabled="aAsesoriasForm.$invalid" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
                 <br>
                 <div class="row center" input-field>
-                    <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+                    <button ng-disabled="aAsesoriasForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
                 </div>
         </div>
     </div>
@@ -52,5 +57,12 @@
     $(document).ready(function () {
         $('.tooltipped').tooltip({ delay: 50 });
     });
+</script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on( "click", function() {
+			    $('.contenido-alert').remove(); 
+		 });
+    });
 </script>

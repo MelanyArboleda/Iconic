@@ -3,7 +3,16 @@
 
 <div class="container white contenido">
     <div class="row cabezaptd">
-        <h4>cabeza de formulario</h4> 
+        <table>
+         <tr>
+           <td><img src="img/logo_poli.jpg" class="img-cabeza"></td>
+           <td><h6 class="center ptd-titulo"><strong>PLAN DE TRABAJO DOCENTE</strong></h6></td>
+           <td class="center">Código: FD-GC51
+            <hr>
+            Versión: 05 
+           </td>
+         </tr>
+       </table> 
     </div>
 </div>
 <br>
@@ -15,29 +24,29 @@
                                  
                       <div class="col s11">
                         <div class="row" input-field>
-                          <input ng-model="infoGeneralVm.infoGeneral.nombreIG" type="text" name="nombreIG" value="" required>
+                          <input ng-model="infoGeneralVm.infoGeneral.nombreIG" type="text" name="nombreIG" class="validate" required>
                           <label class="active" for="nombreIG">Nombres</label> 
                         </div> 
 
                         <div class="row" input-field>
-                          <input ng-model="infoGeneralVm.infoGeneral.apellido1IG" type="text" name="apellido1IG" value="" required>
+                          <input ng-model="infoGeneralVm.infoGeneral.apellido1IG" type="text" name="apellido1IG" class="validate" required>
                           <label class="active" for="apellido1IG">Apellido 1</label> 
                         </div>
 
                         <div class="row" input-field>
-                          <input ng-model="infoGeneralVm.infoGeneral.apellido2IG" type="text" name="apellido2IG" value="">
+                          <input ng-model="infoGeneralVm.infoGeneral.apellido2IG" type="text" name="apellido2IG" class="validate">
                           <label class="active" for="apellido2IG">Apellido 2</label> 
                         </div>
 
                         <div class="row" input-field>
-                          <select id="dedicacionIG" name="dedicacionIG" ng-model="infoGeneralVm.infoGeneral.dedicacionIG" material-select>
+                          <select id="dedicacionIG" name="dedicacionIG" ng-model="infoGeneralVm.infoGeneral.dedicacionIG" material-select watch>
                               <option ng-repeat="dedicacion in infoGeneralVm.dedicacionIG">{{dedicacion}}</option>
                           </select>
                           <label for="dedicacionIG">Dedicación Horaria</label>
                         </div>
 
                         <div class="row" input-field>
-                          <select id="areaIG" name"areaIG" class="" ng-model="infoGeneralVm.infoGeneral.areaIG" material-select watch>
+                          <select id="areaIG" name"areaIG" ng-model="infoGeneralVm.infoGeneral.areaIG" material-select watch required>
                               <option ng-repeat="area in infoGeneralVm.areaIG">{{area}}</option>
                           </select>
                           <label for="areaIG">Área</label>
@@ -48,6 +57,7 @@
                         <input input-date
                         type="text"
                         name="fechaRealizacion"
+                        class="fecha"
                         ng-model="infoGeneralVm.infoGeneral.fechaRealizacion"                      
                         format="mm/dd/yyyy"
                         months-full="{{mnuPVm.month}}"
@@ -65,9 +75,9 @@
 
                         <br>
 
-                        <div class="row center" input-field>
-                          <button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>
-                        </div>
+                        <!--<div class="row center" input-field>
+                          <button ng-disabled="aInfoGeneralForm.$invalid" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>
+                        </div>-->
                                             
                         
                     </div>

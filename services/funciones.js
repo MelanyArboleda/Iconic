@@ -10,18 +10,18 @@ module.exports = {
 	},
 
 	buscarUser: function (user, callback) {
-		crud.findAll(modelo.tbl_usuarios, { doc_identidad: user }, (data) => {
+		crud.findAll(modelo.tbl_usuarios, { doc_identidad: user }, null, (data) => {
 			callback(user = {
-				doc_identidad: data.doc_identidad,
-				nombre: data.nombre,
-				apellido_1: data.apellido_1,
-				apellido_2: data.apellido_2,
-				correo: data.correo,
-				dedicacion: data.tblDedicacioneId,
-				perfil: data.tblPerfileId,
-				estado: data.tblEstadoId,
-				created: data.createdAt,
-				updated: data.updatedAt
+				doc_identidad: data[0].dataValues.doc_identidad,
+				nombre: data[0].dataValues.nombre,
+				apellido_1: data[0].dataValues.apellido_1,
+				apellido_2: data[0].dataValues.apellido_2,
+				correo: data[0].dataValues.correo,
+				dedicacion: data[0].dataValues.tblDedicacioneId,
+				perfil: data[0].dataValues.tblPerfileId,
+				estado: data[0].dataValues.tblEstadoId,
+				created: data[0].dataValues.createdAt,
+				updated: data[0].dataValues.updatedAt
 			});
 		});
 	},

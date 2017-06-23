@@ -11,15 +11,16 @@ aObservacionesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"]
 		vm.observaciones.tblPtdId= ptdFactory.ptd.id,
 			data = {
 				datos: vm.observaciones,
-				tabla: 'tbl_observaciones'
+				tabla: 'tbl_observaciones' 
 			}
 			console.log("llama a servicio Save de observaciones");
 			ptdService.save(data).then(function (resultado) {
 				ptdFactory.aobservacion[resultado.apartado.id-1]=resultado.apartado;
 				console.log(resultado);
+				serviceNotification.success('Apartado guardado correctamente', 2000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error . ', 2000);
+				serviceNotification.error('No se guardó el apartado', 2000);
 			});
 	}
 };

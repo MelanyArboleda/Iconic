@@ -14,8 +14,8 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, serviceNotifica
 	vm.today = 'Hoy';
 	vm.clear = 'Limpiar';
 	vm.close = 'Cerrar';
-	var days = 15;
-	vm.minDate = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * days))).toISOString();
+	var days = 0;
+	//vm.minDate = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * days))).toISOString();
 	vm.maxDate = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * days))).toISOString();
 
 	if (ptdFactory.ptd.id == undefined) {

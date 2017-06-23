@@ -18,9 +18,10 @@ function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification) {
 			ptdService.save(data).then(function (resultado) {
 				ptdFactory.aasesoria[resultado.apartado.id-1]=resultado.apartado;
 				console.log(resultado);
+                serviceNotification.success('Apartado guardado correctamente', 2000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error . ', 2000);
+				serviceNotification.error('No se guardó el apartado', 2000);
 			});
 		}
     }

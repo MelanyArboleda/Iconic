@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aExtensionForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus actividades de extensión antes de presionar el botón "Guardar Apartado".
+</div>
+
 <form name="aExtensionForm" autocomplete="off" ng-submit="extensionVm.aExtension()">
 <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
 	<div class="row">
@@ -19,13 +24,13 @@
                     <tbody>
                         <tr ng-repeat="ext in extensionVm.extension">
                             <td><input type="checkbox" ng-model="ext.selected"/></td>
-                            <td><input type="text" name="nombre_actividad" class="form-control" ng-model="ext.nombre_actividad" required/></td>
+                            <td><input type="text" name="nombre_actividad" class="form-control validate" ng-model="ext.nombre_actividad" required/></td>
                             <td>
                             <input input-date 
                                 type="text" 
                                 name="fecha_inicio" 
                                 id="fechaRealizacion" 
-                                class="form-control" 
+                                class="form-control fecha" 
                                 ng-model="ext.fecha_inicio" 
                                 format="mm/dd/yyyy" 
                                 months-full="{{mnuPVm.month}}" 
@@ -45,7 +50,7 @@
                                 type="text"
                                 name="fecha_final"
                                 id="fecha_final"
-                                class="form-control" 
+                                class="form-control fecha" 
                                 ng-model="ext.fecha_final"                
                                 format="mm/dd/yyyy"
                                 months-full="{{mnuPVm.month}}"
@@ -60,8 +65,8 @@
                                 close="mnuPVm.close"
                                 select-years="15"
                                 required> </td>
-                            <td> <input type="number" name="horas_semestrales" class="form-control" ng-model="ext.horas_semestrales" required/> </td>
-                            <td> <input type="checkbox" name="aprobado" class="form-control" ng-model="ext.aprobado" required/> </td>
+                            <td> <input type="number" name="horas_semestrales" min="1" class="form-control validate" ng-model="ext.horas_semestrales" required/> </td>
+                            <td> <input type="checkbox" name="aprobado" class="form-control validate" ng-model="ext.aprobado" required/> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,13 +75,13 @@
                         <input type="button" class="btn-floating btn-danger pull-right" ng-click="extensionVm.removeExt()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" ng-click="extensionVm.addNewExt()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-disabled="aExtensionForm.$invalid"  ng-click="extensionVm.addNewExt()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
                     <br>
                     <div class="row center" input-field>
-                        <button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>  
+                        <button ng-disabled="aExtensionForm.$invalid" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>  
                     </div>
         </div>
     </div>
@@ -87,4 +92,12 @@
     $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
   });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on( "click", function() {
+			    $('.contenido-alert').remove(); 
+		 });
+    });
 </script>

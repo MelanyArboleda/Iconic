@@ -17,10 +17,11 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 		loginService.validarCodigo(data).then(function(resultado){
 			loginFactory.user = resultado.user;
 			console.log(resultado);
+			serviceNotification.success('Código válido', 2000);
 			$state.go("configini");
 		}).catch(function(err){
 			console.log(err);
-			serviceNotification.error('Error . ', 2000);
+			serviceNotification.error('No es un código válido', 2000);
 		});
 	}
 }

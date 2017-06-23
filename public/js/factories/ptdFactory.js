@@ -14,6 +14,8 @@ function ptdFactory(ptdService, serviceNotification, $q, ) {
         aproyecto: [],
         aextension: [],
 		aasesoria: [],
+        aotrasactividades: [],
+        resumen: [],
         createPtd: createPtd,
         buscarApart: buscarApart
     };

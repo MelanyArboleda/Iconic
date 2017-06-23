@@ -128,7 +128,7 @@ var usuarios = [{
   apellido_1: "Arboleda",
   apellido_2: "Tolosa",
   correo: "gabriel_arboleda23151@elpoli.edu.co",
-  contraseña: funciones.encriptar("123"),
+  contraseña: funciones.encriptar("Iconic123"),
   contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
   tblEstadoId: 1,
@@ -140,10 +140,10 @@ var usuarios = [{
   apellido_1: "Vergara",
   apellido_2: "Bedoya",
   correo: "samuel_vergara23151@elpoli.edu.co",
-  contraseña: funciones.encriptar("1234"),
+  contraseña: funciones.encriptar("Iconic123"),
   contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 1,
+  tblEstadoId: 3,
   recuperar: false
 }];
 
@@ -156,6 +156,12 @@ var usuario_doc = [{
 
 var usuario_programa = [{
   tblUsuarioDocIdentidad: "1039470240",
+  tblProgramaCodigo: "6",
+  tblProgramaPrograma: "Ingeniería",
+  tblProgramaSede: 1
+},
+{
+  tblUsuarioDocIdentidad: "1152710692",
   tblProgramaCodigo: "6",
   tblProgramaPrograma: "Ingeniería",
   tblProgramaSede: 1

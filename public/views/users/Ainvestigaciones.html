@@ -1,5 +1,11 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aInvestigacionesForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus investigaciones antes de presionar el botón "Guardar
+    Apartado".
+</div>
+
 <!--<div class="row ">
     <div class="col s12">
         <div class="col s12">
@@ -36,19 +42,20 @@
                             <td>
                                 <input type="checkbox" ng-model="gI.selectedG" /></td>
                             <td>
-                                <input name="nombre_semillero" type="text" class="form-control" ng-model="gI.nombre_semillero" required/></td>
+                                <input name="nombre_semillero" type="text" class="form-control validate" ng-model="gI.nombre_semillero" required/></td>
+                            <td><select id="tblVinculoId" name="tblVinculoId" ng-model="gI.tblVinculoId" material-select watch required>
+                                    <option ng-repeat="vinculos in investigacionesVm.vinculosG">{{vinculos}}</option>
+                                 </select></td>
                             <td>
-                                <input name="tblVinculoId" type="text" class="form-control" ng-model="gI.tblVinculoId" required/></td>
+                                <input name="actividad_desarrollada" type="text" class="form-control validate" ng-model="gI.actividad_desarrollada" required/></td>
                             <td>
-                                <input name="actividad_desarrollada" type="text" class="form-control" ng-model="gI.actividad_desarrollada" required/></td>
+                                <input name="producto" type="text" class="form-control validate" ng-model="gI.producto" required/></td>
                             <td>
-                                <input name="producto" type="text" class="form-control" ng-model="gI.producto" required/></td>
+                                <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate" ng-model="gI.horas_semanales" required/></td>
                             <td>
-                                <input name="horas_semanales" type="number" class="form-control" ng-model="gI.horas_semanales" required/></td>
+                                <input name="horas_semestrales" type="number" class="form-control validate" ng-model="gI.horas_semestrales" disabled/></td>
                             <td>
-                                <input name="horas_semestrales" type="number" class="form-control" ng-model="gI.horas_semestrales" required/></td>
-                            <td>
-                                <input name="aprobado" type="checkbox" ng-model="gI.aprobado" required/></td>
+                                <input name="aprobado" type="checkbox" class="form-control validate" ng-model="gI.aprobado" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,7 +64,7 @@
                         <input type="button" class="btn-floating btn-danger pull-right" ng-click="investigacionesVm.gInvRemove()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" ng-click="investigacionesVm.gInvAddNew()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped"
+                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesVm.gInvAddNew()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped"
                             data-position="left" data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
@@ -89,37 +96,47 @@
                             <td>
                                 <input type="checkbox" ng-model="pI.selectedP" /></td>
                             <td>
-                                <input name="nombre_proyecto" type="text" class="form-control" ng-model="pI.nombre_proyecto" required/></td>
+                                <input name="nombre_proyecto" type="text" class="form-control validate" ng-model="pI.nombre_proyecto" required/></td>
+                             <td><select id="tblVinculoId" name="tblVinculoId" ng-model="gI.tblVinculoId" material-select watch required>
+                                    <option ng-repeat="vinculos in investigacionesVm.vinculosP">{{vinculos}}</option>
+                                 </select></td>
                             <td>
-                                <input name="tblVinculoId" type="text" class="form-control" ng-model="pI.tblVinculoId" required/></td>
+                                <input name="objetivo_principal" type="text" class="form-control validate" ng-model="pI.objetivo_principal" required/></td>
                             <td>
-                                <input name="objetivo_principal" type="text" class="form-control" ng-model="pI.objetivo_principal" required/></td>
+                                <input name="producto" type="text" class="form-control validate" ng-model="pI.producto" required/></td>
                             <td>
-                                <input name="producto" type="text" class="form-control" ng-model="pI.producto" required/></td>
+                                <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate" ng-model="pI.horas_semanales" required/></td>
                             <td>
-                                <input name="horas_semanales" type="number" class="form-control" ng-model="pI.horas_semanales" required/></td>
+                                <input name="horas_semestrales" type="number" class="form-control validate" ng-model="pI.horas_semestrales" disabled/></td>
                             <td>
-                                <input name="horas_semestrales" type="number" class="form-control" ng-model="pI.horas_semestrales" required/></td>
-                            <td>
-                                <input name="aprobado" type="checkbox" ng-model="pI.aprobado" required/></td>
+                                <input name="aprobado" type="checkbox" class="form-control validate" ng-model="pI.aprobado" /></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="form-group">
                     <input type="button" class="btn btn-danger pull-right" ng-click="investigacionesVm.pInvRemove()" value="Eliminar">
-                    <button type="submit" class="btn waves-effect waves-light btn-primary" ng-click="investigacionesVm.pInvAddNew()">Agregar</button>
+                    <button type="submit" class="btn waves-effect waves-light btn-primary" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesVm.pInvAddNew()">Agregar</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="row center" input-field>
-        <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+        <button ng-disabled="aInvestigacionesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
     </div>
 </form>
 
 <script type="text/javascript">
     $(document).ready(function () {
         $('.tooltipped').tooltip();
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on("click", function () {
+            $('.contenido-alert').hide();
+        });
     });
 
 </script>

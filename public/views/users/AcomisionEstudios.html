@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aComisionEstudiosForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus comisiones de estudio antes de presionar el botón "Guardar Apartado".
+</div>
+
 <form name="aComisionEstudiosForm" autocomplete="off" ng-submit="comisionEstudiosVm.comisionEstudios()">
     <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
         <div class="row">
@@ -21,28 +26,28 @@
                     <tbody>
                         <tr ng-repeat="comE in comisionEstudiosVm.comisionE">
                             <td><input type="checkbox" ng-model="comE.selected" /></td>
-                            <td><input name="universidad" type="text" class="form-control" ng-model="comE.universidad" required/></td>
-                            <td><input name="tipo_estudio" type="text" class="form-control" ng-model="comE.tipo_estudio" required/></td>
-                            <td><input name="nombre_estudio" type="text" class="form-control" ng-model="comE.nombre_estudio" required/></td>
+                            <td><input name="universidad" type="text" class="form-control validate" ng-model="comE.universidad" required/></td>
+                            <td><input name="tipo_estudio" type="text" class="form-control validate" ng-model="comE.tipo_estudio" required/></td>
+                            <td><input name="nombre_estudio" type="text" class="form-control validate" ng-model="comE.nombre_estudio" required/></td>
                             <td>
-                                <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control" ng-model="comE.fecha_inicio" format="mm/dd/yyyy"
+                                <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="comE.fecha_inicio" format="mm/dd/yyyy"
                                     months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
                                     weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
                                     today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
                                     required> </td>
                             <td>
-                                <input input-date type="text" name="fecha_graduacion" id="fecha_graduacion" class="form-control" ng-model="comE.fecha_graduacion" format="mm/dd/yyyy"
+                                <input input-date type="text" name="fecha_graduacion" id="fecha_graduacion" class="form-control fecha" ng-model="comE.fecha_graduacion" format="mm/dd/yyyy"
                                     months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
                                     weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
                                     today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
                                     required> </td>
                             <td>
-                                <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control" ng-model="comE.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
+                                <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control fecha" ng-model="comE.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
                                     months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
                                     weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
                                     today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
                                     required> </td>
-                            <td> <input type="text" name="aportes_inst_obtenidos" class="form-control" ng-model="comE.aportes_inst_obtenidos" required/> </td>
+                            <td> <input type="text" name="aportes_inst_obtenidos" class="form-control validate" ng-model="comE.aportes_inst_obtenidos" required/> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,13 +56,13 @@
                         <input type="button" class="btn-floating btn-danger pull-right" ng-click="comisionEstudiosVm.removeComE()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" ng-click="comisionEstudiosVm.addNewComE()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="comisionEstudiosVm.addNewComE()" ng-disabled="aComisionEstudiosForm.$invalid" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
                 <br>
                 <div class="row center" input-field>
-                    <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+                    <button ng-disabled="aComisionEstudiosForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
                 </div>
             </div>
         </div>
@@ -68,5 +73,12 @@
     $(document).ready(function () {
         $('.tooltipped').tooltip({ delay: 50 });
     });
+</script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on( "click", function() {
+			    $('.contenido-alert').remove(); 
+		 });
+    });
 </script>

@@ -1,5 +1,10 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<div ng-show="aDocenciaDirectaForm.$pristine" class="alert alert-info contenido container contenido-alert">
+    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus asignaturas antes de presionar el botón "Guardar Apartado".
+</div>
+
 <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.aDocenciaDirecta()">
     <div class="container white contenido">
         <div class="row">
@@ -24,21 +29,21 @@
                             <td>
                                 <input type="checkbox" ng-model="dd.selected" /></td>
                             <td>
-                                <input name="nombre_asignatura" type="text" class="form-control" ng-model="dd.nombre_asignatura" required/></td>
+                                <input name="nombre_asignatura" type="text" class="form-control validate" ng-model="dd.nombre_asignatura" required/></td>
                             <td>
-                                <input name="codigo_asignatura" type="text" class="form-control" ng-model="dd.codigo_asignatura"required/></td>
+                                <input name="codigo_asignatura" id="codigo_asignatura" type="text" class="form-control validate" data-length="10" ng-model="dd.codigo_asignatura" required/></td>
                             <td>
-                                <input name="grupo_asignatura" type="number" class="form-control" ng-model="dd.grupo_asignatura" required/></td>
+                                <input name="grupo_asignatura" type="number" class="form-control validate" min="1" ng-model="dd.grupo_asignatura" required/></td>
                             <td>
-                                <input name="numero_estudiantes" type="number" class="form-control" ng-model="dd.numero_estudiantes" required/></td>
+                                <input name="numero_estudiantes" type="number" min="1" max="100" class="form-control validate" ng-model="dd.numero_estudiantes" required/></td>
                             <td>
-                                <input name="horas_semanales" type="number" class="form-control" ng-model="dd.horas_semanales" required/></td>
+                                <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate"  ng-model="dd.horas_semanales" required/></td>
                             <td>
-                                <input name="horas_semestrales" type="number" class="form-control" ng-model="dd.horas_semestrales" required/></td>
+                                <input name="horas_semestrales" type="number" min="40" max="900" class="form-control validate" ng-model="dd.horas_semestrales" disabled/></td>
                             <td>
-                                <input name="estudiante" type="number" class="form-control" ng-model="dd.estudiante" /></td>
+                                <input name="estudiante" type="number" min="1" max="5" class="form-control validate" ng-model="dd.estudiante"/></td>
                             <td>
-                                <input name="jefe" type="number" class="form-control" ng-model="dd.jefe" /></td>
+                                <input name="jefe" type="number" min="1" max="5" class="form-control validate" ng-model="dd.jefe"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -61,28 +66,36 @@
     <div class="container white contenido">
         <div class="row">
             <div class="input-field col s12 areaO" style="padding-right:3%;">
-                <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea"
-                    data-length="500"></textarea>
+                <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea validate"
+                    data-length="1000"></textarea>
                 <label for="observaciones_dd">Observaciones</label>
             </div>
         </div>
         <br>
         <div class="row center" input-field>
-            <button type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+            <button ng-disabled="aDocenciaDirectaForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
         </div>
     </div>
 </form>
 
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('textarea#observacionesDD').characterCounter();
+        $('textarea#observaciones_dd').characterCounter();
+        $('input#codigo_asignatura').characterCounter();
     });
-
 </script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.tooltipped').tooltip();
+        $('.tooltipped').tooltip(); 
     });
+</script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".close").on( "click", function() {
+			    $('.contenido-alert').hide(); 
+		 });
+    });
 </script>

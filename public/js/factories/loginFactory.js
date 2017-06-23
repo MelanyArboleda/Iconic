@@ -23,10 +23,10 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 			factory.userLogin = true;
 			localStorageService.set("loginToken", result.token);
 			deferred.resolve(factory.userLogin);
-			serviceNotification.success("hola", 500);
+			serviceNotification.success("Bienvenido a ICONIC", 2000);
 		}).catch(function (err) {
 			deferred.reject(err);
-			serviceNotification.error("Login error", 500);
+			serviceNotification.error("Ingresa los datos correctamente", 2000);
 		});
 
 		return deferred.promise;

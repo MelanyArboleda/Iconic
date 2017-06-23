@@ -11,21 +11,25 @@
 							de ahora a Iconic.</p>
 					</div>
 
-					<form name="" autocomplete="off" ng-submit="configiniVm.configini()">
+					<form name="configIni" autocomplete="off" ng-submit="configiniVm.configini()">
 						<div class="row">
 							<div class="input-field col s12 cajasombra">
-								<input ng-model="configiniVm.passwordNew" id="passwordNew" type="password" name="passwordNew" required>
+								<input ng-model="configiniVm.passwordNew" id="passwordNew" class="validate" type="password" minlength="8" maxlength="20"
+								 pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+								 name="passwordNew" required>
 								<label class="cajasombra" for="passwordNew">Nueva Contraseña</label>
 							</div>
 
 							<div class="input-field col s12 cajasombra">
-								<input ng-model="configiniVm.repitepassword" id="repitepassword" type="password" name="repitepassword" required>
+								<input ng-model="configiniVm.repitepassword" id="repitepassword" class="validate" type="password" minlength="8" maxlength="20"
+								 pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+								 name="repitepassword" required>
 								<label class="cajasombra" for="repitepassword">Repite la Contraseña</label>
 							</div>
 							<br>
 							<br>
 							<div class="input-field col s12 cajasombra">
-								<button ng-disabled="" type="submit" class="waves-effect waves-light btn">Cambiar Contraseña</button>
+								<button ng-disabled="configIni.$invalid" type="submit" class="waves-effect waves-light btn">Cambiar Contraseña</button>
 
 								<a class="modal-action modal-close modal-trigger firma" href="#modalfirma">Subir firma digital</a>
 
@@ -124,6 +128,7 @@
 	$(document).ready(function () {
 		$('#modalfirma').modal();
 	});
+
 </script>
 
 <script type="text/javascript" src="js/modals.action.js"></script>

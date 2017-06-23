@@ -9,7 +9,12 @@ function aProyectosCtrl(ptdService, ptdFactory, serviceNotification) {
 
     function aProyectos() {
         for (var i = 0; i < vm.proyectos.length; i++) {
-            vm.proyectos[i].tblPtdId = ptdFactory.ptd.id,
+            vm.proyectos[i].tblPtdId = ptdFactory.ptd.id;
+            if (vm.proyectos[i].tblActoreId == 'Principal') {
+                vm.proyectos[i].tblActoreId = 1;
+            } else {
+                vm.proyectos[i].tblActoreId = 2;
+            }
                 data = {
                     datos: vm.proyectos[i],
                     tabla: 'tbl_formulacion_proyectos'
@@ -18,12 +23,15 @@ function aProyectosCtrl(ptdService, ptdFactory, serviceNotification) {
             ptdService.save(data).then(function (resultado) {
                 ptdFactory.aproyecto[resultado.apartado.id - 1] = resultado.apartado;
                 console.log(resultado);
+                serviceNotification.success('Apartado guardado correctamente', 2000);
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.error('Error . ', 2000);
+                serviceNotification.error('No se guardó el apartado', 2000);
             });
         }
     }
+
+    vm.actores = ['Principal', 'Co-Autor'];
 
     vm.addNewProy = function (proy) {
         vm.proyectos.push({
