@@ -12,20 +12,20 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
 		observaciones_dd: ptdFactory.ptd.observaciones_dd,
 	};
 
-
 	function aDocenciaDirecta() {
 		for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-			vm.docenciaDirecta[i].tblPtdId= ptdFactory.ptd.id,
-			data = {
-				datos: vm.docenciaDirecta[i],
-				tabla: 'tbl_dodencias_directas'
-			}
+			vm.docenciaDirecta[i].tblPtdId = ptdFactory.ptd.id,
+				data = {
+					datos: vm.docenciaDirecta[i],
+					tabla: 'tbl_dodencias_directas'
+				}
 			console.log("llama a servicio Save de docencia directa");
-			console.log(ptdFactory.ptd.id,'aaaaaaaaaaaaaaaaaaaaaaa');
 			ptdService.save(data).then(function (resultado) {
-				console.log(resultado.adocenciadirecta,'bbbbbbbbbbbb');
-				ptdFactory.adocenciadirecta[resultado.adocenciadirecta.id-1]=resultado.adocenciadirecta;
-				console.log(ptdFactory.adocenciadirecta,'ccccccccccc');
+				console.log(resultado.apartado, 'aaaaaaaaaaaaaa');
+				console.log(ptdFactory.adocenciadirecta, 'bbbbbbbbbbbbbb');
+				console.log(resultado.apartado.id, 'iiiiiiiiiiiii');
+				ptdFactory.adocenciadirecta[resultado.apartado.id - 1] = resultado.apartado;
+				console.log(ptdFactory.adocenciadirecta, 'cccccccccccccc');
 			}).catch(function (err) {
 				console.log(err);
 				serviceNotification.error('Error . ', 2000);
@@ -37,6 +37,7 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
 				tabla: 'tbl_ptds',
 			}
 			ptdService.save(data).then(function (resultado) {
+				console.log(resultado.ptd, 'pppppppppppppppp');
 				ptdFactory.ptd = resultado.ptd;
 			}).catch(function (err) {
 				console.log(err);

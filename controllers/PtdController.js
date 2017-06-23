@@ -36,8 +36,14 @@ module.exports = {
     },
 
     apartado: function (req, res, next) {
-        crud.findAll(modelo.tbl_dodencias_directas, { tblPtdId: req.body.id }, 'id ASC', (resp) => {
-            res.status(200).json({ apartado: resp }).end();
+        funciones.buscarTabla(req.body.tabla, function (tabla) {
+            crud.findAll(tabla, { tblPtdId: req.body.id }, 'id ASC', (resp) => {
+                if (resp != undefined) {
+                    res.status(200).json({ apartado: resp }).end();
+                } else {
+                    res.status(200).json('null').end();
+                }
+            });
         });
     },
 
@@ -48,7 +54,7 @@ module.exports = {
                     req.body.datos.id = null;
                     crud.create(tabla, req.body.datos, (resp) => {
                         if (resp != 'error') {
-                            res.status(200).json({ adocenciadirecta: resp }).end();
+                            res.status(200).json({ apartado: resp }).end();
                         } else {
                             res.sendStatus(403);
                         }
@@ -57,12 +63,12 @@ module.exports = {
                     crud.update(tabla, { id: req.body.datos.id }, req.body.datos, (resp) => {
                         if (resp == 'update') {
                             if (req.body.tabla == 'tbl_ptds') {
-                                crud.findAll(tabla, { id: req.body.datos.id },null, (resp) => {
+                                crud.findAll(tabla, { id: req.body.datos.id }, null, (resp) => {
                                     res.status(200).json({ ptd: resp[0].dataValues }).end();
                                 });
                             } else {
-                                crud.findAll(tabla, { id: req.body.datos.id },null, (resp) => {
-                                    res.status(200).json({ adocenciadirecta: resp }).end();
+                                crud.findAll(tabla, { id: req.body.datos.id }, null, (resp) => {
+                                    res.status(200).json({ apartado: resp }).end();
                                 });
                             }
                         } else {

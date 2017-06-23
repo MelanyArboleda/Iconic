@@ -15,19 +15,25 @@ function ptdFactory(ptdService, serviceNotification, $q, ) {
         aextension: [],
 		aasesoria: [],
         createPtd: createPtd,
-        buscarApart: buscarApart,
+        buscarApart: buscarApart
     };
     return factory;
 
     function createPtd(user) {
+        var deferred = $q.defer();
         ptdService.createPtd(user).then(function(result) {
             factory.ptd = result.ptd;
+            deferred.resolve();
         });
+        return deferred.promise;
     }
 
     function buscarApart(id) {
         ptdService.buscarApart(id).then(function(result) {
-            factory.adocenciadirecta = result.adocenciadirecta;
+            consolo.log(result)
+            if (result =! null) {
+                factory.adocenciadirecta = result.apartado;
+            }
         });
     }
 }
