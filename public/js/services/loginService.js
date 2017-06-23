@@ -12,7 +12,6 @@ function loginService($http, $q) {
 	function login(user) {
 		// console.log(user);
 		var deferred = $q.defer();
-
 		$http.post("http://localhost:3000/auth/login", user).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
@@ -63,4 +62,5 @@ function loginService($http, $q) {
 		});
 		return deferred.promise;
 	}
+
 }

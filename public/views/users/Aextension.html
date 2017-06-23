@@ -1,13 +1,13 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
+<form name="aExtensionForm" autocomplete="off" ng-submit="extensionVm.aExtension()">
 <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
 	<div class="row">
-        <div class="col s12"> 
-            <form ng-submit="mnuPVm.addNewExt()">
+        <div class="col s12">   
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllExt()"/></th>
+                            <th><input type="checkbox" ng-model="selectedAll" ng-click="extensionVm.checkAllExt()"/></th>
                             <th>Nombre de la actividad a diseñar diplomado, seminario, curso, etc.</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Final</th>
@@ -17,20 +17,21 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="ext in mnuPVm.extension">
+                        <tr ng-repeat="ext in extensionVm.extension">
                             <td><input type="checkbox" ng-model="ext.selected"/></td>
-                            <td><input type="text" class="form-control" ng-model="ext.nomActividad" required/></td>
+                            <td><input type="text" name="nombre_actividad" class="form-control" ng-model="ext.nombre_actividad" required/></td>
                             <td>
                             <input input-date 
                                 type="text" 
-                                name="fecha" 
+                                name="fecha_inicio" 
                                 id="fechaRealizacion" 
                                 class="form-control" 
-                                ng-model="ext.fechaI" 
+                                ng-model="ext.fecha_inicio" 
                                 format="mm/dd/yyyy" 
                                 months-full="{{mnuPVm.month}}" 
                                 months-short="{{mnuPVm.monthShort}}" 
-                                weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}"  
+                                weekdays-full="{{mnuPVm.weekdaysFull}}" 
+                                weekdays-letter="{{mnuPVm.weekdaysLetter}}"  
                                 min="{{mnuPVm.minDate}}"
                                 max="{{mnuPVm.maxDate}}"
                                 today="mnuPVm.today"
@@ -42,10 +43,10 @@
                             <td>
                             <input input-date
                                 type="text"
-                                name="fecha"
-                                id="fechaRealizacion"
+                                name="fecha_final"
+                                id="fecha_final"
                                 class="form-control" 
-                                ng-model="ext.fechaF"                
+                                ng-model="ext.fecha_final"                
                                 format="mm/dd/yyyy"
                                 months-full="{{mnuPVm.month}}"
                                 months-short="{{mnuPVm.monthShort}}"
@@ -59,17 +60,17 @@
                                 close="mnuPVm.close"
                                 select-years="15"
                                 required> </td>
-                            <td> <input type="number" class="form-control" ng-model="ext.hSemestreE" required/> </td>
-                            <td> <input type="checkbox" class="form-control" ng-model="ext.vb" required/> </td>
+                            <td> <input type="number" name="horas_semestrales" class="form-control" ng-model="ext.horas_semestrales" required/> </td>
+                            <td> <input type="checkbox" name="aprobado" class="form-control" ng-model="ext.aprobado" required/> </td>
                         </tr>
                     </tbody>
                 </table>
                     <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="mnuPVm.removeExt()" value="">
+                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="extensionVm.removeExt()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="extensionVm.addNewExt()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
@@ -77,10 +78,10 @@
                     <div class="row center" input-field>
                         <button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>  
                     </div>
-            </form>      
         </div>
     </div>
 </div>
+</form>
 
 <script type="text/javascript">
     $(document).ready(function(){

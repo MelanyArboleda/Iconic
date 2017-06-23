@@ -11,40 +11,44 @@
 <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
             <div class="row">
                 <div class="col s11 formContainer">    
-                  <form action="" method="POST" role="form" name="aInfoGeneral" >
+                  <form name="aInfoGeneralForm" autocomplete="off" ng-submit="infoGeneralVm.aInfoGeneral()">
                                  
                       <div class="col s11">
                         <div class="row" input-field>
-                          <input required type="text" name="nombreUs" value="">
-                          <label class="active" for="nombreUs">Nombres</label> 
+                          <input ng-model="infoGeneralVm.infoGeneral.nombreIG" type="text" name="nombreIG" value="" required>
+                          <label class="active" for="nombreIG">Nombres</label> 
                         </div> 
 
                         <div class="row" input-field>
-                          <input type="text" name="apellidoUs" value="">
-                          <label class="active" for="apellidoUs">Apellidos</label> 
+                          <input ng-model="infoGeneralVm.infoGeneral.apellido1IG" type="text" name="apellido1IG" value="" required>
+                          <label class="active" for="apellido1IG">Apellido 1</label> 
                         </div>
 
                         <div class="row" input-field>
-                          <select id="dedicacionUs" class="" ng-model="select.dedicacion" material-select>
-                              <option ng-repeat="value in mnuPVm.dedicacionUs">{{value}}</option>
-                          </select>
-                          <label for="dedicacionUs">Dedicación Horaria</label>
+                          <input ng-model="infoGeneralVm.infoGeneral.apellido2IG" type="text" name="apellido2IG" value="">
+                          <label class="active" for="apellido2IG">Apellido 2</label> 
                         </div>
 
                         <div class="row" input-field>
-                          <select id="areaUs" class="" ng-model="select.area" material-select watch>
-                              <option ng-repeat="value in mnuPVm.areaUs">{{value}}</option>
+                          <select id="dedicacionIG" name="dedicacionIG" ng-model="infoGeneralVm.infoGeneral.dedicacionIG" material-select>
+                              <option ng-repeat="dedicacion in infoGeneralVm.dedicacionIG">{{dedicacion}}</option>
                           </select>
-                          <label for="areaUs">Área</label>
+                          <label for="dedicacionIG">Dedicación Horaria</label>
+                        </div>
+
+                        <div class="row" input-field>
+                          <select id="areaIG" name"areaIG" class="" ng-model="infoGeneralVm.infoGeneral.areaIG" material-select watch>
+                              <option ng-repeat="area in infoGeneralVm.areaIG">{{area}}</option>
+                          </select>
+                          <label for="areaIG">Área</label>
                         </div>
 
                         <div class="row" input-field>
                         <label for="fechaRealizacion">Fecha de Realización</label>
                         <input input-date
                         type="text"
-                        name="fecha"
-                        id="fechaRealizacion"
-                        ng-model="mnuPVm.fechaRealizacion"                      
+                        name="fechaRealizacion"
+                        ng-model="infoGeneralVm.infoGeneral.fechaRealizacion"                      
                         format="mm/dd/yyyy"
                         months-full="{{mnuPVm.month}}"
                         months-short="{{mnuPVm.monthShort}}"
@@ -62,8 +66,7 @@
                         <br>
 
                         <div class="row center" input-field>
-                        <button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>
-                        
+                          <button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>
                         </div>
                                             
                         

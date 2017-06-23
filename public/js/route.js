@@ -40,6 +40,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal",
 		templateUrl: 'views/users/menuPrincipal.html',
 		url: "/menuPrincipal",
+		controller: "menuPrincipalCtrl as menuPrincipalVm",
 		params: {
 			login: true
 		}
@@ -48,6 +49,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AinfoGeneral",
 		templateUrl: 'views/users/AinfoGeneral.html',
 		url: "/infoGeneral",
+		controller: "aInfoGeneralCtrl as infoGeneralVm",
 		params: {
 			login: true
 		}
@@ -56,7 +58,8 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AdocenciaDirecta",
 		templateUrl: 'views/users/AdocenciaDirecta.html',
 		url: "/docenciaDirecta",
-		params: {
+		controller: "aDocenciaDirectaCtrl as docenciaDirectaVm",
+		params: { 
 			login: true
 		}
 	})
@@ -64,6 +67,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.Aextension",
 		templateUrl: 'views/users/Aextension.html',
 		url: "/extension",
+		controller: "aExtensionCtrl as extensionVm",
 		params: {
 			login: true
 		}
@@ -72,6 +76,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AcomisionEstudios",
 		templateUrl: 'views/users/AcomisionEstudios.html',
 		url: "/comisionEstudios",
+		controller: "aComisionEstudiosCtrl as comisionEstudiosVm",
 		params: {
 			login: true
 		}
@@ -80,6 +85,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.Aproyectos",
 		templateUrl: 'views/users/Aproyectos.html',
 		url: "/proyectosyPublicaciones",
+		controller: "aProyectosCtrl as proyectosVm",
 		params: {
 			login: true
 		}
@@ -88,6 +94,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.Aasesorias",
 		templateUrl: 'views/users/Aasesorias.html',
 		url: "/asesorias",
+		controller: "aAsesoriasCtrl as asesoriasVm",
 		params: {
 			login: true
 		}
@@ -96,6 +103,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AotrasActividades",
 		templateUrl: 'views/users/AotrasActividades.html',
 		url: "/otrasActividades",
+		controller: "aOtrasActividadesCtrl as otrasActividadesVm",
 		params: {
 			login: true
 		}
@@ -104,6 +112,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.Ainvestigaciones",
 		templateUrl: 'views/users/Ainvestigaciones.html',
 		url: "/investigaciones",
+		controller: "aInvestigacionesCtrl as investigacionesVm",
 		params: {
 			login: true
 		}
@@ -112,6 +121,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.Aobservaciones",
 		templateUrl: 'views/users/Aobservaciones.html',
 		url: "/observaciones",
+		controller: "aObservacionesCtrl as observacionesVm",
 		params: {
 			login: true
 		}

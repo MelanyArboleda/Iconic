@@ -27,11 +27,11 @@
   </ul>
 </div>
 <br>
-<form action="">
+<form name="aObservacionesForm" autocomplete="off" ng-submit="observacionesVm.aObservaciones()">
   <div class="container white contenido">
     <div class="row">
       <div class="input-field col s12 areaO" style="padding-right:3%;">
-        <textarea id="observaciones" class="materialize-textarea" data-length="1000"></textarea>
+        <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" id="observacion" class="materialize-textarea" data-length="1000"></textarea>
         <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
       </div>
     </div>
@@ -41,16 +41,16 @@
     <div class="row">
       <div class="col s12 center">
         <div class="input-field col s4">
-          <input  id="docente" type="text" class="validate">
+          <input name="firma_docente" ng-model="observacionesVm.observaciones.firma_docente" id="docente" type="text" class="validate">
           <label for="docente">Docente</label>
         </div>
         <div class="input-field col s4">
-          <input  id="coordPrograma" type="text" class="validate">
+          <input name="firma_coord_prog" ng-model="observacionesVm.observaciones.firma_coord_prog" id="coordPrograma" type="text" class="validate">
           <label for="coordPrograma">Coordinador de Programa</label>
         </div>
         <div class="input-field col s4">
-          <input  id="consejoFacultad" type="text" class="validate">
-          <label for="consejoFacultad">Consejo de Facultad</label>
+          <input name="firma_consejo_facultad" ng-model="observacionesVm.observaciones.firma_consejo_facultad" id="consejoFacultad" type="text" class="validate">
+          <label for="consejoFacultad">Consejo de Facultad</label> 
         </div>
       </div>
     </div>

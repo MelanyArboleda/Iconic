@@ -24,4 +24,3 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 		});
 	}
 }
-

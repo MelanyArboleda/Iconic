@@ -1,135 +1,129 @@
-
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <div class="container">
-  		<div class="row"> 
-    		<div class="col s12" id="logincontainer">
-      			<div class="card z-depth-5 ">
-           			<div class="card-content">
-           				<p class="justify flow-text titulo"><strong>Tu cuenta ha sido activada</strong></p>
-           				<br>
-           				<div class="row">
-           					<p class="justify texto">¡Excelente!, tu cuenta se encuentra verificada, ahora deberás establecer la contraseña con la que ingresarás a partir de ahora a Iconic.</p>
-           				</div>
+	<div class="row">
+		<div class="col s12" id="logincontainer">
+			<div class="card z-depth-5 ">
+				<div class="card-content">
+					<p class="justify flow-text titulo"><strong>Tu cuenta ha sido activada</strong></p>
+					<br>
+					<div class="row">
+						<p class="justify texto">¡Excelente!, tu cuenta se encuentra verificada, ahora deberás establecer la contraseña con la que ingresarás a partir
+							de ahora a Iconic.</p>
+					</div>
 
-          				<form name="" autocomplete="off" ng-submit="configiniVm.configini()">
-          					<div class="row">
-								<div class="input-field col s12 cajasombra">
-            						<input  ng-model="configiniVm.passwordNew" id="passwordNew" type="password" name="passwordNew" required>
-            					<label class="cajasombra" for="passwordNew">Nueva Contraseña</label> 
-          						</div>	
-
-          						<div class="input-field col s12 cajasombra">
-            						<input  ng-model="configiniVm.repitepassword" id="repitepassword" type="password" name="repitepassword" required>
-            					<label class="cajasombra" for="repitepassword">Repite la Contraseña</label>
-          						</div> 
-          						<br>
-          						<br>
-          						<div class="input-field col s12 cajasombra">
-									<button ng-disabled="" type="submit" class="waves-effect waves-light btn" >Cambiar Contraseña</button>
-
-									<a class="modal-action modal-close modal-trigger firma" href="#modalfirma">Subir firma digital</a>
-
-								</div>
-							</div> 
-							<div class="fixed-action-btn">
-							<button class="btn-floating btn-large waves-effect  pulse" data-position="right" data-delay="20" data-tooltip="Finalizar"><i class="material-icons">&#xE850;</i></button>
+					<form name="" autocomplete="off" ng-submit="configiniVm.configini()">
+						<div class="row">
+							<div class="input-field col s12 cajasombra">
+								<input ng-model="configiniVm.passwordNew" id="passwordNew" type="password" name="passwordNew" required>
+								<label class="cajasombra" for="passwordNew">Nueva Contraseña</label>
 							</div>
-						</form>	
-					</div> 
-					<div class="card-action amber lighten-1 footerlogin"> 
-              			<p class="left">Iconic <i class="tiny material-icons">&#xE90C;</i> 2017</p>
-            		</div>
-				</div>
-          	</div>
-        </div>
-    </div>
 
-    <div id="modalfirma" class="modal modal-fixed-footer"> 
-		<div class="modal-content contenido-modal">
-			<h5><strong>Subir Firma Digital</strong></h5>
-				<div class="row">
-					<p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados de plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+							<div class="input-field col s12 cajasombra">
+								<input ng-model="configiniVm.repitepassword" id="repitepassword" type="password" name="repitepassword" required>
+								<label class="cajasombra" for="repitepassword">Repite la Contraseña</label>
+							</div>
+							<br>
+							<br>
+							<div class="input-field col s12 cajasombra">
+								<button ng-disabled="" type="submit" class="waves-effect waves-light btn">Cambiar Contraseña</button>
+
+								<a class="modal-action modal-close modal-trigger firma" href="#modalfirma">Subir firma digital</a>
+
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="row center">
-					<img class="responsive-img imagenfirma" src="img/firma.png">
+				<div class="card-action amber lighten-1 footerlogin">
+					<p class="left">Iconic <i class="tiny material-icons">&#xE90C;</i> 2017</p>
 				</div>
-			    <div class="row">
-					<form action="#">
-					<div class="col s10">
-    					<div class="file-field input-field">
-      						<div class="btn">
-        						<span>Cargar</span>
-        						<input type="file">
-      						</div>
-      					<div class="file-path-wrapper">
-        					<input class="file-path validate" type="text">
-      					</div>
-    					</div>
-    					</div>
-    					<div class="col s2 center"><button type="submit" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20" data-tooltip="Subir Firma"><i class="material-icons">&#xE255;</i></button></div>
-    					
-  					</form>
-				</div> 
 			</div>
-			<div class="modal-footer">
-			    <button class="modal-action modal-close waves-effect waves-green btn"><a href="#modalfirmacontraseña" class="siguiente">Siguiente</a></button>
-			    <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
-			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalfirma" class="modal modal-fixed-footer">
+	<div class="modal-content contenido-modal">
+		<h5><strong>Subir Firma Digital</strong></h5>
+		<div class="row">
+			<p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados de plan
+				de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+		</div>
+		<div class="row center">
+			<img class="responsive-img imagenfirma" src="img/firma.png">
+		</div>
+		<div class="row">
+			<form action="#">
+				<div class="col s10">
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>Cargar</span>
+							<input type="file">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col s2 center"><button type="submit" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20" data-tooltip="Subir Firma"><i class="material-icons">&#xE255;</i></button></div>
+
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="modal-action modal-close waves-effect waves-green btn"><a href="#modalfirmacontraseña" class="siguiente">Siguiente</a></button>
+		<button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
+	</div>
+</div>
+
+<div id="modalfirmacontraseña" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<h5><strong>Contraseña para firmar digitalmente</strong></h5>
+		<div class="row">
+			<p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta contraseña
+				cada vez que vayas a firmar un plan de trabajo.</p>
+			<p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
+		</div>
+		<div class="row">
+			<form autocomplete="off">
+				<div class="input-field col s12 cajasombra">
+					<i class="material-icons prefix ">&#xE0DA;</i>
+					<input id="contraseñafirma" type="password" name="contraseñafirma" required>
+					<label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
+				</div>
+
+				<div class="input-field col s12 cajasombra">
+					<i class="material-icons prefix ">&#xE0DA;</i>
+					<input id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
+					<label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
+				</div>
+
+				<div class="input-field col s12 ">
+					<button type="submit" class="waves-effect btn">Guardar</button>
+				</div>
+			</form>
+		</div>
 	</div>
 
-	<div id="modalfirmacontraseña" class="modal modal-fixed-footer">
-		<div class="modal-content">
-			<h5><strong>Contraseña para firmar digitalmente</strong></h5>
-				<div class="row">
-					<p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta contraseña cada vez que vayas a firmar un plan de trabajo.</p>
-					<p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
-				</div>
-          		<div class="row">
-          			<form autocomplete="off"> 
-						<div class="input-field col s12 cajasombra">
-							<i class="material-icons prefix ">&#xE0DA;</i>
-            				<input  id="contraseñafirma" type="password" name="contraseñafirma" required>
-            				<label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label> 
-          				</div>	
+	<div class="modal-footer">
+		<button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+	</div>
+</div>
 
-          				<div class="input-field col s12 cajasombra">
-          					<i class="material-icons prefix ">&#xE0DA;</i>
-            				<input  id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
-            				<label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
-          				</div> 
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#modalolvidoclave').modal();
+	});
 
-          				<div class="input-field col s12 ">
-          					<button type="submit" class="waves-effect btn">Guardar</button>
-          				</div>
-          			</form>
-				</div> 
-			</div>
+	$(document).ready(function () {
+		$('#modalfirmacontraseña').modal({
+			dismissible: false
+		});
 
-			<div class="modal-footer">
-			    <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
-				</div>		
-		</div>
+	});
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-	$('#modalolvidoclave').modal(); 
-});
+	$(document).ready(function () {
+		$('#modalfirma').modal();
+	});
+</script>
 
-$(document).ready(function() {
-	$('#modalfirmacontraseña').modal({
-		dismissible: false
-	}); 
-	
-});
-
-$(document).ready(function() {
-	$('#modalfirma').modal(); 
-});
-
-  $(document).ready(function(){
-    $('.tooltipped').tooltip();
-  });
-	</script>
-
-	<script type="text/javascript" src="js/modals.action.js"></script>
-
+<script type="text/javascript" src="js/modals.action.js"></script>

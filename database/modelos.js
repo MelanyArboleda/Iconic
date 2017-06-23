@@ -164,18 +164,20 @@ var tbl_fechas_etapas = sequelize.define('tbl_fechas_etapas', {
   },
   semestre: {
     type: Sequelize.INTEGER,
+    primaryKey: true,
     allowNull: false
   },
   año: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
+    primaryKey: true,
     allowNull: false
   },
   fecha_inicial: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
   fecha_final: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
 
@@ -273,7 +275,7 @@ tbl_usuarios.hasMany(tbl_notificaciones);
 tbl_notificaciones.belongsTo(tbl_usuarios);
 
 var tbl_usuario_programa = sequelize.define('tbl_usuario_programa', {
-  tblUsuarioDoc_identidad: {
+  tblUsuarioDocIdentidad: {
     type: Sequelize.STRING(15),
     primaryKey: true,
     allowNull: false
@@ -285,6 +287,11 @@ var tbl_usuario_programa = sequelize.define('tbl_usuario_programa', {
   },
   tblProgramaPrograma: {
     type: Sequelize.STRING(100),
+    primaryKey: true,
+    allowNull: false
+  },
+  tblProgramaSede: {
+    type: Sequelize.INTEGER,
     primaryKey: true,
     allowNull: false
   }
@@ -329,8 +336,8 @@ tbl_permisos.belongsTo(tbl_recursos);
 tbl_usuarios.hasMany(tbl_permisos);
 tbl_permisos.belongsTo(tbl_usuarios);
 
-var tbl_ptd = sequelize.define('tbl_ptd', {
-  tblUsuarioDoc_identidad: {
+var tbl_ptds = sequelize.define('tbl_ptds', {
+  tblUsuarioDocIdentidad: {
     type: Sequelize.STRING(15),
     allowNull: false
   },
@@ -355,8 +362,8 @@ var tbl_ptd = sequelize.define('tbl_ptd', {
   }
 });
 
-tbl_usuarios.hasMany(tbl_ptd);
-tbl_ptd.belongsTo(tbl_usuarios);
+tbl_usuarios.hasMany(tbl_ptds);
+tbl_ptds.belongsTo(tbl_usuarios);
 
 var tbl_dodencias_directas = sequelize.define('tbl_dodencias_directas', {
   nombre_asignatura: {
@@ -394,8 +401,8 @@ var tbl_dodencias_directas = sequelize.define('tbl_dodencias_directas', {
   }
 });
 
-tbl_ptd.hasMany(tbl_dodencias_directas);
-tbl_dodencias_directas.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_dodencias_directas);
+tbl_dodencias_directas.belongsTo(tbl_ptds);
 
 var tbl_vinculos = sequelize.define('tbl_vinculos', {
   vinculo: {
@@ -438,8 +445,8 @@ var tbl_invertigaciones_proyectos = sequelize.define('tbl_invertigaciones_proyec
   }
 });
 
-tbl_ptd.hasMany(tbl_invertigaciones_proyectos);
-tbl_invertigaciones_proyectos.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_invertigaciones_proyectos);
+tbl_invertigaciones_proyectos.belongsTo(tbl_ptds);
 tbl_vinculos.hasMany(tbl_invertigaciones_proyectos);
 tbl_invertigaciones_proyectos.belongsTo(tbl_vinculos);
 
@@ -473,8 +480,8 @@ var tbl_invertigaciones_semilleros = sequelize.define('tbl_invertigaciones_semil
   }
 });
 
-tbl_ptd.hasMany(tbl_invertigaciones_semilleros);
-tbl_invertigaciones_semilleros.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_invertigaciones_semilleros);
+tbl_invertigaciones_semilleros.belongsTo(tbl_ptds);
 tbl_vinculos.hasMany(tbl_invertigaciones_semilleros);
 tbl_invertigaciones_semilleros.belongsTo(tbl_vinculos);
 
@@ -508,8 +515,8 @@ var tbl_actividades_extension = sequelize.define('tbl_actividades_extension', {
   },
 });
 
-tbl_ptd.hasMany(tbl_actividades_extension);
-tbl_actividades_extension.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_actividades_extension);
+tbl_actividades_extension.belongsTo(tbl_ptds);
 
 var tbl_comision_estudios = sequelize.define('tbl_comision_estudios', {
   universidad: {
@@ -549,8 +556,8 @@ var tbl_comision_estudios = sequelize.define('tbl_comision_estudios', {
   }
 });
 
-tbl_ptd.hasMany(tbl_comision_estudios);
-tbl_comision_estudios.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_comision_estudios);
+tbl_comision_estudios.belongsTo(tbl_ptds);
 
 var tbl_actores = sequelize.define('tbl_actores', {
   actor: {
@@ -584,8 +591,8 @@ var tbl_formulacion_proyectos = sequelize.define('tbl_formulacion_proyectos', {
   }
 });
 
-tbl_ptd.hasMany(tbl_formulacion_proyectos);
-tbl_formulacion_proyectos.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_formulacion_proyectos);
+tbl_formulacion_proyectos.belongsTo(tbl_ptds);
 tbl_actores.hasMany(tbl_formulacion_proyectos);
 tbl_formulacion_proyectos.belongsTo(tbl_actores);
 
@@ -621,14 +628,10 @@ var tbl_asesoria_proyectos = sequelize.define('tbl_asesoria_proyectos', {
   }
 });
 
-tbl_ptd.hasMany(tbl_asesoria_proyectos);
-tbl_asesoria_proyectos.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_asesoria_proyectos);
+tbl_asesoria_proyectos.belongsTo(tbl_ptds);
 
 var tbl_resumen = sequelize.define('tbl_resumen', {
-  horas_semanales_tot: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   observaciones: {
     type: Sequelize.STRING,
     allowNull: false
@@ -642,8 +645,8 @@ var tbl_resumen = sequelize.define('tbl_resumen', {
   }
 });
 
-tbl_ptd.hasMany(tbl_resumen);
-tbl_resumen.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_resumen);
+tbl_resumen.belongsTo(tbl_ptds);
 
 var tbl_actividades = sequelize.define('tbl_actividades', {
   nombre_actividad: {
@@ -693,8 +696,8 @@ var tbl_observaciones = sequelize.define('tbl_observaciones', {
   }
 });
 
-tbl_ptd.hasMany(tbl_observaciones);
-tbl_observaciones.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_observaciones);
+tbl_observaciones.belongsTo(tbl_ptds);
 
 var tbl_dias = sequelize.define('tbl_dias', {
   dia: {
@@ -755,8 +758,8 @@ var tbl_seguimientos_evaluacion = sequelize.define('tbl_seguimientos_evaluacion'
   }
 });
 
-tbl_ptd.hasMany(tbl_seguimientos_evaluacion);
-tbl_seguimientos_evaluacion.belongsTo(tbl_ptd);
+tbl_ptds.hasMany(tbl_seguimientos_evaluacion);
+tbl_seguimientos_evaluacion.belongsTo(tbl_ptds);
 
 var tbl_evidencias = sequelize.define('tbl_evidencias', {
   evidencia: {
@@ -781,12 +784,12 @@ module.exports = {
   tbl_areas: tbl_areas,
   tbl_programas: tbl_programas,
   tbl_sedes: tbl_sedes,
-  tbl_fechas_etapas: tbl_fechas_etapas,
   tbl_etapas: tbl_etapas,
+  tbl_fechas_etapas: tbl_fechas_etapas,
   tbl_usuarios: tbl_usuarios,
   tbl_notificaciones: tbl_notificaciones,
   tbl_usuario_programa: tbl_usuario_programa,
-  tbl_ptd: tbl_ptd,
+  tbl_ptds: tbl_ptds,
   tbl_dodencias_directas: tbl_dodencias_directas,
   tbl_invertigaciones_proyectos: tbl_invertigaciones_proyectos,
   tbl_invertigaciones_semilleros: tbl_invertigaciones_semilleros,

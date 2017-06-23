@@ -9,18 +9,27 @@ module.exports = {
         plain: true
       }))
       console.log(created);
-      callback(created);
+      callback(tabla.dataValues, created);
     });
   },
   //buscar todo
-  findAll: function (tabla, donde, callback) {
+  findAll: function (tabla, donde, order,callback) {
     tabla.findAll({
-      where: donde
+      where: donde,
+      order: order
     }).then((tabla) => {
-      callback(tabla[0].dataValues);
+      callback(tabla);
     }).catch((err) => {
       console.log(err);
       callback();
+    });
+  },
+  create: function (tabla, dato, callback) {
+    tabla.create(dato).then((res) => {
+      callback(res.dataValues)
+    }).catch((e) => {
+      console.log("Error" + e);
+      callback('error')
     });
   },
   //modificar espesifico
@@ -29,7 +38,36 @@ module.exports = {
       callback('update')
     }).catch((e) => {
       console.log("Error" + e);
-      callback()
+      callback('error')
     });
-  }
+  },
+  //inner join
+  innerFacultad: function (tabla, donde, callback) {
+    tabla[0].findAll({
+      attributes: ['id', 'facultad'],
+      include: [{
+        model: tabla[1], required: true, attributes: [],
+        include: [{
+          model: tabla[2], required: true, attributes: [], where: donde
+        }]
+      }]
+    }).then((tabla) => {
+      callback(tabla[0].dataValues);
+    }).catch((err) => {
+      console.log(err);
+      callback();
+    });
+  },
+  //buscar el uno
+  findOne: function (tabla, donde, order, callback) {
+    tabla.findOne({
+      where: donde,
+      order: order
+    }).then((tabla) => {
+      callback(tabla.dataValues);
+    }).catch((err) => {
+      console.log(err);
+      callback();
+    });
+  },
 }

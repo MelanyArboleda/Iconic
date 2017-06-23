@@ -131,7 +131,7 @@ var usuarios = [{
   contraseña: funciones.encriptar("123"),
   contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 3,
+  tblEstadoId: 1,
   recuperar: false
 },
 {
@@ -143,7 +143,7 @@ var usuarios = [{
   contraseña: funciones.encriptar("1234"),
   contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 3,
+  tblEstadoId: 1,
   recuperar: false
 }];
 
@@ -152,6 +152,13 @@ var usuario_doc = [{
 },
 {
   doc_identidad: "1152710692"
+}];
+
+var usuario_programa = [{
+  tblUsuarioDocIdentidad: "1039470240",
+  tblProgramaCodigo: "6",
+  tblProgramaPrograma: "Ingeniería",
+  tblProgramaSede: 1
 }];
 
 var vinculos = [
@@ -170,6 +177,22 @@ var etapas = [
   { id: 3, etapa: "Aprobación" },
   { id: 4, etapa: "Seguimiento" },
   { id: 5, etapa: "Evaluación" }];
+
+var fechas_etapas = [{
+  tblEtapaId: 1,
+  tblFacultadeId: 6,
+  semestre: 1,
+  año: '2017/06/10',
+  fecha_inicial: '2017/06/10',
+  fecha_final: '2017/06/30'
+},{
+  tblEtapaId: 1,
+  tblFacultadeId: 6,
+  semestre: 2,
+  año: '2016/06/10',
+  fecha_inicial: '2016/06/10',
+  fecha_final: '2016/06/30'
+},];
 
 var dias = [
   { id: 1, dia: "Domingo" },
@@ -192,11 +215,15 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
             llamado_insert(sedes, modelo.tbl_sedes, sedes, () => {
               llamado_insert(programas, modelo.tbl_programas, programas, () => {
                 llamado_insert(usuarios, modelo.tbl_usuarios, usuario_doc, () => {
-                  llamado_insert(vinculos, modelo.tbl_vinculos, vinculos, () => {
-                    llamado_insert(actores, modelo.tbl_actores, actores, () => {
-                      llamado_insert(etapas, modelo.tbl_etapas, etapas, () => {
-                        llamado_insert(dias, modelo.tbl_dias, dias, () => {
-
+                  llamado_insert(usuario_programa, modelo.tbl_usuario_programa, usuario_programa, () => {
+                    llamado_insert(vinculos, modelo.tbl_vinculos, vinculos, () => {
+                      llamado_insert(actores, modelo.tbl_actores, actores, () => {
+                        llamado_insert(etapas, modelo.tbl_etapas, etapas, () => {
+                          llamado_insert(fechas_etapas, modelo.tbl_fechas_etapas, fechas_etapas, () => {
+                            llamado_insert(dias, modelo.tbl_dias, dias, () => {
+                              
+                            });
+                          });
                         });
                       });
                     });
@@ -205,8 +232,8 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
               });
             });
           });
+          // });
         });
-        // });
       });
     });
   });
@@ -214,7 +241,7 @@ llamado_insert(estados, modelo.tbl_estados, estados, () => {
 
 //funcion que llama el metodo insertar
 function llamado_insert(datos, tabla, donde, callback) {
-  tabla.sync({force: true}).then(function () {
+  tabla.sync({ force: true }).then(function () {
     for (var i = 0; i < datos.length; i++) {
       crud.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
     }

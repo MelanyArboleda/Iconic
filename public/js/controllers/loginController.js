@@ -6,13 +6,12 @@ function loginCtrl(loginFactory, $state, $scope) {
 	var vm = this;
 	vm.login = login;
 	vm.user = {
-		correo: "",
+		correo: "gabriel_arboleda23151@elpoli.edu.co",
 		password: ""
 	}
 
 	function login() {
 		loginFactory.login(vm.user).then(function (isLogin) {
-
 			if (isLogin) {
 				if (loginFactory.user.estado === 1) {
 					$state.go("menuPrincipal.vistaPTD");

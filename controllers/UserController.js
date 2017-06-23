@@ -13,7 +13,7 @@ module.exports = {
         if (req.body.correo && req.body.password) {
             var correo = req.body.correo;
             var password = req.body.password;
-            crud.findAll(modelo.tbl_usuarios, { correo: correo }, (user) => {
+            crud.findOne(modelo.tbl_usuarios, { correo: correo },null, (user) => {
                 if (!user) {
                     res.sendStatus(403);
                 } else if (user.tblEstadoId != '2' || user.createdAt.toString() == user.updatedAt.toString()) {
@@ -50,6 +50,25 @@ module.exports = {
         }
     },
 
+    buscarUsuario: (req, res, next) => {
+        var decode = jwt.decode(req.body.token, config.secret);
+        crud.findOne(modelo.tbl_usuarios, { correo: decode.correo },null, (user) => {
+            user = {
+                doc_identidad: user.doc_identidad,
+                nombre: user.nombre,
+                apellido_1: user.apellido_1,
+                apellido_2: user.apellido_2,
+                correo: user.correo,
+                dedicacion: user.tblDedicacioneId,
+                perfil: user.tblPerfileId,
+                estado: user.tblEstadoId,
+                created: user.createdAt,
+                updated: user.updatedAt
+            };
+            res.status(200).json({ user: user}).end();
+        });
+    },
+
     sendVerificationCode: (req, res, next) => {
         const user = req.body;
         var codigo = mail.codigo(user.correo, user.nombre);
@@ -75,12 +94,17 @@ module.exports = {
     },
 
     pinicial: function (req, res, next) {
-        crud.update(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
-            if (data == 'update') {
-                funciones.buscarUser(req.body.doc_identidad, function (user) {
-                    res.status(200).json({ user: user, mensaje: 'contraseña actualizada' }).end();
+        crud.findOne(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad },null ,(user) => {
+            if (!bcrypt.compareSync(req.body.password, user.contraseña)) {
+                crud.update(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
+                    if (data == 'update') {
+                        funciones.buscarUser(req.body.doc_identidad, function (user) {
+                            res.status(200).json({ user: user, mensaje: 'contraseña actualizada' }).end();
+                        });
+                    }
                 });
-
+            } else {
+                res.status(401).json({ mensaje: 'contraseña invalida' }).end();
             }
         });
     },
@@ -133,7 +157,7 @@ module.exports = {
             b = new Buffer(user, 'base64')
             user = b.toString();
         }
-        crud.findAll(modelo.tbl_usuarios, { doc_identidad: user }, function (data) {
+        crud.findOne(modelo.tbl_usuarios, { doc_identidad: user },null, function (data) {
             if (data !== undefined) {
                 if (fecha >= fecha_act) {
                     if (data.recuperar == true) {
@@ -167,11 +191,11 @@ module.exports = {
         });
     },
 
-    test: (req, res, next) => {
+    // test: (req, res, next) => {
 
-        console.log("programs");
-        crud.findAll(modelo.tbl_programas, {}, (programs) => {
-            res.json(programs);
-        })
-    }
+    //     console.log("programs");
+    //     crud.findAll(modelo.tbl_programas, {}, (programs) => {
+    //         res.json(programs);
+    //     })
+    // }
 }; 

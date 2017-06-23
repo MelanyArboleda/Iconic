@@ -43,7 +43,6 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 		var token = localStorageService.get("loginToken");
 		if (token) {
 			factory.userLogin = true;
-			console.log('esta mieda paso por aca')
 			$state.go("menuPrincipal.vistaPTD").catch(function (err) { console.log(err) });;
 		} else {
 			$state.go("login");
@@ -56,6 +55,4 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 			factory.codigoVerificacion = codigoVerificacion;
 		});
 	}
-
-
 }

@@ -1,13 +1,13 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
+<form name="aAsesoriasForm" autocomplete="off" ng-submit="asesoriasVm.aAsesorias()">
+<div class="container white contenido"> 
     <div class="row">
         <div class="col s12">
-            <form ng-submit="mnuPVm.addNewAse()">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllAse()" /></th>
+                            <th><input type="checkbox" ng-model="selectedAll" ng-click="asesoriasVm.checkAllAse()" /></th>
                             <th>Integrantes del Equipo</th>
                             <th>Título</th>
                             <th>Aspectos Reelevantes del Trabajo</th>
@@ -18,24 +18,24 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="ase in mnuPVm.asesorias">
-                            <td><input type="checkbox" ng-model="ase.selected" /></td>
-                            <td><input type="text" class="form-control" ng-model="ase.integrantes" required/></td>
-                            <td> <input type="text" class="form-control" ng-model="ase.titulo" required/> </td>
-                            <td> <input type="text" class="form-control" ng-model="ase.aspectosR" required/> </td>
-                            <td> <input type="number" class="form-control" ng-model="ase.hSemestreA" required/> </td>
-                            <td> <input type="number" class="form-control" ng-model="ase.evalEstudiante" required/> </td>
-                            <td> <input type="number" class="form-control" ng-model="ase.evalJefe" required/> </td>
+                        <tr ng-repeat="ase in asesoriasVm.asesorias">
+                            <td><input name="" type="checkbox" ng-model="ase.selected" /></td>
+                            <td><input name="integrantes" type="text" class="form-control" ng-model="ase.integrantes" required/></td>
+                            <td> <input name="titulo" type="text" class="form-control" ng-model="ase.titulo" required/> </td>
+                            <td> <input name="aspectos" type="text" class="form-control" ng-model="ase.aspectos" required/> </td>
+                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="ase.horas_semestrales" required/> </td>
+                            <td> <input name="estudiante" type="number" class="form-control" ng-model="ase.estudiante" required/> </td>
+                            <td> <input name="jefe" type="number" class="form-control" ng-model="ase.jefe" required/> </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="mnuPVm.removeAse()" value="">
+                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="asesoriasVm.removeAse()">
                     </div>
                     <div class="fixed-action-btn">
 
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="asesoriasVm.addNewAse()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
@@ -43,10 +43,10 @@
                 <div class="row center" input-field>
                     <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
+</form>
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -10,23 +10,19 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
 
     function configini() {
         if (vm.passwordNew == vm.repitepassword) {
-            if (vm.passwordNew != '123') {
-                var data = {
-                    password: vm.passwordNew,
-                    doc_identidad: loginFactory.user.doc_identidad
-                };
-                console.log("llamando al comparador");
-                loginService.compararcontraseñas(data).then(function (resultado) {
-                    loginFactory.user = resultado.user;
-                    console.log(resultado);
-                    $state.go("menuPrincipal.vistaPTD");
-                }).catch(function (err) {
-                    console.log(err);
-                    serviceNotification.error('Error . ', 2000);
-                });
-            } else {
-                console.log('contraseña invalida')
-            }
+            var data = {
+                password: vm.passwordNew,
+                doc_identidad: loginFactory.user.doc_identidad
+            };
+            console.log("llamando al comparador");
+            loginService.compararcontraseñas(data).then(function (resultado) {
+                loginFactory.user = resultado.user;
+                console.log(resultado);
+                $state.go("menuPrincipal.vistaPTD");
+            }).catch(function (err) {
+                console.log(err);
+                serviceNotification.error('Error . ', 2000);
+            });
         } else {
             console.log('contraseñas no coinciden')
         }

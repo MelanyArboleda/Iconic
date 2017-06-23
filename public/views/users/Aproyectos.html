@@ -1,13 +1,13 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
-    <div class="row">
-        <div class="col s12">
-            <form ng-submit="mnuPVm.addNewProy()">
+<form name="aProyectosForm" autocomplete="off" ng-submit="proyectosVm.aProyectos()">
+    <div class="container white contenido">
+        <div class="row">
+            <div class="col s12">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="mnuPVm.checkAllProy()" /></th>
+                            <th><input type="checkbox" ng-model="selectedAll" ng-click="proyectosVm.checkAllProy()" /></th>
                             <th>Nombre del Artículo, Texto. Etc.</th>
                             <th>Autor Principal o Coautor</th>
                             <th>Tema Principal</th>
@@ -16,21 +16,21 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="proy in mnuPVm.proyectos">
+                        <tr ng-repeat="proy in proyectosVm.proyectos">
                             <td><input type="checkbox" ng-model="proy.selected" /></td>
-                            <td><input type="text" class="form-control" ng-model="proy.nomArticulo" required/></td>
-                            <td> <input type="text" class="form-control" ng-model="proy.autorcoautor" required/> </td>
-                            <td> <input type="text" class="form-control" ng-model="proy.temaP" required/> </td>
-                            <td> <input type="number" class="form-control" ng-model="proy.hSemestreP" required/> </td>
+                            <td><input name="nombre_articulo" type="text" class="form-control" ng-model="proy.nombre_articulo" required/></td>
+                            <td> <input name="tblActoreId" type="text" class="form-control" ng-model="proy.tblActoreId" required/> </td>
+                            <td> <input name="tema_ppal" type="text" class="form-control" ng-model="proy.tema_ppal" required/> </td>
+                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="proy.horas_semestrales" required/> </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="mnuPVm.removeProy()" value="">
+                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="proyectosVm.removeProy()">
                     </div>
                     <div class="fixed-action-btn">
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
+                        <button type="submit" ng-click="proyectosVm.addNewProy()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
                             data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
                     </div>
                 </div>
@@ -38,10 +38,10 @@
                 <div class="row center" input-field>
                     <button ng-disabled="" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
                 </div>
-             </form>
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 <script type="text/javascript">
     $(document).ready(function () {
