@@ -2,7 +2,7 @@ angular.module("iconic").controller("aOtrasActividadesCtrl", aOtrasActividadesCt
 
 aOtrasActividadesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
 
-function aOtrasActividadesCtrl() {
+function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification) {
     var vm = this;
     vm.aOtrasActividades = aOtrasActividades;
 
@@ -18,18 +18,22 @@ function aOtrasActividadesCtrl() {
     function aOtrasActividades() {
         data = {
             datos: vm.resumen,
-            tabla: 'tbl_resumen'
+            tabla: 'tbl_resumenes'
         }
         console.log("llama a servicio Save de resumen");
         ptdService.save(data).then(function (resultado) {
             ptdFactory.resumen[resultado.apartado.id - 1] = resultado.apartado;
             serviceNotification.success('Apartado guardado correctamente', 2000);
+            actividades();
         }).catch(function (err) {
             console.log(err);
             serviceNotification.error('No se guardó el apartado', 2000);
         });
+    }
+
+    function actividades(){
         for (var i = 0; i < vm.otrasActividades.length; i++) {
-            vm.otrasActividades[i].tblResumenId = ptdFactory.resumen.id,
+            vm.otrasActividades[i].tblResumeneId = ptdFactory.resumen.id,
                 data = {
                     datos: vm.otrasActividades[i],
                     tabla: 'tbl_actividades'
@@ -37,19 +41,21 @@ function aOtrasActividadesCtrl() {
             console.log("llama a servicio Save de otras actividades");
             ptdService.save(data).then(function (resultado) {
                 ptdFactory.aotrasactividades[resultado.apartado.id - 1] = resultado.apartado;
+                serviceNotification.success('Apartado Otras actividades guardado correctamente', 2000);
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.error('Error . ', 2000);
+                serviceNotification.error('Error . No se guardó', 2000);
             });
         }
     }
+        
 
     vm.addNewOAct = function (oact) {
         vm.otrasActividades.push({
-            'actividad': "",
-            'hSemanaO': "",
-            'hSemestreO': "",
-            'descProductos': "",
+            'nombre_actividad': "",
+            'horas_semanales': "",
+            'horas_semestrales': "",
+            'descripcion_productos': "",
         });
     };
     vm.removeOAct = function () {

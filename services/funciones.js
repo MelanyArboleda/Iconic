@@ -53,8 +53,8 @@ module.exports = {
 			case 'tbl_asesoria_proyectos':
 				modeloTabla = modelo.tbl_asesoria_proyectos;
 				break;
-			case 'tbl_resumen':
-				modeloTabla = modelo.tbl_resumen;
+			case 'tbl_resumenes':
+				modeloTabla = modelo.tbl_resumenes;
 				break;
 			case 'tbl_actividades':
 				modeloTabla = modelo.tbl_actividades;

@@ -631,7 +631,7 @@ var tbl_asesoria_proyectos = sequelize.define('tbl_asesoria_proyectos', {
 tbl_ptds.hasMany(tbl_asesoria_proyectos);
 tbl_asesoria_proyectos.belongsTo(tbl_ptds);
 
-var tbl_resumen = sequelize.define('tbl_resumen', {
+var tbl_resumenes = sequelize.define('tbl_resumenes', {
   observaciones: {
     type: Sequelize.STRING,
     allowNull: false
@@ -645,12 +645,12 @@ var tbl_resumen = sequelize.define('tbl_resumen', {
   }
 });
 
-tbl_ptds.hasMany(tbl_resumen);
-tbl_resumen.belongsTo(tbl_ptds);
+tbl_ptds.hasMany(tbl_resumenes);
+tbl_resumenes.belongsTo(tbl_ptds);
 
 var tbl_actividades = sequelize.define('tbl_actividades', {
   nombre_actividad: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING, 
     allowNull: false
   },
   horas_semanales: {
@@ -661,14 +661,14 @@ var tbl_actividades = sequelize.define('tbl_actividades', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  tblResumenId: {
+  tblResumeneId: {
     type: Sequelize.INTEGER,
     allowNull: false
   }
 });
 
-tbl_resumen.hasMany(tbl_actividades);
-tbl_actividades.belongsTo(tbl_resumen);
+tbl_resumenes.hasMany(tbl_actividades);
+tbl_actividades.belongsTo(tbl_resumenes);
 
 var tbl_observaciones = sequelize.define('tbl_observaciones', {
   observacion: {
@@ -799,7 +799,7 @@ module.exports = {
   tbl_actores: tbl_actores,
   tbl_formulacion_proyectos: tbl_formulacion_proyectos,
   tbl_asesoria_proyectos: tbl_asesoria_proyectos,
-  tbl_resumen: tbl_resumen,
+  tbl_resumenes: tbl_resumenes,
   tbl_actividades: tbl_actividades,
   tbl_observaciones: tbl_observaciones,
   tbl_dias: tbl_dias,
