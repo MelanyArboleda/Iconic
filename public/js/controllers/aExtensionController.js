@@ -1,29 +1,40 @@
 angular.module("iconic").controller("aExtensionCtrl", aExtensionCtrl);
 
-aExtensionCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aExtensionCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aExtensionCtrl(ptdService, ptdFactory, serviceNotification) {
+function aExtensionCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aExtension = aExtension;
-    vm.extension = ptdFactory.aextension;
+    buscarApartEP();
+    function buscarApartEP() {
+        ptdFactory.buscarApartEP({ tabla: 'tbl_actividades_extension', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.extension = ptdFactory.aextension;
+        });
+    }
 
     function aExtension() {
-        for (var i = 0; i < vm.extension.length; i++) {
-			vm.extension[i].tblPtdId= ptdFactory.ptd.id,
-			data = {
-				datos: vm.extension[i],
-				tabla: 'tbl_actividades_extension'
-			}
-			console.log("llama a servicio Save de actividades extension");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.aextension[resultado.apartado.id-1]=resultado.apartado;
-				console.log(resultado);
-                serviceNotification.success('Apartado guardado correctamente', 2000);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('No se guardó el apartado', 2000);
-			});
-		}
+        saveExtension().then(function () { buscarApartEP(); });
+        function saveExtension() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.extension.length; i++) {
+                vm.extension[i].tblPtdId = ptdFactory.ptd.id,
+                    data = {
+                        datos: vm.extension[i],
+                        tabla: 'tbl_actividades_extension'
+                    }
+                console.log("llama a servicio Save de actividades extension");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    if (i == vm.extension.length - 1) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('No se guardó el apartado', 2000);
+                });
+            }
+        }
     }
 
     vm.addNewExt = function (ext) {

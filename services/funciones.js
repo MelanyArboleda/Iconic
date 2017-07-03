@@ -35,11 +35,11 @@ module.exports = {
 			case 'tbl_dodencias_directas':
 				modeloTabla = modelo.tbl_dodencias_directas;
 				break;
-			case 'tbl_invertigaciones_proyectos':
-				modeloTabla = modelo.tbl_invertigaciones_proyectos;
+			case 'tbl_investigaciones_proyectos':
+				modeloTabla = modelo.tbl_investigaciones_proyectos;
 				break;
-			case 'tbl_invertigaciones_semilleros':
-				modeloTabla = modelo.tbl_invertigaciones_semilleros;
+			case 'tbl_investigaciones_semilleros':
+				modeloTabla = modelo.tbl_investigaciones_semilleros;
 				break;
 			case 'tbl_actividades_extension':
 				modeloTabla = modelo.tbl_actividades_extension;

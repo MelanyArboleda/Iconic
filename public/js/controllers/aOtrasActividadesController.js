@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aOtrasActividadesCtrl", aOtrasActividadesCtrl);
 
-aOtrasActividadesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aOtrasActividadesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification) {
+function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aOtrasActividades = aOtrasActividades;
 
@@ -22,7 +22,16 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification) {
         }
         console.log("llama a servicio Save de resumen");
         ptdService.save(data).then(function (resultado) {
-            ptdFactory.resumen[resultado.apartado.id - 1] = resultado.apartado;
+            ptdFactory.resumen = resultado.apartado;
+            ptdFactory.buscarResumen({ tabla: 'tbl_resumenes', ptd: ptdFactory.ptd.id }).then(function () {
+                vm.resumen = {
+                    tblPtdId: ptdFactory.ptd.id,
+                    horas_semanales_tot: "",
+                    horas_semestrales_tot: "",
+                    observaciones: ptdFactory.resumen.observaciones,
+                    observacion_ptd: ptdFactory.resumen.observacion_ptd,
+                };
+            });
             serviceNotification.success('Apartado guardado correctamente', 2000);
             actividades();
         }).catch(function (err) {
@@ -31,7 +40,7 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification) {
         });
     }
 
-    function actividades(){
+    function actividades() {
         for (var i = 0; i < vm.otrasActividades.length; i++) {
             vm.otrasActividades[i].tblResumeneId = ptdFactory.resumen.id,
                 data = {
@@ -48,7 +57,7 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification) {
             });
         }
     }
-        
+
 
     vm.addNewOAct = function (oact) {
         vm.otrasActividades.push({

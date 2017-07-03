@@ -411,7 +411,7 @@ var tbl_vinculos = sequelize.define('tbl_vinculos', {
   }
 });
 
-var tbl_invertigaciones_proyectos = sequelize.define('tbl_invertigaciones_proyectos', {
+var tbl_investigaciones_proyectos = sequelize.define('tbl_investigaciones_proyectos', {
   nombre_proyecto: {
     type: Sequelize.STRING(500),
     allowNull: false
@@ -440,17 +440,16 @@ var tbl_invertigaciones_proyectos = sequelize.define('tbl_invertigaciones_proyec
     allowNull: false
   },
   observacion_ptd: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   }
 });
 
-tbl_ptds.hasMany(tbl_invertigaciones_proyectos);
-tbl_invertigaciones_proyectos.belongsTo(tbl_ptds);
-tbl_vinculos.hasMany(tbl_invertigaciones_proyectos);
-tbl_invertigaciones_proyectos.belongsTo(tbl_vinculos);
+tbl_ptds.hasMany(tbl_investigaciones_proyectos);
+tbl_investigaciones_proyectos.belongsTo(tbl_ptds);
+tbl_vinculos.hasMany(tbl_investigaciones_proyectos);
+tbl_investigaciones_proyectos.belongsTo(tbl_vinculos);
 
-var tbl_invertigaciones_semilleros = sequelize.define('tbl_invertigaciones_semilleros', {
+var tbl_investigaciones_semilleros = sequelize.define('tbl_investigaciones_semilleros', {
   nombre_semillero: {
     type: Sequelize.STRING(500),
     allowNull: false
@@ -480,10 +479,10 @@ var tbl_invertigaciones_semilleros = sequelize.define('tbl_invertigaciones_semil
   }
 });
 
-tbl_ptds.hasMany(tbl_invertigaciones_semilleros);
-tbl_invertigaciones_semilleros.belongsTo(tbl_ptds);
-tbl_vinculos.hasMany(tbl_invertigaciones_semilleros);
-tbl_invertigaciones_semilleros.belongsTo(tbl_vinculos);
+tbl_ptds.hasMany(tbl_investigaciones_semilleros);
+tbl_investigaciones_semilleros.belongsTo(tbl_ptds);
+tbl_vinculos.hasMany(tbl_investigaciones_semilleros);
+tbl_investigaciones_semilleros.belongsTo(tbl_vinculos);
 
 var tbl_actividades_extension = sequelize.define('tbl_actividades_extension', {
   nombre_actividad: {
@@ -791,8 +790,8 @@ module.exports = {
   tbl_usuario_programa: tbl_usuario_programa,
   tbl_ptds: tbl_ptds,
   tbl_dodencias_directas: tbl_dodencias_directas,
-  tbl_invertigaciones_proyectos: tbl_invertigaciones_proyectos,
-  tbl_invertigaciones_semilleros: tbl_invertigaciones_semilleros,
+  tbl_investigaciones_proyectos: tbl_investigaciones_proyectos,
+  tbl_investigaciones_semilleros: tbl_investigaciones_semilleros,
   tbl_vinculos: tbl_vinculos,
   tbl_actividades_extension: tbl_actividades_extension,
   tbl_comision_estudios: tbl_comision_estudios,

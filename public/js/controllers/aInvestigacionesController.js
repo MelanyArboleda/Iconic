@@ -1,80 +1,104 @@
 angular.module("iconic").controller("aInvestigacionesCtrl", aInvestigacionesCtrl);
 
-aInvestigacionesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aInvestigacionesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification) {
+function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aInvestigaciones = aInvestigaciones;
-    vm.gruposInvestigaciones = ptdFactory.ainvestigacionesgrupo;;
-    vm.proyectosInvestigaciones = ptdFactory.ainvestigacionesproyecto;;
+    buscarApartIG();
+    buscarApartIP();
+    function buscarApartIG() {
+        ptdFactory.buscarApartIG({ tabla: 'tbl_investigaciones_semilleros', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.gruposInvestigaciones = ptdFactory.ainvestigacionesgrupo;
+            for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
+                if (vm.gruposInvestigaciones[i].tblVinculoId == 1) {
+                    vm.gruposInvestigaciones[i].tblVinculoId = 'Director';
+                } else {
+                    vm.gruposInvestigaciones[i].tblVinculoId = 'Miembro';
+                }
+            }
+        });
+    }
+    function buscarApartIP() {
+        ptdFactory.buscarApartIP({ tabla: 'tbl_investigaciones_proyectos', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.proyectosInvestigaciones = ptdFactory.ainvestigacionesproyecto;
+            for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
+                if (vm.proyectosInvestigaciones[i].tblVinculoId == 3) {
+                    vm.proyectosInvestigaciones[i].tblVinculoId = 'Investigador Principal';
+                } else {
+                    vm.proyectosInvestigaciones[i].tblVinculoId = 'Co-Investigador';
+                }
+            }
+        });
+    }
 
-    for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
-    if (vm.gruposInvestigaciones[i].tblVinculoId == 1) {
-        vm.gruposInvestigaciones[i].tblVinculoId = 'Director';
-    } else {
-        vm.gruposInvestigaciones[i].tblVinculoId = 'Miembro';
-    }}
-
-    for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-     if (vm.proyectosInvestigaciones[i].tblVinculoId == 3) {
-        vm.proyectosInvestigaciones[i].tblVinculoId = 'Investigador Ppal';
-    } else {
-        vm.proyectosInvestigaciones[i].tblVinculoId = 'Co-Investigador';
-    }}
     function aInvestigaciones() {
-        for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
-            vm.gruposInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
-            if (vm.gruposInvestigaciones[i].tblVinculoId == 'Director') {
-                vm.gruposInvestigaciones[i].tblVinculoId = 1;
-            } else {
-                vm.gruposInvestigaciones[i].tblVinculoId = 2;
+        saveGrupos().then(function () { buscarApartIG(); });
+        function saveGrupos() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
+                vm.gruposInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
+                if (vm.gruposInvestigaciones[i].tblVinculoId == 'Director') {
+                    vm.gruposInvestigaciones[i].tblVinculoId = 1;
+                } else {
+                    vm.gruposInvestigaciones[i].tblVinculoId = 2;
+                }
+                if (vm.gruposInvestigaciones[i].aprobado == "") {
+                    vm.gruposInvestigaciones[i].aprobado = false;
+                }
+
+                data = {
+                    datos: vm.gruposInvestigaciones[i],
+                    tabla: 'tbl_investigaciones_semilleros'
+                }
+                console.log("llama a servicio Save de investigaciones semilleros");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('No se guardó el apartado', 2000);
+                });
             }
-            if(vm.gruposInvestigaciones[i].aprobado == ""){
-                vm.gruposInvestigaciones[i].aprobado = false;
+            if (i == vm.gruposInvestigaciones.length) {
+                deferred.resolve();
+                return deferred.promise;
             }
-             
-            data = {
-                datos: vm.gruposInvestigaciones[i],
-                tabla: 'tbl_invertigaciones_semilleros'
-            }
-            console.log("llama a servicio Save de investigaciones semilleros");
-            ptdService.save(data).then(function (resultado) {
-                ptdFactory.ainvestigacionesgrupo[resultado.apartado.id - 1] = resultado.apartado;
-                console.log(resultado);
-                serviceNotification.success('Apartado guardado correctamente', 2000);
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado', 2000);
-            });
         }
-        for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-            vm.proyectosInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
-            if (vm.proyectosInvestigaciones[i].tblVinculoId == 'Investigador Ppal') {
-                vm.proyectosInvestigaciones[i].tblVinculoId = 3;
-            } else {
-                vm.proyectosInvestigaciones[i].tblVinculoId = 4;
+        saveProyectos().then(function () { buscarApartIP(); });
+        function saveProyectos() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
+                vm.proyectosInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
+                if (vm.proyectosInvestigaciones[i].tblVinculoId == 'Investigador Principal') {
+                    vm.proyectosInvestigaciones[i].tblVinculoId = 3;
+                } else {
+                    vm.proyectosInvestigaciones[i].tblVinculoId = 4;
+                }
+                if (vm.proyectosInvestigaciones[i].aprobado == "") {
+                    vm.proyectosInvestigaciones[i].aprobado = false;
+                }
+                data = {
+                    datos: vm.proyectosInvestigaciones[i],
+                    tabla: 'tbl_investigaciones_proyectos'
+                }
+                console.log("llama a servicio Save de investigaciones proyectos");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    if (i == vm.proyectosInvestigaciones.length - 1) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('Error . ', 2000);
+                });
             }
-            if(vm.proyectosInvestigaciones[i].aprobado == ""){
-                vm.proyectosInvestigaciones[i].aprobado = false;
-            }
-            data = {
-                datos: vm.proyectosInvestigaciones[i],
-                tabla: 'tbl_invertigaciones_proyectos'
-            }
-            console.log("llama a servicio Save de investigaciones proyectos");
-            ptdService.save(data).then(function (resultado) {
-                ptdFactory.ainvestigacionesproyecto[resultado.apartado.id - 1] = resultado.apartado;
-                console.log(resultado);
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('Error . ', 2000);
-            });
         }
     }
 
 
     vm.vinculosG = ['Director', 'Miembro'];
-    vm.vinculosP = ['Investigador Ppal', 'Co-Investigador'];
+    vm.vinculosP = ['Investigador Principal', 'Co-Investigador'];
 
     vm.gInvAddNew = function (gI) {
         vm.gruposInvestigaciones.push({
@@ -110,7 +134,7 @@ function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification) {
         });
     };
 
-    vm.pInvAddNew = function (proyectosInvestigaciones) {
+    vm.pInvAddNew = function (pI) {
         vm.proyectosInvestigaciones.push({
             'nombre_proyecto': "",
             'tblVinculoId': "",

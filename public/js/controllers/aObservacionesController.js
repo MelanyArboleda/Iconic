@@ -15,7 +15,7 @@ aObservacionesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"]
 			}
 			console.log("llama a servicio Save de observaciones");
 			ptdService.save(data).then(function (resultado) {
-				ptdFactory.aobservacion[resultado.apartado.id-1]=resultado.apartado;
+				ptdFactory.aobservacion=resultado.apartado;
 				console.log(resultado);
 				serviceNotification.success('Apartado guardado correctamente', 2000);
 			}).catch(function (err) {

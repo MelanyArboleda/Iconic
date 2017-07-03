@@ -9,7 +9,7 @@ var inicial = require('.././database/inicial');
 router.get('/', controllers.HomeController.index);
 router.post('/auth/login', controllers.UserController.login);
 router.post('/auth/sendCode', controllers.UserController.sendVerificationCode);
-// router.post('/auth/buscarUsuario', controllers.UserController.buscarUsuario);
+router.post('/auth/buscarUser', controllers.UserController.buscarUsuario);
 
 // router.get('/auth/recu/*', controllers.UserController.recup);
 router.post('/auth/send', controllers.MailController.restablecer);

@@ -1,33 +1,51 @@
 angular.module("iconic").controller("aProyectosCtrl", aProyectosCtrl);
 
-aProyectosCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aProyectosCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aProyectosCtrl(ptdService, ptdFactory, serviceNotification) {
+function aProyectosCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aProyectos = aProyectos;
-    vm.proyectos = ptdFactory.aproyecto;
+    buscarApartPP();
+    function buscarApartPP() {
+        ptdFactory.buscarApartPP({ tabla: 'tbl_formulacion_proyectos', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.proyectos = ptdFactory.aproyecto;
+            for (var i = 0; i < vm.proyectos.length; i++) {
+                if (vm.proyectos[i].tblActoreId == 1) {
+                    vm.proyectos[i].tblActoreId = 'Principal';
+                } else {
+                    vm.proyectos[i].tblActoreId = 'Co-Autor';
+                }
+            }
+        });
+    }
 
     function aProyectos() {
-        for (var i = 0; i < vm.proyectos.length; i++) {
-            vm.proyectos[i].tblPtdId = ptdFactory.ptd.id;
-            if (vm.proyectos[i].tblActoreId == 'Principal') {
-                vm.proyectos[i].tblActoreId = 1;
-            } else {
-                vm.proyectos[i].tblActoreId = 2;
-            }
+        saveProyectos().then(function () { buscarApartPP(); });
+        function saveProyectos() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.proyectos.length; i++) {
+                vm.proyectos[i].tblPtdId = ptdFactory.ptd.id;
+                if (vm.proyectos[i].tblActoreId == 'Principal') {
+                    vm.proyectos[i].tblActoreId = 1;
+                } else {
+                    vm.proyectos[i].tblActoreId = 2;
+                }
                 data = {
                     datos: vm.proyectos[i],
                     tabla: 'tbl_formulacion_proyectos'
                 }
-            console.log("llama a servicio Save de formulacion proyectos");
-            ptdService.save(data).then(function (resultado) {
-                ptdFactory.aproyecto[resultado.apartado.id - 1] = resultado.apartado;
-                console.log(resultado);
-                serviceNotification.success('Apartado guardado correctamente', 2000);
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado', 2000);
-            });
+                console.log("llama a servicio Save de formulacion proyectos");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    if (i == vm.proyectos.length - 1) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('No se guardó el apartado', 2000);
+                });
+            }
         }
     }
 

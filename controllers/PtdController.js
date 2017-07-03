@@ -21,7 +21,7 @@ module.exports = {
                         horas_semanales: 0
                     }
                     modelo.tbl_ptds.sync().then(function () {
-                        crud.findOrCreate(modelo.tbl_ptds, datos, { fecha: fechas.año, semestre: fechas.semestre }, (ptd, resp) => {
+                        crud.findOrCreate(modelo.tbl_ptds, datos, { tblUsuarioDocIdentidad: datos.tblUsuarioDocIdentidad }, (ptd, resp) => {
                             if (resp) {
                                 res.status(200).json({ ptd: ptd, mensaje: 'ptd' }).end();
                             } else {
@@ -37,11 +37,15 @@ module.exports = {
 
     apartado: function (req, res, next) {
         funciones.buscarTabla(req.body.tabla, function (tabla) {
-            crud.findAll(tabla, { tblPtdId: req.body.id }, 'id ASC', (resp) => {
-                if (resp != undefined) {
-                    res.status(200).json({ apartado: resp }).end();
+            tabla.sync().then(function () {
+                if (req.body.tabla == 'tbl_ptds' || req.body.tabla == 'tbl_resumenes') {
+                    crud.findAll(tabla, { id: req.body.ptd }, null, (resp) => {
+                        res.status(200).json({ apartado: resp[0].dataValues }).end();
+                    });
                 } else {
-                    res.status(200).json('null').end();
+                    crud.findAll(tabla, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
+                        res.status(200).json({ apartado: resp }).end();
+                    });
                 }
             });
         });
@@ -54,7 +58,7 @@ module.exports = {
                     req.body.datos.id = null;
                     crud.create(tabla, req.body.datos, (resp) => {
                         if (resp != 'error') {
-                            res.status(200).json({ apartado: resp }).end();
+                            res.status(200).end();
                         } else {
                             res.sendStatus(403);
                         }
@@ -62,15 +66,7 @@ module.exports = {
                 } else {
                     crud.update(tabla, { id: req.body.datos.id }, req.body.datos, (resp) => {
                         if (resp == 'update') {
-                            if (req.body.tabla == 'tbl_ptds') {
-                                crud.findAll(tabla, { id: req.body.datos.id }, null, (resp) => {
-                                    res.status(200).json({ ptd: resp[0].dataValues }).end();
-                                });
-                            } else {
-                                crud.findAll(tabla, { id: req.body.datos.id }, null, (resp) => {
-                                    res.status(200).json({ apartado: resp }).end();
-                                });
-                            }
+                            res.status(200).end();
                         } else {
                             res.sendStatus(403);
                         }

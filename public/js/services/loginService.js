@@ -8,6 +8,7 @@ function loginService($http, $q) {
 	this.sendCode = sendCode;
 	this.validarCodigo = validarCodigo;
 	this.compararcontraseñas = compararcontraseñas;
+	this.busacarUser = busacarUser;
 
 	function login(user) {
 		// console.log(user);
@@ -54,6 +55,19 @@ function loginService($http, $q) {
 		var deferred = $q.defer();
 		console.log("comparando tu tu tu");
 		$http.post("http://localhost:3000/auth/configp", data).then(function (res) {
+			console.log(res);
+			deferred.resolve(res.data);
+		}).catch(function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function busacarUser(data) {
+		var deferred = $q.defer();
+		console.log("buscando user tu tu tu");
+		$http.post("http://localhost:3000/auth/buscarUser", data).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
 		}).catch(function (err) {

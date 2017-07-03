@@ -33,10 +33,10 @@ function ptdService($http, $q) {
         return deferred.promise;
     }
 
-    function buscarApart(ptd) {
+    function buscarApart(apartado) {
         var deferred = $q.defer();
-        console.log("creando ptd");
-        $http.post("http://localhost:3000/auth/buscarApart", ptd).then(function (res) {
+        console.log("buscando apartado");
+        $http.post("http://localhost:3000/auth/buscarApart", apartado).then(function (res) {
             console.log(res);
             deferred.resolve(res.data);
         }, function (err) {

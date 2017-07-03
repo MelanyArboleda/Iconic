@@ -1,29 +1,41 @@
 angular.module("iconic").controller("aComisionEstudiosCtrl", aComisionEstudiosCtrl);
 
-aComisionEstudiosCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aComisionEstudiosCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aComisionEstudiosCtrl(ptdService, ptdFactory, serviceNotification) {
+function aComisionEstudiosCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.comisionEstudios = comisionEstudios;
-    vm.comisionE = ptdFactory.acomision;
+    buscarApartCE();
+    function buscarApartCE() {
+        ptdFactory.buscarApartCE({ tabla: 'tbl_comision_estudios', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.comisionE = ptdFactory.acomision;
+        });
+    }
 
     function comisionEstudios() {
-        for (var i = 0; i < vm.comisionE.length; i++) {
-			vm.comisionE[i].tblPtdId= ptdFactory.ptd.id,
-			data = {
-				datos: vm.comisionE[i],
-				tabla: 'tbl_comision_estudios'
-			}
-			console.log("llama a servicio Save de comision de estudios");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.acomision[resultado.apartado.id-1]=resultado.apartado;
-				console.log(resultado);
-                serviceNotification.success('Apartado guardado correctamente', 2000);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('No se guardó el apartado', 2000);
-			});
-		}
+        saveComision().then(function () { buscarApartCE(); });
+        function saveComision() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.comisionE.length; i++) {
+                vm.comisionE[i].tblPtdId = ptdFactory.ptd.id,
+                    data = {
+                        datos: vm.comisionE[i],
+                        tabla: 'tbl_comision_estudios'
+                    }
+                console.log("llama a servicio Save de comision de estudios");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    if (i == vm.comisionE.length - 1) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('No se guardó el apartado', 2000);
+                });
+            }
+
+        }
     }
 
     vm.addNewComE = function (comE) {

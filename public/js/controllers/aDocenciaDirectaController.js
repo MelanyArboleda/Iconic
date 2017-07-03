@@ -1,12 +1,16 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aDocenciaDirectaCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "serviceNotification"];
 
-function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
+function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotification) {
 	var vm = this;
 	vm.aDocenciaDirecta = aDocenciaDirecta;
-
-	vm.docenciaDirecta = ptdFactory.adocenciadirecta;
+	buscarApartDD();
+	function buscarApartDD() {
+		ptdFactory.buscarApartDD({ tabla: 'tbl_dodencias_directas', ptd: ptdFactory.ptd.id }).then(function () {
+			vm.docenciaDirecta = ptdFactory.adocenciadirecta;
+		});
+	}
 	vm.observacion = {
 		id: ptdFactory.ptd.id,
 		observaciones_dd: ptdFactory.ptd.observaciones_dd,
@@ -20,11 +24,9 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
 					tabla: 'tbl_dodencias_directas'
 				}
 			console.log("llama a servicio Save de docencia directa");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.adocenciadirecta[resultado.apartado.id - 1] = resultado.apartado;
+			ptdService.save(data).then(function (next) {
 				serviceNotification.success('Apartado guardado correctamente', 2000);
 			}).catch(function (err) {
-				console.log(err);
 				serviceNotification.error('No se guardó el apartado', 2000);
 			});
 		}
@@ -33,12 +35,18 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, serviceNotification) {
 				datos: vm.observacion,
 				tabla: 'tbl_ptds',
 			}
-			ptdService.save(data).then(function (resultado) {
-				console.log(resultado.ptd, 'pppppppppppppppp');
-				ptdFactory.ptd = resultado.ptd;
+			ptdService.save(data).then(function (next) {
+				ptdFactory.buscarPtd({ tabla: 'tbl_ptds', ptd: ptdFactory.ptd.id }).then(function () {
+					buscarApartDD();
+					vm.observacion = {
+						id: ptdFactory.ptd.id,
+						observaciones_dd: ptdFactory.ptd.observaciones_dd,
+					};
+				});
+				serviceNotification.success('PTD actualizo correctamente', 2000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error . ', 2000);
+				serviceNotification.error('Error PTD. ', 2000);
 			});
 		}
 	}

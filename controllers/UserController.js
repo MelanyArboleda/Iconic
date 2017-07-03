@@ -13,7 +13,7 @@ module.exports = {
         if (req.body.correo && req.body.password) {
             var correo = req.body.correo;
             var password = req.body.password;
-            crud.findOne(modelo.tbl_usuarios, { correo: correo },null, (user) => {
+            crud.findOne(modelo.tbl_usuarios, { correo: correo }, null, (user) => {
                 if (!user) {
                     res.sendStatus(403);
                 } else if (user.tblEstadoId != '2' || user.createdAt.toString() == user.updatedAt.toString()) {
@@ -50,9 +50,9 @@ module.exports = {
         }
     },
 
-    buscarUsuario: (req, res, next) => {
+    buscarUsuario: function (req, res, next) {
         var decode = jwt.decode(req.body.token, config.secret);
-        crud.findOne(modelo.tbl_usuarios, { correo: decode.correo },null, (user) => {
+        crud.findOne(modelo.tbl_usuarios, { correo: decode.correo }, null, (user) => {
             user = {
                 doc_identidad: user.doc_identidad,
                 nombre: user.nombre,
@@ -65,7 +65,7 @@ module.exports = {
                 created: user.createdAt,
                 updated: user.updatedAt
             };
-            res.status(200).json({ user: user}).end();
+            res.status(200).json({ user: user }).end();
         });
     },
 
@@ -94,7 +94,7 @@ module.exports = {
     },
 
     pinicial: function (req, res, next) {
-        crud.findOne(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad },null ,(user) => {
+        crud.findOne(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, null, (user) => {
             if (!bcrypt.compareSync(req.body.password, user.contraseña)) {
                 crud.update(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
                     if (data == 'update') {
@@ -157,7 +157,7 @@ module.exports = {
             b = new Buffer(user, 'base64')
             user = b.toString();
         }
-        crud.findOne(modelo.tbl_usuarios, { doc_identidad: user },null, function (data) {
+        crud.findOne(modelo.tbl_usuarios, { doc_identidad: user }, null, function (data) {
             if (data !== undefined) {
                 if (fecha >= fecha_act) {
                     if (data.recuperar == true) {
@@ -198,4 +198,4 @@ module.exports = {
     //         res.json(programs);
     //     })
     // }
-}; 
+};

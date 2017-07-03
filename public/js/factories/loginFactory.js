@@ -42,8 +42,11 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 	function isLogin() {
 		var token = localStorageService.get("loginToken");
 		if (token) {
-			factory.userLogin = true;
-			$state.go("menuPrincipal.vistaPTD").catch(function (err) { console.log(err) });;
+			loginService.busacarUser({ token: token }).then(function (user) {
+				factory.user = user.user;
+				factory.userLogin = true;
+				$state.go("menuPrincipal.vistaPTD").catch(function (err) { console.log(err) });
+			});
 		} else {
 			$state.go("login");
 		}

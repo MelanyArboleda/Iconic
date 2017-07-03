@@ -143,7 +143,7 @@ var usuarios = [{
   contraseña: funciones.encriptar("Iconic123"),
   contraseña_firma: funciones.encriptar("0"),
   tblPerfileId: 6,
-  tblEstadoId: 3,
+  tblEstadoId: 1,
   recuperar: false
 }];
 
@@ -171,7 +171,7 @@ var vinculos = [
   { id: 1, vinculo: "Director" },
   { id: 2, vinculo: "Miembro" },
   { id: 3, vinculo: "Investigador Principal" },
-  { id: 4, vinculo: "Co-investigador" }];
+  { id: 4, vinculo: "Co-Investigador" }];
 
 var actores = [
   { id: 1, actor: "Principal" },

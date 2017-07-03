@@ -1,29 +1,40 @@
 angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
-aAsesoriasCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"];
+aAsesoriasCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification) {
+function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aAsesorias = aAsesorias;
-    vm.asesorias = ptdFactory.aasesoria;
+    buscarApartAP();
+    function buscarApartAP() {
+        ptdFactory.buscarApartAP({ tabla: 'tbl_asesoria_proyectos', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.asesorias = ptdFactory.aasesoria;
+        });
+    }
 
     function aAsesorias() {
-        for (var i = 0; i < vm.asesorias.length; i++) {
-			vm.asesorias[i].tblPtdId= ptdFactory.ptd.id,
-			data = {
-				datos: vm.asesorias[i],
-				tabla: 'tbl_asesoria_proyectos'
-			}
-			console.log("llama a servicio Save de asesoria proyectos");
-			ptdService.save(data).then(function (resultado) {
-				ptdFactory.aasesoria[resultado.apartado.id-1]=resultado.apartado;
-				console.log(resultado);
-                serviceNotification.success('Apartado guardado correctamente', 2000);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('No se guardó el apartado', 2000);
-			});
-		}
+        saveAsesorias().then(function () { buscarApartAP(); });
+        function saveAsesorias() {
+            var deferred = $q.defer();
+            for (var i = 0; i < vm.asesorias.length; i++) {
+                vm.asesorias[i].tblPtdId = ptdFactory.ptd.id,
+                    data = {
+                        datos: vm.asesorias[i],
+                        tabla: 'tbl_asesoria_proyectos'
+                    }
+                console.log("llama a servicio Save de asesoria proyectos");
+                ptdService.save(data).then(function (resultado) {
+                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    if (i == vm.asesorias.length - 1) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    serviceNotification.error('No se guardó el apartado', 2000);
+                });
+            }
+        }
     }
 
     vm.addNewAse = function (ase) {

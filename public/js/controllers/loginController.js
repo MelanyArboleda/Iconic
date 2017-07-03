@@ -6,8 +6,8 @@ function loginCtrl(loginFactory, $state, $scope) {
 	var vm = this;
 	vm.login = login;
 	vm.user = {
-		correo: "samuel_vergara23151@elpoli.edu.co",
-		password: ""
+		correo: "gabriel_arboleda23151@elpoli.edu.co",
+		password: "Iconic123"
 	}
 
 	function login() {
