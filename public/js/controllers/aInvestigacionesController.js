@@ -53,10 +53,10 @@ function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
                 }
                 console.log("llama a servicio Save de investigaciones semilleros");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    serviceNotification.success('Grupos investigación guardado correctamente', 3000);
                 }).catch(function (err) {
                     console.log(err);
-                    serviceNotification.error('No se guardó el apartado', 2000);
+                    serviceNotification.error('No se guardó el apartado G', 2000);
                 });
             }
             if (i == vm.gruposInvestigaciones.length) {
@@ -83,14 +83,14 @@ function aInvestigacionesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
                 }
                 console.log("llama a servicio Save de investigaciones proyectos");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    serviceNotification.success('Proyectos investigación guardado correctamente', 3000);
                     if (i == vm.proyectosInvestigaciones.length - 1) {
                         deferred.resolve();
                         return deferred.promise;
                     }
                 }).catch(function (err) {
                     console.log(err);
-                    serviceNotification.error('Error . ', 2000);
+                     serviceNotification.error('No se guardó el apartado P', 2000);
                 });
             }
         }

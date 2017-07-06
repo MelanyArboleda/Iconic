@@ -25,9 +25,9 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 				}
 			console.log("llama a servicio Save de docencia directa");
 			ptdService.save(data).then(function (next) {
-				serviceNotification.success('Apartado guardado correctamente', 2000);
+				serviceNotification.success('Apartado guardado correctamente', 3000);
 			}).catch(function (err) {
-				serviceNotification.error('No se guardó el apartado', 2000);
+				serviceNotification.error('No se guardó el apartado.', 2000);
 			});
 		}
 		if (vm.observacion.observaciones_dd != null) {
@@ -43,10 +43,10 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 						observaciones_dd: ptdFactory.ptd.observaciones_dd,
 					};
 				});
-				serviceNotification.success('PTD actualizo correctamente', 2000);
+				serviceNotification.success('PTD actualizó correctamente', 3000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error PTD. ', 2000);
+				serviceNotification.error('Error PTD.', 2000);
 			});
 		}
 	}

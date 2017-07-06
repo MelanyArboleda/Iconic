@@ -24,7 +24,7 @@ function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification, $q) {
                     }
                 console.log("llama a servicio Save de asesoria proyectos");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    serviceNotification.success('Apartado guardado correctamente', 3000);
                     if (i == vm.asesorias.length - 1) {
                         deferred.resolve();
                         return deferred.promise;

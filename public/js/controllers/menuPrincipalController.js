@@ -14,10 +14,21 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, serviceNotifica
 	vm.today = 'Hoy';
 	vm.clear = 'Limpiar';
 	vm.close = 'Cerrar';
-	var days = 0;
-	//vm.minDate = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * days))).toISOString();
-	vm.maxDate = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * days))).toISOString();
+	var daysmax = 0;
+	var daysmin = 150;
+	var daysminExt = 1;
+	var daysmaxExt = 150;
+	vm.minDate = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * daysmin))).toISOString();
+	vm.maxDate = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
+
+	var fechaSel = vm.fecha_inicio;
 	
+	vm.minDateIExt = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * daysmin))).toISOString();
+	vm.maxDateIExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
+
+	vm.minDateFExt = fechaSel;
+	vm.maxDateFExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmaxExt))).toISOString();
+
 	if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 		ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad });
 	}

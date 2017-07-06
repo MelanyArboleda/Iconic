@@ -24,7 +24,7 @@ function aComisionEstudiosCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                     }
                 console.log("llama a servicio Save de comision de estudios");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Apartado guardado correctamente', 2000);
+                    serviceNotification.success('Apartado guardado correctamente', 3000);
                     if (i == vm.comisionE.length - 1) {
                         deferred.resolve();
                         return deferred.promise;

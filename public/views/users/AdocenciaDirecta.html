@@ -50,12 +50,15 @@
 
                 <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="docenciaDirectaVm.removeDD()">
+                        <a class="btn-floating waves-effect waves-light btn red" ng-click="docenciaDirectaVm.removeDD()" title="Eliminar Línea">
+                            <i class="material-icons">&#xE15B;</i>
+                        </a>
                     </div>
-                    <div class="fixed-action-btn">
-                        <button type="submit" ng-disabled="aDocenciaDirectaForm.$invalid" ng-click="docenciaDirectaVm.addNewDD()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped"
-                            data-position="left" data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
-                    </div>
+                    <div class="fixed-action-btn add">
+                        <button type="submit" ng-disabled="aDocenciaDirectaForm.$invalid" ng-click="docenciaDirectaVm.addNewDD()" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
+                            <i class="material-icons">&#xE145;</i>
+                        </button>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -78,24 +81,4 @@
     </div>
 </form>
 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('textarea#observaciones_dd').characterCounter();
-        $('input#codigo_asignatura').characterCounter();
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.tooltipped').tooltip(); 
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".close").on( "click", function() {
-			    $('.contenido-alert').hide(); 
-		 });
-    });
-</script>
+<script type="text/javascript" src="js/todoScript.js"></script>

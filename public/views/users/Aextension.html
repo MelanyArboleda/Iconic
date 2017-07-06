@@ -2,17 +2,18 @@
 
 <div ng-show="aExtensionForm.$pristine" class="alert alert-info contenido container contenido-alert">
     <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus actividades de extensión antes de presionar el botón "Guardar Apartado".
+    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus actividades de extensión antes de presionar el botón
+    "Guardar Apartado".
 </div>
 
 <form name="aExtensionForm" autocomplete="off" ng-submit="extensionVm.aExtension()">
-<div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
-	<div class="row">
-        <div class="col s12">   
+    <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
+        <div class="row">
+            <div class="col s12">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="extensionVm.checkAllExt()"/></th>
+                            <th><input type="checkbox" ng-model="selectedAll" ng-click="extensionVm.checkAllExt()" /></th>
                             <th>*Nombre de la actividad a diseñar diplomado, seminario, curso, etc.</th>
                             <th>*Fecha Inicio</th>
                             <th>*Fecha Final</th>
@@ -20,84 +21,49 @@
                             <th>Vo.Bo Vicerrectoría de extensión</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <tr ng-repeat="ext in extensionVm.extension">
-                            <td><input type="checkbox" ng-model="ext.selected"/></td>
-                            <td><input type="text" name="nombre_actividad" class="form-control validate" ng-model="ext.nombre_actividad" required/></td>
+                            <td><input type="checkbox" ng-model="ext.selected" /></td>
+                            <td><input type="text" name="nombre_actividad" class="form-control validate" ng-model="ext.nombre_actividad"
+                                    required/></td>
                             <td>
-                            <input input-date 
-                                type="text" 
-                                name="fecha_inicio" 
-                                id="fechaRealizacion" 
-                                class="form-control fecha" 
-                                ng-model="ext.fecha_inicio" 
-                                format="mm/dd/yyyy" 
-                                months-full="{{mnuPVm.month}}" 
-                                months-short="{{mnuPVm.monthShort}}" 
-                                weekdays-full="{{mnuPVm.weekdaysFull}}" 
-                                weekdays-letter="{{mnuPVm.weekdaysLetter}}"  
-                                min="{{mnuPVm.minDate}}"
-                                max="{{mnuPVm.maxDate}}"
-                                today="mnuPVm.today"
-                                first-day="1"
-                                clear="mnuPVm.clear"
-                                close="mnuPVm.close"
-                                select-years="15"
-                                required> </td>
+                                <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="ext.fecha_inicio"
+                                    format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateIExt}}" max="{{mnuPVm.maxDateIExt}}"
+                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" onclick="document.aExtensionForm.fecha_final.disabled=!document.aExtensionForm.fecha_final.disabled"
+                                    required> </td>
                             <td>
-                            <input input-date
-                                type="text"
-                                name="fecha_final"
-                                id="fecha_final"
-                                class="form-control fecha" 
-                                ng-model="ext.fecha_final"                
-                                format="mm/dd/yyyy"
-                                months-full="{{mnuPVm.month}}"
-                                months-short="{{mnuPVm.monthShort}}"
-                                weekdays-full="{{mnuPVm.weekdaysFull}}"
-                                weekdays-letter="{{mnuPVm.weekdaysLetter}}"         
-                                min="{{mnuPVm.minDate}}"
-                                max="{{mnuPVm.maxDate}}"
-                                today="mnuPVm.today"
-                                first-day="1"
-                                clear="mnuPVm.clear"
-                                close="mnuPVm.close"
-                                select-years="15"
-                                required> </td>
-                            <td> <input type="number" name="horas_semestrales" min="1" class="form-control validate" ng-model="ext.horas_semestrales" required/> </td>
-                            <td> <input type="checkbox" name="aprobado" class="form-control validate" ng-model="ext.aprobado" required/> </td>
+                                <input input-date type="text" name="fecha_final" id="fecha_final" class="form-control fecha" ng-model="ext.fecha_final" format="dd/mm/yyyy"
+                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateFExt}}" max="{{mnuPVm.maxDateFExt}}"
+                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
+                                    required> </td>
+                            <td> <input type="number" name="horas_semestrales" min="1" class="form-control validate" ng-model="ext.horas_semestrales"
+                                    required/> </td>
+                            <td> <input type="checkbox" name="aprobado" class="form-control validate" ng-model="ext.aprobado"/> </td>
                         </tr>
                     </tbody>
                 </table>
-                    <div class="form-group">
+                <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <input type="button" class="btn-floating btn-danger pull-right" ng-click="extensionVm.removeExt()">
+                        <a class="btn-floating waves-effect waves-light btn red" ng-click="extensionVm.removeExt()" title="Eliminar Línea">
+                            <i class="material-icons">&#xE15B;</i>
+                        </a>
                     </div>
-                    <div class="fixed-action-btn">
-                        <button type="submit" ng-disabled="aExtensionForm.$invalid"  ng-click="extensionVm.addNewExt()" class="btn-floating btn-large waves-effect waves-light btn-primary addnew pull-right tooltipped" data-position="left"
-                            data-delay="20" data-tooltip="Agregar Línea"><i class="material-icons">add</i></button>
-                    </div>
+                    <div class="fixed-action-btn add">
+                        <button type="submit" ng-disabled="aExtensionForm.$invalid" ng-click="extensionVm.addNewExt()" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
+                            <i class="material-icons">&#xE145;</i>
+                        </button>
+                    </div> 
                 </div>
-                    <br>
-                    <div class="row center" input-field>
-                        <button ng-disabled="aExtensionForm.$invalid" type="submit" class="waves-effect waves-light btn" >Guardar Apartado</button>  
-                    </div>
+                <br>
+                <div class="row center" input-field>
+                    <button ng-disabled="aExtensionForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </form>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-  });
-</script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".close").on( "click", function() {
-			    $('.contenido-alert').remove(); 
-		 });
-    });
-</script>
+<script type="text/javascript" src="js/todoScript.js"></script>

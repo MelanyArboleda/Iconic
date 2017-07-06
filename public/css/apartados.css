@@ -110,10 +110,6 @@ div.buscaPTD{
 	padding-top: 1%;
 }
 
-.btn-primary{
-    margin-right: 10px;
-}
-
 
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked{
 	opacity: 1;
@@ -127,7 +123,11 @@ div.buscaPTD{
 
 .fixed-action-btn.cancel{
 	bottom: 115px;
-    right: 42px;
+    right: 43px;
+}
+
+.fixed-action-btn.add{
+    right: 35px;
 }
 
 #asig {
@@ -211,5 +211,7 @@ textarea.ng-valid.ng-dirty, .fecha.ng-dirty, .select-wrapper.ng-valid.ng-dirty i
 .text-danger{
 	color: #F44336;
 }
+
+
 
 

@@ -61,7 +61,7 @@ angular.module('iconic')
       var config = {
         message: message,
         time: time ? time : undefined,
-        className: 'green ' + className
+        className: 'green' + className
       };
 
       if (callback) {

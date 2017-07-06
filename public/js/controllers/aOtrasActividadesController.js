@@ -32,11 +32,11 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                     observacion_ptd: ptdFactory.resumen.observacion_ptd,
                 };
             });
-            serviceNotification.success('Apartado guardado correctamente', 2000);
+            serviceNotification.success('Resumen guardado correctamente', 3000);
             actividades();
         }).catch(function (err) {
             console.log(err);
-            serviceNotification.error('No se guardó el apartado', 2000);
+            serviceNotification.error('No se guardó el apartado R', 2000);
         });
     }
 
@@ -50,10 +50,10 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
             console.log("llama a servicio Save de otras actividades");
             ptdService.save(data).then(function (resultado) {
                 ptdFactory.aotrasactividades[resultado.apartado.id - 1] = resultado.apartado;
-                serviceNotification.success('Apartado Otras actividades guardado correctamente', 2000);
+                serviceNotification.success('Actividades guardado correctamente', 3000);
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.error('Error . No se guardó', 2000);
+                serviceNotification.error('No se guardó el apartado A', 2000);
             });
         }
     }

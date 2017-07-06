@@ -109,9 +109,18 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state({
-		name: "menuPrincipal.Ainvestigaciones",
-		templateUrl: 'views/users/Ainvestigaciones.html',
-		url: "/investigaciones",
+		name: "menuPrincipal.AinvestigacionesG",
+		templateUrl: 'views/users/AinvestigacionesG.html',
+		url: "/investigacionesGrupos",
+		controller: "aInvestigacionesCtrl as investigacionesVm",
+		params: {
+			login: true
+		}
+	})
+	.state({
+		name: "menuPrincipal.AinvestigacionesP",
+		templateUrl: 'views/users/AinvestigacionesP.html',
+		url: "/investigacionesProyectos",
 		controller: "aInvestigacionesCtrl as investigacionesVm",
 		params: {
 			login: true
