@@ -6,7 +6,7 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
     var vm = this;
     vm.aInvestigacionesG = aInvestigacionesG;
     buscarApartIG();
-    
+
     function buscarApartIG() {
         ptdFactory.buscarApartIG({ tabla: 'tbl_investigaciones_semilleros', ptd: ptdFactory.ptd.id }).then(function () {
             vm.gruposInvestigaciones = ptdFactory.ainvestigacionesgrupo;
@@ -42,15 +42,16 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 console.log("llama a servicio Save de investigaciones semilleros");
                 ptdService.save(data).then(function (resultado) {
                     serviceNotification.success('Apartado guardado correctamente', 3000);
+                    if (i == vm.gruposInvestigaciones.length) {
+                        deferred.resolve();
+                        return deferred.promise;
+                    }
                 }).catch(function (err) {
                     console.log(err);
                     serviceNotification.error('No se guardó el apartado', 2000);
                 });
             }
-            if (i == vm.gruposInvestigaciones.length) {
-                deferred.resolve();
-                return deferred.promise;
-            }
+
         }
     }
 
