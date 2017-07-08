@@ -112,7 +112,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AinvestigacionesG",
 		templateUrl: 'views/users/AinvestigacionesG.html',
 		url: "/investigacionesGrupos",
-		controller: "aInvestigacionesCtrl as investigacionesVm",
+		controller: "aInvestigacionesGCtrl as investigacionesGVm",
 		params: {
 			login: true
 		}
@@ -121,7 +121,7 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		name: "menuPrincipal.AinvestigacionesP",
 		templateUrl: 'views/users/AinvestigacionesP.html',
 		url: "/investigacionesProyectos",
-		controller: "aInvestigacionesCtrl as investigacionesVm",
+		controller: "aInvestigacionesPCtrl as investigacionesPVm",
 		params: {
 			login: true
 		}

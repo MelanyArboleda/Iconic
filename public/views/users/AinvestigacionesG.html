@@ -6,14 +6,14 @@
     Apartado".
 </div>
 
-<form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesVm.aInvestigaciones()">
+<form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesGVm.aInvestigacionesG()">
     <div class="container white contenido">
         <div class="row">
             <div class="col s12">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAllG" ng-click="investigacionesVm.gInvCheckAll()" /></th>
+                            <th><input type="checkbox" ng-model="selectedAllG" ng-click="investigacionesGVm.gInvCheckAll()" /></th>
                             <th class="invgr">*Nombre del Semillero y/o Grupo</th>
                             <th id="gvinculo">*Tipo de vínculo
                                 <br>(Director ó Miembro)
@@ -27,13 +27,13 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="gI in investigacionesVm.gruposInvestigaciones">
+                        <tr ng-repeat="gI in investigacionesGVm.gruposInvestigaciones">
                             <td>
                                 <input type="checkbox" ng-model="gI.selectedG" /></td>
                             <td>
                                 <input name="nombre_semillero" type="text" class="form-control validate" ng-model="gI.nombre_semillero" required/></td>
                             <td><select id="tblVinculoId" name="tblVinculoId" ng-model="gI.tblVinculoId" material-select watch required>
-                                    <option ng-repeat="vinculos in investigacionesVm.vinculosG">{{vinculos}}</option>
+                                    <option ng-repeat="vinculos in investigacionesGVm.vinculosG">{{vinculos}}</option>
                                  </select></td>
                             <td>
                                 <input name="actividad_desarrollada" type="text" class="form-control validate" ng-model="gI.actividad_desarrollada" required/></td>
@@ -50,12 +50,12 @@
                 </table>
                 <div class="form-group">
                     <div class="fixed-action-btn cancel">
-                        <a class="btn-floating waves-effect waves-light btn red" ng-click="investigacionesVm.gInvRemove()" title="Eliminar Línea">
+                        <a class="btn-floating waves-effect waves-light btn red" ng-click="investigacionesGVm.gInvRemove()" title="Eliminar Línea">
                             <i class="material-icons">&#xE15B;</i>
                         </a>
                     </div>
                     <div class="fixed-action-btn add">
-                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesVm.gInvAddNew()" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
+                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesGVm.gInvAddNew()" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
                             <i class="material-icons">&#xE145;</i>
                         </button>
                     </div> 

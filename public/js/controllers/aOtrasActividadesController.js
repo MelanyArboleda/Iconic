@@ -5,15 +5,29 @@ aOtrasActividadesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotificatio
 function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aOtrasActividades = aOtrasActividades;
+    buscarResumen();
+    function buscarResumen() {
+        var deferred = $q.defer();
+        ptdFactory.buscarResumen({ tabla: 'tbl_resumenes', ptd: ptdFactory.ptd.id }).then(function () {
+            vm.resumen = {
+                tblPtdId: ptdFactory.ptd.id,
+                id: ptdFactory.resumen.id,
+                horas_semanales_tot: "",
+                horas_semestrales_tot: "",
+                observaciones: ptdFactory.resumen.observaciones,
+                observacion_ptd: ptdFactory.resumen.observacion_ptd,
+            };
+            deferred.resolve(buscarApartOA());
+        });
+        return deferred.promise;
+    }
+    function buscarApartOA() {
+        ptdFactory.buscarApartOA({ tabla: 'tbl_actividades', id: ptdFactory.resumen.id }).then(function () {
+            vm.otrasActividades = ptdFactory.aotrasactividades;
+        });
+    }
 
-    vm.otrasActividades = ptdFactory.aotrasactividades;
-    vm.resumen = {
-        tblPtdId: ptdFactory.ptd.id,
-        horas_semanales_tot: "",
-        horas_semestrales_tot: "",
-        observaciones: ptdFactory.resumen.observaciones,
-        observacion_ptd: ptdFactory.resumen.observacion_ptd,
-    };
+
 
     function aOtrasActividades() {
         data = {
@@ -22,35 +36,28 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
         }
         console.log("llama a servicio Save de resumen");
         ptdService.save(data).then(function (resultado) {
-            ptdFactory.resumen = resultado.apartado;
-            ptdFactory.buscarResumen({ tabla: 'tbl_resumenes', ptd: ptdFactory.ptd.id }).then(function () {
-                vm.resumen = {
-                    tblPtdId: ptdFactory.ptd.id,
-                    horas_semanales_tot: "",
-                    horas_semestrales_tot: "",
-                    observaciones: ptdFactory.resumen.observaciones,
-                    observacion_ptd: ptdFactory.resumen.observacion_ptd,
-                };
+            var id = ptdFactory.resumen.id;
+            buscarResumen().then(function (callback) {
+                actividades(id);
             });
             serviceNotification.success('Resumen guardado correctamente', 3000);
-            actividades();
         }).catch(function (err) {
             console.log(err);
             serviceNotification.error('No se guardó el apartado R', 2000);
         });
     }
 
-    function actividades() {
+    function actividades(id) {
         for (var i = 0; i < vm.otrasActividades.length; i++) {
-            vm.otrasActividades[i].tblResumeneId = ptdFactory.resumen.id,
+            vm.otrasActividades[i].tblResumeneId = id,
                 data = {
                     datos: vm.otrasActividades[i],
                     tabla: 'tbl_actividades'
                 }
             console.log("llama a servicio Save de otras actividades");
             ptdService.save(data).then(function (resultado) {
-                ptdFactory.aotrasactividades[resultado.apartado.id - 1] = resultado.apartado;
                 serviceNotification.success('Actividades guardado correctamente', 3000);
+                buscarApartOA();
             }).catch(function (err) {
                 console.log(err);
                 serviceNotification.error('No se guardó el apartado A', 2000);

@@ -42,6 +42,10 @@ module.exports = {
                     crud.findAll(tabla, { id: req.body.ptd }, null, (resp) => {
                         res.status(200).json({ apartado: resp[0].dataValues }).end();
                     });
+                } else if (req.body.tabla == 'tbl_actividades') {
+                    crud.findAll(tabla, { tblResumeneId: req.body.id }, 'id ASC', (resp) => {
+                        res.status(200).json({ apartado: resp }).end();
+                    });
                 } else {
                     crud.findAll(tabla, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
                         res.status(200).json({ apartado: resp }).end();
