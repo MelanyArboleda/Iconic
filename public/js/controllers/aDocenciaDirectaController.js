@@ -24,8 +24,10 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 					tabla: 'tbl_dodencias_directas'
 				}
 			console.log("llama a servicio Save de docencia directa");
-			ptdService.save(data).then(function (next) {
-				serviceNotification.success('Apartado guardado correctamente', 3000);
+			ptdService.save(data).then(function (resultado) {
+				if (JSON.stringify(resultado) === JSON.stringify(vm.docenciaDirecta[i - 1]) || vm.docenciaDirecta[i - 1] == undefined) {
+					serviceNotification.success('Apartado guardado correctamente', 3000);
+				}
 			}).catch(function (err) {
 				serviceNotification.error('No se guardó el apartado.', 2000);
 			});

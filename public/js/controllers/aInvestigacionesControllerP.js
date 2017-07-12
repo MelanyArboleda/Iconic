@@ -39,16 +39,17 @@ function aInvestigacionesPCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 }
                 console.log("llama a servicio Save de investigaciones proyectos");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Proyectos investigación guardado correctamente', 3000);
-                    if (i == vm.proyectosInvestigaciones.length - 1) {
+                    if (JSON.stringify(resultado) === JSON.stringify(vm.proyectosInvestigaciones[i-1]) || vm.proyectosInvestigaciones[i-1] == undefined) {
+                        serviceNotification.success('Apartado guardado correctamente', 3000);
                         deferred.resolve();
-                        return deferred.promise;
                     }
                 }).catch(function (err) {
                     console.log(err);
-                     serviceNotification.error('No se guardó el apartado P', 2000);
+                    deferred.resolve();
+                    serviceNotification.error('No se guardó el apartado P', 2000);
                 });
             }
+            return deferred.promise;
         }
     }
 

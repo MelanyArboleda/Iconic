@@ -56,8 +56,10 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 }
             console.log("llama a servicio Save de otras actividades");
             ptdService.save(data).then(function (resultado) {
-                serviceNotification.success('Actividades guardado correctamente', 3000);
-                buscarApartOA();
+                if (angular.toJson(resultado) == angular.toJson(vm.otrasActividades[i - 1]) || resultado.id == undefined) {
+                    serviceNotification.success('Actividades guardado correctamente', 3000);
+                    buscarApartOA();
+                }
             }).catch(function (err) {
                 console.log(err);
                 serviceNotification.error('No se guardó el apartado A', 2000);

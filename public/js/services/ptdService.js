@@ -12,7 +12,7 @@ function ptdService($http, $q) {
         console.log("llegó al servivioptd");
         $http.post("http://localhost:3000/auth/save", ptd).then(function (res) {
             console.log(res);
-            deferred.resolve(res.data);
+            deferred.resolve(res.config.data.datos);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

@@ -21,7 +21,7 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
     }
 
     function aInvestigacionesG() {
-        saveGrupos().then(function () { buscarApartIG(); });
+        saveGrupos().then(buscarApartIG());
         function saveGrupos() {
             var deferred = $q.defer();
             for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
@@ -41,17 +41,17 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 }
                 console.log("llama a servicio Save de investigaciones semilleros");
                 ptdService.save(data).then(function (resultado) {
-                    serviceNotification.success('Apartado guardado correctamente', 3000);
-                    if (i == vm.gruposInvestigaciones.length) {
+                    if (JSON.stringify(resultado) === JSON.stringify(vm.gruposInvestigaciones[i-1]) || vm.gruposInvestigaciones[i-1] == undefined) {
+                        serviceNotification.success('Apartado guardado correctamente', 3000);
                         deferred.resolve();
-                        return deferred.promise;
                     }
                 }).catch(function (err) {
                     console.log(err);
+                    deferred.resolve();
                     serviceNotification.error('No se guardó el apartado', 2000);
                 });
             }
-
+            return deferred.promise;
         }
     }
 
