@@ -7,7 +7,7 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 	vm.aDocenciaDirecta = aDocenciaDirecta;
 	buscarApartDD();
 	function buscarApartDD() {
-		ptdFactory.buscarApartDD({ tabla: 'tbl_dodencias_directas', ptd: ptdFactory.ptd.id }).then(function () {
+		ptdFactory.buscarApartDD({ tabla: 'tbl_docencias_directas', ptd: ptdFactory.ptd.id }).then(function () {
 			vm.docenciaDirecta = ptdFactory.adocenciadirecta;
 		});
 	}
@@ -21,7 +21,7 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 			vm.docenciaDirecta[i].tblPtdId = ptdFactory.ptd.id,
 				data = {
 					datos: vm.docenciaDirecta[i],
-					tabla: 'tbl_dodencias_directas'
+					tabla: 'tbl_docencias_directas'
 				}
 			console.log("llama a servicio Save de docencia directa");
 			ptdService.save(data).then(function (resultado) {

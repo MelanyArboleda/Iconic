@@ -355,17 +355,13 @@ var tbl_ptds = sequelize.define('tbl_ptds', {
   },
   observaciones_dd: {
     type: Sequelize.STRING
-  },
-  horas_semanales: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   }
 });
 
 tbl_usuarios.hasMany(tbl_ptds);
 tbl_ptds.belongsTo(tbl_usuarios);
 
-var tbl_dodencias_directas = sequelize.define('tbl_dodencias_directas', {
+var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
   nombre_asignatura: {
     type: Sequelize.STRING(100),
     allowNull: false
@@ -401,8 +397,8 @@ var tbl_dodencias_directas = sequelize.define('tbl_dodencias_directas', {
   }
 });
 
-tbl_ptds.hasMany(tbl_dodencias_directas);
-tbl_dodencias_directas.belongsTo(tbl_ptds);
+tbl_ptds.hasMany(tbl_docencias_directas);
+tbl_docencias_directas.belongsTo(tbl_ptds);
 
 var tbl_vinculos = sequelize.define('tbl_vinculos', {
   vinculo: {
@@ -631,9 +627,16 @@ tbl_ptds.hasMany(tbl_asesoria_proyectos);
 tbl_asesoria_proyectos.belongsTo(tbl_ptds);
 
 var tbl_resumenes = sequelize.define('tbl_resumenes', {
-  observaciones: {
-    type: Sequelize.STRING,
+  horas_semanales_tot: {
+    type: Sequelize.INTEGER,
     allowNull: false
+  },
+  horas_semestrales_tot: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  observaciones: {
+    type: Sequelize.STRING
   },
   tblPtdId: {
     type: Sequelize.INTEGER,
@@ -789,7 +792,7 @@ module.exports = {
   tbl_notificaciones: tbl_notificaciones,
   tbl_usuario_programa: tbl_usuario_programa,
   tbl_ptds: tbl_ptds,
-  tbl_dodencias_directas: tbl_dodencias_directas,
+  tbl_docencias_directas: tbl_docencias_directas,
   tbl_investigaciones_proyectos: tbl_investigaciones_proyectos,
   tbl_investigaciones_semilleros: tbl_investigaciones_semilleros,
   tbl_vinculos: tbl_vinculos,

@@ -13,7 +13,7 @@ function aInfoGeneralCtrl(ptdFactory, loginFactory, serviceNotification) {
 		areaIG: "",
 		fechaRealizacion: "",
 	}
-
+	ptdFactory.aInfoGeneral = vm.infoGeneral;
 	vm.dedicacionIG = ['Tiempo Completo', 'Medio Tiempo', 'Ocasional MT'];
 	vm.areaIG = ['Programas Informáticos'];
 

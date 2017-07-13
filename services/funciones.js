@@ -32,8 +32,8 @@ module.exports = {
 			case 'tbl_ptds':
 				modeloTabla = modelo.tbl_ptds;
 				break;
-			case 'tbl_dodencias_directas':
-				modeloTabla = modelo.tbl_dodencias_directas;
+			case 'tbl_docencias_directas':
+				modeloTabla = modelo.tbl_docencias_directas;
 				break;
 			case 'tbl_investigaciones_proyectos':
 				modeloTabla = modelo.tbl_investigaciones_proyectos;

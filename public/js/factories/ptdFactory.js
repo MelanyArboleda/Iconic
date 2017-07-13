@@ -2,9 +2,10 @@ angular.module("iconic").factory("ptdFactory", ptdFactory);
 
 ptdFactory.$inject = ["ptdService", "serviceNotification", "$q"];
 
-function ptdFactory(ptdService, serviceNotification, $q ) {
+function ptdFactory(ptdService, serviceNotification, $q) {
 
     var factory = {
+        aInfoGeneral: {},
         ptd: {},
         adocenciadirecta: [],
         ainvestigacionesgrupo: [],
@@ -20,13 +21,14 @@ function ptdFactory(ptdService, serviceNotification, $q ) {
         buscarPtd: buscarPtd,
         buscarApartDD: buscarApartDD,
         buscarApartIG: buscarApartIG,
-        buscarApartIP:buscarApartIP,
-        buscarApartEP:buscarApartEP,
-        buscarApartCE:buscarApartCE,
-        buscarApartPP:buscarApartPP,
-        buscarApartAP:buscarApartAP,
-        buscarApartOA:buscarApartOA,
-        buscarResumen:buscarResumen
+        buscarApartIP: buscarApartIP,
+        buscarApartEP: buscarApartEP,
+        buscarApartCE: buscarApartCE,
+        buscarApartPP: buscarApartPP,
+        buscarApartAP: buscarApartAP,
+        buscarApartOA: buscarApartOA,
+        buscarResumen: buscarResumen,
+        cargarHoras: cargarHoras
     };
     return factory;
 
@@ -134,5 +136,9 @@ function ptdFactory(ptdService, serviceNotification, $q ) {
             deferred.resolve();
         });
         return deferred.promise;
+    }
+
+    function cargarHoras(sql) {
+        
     }
 }

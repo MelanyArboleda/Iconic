@@ -1,3 +1,5 @@
+var Sequelize = require('sequelize');
+var sequelize = require('../database/config');
 module.exports = {
   //Busqueda e inserto
   findOrCreate: function (tabla, dato, donde, callback) {
@@ -13,7 +15,7 @@ module.exports = {
     });
   },
   //buscar todo
-  findAll: function (tabla, donde, order,callback) {
+  findAll: function (tabla, donde, order, callback) {
     tabla.findAll({
       where: donde,
       order: order
@@ -24,6 +26,7 @@ module.exports = {
       callback();
     });
   },
+
   create: function (tabla, dato, callback) {
     tabla.create(dato).then((res) => {
       callback(res.dataValues)
@@ -70,4 +73,13 @@ module.exports = {
       callback();
     });
   },
+
+  query: function (sql, callback) {
+    sequelize.query(sql, { type: Sequelize.QueryTypes.SELECT }).then(resp => {
+      callback(resp);
+    }).catch((err) => {
+      console.log(err);
+      callback();
+    });
+  }
 }

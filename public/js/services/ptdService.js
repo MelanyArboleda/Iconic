@@ -45,5 +45,4 @@ function ptdService($http, $q) {
         });
         return deferred.promise;
     }
-
 }

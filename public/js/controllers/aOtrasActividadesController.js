@@ -5,15 +5,17 @@ aOtrasActividadesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotificatio
 function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aOtrasActividades = aOtrasActividades;
-    buscarResumen();
+    ptdFactory.cargarHoras().then(function () {
+        buscarResumen();
+    });
     function buscarResumen() {
         var deferred = $q.defer();
         ptdFactory.buscarResumen({ tabla: 'tbl_resumenes', ptd: ptdFactory.ptd.id }).then(function () {
             vm.resumen = {
                 tblPtdId: ptdFactory.ptd.id,
                 id: ptdFactory.resumen.id,
-                horas_semanales_tot: "",
-                horas_semestrales_tot: "",
+                horas_semanales_tot: ptdFactory.resumen.horas_semanales_tot,
+                horas_semestrales_tot: ptdFactory.resumen.horas_semestrales_tot,
                 observaciones: ptdFactory.resumen.observaciones,
                 observacion_ptd: ptdFactory.resumen.observacion_ptd,
             };
