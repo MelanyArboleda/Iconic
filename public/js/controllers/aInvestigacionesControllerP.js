@@ -15,6 +15,10 @@ function aInvestigacionesPCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 } else {
                     vm.proyectosInvestigaciones[i].tblVinculoId = 'Co-Investigador';
                 }
+                for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
+                    var semestre = vm.calculahoras(vm.proyectosInvestigaciones[i]);
+                    ptdFactory.horasemestre.proyectosInvestigaciones += semestre;
+                }
             }
         });
     }
@@ -39,7 +43,7 @@ function aInvestigacionesPCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                 }
                 console.log("llama a servicio Save de investigaciones proyectos");
                 ptdService.save(data).then(function (resultado) {
-                    if (JSON.stringify(resultado) === JSON.stringify(vm.proyectosInvestigaciones[i-1]) || vm.proyectosInvestigaciones[i-1] == undefined) {
+                    if (JSON.stringify(resultado) === JSON.stringify(vm.proyectosInvestigaciones[i - 1]) || vm.proyectosInvestigaciones[i - 1] == undefined) {
                         serviceNotification.success('Apartado guardado correctamente', 3000);
                         deferred.resolve();
                     }
@@ -87,5 +91,8 @@ function aInvestigacionesPCtrl(ptdService, ptdFactory, serviceNotification, $q) 
         angular.forEach(vm.proyectosInvestigaciones, function (proyectosInvestigaciones) {
             proyectosInvestigaciones.selected = vm.selectedAllP;
         });
+    };
+    vm.calculahoras = function (inv) {
+        return(inv.horas_semestrales = inv.horas_semanales * 22.5);
     };
 };

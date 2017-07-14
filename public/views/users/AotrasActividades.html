@@ -22,13 +22,14 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="oact in otrasActividadesVm.otrasActividades"> 
+                        <tr ng-repeat="oact in otrasActividadesVm.otrasActividades">
                             <td><input type="checkbox" ng-model="oact.selected" /></td>
                             <td><input name="nombre_actividad" type="text" class="form-control validate" ng-model="oact.nombre_actividad"
                                     required/></td>
-                            <td> <input name="horas_semanales" type="number" class="form-control validate" ng-model="oact.horas_semanales"
-                                    required/> </td>
-                            <td> <input name="horas_semestrales" type="number" class="form-control validate" ng-model="oact.horas_semestrales"
+                            <td> <input name="horas_semanales" type="number" ng-change="otrasActividadesVm.calculahoras(oact)"
+                                    class="form-control validate" ng-model="oact.horas_semanales" required/>
+                            </td>
+                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="oact.horas_semestrales"
                                     disabled/> </td>
                             <td> <input name="descripcion_productos" type="text" class="form-control validate" ng-model="oact.descripcion_productos"
                                 /> </td>
@@ -42,10 +43,11 @@
                         </a>
                     </div>
                     <div class="fixed-action-btn add">
-                        <button type="submit" ng-click="otrasActividadesVm.addNewOAct()" ng-disabled="aOtrasActividadesForm.$invalid" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
+                        <button type="submit" ng-click="otrasActividadesVm.addNewOAct()" ng-disabled="aOtrasActividadesForm.$invalid" class="btn-floating btn-large waves-effect waves-light"
+                            title="Agregar Línea">
                             <i class="material-icons">&#xE145;</i>
                         </button>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,8 +75,8 @@
                                     class="form-control validate" disabled/> </td>
                             <td> <input name="horas_semestrales_tot" type="number" ng-model="otrasActividadesVm.resumen.horas_semestrales_tot"
                                     class="form-control validate" disabled /> </td>
-                            <td> <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumen.observaciones" 
-                                    class="form-control validate"/></td>
+                            <td> <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumen.observaciones" class="form-control validate"
+                                /></td>
                         </tr>
                     </tbody>
                 </table>

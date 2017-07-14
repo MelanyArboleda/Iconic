@@ -17,6 +17,10 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
                     vm.gruposInvestigaciones[i].tblVinculoId = 'Miembro';
                 }
             }
+            for (var i = 0; i < vm.gruposInvestigaciones.length; i++) {
+                var semestre = vm.calculahoras(vm.gruposInvestigaciones[i]);
+                ptdFactory.horasemestre.gruposInvestigaciones += semestre;
+			}
         });
     }
 
@@ -90,4 +94,8 @@ function aInvestigacionesGCtrl(ptdService, ptdFactory, serviceNotification, $q) 
             gruposInvestigaciones.selected = vm.selectedAllG;
         });
     };
+    
+    vm.calculahoras = function (inv) {
+        return(inv.horas_semestrales = inv.horas_semanales * 22.5);
+ };
 };

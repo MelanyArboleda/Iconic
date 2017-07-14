@@ -5,10 +5,15 @@ aDocenciaDirectaCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "ser
 function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotification) {
 	var vm = this;
 	vm.aDocenciaDirecta = aDocenciaDirecta;
+	
 	buscarApartDD();
 	function buscarApartDD() {
 		ptdFactory.buscarApartDD({ tabla: 'tbl_docencias_directas', ptd: ptdFactory.ptd.id }).then(function () {
 			vm.docenciaDirecta = ptdFactory.adocenciadirecta;
+			for (var i = 0; i < vm.docenciaDirecta.length; i++) {
+				var semestre = vm.calculahoras(vm.docenciaDirecta[i]);
+				ptdFactory.horasemestre.docenciaDirecta += semestre;
+			}
 		});
 	}
 	vm.observacion = {
@@ -86,4 +91,39 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 			docenciaDirecta.selected = vm.selectedAll;
 		});
 	};
+
+	vm.calculahoras = function (dd) {
+		return(dd.horas_semestrales = dd.horas_semanales * 16);
+	};
+
+	vm.ig = ptdFactory.aInfoGeneral;
+	vm.min;
+	vm.max;
+
+	vm.calculaMin = function () {
+		if (vm.ig.dedicacionIG == "Tiempo Completo") {
+			vm.min = 14;
+		}
+		else if (vm.ig.dedicacionIG == "Medio Tiempo") {
+			vm.min = 10;
+		}
+		else {
+			vm.min = 8;
+		}
+	};
+
+	vm.calculaMax = function () {
+		if (vm.ig.dedicacionIG == "Tiempo Completo") {
+			vm.max = 18;
+		}
+		else if (vm.ig.dedicacionIG == "Medio Tiempo") {
+			vm.max = 14;
+		}
+		else {
+			vm.max = 10;
+		}
+	};
+
+	vm.calculaMin();
+	vm.calculaMax();
 };

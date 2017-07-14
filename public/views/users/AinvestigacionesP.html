@@ -28,7 +28,8 @@
                                 <input type="checkbox" ng-model="pI.selectedP" /></td>
                             <td>
                                 <input name="nombre_proyecto" type="text" class="form-control validate" ng-model="pI.nombre_proyecto" required/></td>
-                             <td><select id="tblVinculoId" name="tblVinculoId" ng-model="pI.tblVinculoId" material-select watch required>
+                            <td><select id="tblVinculoId" name="tblVinculoId" ng-model="pI.tblVinculoId" material-select watch
+                                    required>
                                     <option ng-repeat="vinculos in investigacionesPVm.vinculosP">{{vinculos}}</option>
                                  </select></td>
                             <td>
@@ -36,11 +37,12 @@
                             <td>
                                 <input name="producto" type="text" class="form-control validate" ng-model="pI.producto" required/></td>
                             <td>
-                                <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate" ng-model="pI.horas_semanales" required/></td>
-                            <td>
-                                <input name="horas_semestrales" type="number" class="form-control validate" ng-model="pI.horas_semestrales" disabled/></td>
-                            <td>
-                                <input name="aprobado" type="checkbox" class="form-control validate" ng-model="pI.aprobado" /></td>
+                                <input name="horas_semanales" type="number" min="1" max="40" ng-change="investigacionesPVm.calculahoras(pI)" class="form-control validate"
+                                    ng-model="pI.horas_semanales" required/>
+                                <td>
+                                    <input name="horas_semestrales" type="number" class="form-control" ng-model="pI.horas_semestrales" disabled/></td>
+                                <td>
+                                    <input name="aprobado" type="checkbox" class="form-control validate" ng-model="pI.aprobado" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,10 +53,11 @@
                         </a>
                     </div>
                     <div class="fixed-action-btn add">
-                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesPVm.pInvAddNew()" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
+                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesPVm.pInvAddNew()" class="btn-floating btn-large waves-effect waves-light"
+                            title="Agregar Línea">
                             <i class="material-icons">&#xE145;</i>
                         </button>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>

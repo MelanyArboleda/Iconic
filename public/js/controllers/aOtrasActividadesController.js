@@ -26,10 +26,12 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
     function buscarApartOA() {
         ptdFactory.buscarApartOA({ tabla: 'tbl_actividades', id: ptdFactory.resumen.id }).then(function () {
             vm.otrasActividades = ptdFactory.aotrasactividades;
+            for (var i = 0; i < vm.otrasActividades.length; i++) {
+                var semestre = vm.calculahoras(vm.otrasActividades[i]);
+                ptdFactory.horasemestre.otrasActividades += semestre;
+            }
         });
     }
-
-
 
     function aOtrasActividades() {
         data = {
@@ -97,5 +99,8 @@ function aOtrasActividadesCtrl(ptdService, ptdFactory, serviceNotification, $q) 
         angular.forEach(vm.otrasActividades, function (otrasActividades) {
             otrasActividades.selected = vm.selectedAll;
         });
+    };
+    vm.calculahoras = function (otras) {
+        return (otras.horas_semestrales = otras.horas_semanales * 18);
     };
 };
