@@ -32,4 +32,20 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, serviceNotifica
 	if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 		ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad });
 	}
+
+	vm.validFechaFinal = function(ext) {
+        if (ext.fecha_inicio) {
+			var auxFechaInico = new Date(ext.fecha_inicio);
+			console.log(auxFechaInico);
+			console.log(auxFechaFinal);
+			if (ext.fecha_final) {
+				var auxFechaFinal = new Date(ext.fecha_final);
+				console.log(auxFechaFinal);
+				if(auxFechaFinal < auxFechaInico){
+					delete ext.fecha_final;
+				} 
+			}
+			ext.fechaFinalValida = (new Date(auxFechaInico.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+		}
+    }
 };

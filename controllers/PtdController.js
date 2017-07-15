@@ -40,7 +40,11 @@ module.exports = {
             tabla.sync().then(function () {
                 if (req.body.tabla == 'tbl_ptds' || req.body.tabla == 'tbl_resumenes') {
                     crud.findAll(tabla, { id: req.body.ptd }, null, (resp) => {
-                        res.status(200).json({ apartado: resp[0].dataValues }).end();
+                        if (resp[0] == undefined) {
+                            res.status(200).json({ apartado: 0 }).end();
+                        }else{
+                            res.status(200).json({ apartado: resp[0].dataValues }).end();
+                        }
                     });
                 } else if (req.body.tabla == 'tbl_actividades') {
                     crud.findAll(tabla, { tblResumeneId: req.body.id }, 'id ASC', (resp) => {

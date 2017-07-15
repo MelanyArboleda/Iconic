@@ -38,6 +38,7 @@
                       <div class="indicator" style="right: 430px; left: 0px;"></div>
                       <li id="perfil">Administrador</li>
                       <li><a href="" id="select">Cambiar contraseña</a></li>
+                      <li><a id="select" class="modal-action modal-close modal-trigger" href="#modalfirma">Subir firma digital</a></li>
                       <center><button class="waves-effect waves-light btn" id="cerrar" ng-click="indexVm.logout()">Cerrar sesión</button></center>
                     </div>
                   </div>
@@ -53,6 +54,140 @@
     </div>
   </header>
   <ui-view></ui-view>
+
+  <div id="modalfirma" class="modal modal-fixed-footer">
+    <div class="modal-content contenido-modal">
+      <h5><strong>Subir Firma Digital</strong></h5>
+      <div class="row">
+        <p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados del
+          plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+      </div>
+      <div class="row center">
+        <img class="responsive-img imagenfirma" src="img/firma.png">
+      </div>
+      <div class="row">
+        <form action="#">
+          <div class="col s10">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>Cargar</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="col s2 center"><button type="" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20" data-tooltip="Subir Firma"><i class="material-icons">&#xE255;</i></button></div>
+
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn"><a href="#modalfirmacontraseña" class="siguiente">Siguiente</a></button>
+      <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="modalfirmacontraseña" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h5><strong>Contraseña para firmar digitalmente</strong></h5>
+      <div class="row">
+        <p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta contraseña
+          cada vez que vayas a firmar un plan de trabajo.</p>
+        <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
+      </div>
+      <div class="row">
+        <form autocomplete="off">
+          <div class="input-field col s12 cajasombra">
+            <i class="material-icons prefix ">&#xE0DA;</i>
+            <input id="contraseñafirma" type="password" name="contraseñafirma" required>
+            <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
+          </div>
+
+          <div class="input-field col s12 cajasombra">
+            <i class="material-icons prefix ">&#xE0DA;</i>
+            <input id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
+            <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
+          </div>
+
+          <div class="input-field col s12 ">
+            <button type="submit" class="waves-effect btn">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+  </div>
+
+  <div id="modalObservaciones" class="modal" style="overflow-y: hidden;">
+    <div id="chat">
+      <div id="header-chat">
+        <h5>Observaciones al Plan de Trabajo Docente | Samuel Vergara</h5>
+      </div>
+      <div id="mensajes">
+
+        <div ng-show="observacionesDecanoForm.$pristine" class="alert alert-info contenidoObservaciones container contenido-alert">
+          <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+          <strong>¡Importante!</strong> Recuerda que cada comentario que envíes no podrá ser borrado, utiliza esta herramienta, únicamente para la concertación del Plan de trabajo.
+        </div>
+
+        <div class="mensaje-amigo right">
+          <div class="contenido">
+            <p class="message">Ese plan de trabajo está malo, hace bien tu trabajo, pa' que te estoy pagando?</p>
+          </div>
+          <div class="fecha"><p>Enviado 12:03am</p></div>
+        </div>
+
+        <div class="mensaje-amigo right">
+          <div class="contenido">
+            <p class="message">Ese plan de trabajo está malo, hace bien tu trabajo, pa' que te estoy pagando?</p>
+          </div>
+          <div class="fecha"><p>Enviado 12:03am</p></div>
+        </div>
+
+        
+        <div class="mensaje-autor left">
+          <div class="contenido">
+            <p class="message">Buenas, lo cambiaré.</p>
+          </div>
+          <div class="fecha"><p>Enviado 1:34pm</p></div>
+        </div>
+
+        <div class="mensaje-autor left">
+          <div class="contenido">
+            <p class="message">Buenas, lo cambiaré.</p>
+          </div>
+          <div class="fecha"><p>Enviado 1:34pm</p></div>
+        </div>
+        
+      </div>
+    </div>
+    <div id="caja-mensaje">
+
+      <form name="observacionesDecanoForm" class="col s12">
+        <div class="row mensaje">
+          <div class="input-field col s10">
+            <i class="material-icons prefix">&#xE8AF;</i>
+            <textarea id="observacion" class="materialize-textarea"></textarea>
+            <label for="observacion">*Observación</label>
+          </div>
+
+          <div class="col s2">
+            <div class="form-group">
+              <div class="fixed-action-btn subir_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-lightbtn">
+                    <i class="material-icons">&#xE163;</i> </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
 
   <script type="text/javascript">
     (function ($) {

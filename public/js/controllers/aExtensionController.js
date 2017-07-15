@@ -17,7 +17,10 @@ function aExtensionCtrl(ptdService, ptdFactory, serviceNotification, $q) {
         function saveExtension() {
             var deferred = $q.defer();
             for (var i = 0; i < vm.extension.length; i++) {
-                vm.extension[i].tblPtdId = ptdFactory.ptd.id,
+                vm.extension[i].tblPtdId = ptdFactory.ptd.id;
+                if (vm.extension[i].aprobado == "") {
+                    vm.extension[i].aprobado = false;
+                }
                     data = {
                         datos: vm.extension[i],
                         tabla: 'tbl_actividades_extension'

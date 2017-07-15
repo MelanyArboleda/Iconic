@@ -92,6 +92,7 @@ display:block;
  color: #424242;
  text-align: center;
  line-height: 150%;
+ padding-bottom: 3px;
 }
 
 
@@ -163,3 +164,89 @@ p.titulo{
     padding-right: 1px;
     right: 5px;
 }
+
+
+#chat{
+  background-color: #eee;
+	width: 100%;
+}
+#chat #header-chat{
+	background-color: #26a69a; 
+	color: white;
+	padding: 2.2%;
+	text-align: center;
+}
+#caja-mensaje{
+	width: 100%;
+}
+#caja-mensaje input{
+	width: 100%;
+}
+#chat #mensajes{
+	padding: 10px;
+	height: 380px;
+	width: 100%;
+	overflow: hidden;
+	overflow-y: scroll 
+}
+#chat #mensajes .mensaje-autor{
+		margin-bottom: 4%;
+    padding-top: 23%;
+}
+#chat #mensajes .mensaje-autor .contenido{
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+	display: inline-block;
+	padding: 10px;
+	width: 100%;
+}
+#chat #mensajes .mensaje-autor .fecha{
+	color: #777;
+	font-style: italic;
+	font-size: 13px;
+	text-align: right;
+	margin-left: 35px;
+	margin-top: 10px;
+}
+#chat #mensajes .mensaje-amigo{
+	  margin-bottom: 4%;
+    padding-top: 3%;
+}
+#chat #mensajes .mensaje-amigo .contenido{
+	background-color: #b0bec5;
+	border-radius: 5px;
+	color: #212121;
+	display: inline-block;
+	padding: 10px;
+	vertical-align: top;
+	width: 97%;
+}
+#chat #mensajes .mensaje-amigo .fecha{
+	color: #777;
+	font-style: italic;
+	font-size: 13px;
+	text-align: left;
+	
+	margin-top: 10px;
+}
+
+.mensaje{
+  padding-left: 2%;
+  margin-bottom: 0px;
+}
+
+.fixed-action-btn.subir_observaciones{
+	bottom: 5%;
+  left: 87%;
+}
+
+#modalObservaciones{
+  max-height: 100%;
+  border-radius: 3%;
+}
+
+.message{
+  padding-left: 2%;
+}
+      

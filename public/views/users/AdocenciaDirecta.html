@@ -43,7 +43,7 @@
                                     class="form-control validate" ng-model="dd.horas_semanales" required/>
                                 <td>
                                     <input name="horas_semestrales" type="number" class="form-control" ng-model="dd.horas_semestrales"
-                                        disabled/></td>
+                                        readonly/></td>
                                 <td>
                                     <input name="estudiante" type="number" min="1" max="5" class="form-control validate" ng-model="dd.estudiante" /></td>
                                 <td>
@@ -83,6 +83,14 @@
         <div class="row center" input-field>
             <button ng-disabled="aDocenciaDirectaForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
         </div>
+
+        <div class="form-group">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-action modal-close modal-trigger btn" data-target='modalObservaciones' disabled modal>
+                    <i class="material-icons">&#xE85F;</i> </a>
+            </div>
+        </div>
+
     </div>
 </form>
 
