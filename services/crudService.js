@@ -44,7 +44,7 @@ module.exports = {
       callback('error')
     });
   },
-  //inner join
+  //inner join facultad
   innerFacultad: function (tabla, donde, callback) {
     tabla[0].findAll({
       attributes: ['id', 'facultad'],
@@ -73,13 +73,32 @@ module.exports = {
       callback();
     });
   },
-
-  query: function (sql, callback) {
-    sequelize.query(sql, { type: Sequelize.QueryTypes.SELECT }).then(resp => {
-      callback(resp);
+  //inner join area
+  innerArea : function (tabla, donde, callback) {
+    tabla[0].findAll({
+      attributes: ['area'],
+      include: [{
+        model: tabla[1], required: true, attributes: [],where: donde
+      }]
+    }).then((tabla) => {
+      callback(tabla[0].dataValues);
     }).catch((err) => {
       console.log(err);
       callback();
     });
-  }
+  },
+
+  innerDedicacion : function (tabla, donde, callback) {
+    tabla[0].findAll({
+      attributes: ['dedicacion'],
+      include: [{
+        model: tabla[1], required: true, attributes: [],where: donde
+      }]
+    }).then((tabla) => {
+      callback(tabla[0].dataValues);
+    }).catch((err) => {
+      console.log(err);
+      callback();
+    });
+  },
 }

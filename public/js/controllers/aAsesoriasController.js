@@ -1,14 +1,13 @@
 angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
-aAsesoriasCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
+aAsesoriasCtrl.$inject = ["APService", "APFactory", "ptdFactory","serviceNotification", "$q"];
 
-function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification, $q) {
+function aAsesoriasCtrl(APService, APFactory, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aAsesorias = aAsesorias;
-    buscarApartAP();
     function buscarApartAP() {
-        ptdFactory.buscarApartAP({ tabla: 'tbl_asesoria_proyectos', ptd: ptdFactory.ptd.id }).then(function () {
-            vm.asesorias = ptdFactory.aasesoria;
+        APFactory.buscarApartAP({ ptd: ptdFactory.ptd.id }).then(function () {
+            vm.asesorias = APFactory.AsePro;
         });
     }
 
@@ -19,11 +18,9 @@ function aAsesoriasCtrl(ptdService, ptdFactory, serviceNotification, $q) {
             for (var i = 0; i < vm.asesorias.length; i++) {
                 vm.asesorias[i].tblPtdId = ptdFactory.ptd.id,
                     data = {
-                        datos: vm.asesorias[i],
-                        tabla: 'tbl_asesoria_proyectos'
+                        datos: vm.asesorias[i]
                     }
-                console.log("llama a servicio Save de asesoria proyectos");
-                ptdService.save(data).then(function (resultado) {
+                APService.guardarAP(data).then(function (resultado) {
                     if (JSON.stringify(resultado) === JSON.stringify(vm.asesorias[i-1]) || vm.asesorias[i-1] == undefined) {
                         serviceNotification.success('Apartado guardado correctamente', 3000);
                         deferred.resolve();

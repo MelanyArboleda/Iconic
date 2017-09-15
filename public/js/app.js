@@ -6,7 +6,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory",
 
         $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
             console.log("Na na na", toState, toParams, fromState);
-            console.log(loginFactory.user);
+            console.log("Usuario--------",loginFactory.user);
 
             if (toParams.login) {
                 var name = toState.name.split(".");
@@ -55,7 +55,6 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory",
                         }
                     }
                 }
-                console.log("que pasa?", loginFactory.userLogin);
                 if (!loginFactory.userLogin) {
                     console.log("enviar al login");
                     event.preventDefault();

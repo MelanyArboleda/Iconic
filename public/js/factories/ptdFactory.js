@@ -7,145 +7,58 @@ function ptdFactory(ptdService, serviceNotification, $q) {
     var factory = {
         aInfoGeneral: {},
         ptd: {},
-        adocenciadirecta: [],
-        ainvestigacionesgrupo: [],
-        ainvestigacionesproyecto: [],
+        datosig:{},
         aobservacion: {},
-        acomision: [],
-        aproyecto: [],
-        aextension: [],
-        aasesoria: [],
-        aotrasactividades: [],
-        resumen: {},
         horasemestre: {
-            docenciaDirecta: 0,
-            otrasActividades: 0,
-            proyectosInvestigaciones: 0,
-            gruposInvestigaciones: 0
+            DD: 0,
+            OA: 0,
+            IP: 0,
+            IS: 0
         },
         createPtd: createPtd,
         buscarPtd: buscarPtd,
-        buscarApartDD: buscarApartDD,
-        buscarApartIG: buscarApartIG,
-        buscarApartIP: buscarApartIP,
-        buscarApartEP: buscarApartEP,
-        buscarApartCE: buscarApartCE,
-        buscarApartPP: buscarApartPP,
-        buscarApartAP: buscarApartAP,
-        buscarApartOA: buscarApartOA,
-        buscarResumen: buscarResumen,
-        cargarHoras: cargarHoras
+        cargarHoras: cargarHoras,
+        buscarArea: buscarArea,
+        buscarDedicacion: buscarDedicacion
     };
     return factory;
 
     function createPtd(user) {
+        var deferred = $q.defer();
         ptdService.createPtd(user).then(function (result) {
             factory.ptd = result.ptd;
+            deferred.resolve(result.ptd.id);
         });
+        return deferred.promise;
     }
 
     function buscarPtd(apartado) {
         var deferred = $q.defer();
         factory.ptd = {};
-        ptdService.buscarApart(apartado).then(function (result) {
+        ptdService.buscarPtd(apartado).then(function (result) {
             factory.ptd = result.apartado;
             deferred.resolve();
         });
-        return deferred.promise;
+        return deferred.promise;    
     }
 
-    function buscarApartDD(apartado) {
+    function buscarArea(user){
         var deferred = $q.defer();
-        factory.adocenciadirecta = [];
-        factory.horasemestre.docenciaDirecta = 0;
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.adocenciadirecta = result.apartado;
+        factory.datosig = {};        
+        ptdService.buscarArea(user).then(function (area) {
+            factory.datosig.area = area;
             deferred.resolve();
-        });
-        return deferred.promise;
+        }); 
+        return deferred.promise; 
     }
-
-    function buscarApartIG(apartado) {
+    
+    function buscarDedicacion(user){
         var deferred = $q.defer();
-        factory.ainvestigacionesgrupo = [];
-        factory.horasemestre.gruposInvestigaciones = 0;
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.ainvestigacionesgrupo = result.apartado;
+        ptdService.buscarDedicacion(user).then(function (dedicacion) {
+            factory.datosig.dedicacion = dedicacion;
             deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartIP(apartado) {
-        var deferred = $q.defer();
-        factory.ainvestigacionesproyecto = [];
-        factory.horasemestre.proyectosInvestigaciones = 0;
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.ainvestigacionesproyecto = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartEP(apartado) {
-        var deferred = $q.defer();
-        factory.aextension = [];
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.aextension = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartCE(apartado) {
-        var deferred = $q.defer();
-        factory.acomision = [];
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.acomision = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartPP(apartado) {
-        var deferred = $q.defer();
-        factory.aproyecto = [];
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.aproyecto = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartAP(apartado) {
-        var deferred = $q.defer();
-        factory.aasesoria = [];
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.aasesoria = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarApartOA(apartado) {
-        var deferred = $q.defer();
-        factory.aotrasactividades = [];
-        factory.horasemestre.otrasActividades = 0;
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.aotrasactividades = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
-
-    function buscarResumen(apartado) {
-        var deferred = $q.defer();
-        factory.resumen = {};
-        ptdService.buscarApart(apartado).then(function (result) {
-            factory.resumen = result.apartado;
-            deferred.resolve();
-        });
-        return deferred.promise;
+        }); 
+        return deferred.promise; 
     }
 
     function cargarHoras() {

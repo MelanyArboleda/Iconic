@@ -1,20 +1,17 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "serviceNotification"];
+aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "serviceNotification"];
 
-function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotification) {
+function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, serviceNotification) {
 	var vm = this;
 	vm.aDocenciaDirecta = aDocenciaDirecta;
-	
-	buscarApartDD();
-	function buscarApartDD() {
-		ptdFactory.buscarApartDD({ tabla: 'tbl_docencias_directas', ptd: ptdFactory.ptd.id }).then(function () {
-			vm.docenciaDirecta = ptdFactory.adocenciadirecta;
-			for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-				var semestre = vm.calculahoras(vm.docenciaDirecta[i]);
-				ptdFactory.horasemestre.docenciaDirecta += semestre;
-			}
-		});
+	RecargarDD();
+	function RecargarDD() {
+		vm.docenciaDirecta = DDFactory.DocDir;
+		// for (var i = 0; i < vm.docenciaDirecta.length; i++) {
+		// 	var semestre = vm.calculahoras(vm.docenciaDirecta[i]);
+		// 	ptdFactory.horasemestre.docenciaDirecta += semestre;
+		// }
 	}
 	vm.observacion = {
 		id: ptdFactory.ptd.id,
@@ -23,14 +20,9 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 
 	function aDocenciaDirecta() {
 		for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-			vm.docenciaDirecta[i].tblPtdId = ptdFactory.ptd.id,
-				data = {
-					datos: vm.docenciaDirecta[i],
-					tabla: 'tbl_docencias_directas'
-				}
-			console.log("llama a servicio Save de docencia directa");
-			ptdService.save(data).then(function (resultado) {
-				if (JSON.stringify(resultado) === JSON.stringify(vm.docenciaDirecta[i - 1]) || vm.docenciaDirecta[i - 1] == undefined) {
+			vm.docenciaDirecta[i].tblPtdId = ptdFactory.ptd.id;
+			DDService.guardarDD({ datos: vm.docenciaDirecta[i] }).then(function (resultado) {
+				if (angular.toJson(resultado) === angular.toJson(vm.docenciaDirecta[i - 1]) || vm.docenciaDirecta[i - 1] == undefined) {
 					serviceNotification.success('Apartado guardado correctamente', 3000);
 				}
 			}).catch(function (err) {
@@ -38,22 +30,18 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 			});
 		}
 		if (vm.observacion.observaciones_dd != null) {
-			data = {
-				datos: vm.observacion,
-				tabla: 'tbl_ptds',
-			}
-			ptdService.save(data).then(function (next) {
-				ptdFactory.buscarPtd({ tabla: 'tbl_ptds', ptd: ptdFactory.ptd.id }).then(function () {
-					buscarApartDD();
+			ptdService.guardarPtd({ datos: vm.observacion }).then(function (next) {
+				ptdFactory.buscarPtd({ ptd: ptdFactory.ptd.id }).then(function () {
+					RecargarDD();
 					vm.observacion = {
 						id: ptdFactory.ptd.id,
 						observaciones_dd: ptdFactory.ptd.observaciones_dd,
 					};
 				});
-				serviceNotification.success('PTD actualizó correctamente', 3000);
+				serviceNotification.success('PTD guardado correctamente', 3000);
 			}).catch(function (err) {
 				console.log(err);
-				serviceNotification.error('Error PTD.', 2000);
+				serviceNotification.error('Error PTD', 2000);
 			});
 		}
 	}
@@ -93,7 +81,7 @@ function aDocenciaDirectaCtrl(ptdService, ptdFactory, loginFactory, serviceNotif
 	};
 
 	vm.calculahoras = function (dd) {
-		return(dd.horas_semestrales = dd.horas_semanales * 16);
+		return (dd.horas_semestrales = dd.horas_semanales * 16);
 	};
 
 	vm.ig = ptdFactory.aInfoGeneral;

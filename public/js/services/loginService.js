@@ -11,7 +11,6 @@ function loginService($http, $q) {
 	this.busacarUser = busacarUser;
 
 	function login(user) {
-		// console.log(user);
 		var deferred = $q.defer();
 		$http.post("http://localhost:3000/auth/login", user).then(function (res) {
 			console.log(res);
@@ -26,7 +25,6 @@ function loginService($http, $q) {
 
 	function sendCode(user) {
 		var deferred = $q.defer();
-		console.log("sending", user);
 		$http.post("http://localhost:3000/auth/sendCode", user).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
@@ -40,7 +38,6 @@ function loginService($http, $q) {
 
 	function validarCodigo(data) {
 		var deferred = $q.defer();
-		console.log("validando tu tu tu");
 		$http.post("http://localhost:3000/auth/actic", data).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
@@ -53,7 +50,6 @@ function loginService($http, $q) {
 
 	function compararcontraseñas(data) {
 		var deferred = $q.defer();
-		console.log("comparando tu tu tu");
 		$http.post("http://localhost:3000/auth/configp", data).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);
@@ -66,7 +62,6 @@ function loginService($http, $q) {
 
 	function busacarUser(data) {
 		var deferred = $q.defer();
-		console.log("buscando user tu tu tu");
 		$http.post("http://localhost:3000/auth/buscarUser", data).then(function (res) {
 			console.log(res);
 			deferred.resolve(res.data);

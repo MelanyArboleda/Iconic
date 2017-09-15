@@ -1,6 +1,6 @@
 const funciones = require('.././services/funciones');
 const crud = require('.././services/crudService');
-const modelo = require('.././database/modelos');
+const tbl_usuarios = require('.././database/tbl_usuarios');
 const fs = require('fs');
 const jwt = require("jwt-simple");
 const config = require("../config/config");
@@ -13,7 +13,7 @@ module.exports = {
         if (req.body.correo && req.body.password) {
             var correo = req.body.correo;
             var password = req.body.password;
-            crud.findOne(modelo.tbl_usuarios, { correo: correo }, null, (user) => {
+            crud.findOne(tbl_usuarios, { correo: correo }, null, (user) => {
                 if (!user) {
                     res.sendStatus(403);
                 } else if (user.tblEstadoId != '2' || user.createdAt.toString() == user.updatedAt.toString()) {
@@ -52,7 +52,7 @@ module.exports = {
 
     buscarUsuario: function (req, res, next) {
         var decode = jwt.decode(req.body.token, config.secret);
-        crud.findOne(modelo.tbl_usuarios, { correo: decode.correo }, null, (user) => {
+        crud.findOne(tbl_usuarios, { correo: decode.correo }, null, (user) => {
             user = {
                 doc_identidad: user.doc_identidad,
                 nombre: user.nombre,
@@ -81,7 +81,7 @@ module.exports = {
         var codigoEncriptado = new Buffer(req.body.codigoEncriptado, 'base64');
         codigoEncriptado = codigoEncriptado.toString();
         if (req.body.codigo == codigoEncriptado) {
-            crud.update(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { tblEstadoId: 4 }, function (data) {
+            crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { tblEstadoId: 4 }, function (data) {
                 if (data == 'update') {
                     funciones.buscarUser(req.body.doc_identidad, function (user) {
                         res.status(200).json({ user: user, mensaje: 'usuario activado' }).end();
@@ -94,9 +94,9 @@ module.exports = {
     },
 
     pinicial: function (req, res, next) {
-        crud.findOne(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, null, (user) => {
+        crud.findOne(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, null, (user) => {
             if (!bcrypt.compareSync(req.body.password, user.contraseña)) {
-                crud.update(modelo.tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
+                crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
                     if (data == 'update') {
                         funciones.buscarUser(req.body.doc_identidad, function (user) {
                             res.status(200).json({ user: user, mensaje: 'contraseña actualizada' }).end();
@@ -121,7 +121,7 @@ module.exports = {
             }
         });
 
-        crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
+        crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
             if (data == 'update') {
                 return true
             } else {
@@ -132,7 +132,7 @@ module.exports = {
 
     cinicial: function (req, res, next) {
         if (req.res.req.user.contraseña != req.body.contraseña_firma) {
-            crud.update(modelo.tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña_firma: funciones.encriptar(req.body.contraseña_firma) }, function (data) {
+            crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña_firma: funciones.encriptar(req.body.contraseña_firma) }, function (data) {
                 if (data == 'update') {
                     return true
                 } else {
@@ -157,7 +157,7 @@ module.exports = {
             b = new Buffer(user, 'base64')
             user = b.toString();
         }
-        crud.findOne(modelo.tbl_usuarios, { doc_identidad: user }, null, function (data) {
+        crud.findOne(tbl_usuarios, { doc_identidad: user }, null, function (data) {
             if (data !== undefined) {
                 if (fecha >= fecha_act) {
                     if (data.recuperar == true) {
@@ -169,7 +169,7 @@ module.exports = {
                     var datos = {
                         recuperar: false
                     };
-                    crud.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) { });
+                    crud.update(tbl_usuarios, { doc_identidad: user }, datos, function (data) { });
                     res.redirect('/');
                 }
             } else {
@@ -184,18 +184,10 @@ module.exports = {
             contraseña: funciones.encriptar(req.body.contraseña),
             recuperar: false
         };
-        crud.update(modelo.tbl_usuarios, { doc_identidad: user }, datos, function (data) {
+        crud.update(tbl_usuarios, { doc_identidad: user }, datos, function (data) {
             if (data == 'update') {
                 res.redirect('/');
             }
         });
-    },
-
-    // test: (req, res, next) => {
-
-    //     console.log("programs");
-    //     crud.findAll(modelo.tbl_programas, {}, (programs) => {
-    //         res.json(programs);
-    //     })
-    // }
+    }
 };

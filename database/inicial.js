@@ -1,6 +1,20 @@
 var funciones = require('.././services/funciones');
-var modelo = require('.././database/modelos');
 var crud = require('.././services/crudService');
+var tbl_estados = require('./tbl_estados');
+var tbl_dedicaciones = require('./tbl_dedicaciones');
+var tbl_perfiles = require('./tbl_perfiles');
+var tbl_recursos = require('./tbl_recursos');
+var tbl_facultades = require('./tbl_facultades');
+var tbl_areas = require('./tbl_areas');
+var tbl_sedes = require('./tbl_sedes');
+var tbl_programas = require('./tbl_programas');
+var tbl_usuarios = require('./tbl_usuarios');
+var tbl_usuario_programas = require('./tbl_usuario_programas');
+var tbl_vinculos = require('./tbl_vinculos');
+var tbl_actores = require('./tbl_actores');
+var tbl_etapas = require('./tbl_etapas');
+var tbl_fechas_etapas = require('./tbl_fechas_etapas');
+var tbl_dias = require('./tbl_dias');
 
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [
@@ -130,6 +144,7 @@ var usuarios = [{
   correo: "gabriel_arboleda23151@elpoli.edu.co",
   contraseña: funciones.encriptar("Iconic123"),
   contraseña_firma: funciones.encriptar("0"),
+  tblDedicacioneId: 1,
   tblPerfileId: 6,
   tblEstadoId: 1,
   recuperar: false
@@ -142,6 +157,7 @@ var usuarios = [{
   correo: "samuel_vergara23151@elpoli.edu.co",
   contraseña: funciones.encriptar("Iconic123"),
   contraseña_firma: funciones.encriptar("0"),
+  tblDedicacioneId: 1,
   tblPerfileId: 6,
   tblEstadoId: 1,
   recuperar: false
@@ -154,7 +170,7 @@ var usuario_doc = [{
   doc_identidad: "1152710692"
 }];
 
-var usuario_programa = [{
+var usuario_programas = [{
   tblUsuarioDocIdentidad: "1039470240",
   tblProgramaCodigo: "6",
   tblProgramaPrograma: "Ingeniería",
@@ -191,7 +207,7 @@ var fechas_etapas = [{
   año: '2017/06/10',
   fecha_inicial: '2017/06/10',
   fecha_final: '2017/06/30'
-},{
+}, {
   tblEtapaId: 1,
   tblFacultadeId: 6,
   semestre: 2,
@@ -211,23 +227,23 @@ var dias = [
 
 
 //llamados de insercion para cada tabla
-llamado_insert(estados, modelo.tbl_estados, estados, () => {
-  llamado_insert(dedicaciones, modelo.tbl_dedicaciones, dedicaciones, () => {
-    llamado_insert(perfiles, modelo.tbl_perfiles, perfiles, () => {
-      llamado_insert(recursos, modelo.tbl_recursos, recursos, () => {
-        // llamado_insert(permisos_iniciales, modelo.tbl_permisos_iniciales, permisos_iniciales, () => {
-        llamado_insert(facultades, modelo.tbl_facultades, facultades, () => {
-          llamado_insert(areas, modelo.tbl_areas, areas, () => {
-            llamado_insert(sedes, modelo.tbl_sedes, sedes, () => {
-              llamado_insert(programas, modelo.tbl_programas, programas, () => {
-                llamado_insert(usuarios, modelo.tbl_usuarios, usuario_doc, () => {
-                  llamado_insert(usuario_programa, modelo.tbl_usuario_programa, usuario_programa, () => {
-                    llamado_insert(vinculos, modelo.tbl_vinculos, vinculos, () => {
-                      llamado_insert(actores, modelo.tbl_actores, actores, () => {
-                        llamado_insert(etapas, modelo.tbl_etapas, etapas, () => {
-                          llamado_insert(fechas_etapas, modelo.tbl_fechas_etapas, fechas_etapas, () => {
-                            llamado_insert(dias, modelo.tbl_dias, dias, () => {
-                              
+llamado_insert(estados, tbl_estados, estados, () => {
+  llamado_insert(dedicaciones, tbl_dedicaciones, dedicaciones, () => {
+    llamado_insert(perfiles, tbl_perfiles, perfiles, () => {
+      llamado_insert(recursos, tbl_recursos, recursos, () => {
+        // llamado_insert(permisos_iniciales, tbl_permisos_iniciales, permisos_iniciales, () => {
+        llamado_insert(facultades, tbl_facultades, facultades, () => {
+          llamado_insert(areas, tbl_areas, areas, () => {
+            llamado_insert(sedes, tbl_sedes, sedes, () => {
+              llamado_insert(programas, tbl_programas, programas, () => {
+                llamado_insert(usuarios, tbl_usuarios, usuario_doc, () => {
+                  llamado_insert(usuario_programas, tbl_usuario_programas, usuario_programas, () => {
+                    llamado_insert(vinculos, tbl_vinculos, vinculos, () => {
+                      llamado_insert(actores, tbl_actores, actores, () => {
+                        llamado_insert(etapas, tbl_etapas, etapas, () => {
+                          llamado_insert(fechas_etapas, tbl_fechas_etapas, fechas_etapas, () => {
+                            llamado_insert(dias, tbl_dias, dias, () => {
+
                             });
                           });
                         });

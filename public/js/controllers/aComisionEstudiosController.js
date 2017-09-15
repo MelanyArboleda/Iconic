@@ -1,39 +1,27 @@
 angular.module("iconic").controller("aComisionEstudiosCtrl", aComisionEstudiosCtrl);
 
-aComisionEstudiosCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
+aComisionEstudiosCtrl.$inject = ["CEService", "CEFactory", "ptdFactory", "serviceNotification", "$q"];
 
-function aComisionEstudiosCtrl(ptdService, ptdFactory, serviceNotification, $q) {
+function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.comisionEstudios = comisionEstudios;
-    buscarApartCE();
-    function buscarApartCE() {
-        ptdFactory.buscarApartCE({ tabla: 'tbl_comision_estudios', ptd: ptdFactory.ptd.id }).then(function () {
-            vm.comisionE = ptdFactory.acomision;
-        });
+    recargarCE();
+    function recargarCE() {
+        vm.comisionE = CEFactory.ComEst;
     }
 
     function comisionEstudios() {
-        saveComision().then(function () { buscarApartCE(); });
-        function saveComision() {
-            var deferred = $q.defer();
-            for (var i = 0; i < vm.comisionE.length; i++) {
-                vm.comisionE[i].tblPtdId = ptdFactory.ptd.id,
-                    data = {
-                        datos: vm.comisionE[i],
-                        tabla: 'tbl_comision_estudios'
-                    }
-                console.log("llama a servicio Save de comision de estudios");
-                ptdService.save(data).then(function (resultado) {
-                    if (JSON.stringify(resultado) === JSON.stringify(vm.comisionE[i-1]) || vm.comisionE[i-1] == undefined) {
-                        serviceNotification.success('Apartado guardado correctamente', 3000);
-                        deferred.resolve();
-                    }
-                }).catch(function (err) {
-                    console.log(err);
-                    serviceNotification.error('No se guardó el apartado', 2000);
-                });
-            }
-            return deferred.promise;
+        var deferred = $q.defer();
+        for (var i = 0; i < vm.comisionE.length; i++) {
+            vm.comisionE[i].tblPtdId = ptdFactory.ptd.id
+            CEService.guardarCE({ datos: vm.comisionE[i] }).then(function (resultado) {
+                if (JSON.stringify(resultado) === JSON.stringify(vm.comisionE[i - 1]) || vm.comisionE[i - 1] == undefined) {
+                    serviceNotification.success('Apartado guardado correctamente', 3000);
+                }
+            }).catch(function (err) {
+                console.log(err);
+                serviceNotification.error('No se guardó el apartado', 2000);
+            });
         }
     }
 

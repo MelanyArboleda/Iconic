@@ -1,42 +1,29 @@
 angular.module("iconic").controller("aExtensionCtrl", aExtensionCtrl);
 
-aExtensionCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification", "$q"];
+aExtensionCtrl.$inject = ["AEService", "AEFactory", "ptdService", "ptdFactory", "serviceNotification", "$q"];
 
-function aExtensionCtrl(ptdService, ptdFactory, serviceNotification, $q) {
+function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, serviceNotification, $q) {
     var vm = this;
     vm.aExtension = aExtension;
-    buscarApartEP();
-    function buscarApartEP() {
-        ptdFactory.buscarApartEP({ tabla: 'tbl_actividades_extension', ptd: ptdFactory.ptd.id }).then(function () {
-            vm.extension = ptdFactory.aextension;
-        });
+    recargarAE();
+    function recargarAE() {
+        vm.extension = AEFactory.ExtPro;
     }
 
     function aExtension() {
-        saveExtension().then(function () { buscarApartEP(); });
-        function saveExtension() {
-            var deferred = $q.defer();
-            for (var i = 0; i < vm.extension.length; i++) {
-                vm.extension[i].tblPtdId = ptdFactory.ptd.id;
-                if (vm.extension[i].aprobado == "") {
-                    vm.extension[i].aprobado = false;
-                }
-                    data = {
-                        datos: vm.extension[i],
-                        tabla: 'tbl_actividades_extension'
-                    }
-                console.log("llama a servicio Save de actividades extension");
-                ptdService.save(data).then(function (resultado) {
-                    if (JSON.stringify(resultado) === JSON.stringify(vm.extension[i-1]) || vm.extension[i-1] == undefined) {
-                        serviceNotification.success('Apartado guardado correctamente', 3000);
-                        deferred.resolve();
-                    }
-                }).catch(function (err) {
-                    console.log(err);
-                    serviceNotification.error('No se guardó el apartado', 2000);
-                });
+        for (var i = 0; i < vm.extension.length; i++) {
+            vm.extension[i].tblPtdId = ptdFactory.ptd.id;
+            if (vm.extension[i].aprobado == "") {
+                vm.extension[i].aprobado = false;
             }
-            return deferred.promise;
+            AEService.guardarAE({ datos: vm.extension[i] }).then(function (resultado) {
+                if (angular.toJson(resultado) === angular.toJson(vm.extension[i - 1]) || vm.extension[i - 1] == undefined) {
+                    serviceNotification.success('Apartado guardado correctamente', 3000);
+                }
+            }).catch(function (err) {
+                console.log(err);
+                serviceNotification.error('No se guardó el apartado', 2000);
+            });
         }
     }
 

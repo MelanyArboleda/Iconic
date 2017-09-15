@@ -36,7 +36,7 @@ function aProyectosCtrl(ptdService, ptdFactory, serviceNotification, $q) {
                 }
                 console.log("llama a servicio Save de formulacion proyectos");
                 ptdService.save(data).then(function (resultado) {
-                    if (JSON.stringify(resultado) === JSON.stringify(vm.proyectos[i-1]) || vm.proyectos[i-1] == undefined) {
+                    if (angular.toJson(resultado) === angular.toJson(vm.proyectos[i-1]) || vm.proyectos[i-1] == undefined) {
                         serviceNotification.success('Apartado guardado correctamente', 3000);
                         deferred.resolve();
                     }

@@ -49,7 +49,7 @@
 
 // var localStrategy = require('passport-local').Strategy;
 var crud = require('.././services/crudService');
-var modelo = require('.././database/modelos');
+const tbl_usuarios = require('.././database/tbl_usuarios');
 var mail = require('.././controllers/MailController');
 var bcrypt = require('bcryptjs');
 
@@ -68,7 +68,7 @@ class auth {
 		var strategy = new Strategy(params, function (payload, done) {
 			// var user = users[payload.id] || null;
 			console.log(payload);
-			crud.findAll(modelo.tbl_usuarios, { correo: payload.correo }, function (data) {
+			crud.findAll(tbl_usuarios, { correo: payload.correo }, function (data) {
 				if (data !== undefined) {
 					//si esta activa las cuenta o las fechas de creado y actualizado del usuario son las mismas de ja seguir con el proceso
 					if (data.estado == 1) {

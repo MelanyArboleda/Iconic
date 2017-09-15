@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const crud = require('.././services/crudService');
-const modelo = require('.././database/modelos');
+const tbl_usuarios = require('.././database/tbl_usuarios');
 //la funcion encripta cualquier dato que llegue y lo retorna
 module.exports = {
 	encriptar: function (clave) {
@@ -10,7 +10,7 @@ module.exports = {
 	},
 
 	buscarUser: function (user, callback) {
-		crud.findAll(modelo.tbl_usuarios, { doc_identidad: user }, null, (data) => {
+		crud.findAll(tbl_usuarios, { doc_identidad: user }, null, (data) => {
 			callback(user = {
 				doc_identidad: data[0].dataValues.doc_identidad,
 				nombre: data[0].dataValues.nombre,
@@ -25,53 +25,4 @@ module.exports = {
 			});
 		});
 	},
-
-	buscarTabla: function (tabla, callback) {
-		var modeloTabla;
-		switch (tabla) {
-			case 'tbl_ptds':
-				modeloTabla = modelo.tbl_ptds;
-				break;
-			case 'tbl_docencias_directas':
-				modeloTabla = modelo.tbl_docencias_directas;
-				break;
-			case 'tbl_investigaciones_proyectos':
-				modeloTabla = modelo.tbl_investigaciones_proyectos;
-				break;
-			case 'tbl_investigaciones_semilleros':
-				modeloTabla = modelo.tbl_investigaciones_semilleros;
-				break;
-			case 'tbl_actividades_extension':
-				modeloTabla = modelo.tbl_actividades_extension;
-				break;
-			case 'tbl_comision_estudios':
-				modeloTabla = modelo.tbl_comision_estudios;
-				break;
-			case 'tbl_formulacion_proyectos':
-				modeloTabla = modelo.tbl_formulacion_proyectos;
-				break;
-			case 'tbl_asesoria_proyectos':
-				modeloTabla = modelo.tbl_asesoria_proyectos;
-				break;
-			case 'tbl_resumenes':
-				modeloTabla = modelo.tbl_resumenes;
-				break;
-			case 'tbl_actividades':
-				modeloTabla = modelo.tbl_actividades;
-				break;
-			case 'tbl_observaciones':
-				modeloTabla = modelo.tbl_observaciones;
-				break;
-			case 'tbl_horarios':
-				modeloTabla = modelo.tbl_horarios;
-				break;
-			case 'tbl_seguimientos_evaluacion':
-				modeloTabla = modelo.tbl_seguimientos_evaluacion;
-				break;
-			case 'tbl_evidencias':
-				modeloTabla = modelo.tbl_seguimientotbl_evidenciass_evaluacion;
-				break;
-		}
-		callback(modeloTabla);
-	}
 };

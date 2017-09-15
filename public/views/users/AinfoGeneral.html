@@ -39,17 +39,13 @@
                         </div>
 
                         <div class="row" input-field>
-                          <select id="dedicacionIG" name="dedicacionIG" ng-model="infoGeneralVm.infoGeneral.dedicacionIG" material-select watch>
-                              <option ng-repeat="dedicacion in infoGeneralVm.dedicacionIG">{{dedicacion}}</option>
-                          </select>
-                          <label for="dedicacionIG">Dedicación Horaria</label>
+                          <input ng-model="infoGeneralVm.infoGeneral.dedicacionIG" type="text" id="dedicacionIG" name="dedicacionIG" class="validate">
+                          <label class="active" for="dedicacionIG">Dedicación Horaria</label> 
                         </div>
 
                         <div class="row" input-field>
-                          <select id="areaIG" name"areaIG" ng-model="infoGeneralVm.infoGeneral.areaIG" material-select watch required>
-                              <option ng-repeat="area in infoGeneralVm.areaIG">{{area}}</option>
-                          </select>
-                          <label for="areaIG">Área</label>
+                          <input ng-model="infoGeneralVm.infoGeneral.areaIG" type="text" id="areaIG" name="areaIG" class="validate">
+                          <label class="active" for="areaIG">Área</label> 
                         </div>
 
                         <div class="row" input-field>
