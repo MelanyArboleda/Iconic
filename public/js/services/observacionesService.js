@@ -1,8 +1,8 @@
 angular.module("iconic").service("observacionesService", observacionesService);
 
-observacionesService.$inject = ["$http", "$q"];
+observacionesService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
-function observacionesService($http, $q) {
+function observacionesService($http, $q, appConstant) {
     this.buscarObservaciones = buscarObservaciones;
     this.guardarObservaciones = guardarObservaciones;
 

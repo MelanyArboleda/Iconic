@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "DDFactory", "ISFactory", "IPFactory", "AEFactory", "CEFactory","serviceNotification", "$q"];
+menuPrincipalCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "DDFactory", "ISFactory", "IPFactory", "AEFactory", "CEFactory", "FPFactory", /*"APFactory",*/ /*"RGFactory",*/ "serviceNotification", "$state", "$q"];
 
-function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, serviceNotification, $q) {
+function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, FPFactory, /*APFactory,*/ /*RGFactory,*/ serviceNotification, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -22,49 +22,56 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, DDFactory, ISFa
 	vm.maxDate = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
 
 	var fechaSel = vm.fecha_inicio;
-	
+
 	vm.minDateIExt = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * daysmin))).toISOString();
 	vm.maxDateIExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
 
 	vm.minDateFExt = fechaSel;
 	vm.maxDateFExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmaxExt))).toISOString();
-	
-	if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
-		ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function(id_ptd){
-			ptdFactory.buscarArea({ doc_identidad: loginFactory.user.doc_identidad }).then(function(){
-				ptdFactory.buscarDedicacion({ doc_identidad: loginFactory.user.doc_identidad }).then(function(){
-					cargarinfo();
+	if (loginFactory.user.estado != 1) {
+		$state.go("login");
+	} else {
+		if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
+			ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+				console.log("PTD--------", ptd)
+				ptdFactory.buscarArea({ doc_identidad: loginFactory.user.doc_identidad }).then(function () {
+					ptdFactory.buscarDedicacion({ id: loginFactory.user.dedicacion }).then(function () {
+						cargarinfo();
+					});
 				});
-			});			
-			DDFactory.buscarApartDD({ ptd: ptdFactory.ptd.id }).then(function () {});
-			ISFactory.buscarApartIS({ ptd: ptdFactory.ptd.id }).then(function () {});
-			IPFactory.buscarApartIP({ ptd: ptdFactory.ptd.id }).then(function () {});
-			AEFactory.buscarApartAE({ ptd: ptdFactory.ptd.id }).then(function () {});
-			CEFactory.buscarApartCE({ ptd: ptdFactory.ptd.id }).then(function () {});
-		});
-	}
-
-	vm.validFechaFinal = function(ext) {
-        if (ext.fecha_inicio) {
-			var auxFechaInico = new Date(ext.fecha_inicio);
-			console.log(auxFechaInico);
-			console.log(auxFechaFinal);
-			if (ext.fecha_final) {
-				var auxFechaFinal = new Date(ext.fecha_final);
-				console.log(auxFechaFinal);
-				if(auxFechaFinal < auxFechaInico){
-					delete ext.fecha_final;
-				} 
-			}
-			ext.fechaFinalValida = (new Date(auxFechaInico.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+				DDFactory.buscarApartDD({ ptd: ptdFactory.ptd.id }).then(function () { });
+				ISFactory.buscarApartIS({ ptd: ptdFactory.ptd.id }).then(function () { });
+				IPFactory.buscarApartIP({ ptd: ptdFactory.ptd.id }).then(function () { });
+				AEFactory.buscarApartAE({ ptd: ptdFactory.ptd.id }).then(function () { });
+				CEFactory.buscarApartCE({ ptd: ptdFactory.ptd.id }).then(function () { });
+				FPFactory.buscarApartFP({ ptd: ptdFactory.ptd.id }).then(function () { });
+				APFactory.buscarApartAP({ ptd: ptdFactory.ptd.id }).then(function () { });
+				//RGFactory.buscarApartRG({ ptd: ptdFactory.ptd.id }).then(function () {});
+			});
 		}
-	}
-	function cargarinfo(){
-		ptdFactory.aInfoGeneral.nombreIG= loginFactory.user.nombre;
-		ptdFactory.aInfoGeneral.apellido1IG= loginFactory.user.apellido_1;
-		ptdFactory.aInfoGeneral.apellido2IG= loginFactory.user.apellido_2;
-		ptdFactory.aInfoGeneral.dedicacionIG= ptdFactory.datosig.dedicacion;
-		ptdFactory.aInfoGeneral.areaIG= ptdFactory.datosig.area;
-		ptdFactory.aInfoGeneral.fechaRealizacion= ptdFactory.ptd.fecha;
+
+		vm.validFechaFinal = function (ext) {
+			if (ext.fecha_inicio) {
+				var auxFechaInico = new Date(ext.fecha_inicio);
+				console.log(auxFechaInico);
+				console.log(auxFechaFinal);
+				if (ext.fecha_final) {
+					var auxFechaFinal = new Date(ext.fecha_final);
+					console.log(auxFechaFinal);
+					if (auxFechaFinal < auxFechaInico) {
+						delete ext.fecha_final;
+					}
+				}
+				ext.fechaFinalValida = (new Date(auxFechaInico.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+			}
+		}
+		function cargarinfo() {
+			ptdFactory.aInfoGeneral.nombreIG = loginFactory.user.nombre;
+			ptdFactory.aInfoGeneral.apellido1IG = loginFactory.user.apellido_1;
+			ptdFactory.aInfoGeneral.apellido2IG = loginFactory.user.apellido_2;
+			ptdFactory.aInfoGeneral.dedicacionIG = ptdFactory.datosig.dedicacion;
+			ptdFactory.aInfoGeneral.areaIG = ptdFactory.datosig.area;
+			ptdFactory.aInfoGeneral.fechaRealizacion = ptdFactory.ptd.fecha;
+		}
 	}
 };

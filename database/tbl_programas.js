@@ -1,7 +1,7 @@
-var Sequelize = require('sequelize');
-var sequelize = require('./config');
-var tbl_areas = require('./tbl_areas');
-var tbl_sedes = require('./tbl_sedes');
+const Sequelize = require('sequelize');
+const sequelize = require('./config');
+const tbl_areas = require('./tbl_areas');
+const tbl_sedes = require('./tbl_sedes');
 
 var tbl_programas = sequelize.define('tbl_programas', {
     codigo: {

@@ -2,250 +2,259 @@
 <html lang="es">
 
 <head>
-  <!--Import Google Icon Font-->
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Iconic - Workplan | Politécnico JIC</title>
+    <title>Iconic - Workplan | Politécnico JIC</title>
 
 </head>
 
 <body ng-app="iconic">
 
-  <header id="header" ng-controller="indexCtrl as indexVm">
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <div class="brand-logo center">
-            <img src="img/rombo.png" style="height: 40px; top:2px;"> <span>iconic</span>
-          </div>
-
-          <ul class="right " ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
-            <li><a href="" class="notification-button"><i class="material-icons">&#xE7F4; <small class="notification-badge">5</small></i></a></li>
-            <li><a href=""><i class="material-icons">&#xE853;</i></a>
-              <ul>
-                <div class="triangulito"></div>
-                <div class="row">
-                  <div class="col s12 m5">
-                    <div class="card-panel white">
-                      <li id="name">{{indexVm.loginFactory.user.nombre}} {{indexVm.loginFactory.user.apellido_1}} {{indexVm.loginFactory.user.apellido_2}}</li>
-                      <div class="indicator" style="right: 430px; left: 0px;"></div>
-                      <li id="perfil">Administrador</li>
-                      <li><a href="" id="select">Cambiar contraseña</a></li>
-                      <li><a id="select" class="modal-action modal-close modal-trigger" href="#modalfirma">Subir firma digital</a></li>
-                      <center><button class="waves-effect waves-light btn" id="cerrar" ng-click="indexVm.logout()">Cerrar sesión</button></center>
+    <header id="header" ng-controller="indexCtrl as indexVm">
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="brand-logo center">
+                        <img src="img/rombo.png" style="height: 40px; top:2px;">
+                        <span>iconic</span>
                     </div>
-                  </div>
+
+                    <ul class="right " ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
+                        <li>
+                            <a href="" class="notification-button">
+                                <i class="material-icons">&#xE7F4;
+                                    <small class="notification-badge">5</small>
+                                </i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="material-icons">&#xE853;</i>
+                            </a>
+                            <ul>
+                                <div class="triangulito"></div>
+                                <div class="row">
+                                    <div class="col s12 m5">
+                                        <div class="card-panel white">
+                                            <li id="name">
+                                                {{indexVm.loginFactory.user.nombre}} {{indexVm.loginFactory.user.apellido_1}} {{indexVm.loginFactory.user.apellido_2}}
+                                            </li>
+                                            <div class="indicator" style="right: 430px; left: 0px;"></div>
+                                            <li id="perfil">Administrador</li>
+                                            <li>
+                                                <a href="" id="select">Cambiar contraseña</a>
+                                            </li>
+                                            <li>
+                                                <a id="select" class="modal-action modal-close modal-trigger" href="#modalfirma">Subir firma digital</a>
+                                            </li>
+                                            <center>
+                                                <button class="waves-effect waves-light btn" id="cerrar" ng-click="indexVm.logout()">Cerrar sesión</button>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                        <div class="left">
+                            <a href="#" class="button-collapse" data-activates="nav-mobile slide-out" data-sidenav="left" data-menuwidth="500" data-closeonclick="false">
+                                <i class="material-icons">menu</i>
+                            </a>
+                        </div>
                 </div>
-              </ul>
-            </li>
-            <div class="left">
-              <a href="#" class="button-collapse" data-activates="nav-mobile slide-out" data-sidenav="left" data-menuwidth="500" data-closeonclick="false">
-                    <i class="material-icons">menu</i></a>
+            </nav>
+        </div>
+    </header>
+    <ui-view></ui-view>
+
+    <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
+        <div class="modal-content contenido-modal">
+            <h5>
+                <strong>Subir Firma Digital</strong>
+            </h5>
+            <div class="row">
+                <p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados
+                    del plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+            </div>
+            <div class="row center">
+                <img class="responsive-img imagenfirma" src="img/firma.png">
+            </div>
+            <div class="row">
+                <form name="" autocomplete="off">
+                    <div class="col s10">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Cargar</span>
+                                <input type="file" ng-model="firmaVm.firma" ng-file-on-change="firmaVm.prefirmar">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s2 center">
+                        <button ng-click="firmaVm.firmar()" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20"
+                            data-tooltip="Subir Firma">
+                            <i class="material-icons">&#xE255;</i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-      </nav>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-green btn">
+                <a href="#modalfirmacontraseña" class="siguiente">Siguiente</a>
+            </button>
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
+        </div>
     </div>
-  </header>
-  <ui-view></ui-view>
 
-  <div id="modalfirma" class="modal modal-fixed-footer">
-    <div class="modal-content contenido-modal">
-      <h5><strong>Subir Firma Digital</strong></h5>
-      <div class="row">
-        <p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados del
-          plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
-      </div>
-      <div class="row center">
-        <img class="responsive-img imagenfirma" src="img/firma.png">
-      </div>
-      <div class="row">
-        <form action="#">
-          <div class="col s10">
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>Cargar</span>
-                <input type="file">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-              </div>
+    <div id="modalfirmacontraseña" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>
+                <strong>Contraseña para firmar digitalmente</strong>
+            </h5>
+            <div class="row">
+                <p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta
+                    contraseña cada vez que vayas a firmar un plan de trabajo.</p>
+                <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
             </div>
-          </div>
-          <div class="col s2 center"><button type="" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20" data-tooltip="Subir Firma"><i class="material-icons">&#xE255;</i></button></div>
+            <div class="row">
+                <form autocomplete="off">
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input id="contraseñafirma" type="password" name="contraseñafirma" required>
+                        <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
+                    </div>
 
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="modal-action modal-close waves-effect waves-green btn"><a href="#modalfirmacontraseña" class="siguiente">Siguiente</a></button>
-      <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
-    </div>
-  </div>
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
+                        <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
+                    </div>
 
-  <div id="modalfirmacontraseña" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h5><strong>Contraseña para firmar digitalmente</strong></h5>
-      <div class="row">
-        <p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta contraseña
-          cada vez que vayas a firmar un plan de trabajo.</p>
-        <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
-      </div>
-      <div class="row">
-        <form autocomplete="off">
-          <div class="input-field col s12 cajasombra">
-            <i class="material-icons prefix ">&#xE0DA;</i>
-            <input id="contraseñafirma" type="password" name="contraseñafirma" required>
-            <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
-          </div>
-
-          <div class="input-field col s12 cajasombra">
-            <i class="material-icons prefix ">&#xE0DA;</i>
-            <input id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
-            <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
-          </div>
-
-          <div class="input-field col s12 ">
-            <button type="submit" class="waves-effect btn">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
-    </div>
-  </div>
-
-  <div id="modalObservaciones" class="modal" style="overflow-y: hidden;">
-    <div id="chat">
-      <div id="header-chat">
-        <h5>Observaciones al Plan de Trabajo Docente | Samuel Vergara</h5>
-      </div>
-      <div id="mensajes">
-
-        <div ng-show="observacionesDecanoForm.$pristine" class="alert alert-info contenidoObservaciones container contenido-alert">
-          <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-          <strong>¡Importante!</strong> Recuerda que cada comentario que envíes no podrá ser borrado, utiliza esta herramienta, únicamente para la concertación del Plan de trabajo.
+                    <div class="input-field col s12 ">
+                        <button type="submit" class="waves-effect btn">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <div class="mensaje-amigo right">
-          <div class="contenido">
-            <p class="message">Ese plan de trabajo está malo, hace bien tu trabajo, pa' que te estoy pagando?</p>
-          </div>
-          <div class="fecha"><p>Enviado 12:03am</p></div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
         </div>
+    </div>
 
-        <div class="mensaje-amigo right">
-          <div class="contenido">
-            <p class="message">Ese plan de trabajo está malo, hace bien tu trabajo, pa' que te estoy pagando?</p>
-          </div>
-          <div class="fecha"><p>Enviado 12:03am</p></div>
+    <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm">
+        <div id="chat">
+            <div id="header-chat">
+                <h5>
+                    Observaciones al Plan de Trabajo Docente | {{concertacionVm.loginFactory.user.nombre}} {{concertacionVm.loginFactory.user.apellido_1}}
+                </h5>
+            </div>
+            <div id="mensajes">
+
+                <div ng-show="observacionesDecanoForm.$pristine" class="alert alert-info contenidoObservaciones container contenido-alert">
+                    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                    <strong>¡Importante!</strong> Recuerda que cada comentario que envíes no podrá ser borrado, utiliza esta herramienta,
+                    únicamente para la concertación del Plan de trabajo.
+                </div>
+
+            </div>
         </div>
+        <div id="caja-mensaje">
+            <form name="observacionesDecanoForm" class="col s12">
+                <div class="row mensaje">
+                    <div class="input-field col s10">
+                        <i class="material-icons prefix">&#xE8AF;</i>
+                        <textarea id="observacion" class="materialize-textarea" ng-model="concertacionVm.mensaje"></textarea>
+                        <label for="observacion">*Observación</label>
+                    </div>
 
+                    <div class="col s2">
+                        <div class="form-group">
+                            <div class="fixed-action-btn subir_observaciones">
+                                <button ng-click="concertacionVm.enviar()" class="btn-floating btn-large waves-effect waves-lightbtn">
+                                    <i class="material-icons">&#xE163;</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         
-        <div class="mensaje-autor left">
-          <div class="contenido">
-            <p class="message">Buenas, lo cambiaré.</p>
-          </div>
-          <div class="fecha"><p>Enviado 1:34pm</p></div>
-        </div>
+        <script type="text/javascript">
+            (function ($) {
+                $(function () {
 
-        <div class="mensaje-autor left">
-          <div class="contenido">
-            <p class="message">Buenas, lo cambiaré.</p>
-          </div>
-          <div class="fecha"><p>Enviado 1:34pm</p></div>
-        </div>
-        
-      </div>
-    </div>
-    <div id="caja-mensaje">
+                    $('.button-collapse').sideNav();
 
-      <form name="observacionesDecanoForm" class="col s12">
-        <div class="row mensaje">
-          <div class="input-field col s10">
-            <i class="material-icons prefix">&#xE8AF;</i>
-            <textarea id="observacion" class="materialize-textarea"></textarea>
-            <label for="observacion">*Observación</label>
-          </div>
+                }); // end of document ready
+            });
+        </script>
 
-          <div class="col s2">
-            <div class="form-group">
-              <div class="fixed-action-btn subir_observaciones">
-                <a class="btn-floating btn-large waves-effect waves-lightbtn">
-                    <i class="material-icons">&#xE163;</i> </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </form>
-    </div>
-
-  <script type="text/javascript">
-    (function ($) {
-      $(function () {
-
-        $('.button-collapse').sideNav();
-
-      }); // end of document ready
-    });
-  </script>
-
-  <!--Import jQuery before materialize.js-->
-  <script type="text/javascript" src="js/minified/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="js/minified/materialize.min.js"></script>
-  <script type="text/javascript" src="js/minified/angular.min.js"></script>
-  <script type="text/javascript" src="js/minified/angular-materialize.js"></script>
-  <script type="text/javascript" src="js/minified/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="js/minified/angular-local-storage.min.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript" src="js/route.js"></script>
-  <script type="text/javascript" src="js/todoScript.js"></script>
-  <script type="text/javascript" src="js/controllers/loginController.js"></script>
-  <script type="text/javascript" src="js/services/loginService.js"></script>  
-  <script type="text/javascript" src="js/services/DDService.js"></script>
-  <script type="text/javascript" src="js/services/ISService.js"></script>
-  <script type="text/javascript" src="js/services/IPService.js"></script>
-  <script type="text/javascript" src="js/services/AEService.js"></script>
-  <script type="text/javascript" src="js/services/CEService.js"></script>  
-  <!-- <script type="text/javascript" src="js/services/APService.js"></script>
-  <script type="text/javascript" src="js/services/FPService.js"></script>
-  <script type="text/javascript" src="js/services/OAService.js"></script> -->
-  <script type="text/javascript" src="js/services/ptdService.js"></script>
-  <script type="text/javascript" src="js/controllers/menuPrincipalController.js"></script>
-  <script type="text/javascript" src="js/factories/loginFactory.js"></script>
-  <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
-  <script type="text/javascript" src="js/factories/DDFactory.js"></script>
-  <script type="text/javascript" src="js/factories/ISFactory.js"></script>
-  <script type="text/javascript" src="js/factories/IPFactory.js"></script>
-  <script type="text/javascript" src="js/factories/AEFactory.js"></script>
-  <script type="text/javascript" src="js/factories/CEFactory.js"></script>  
-  <!-- <script type="text/javascript" src="js/factories/APFactory.js"></script>
-  <script type="text/javascript" src="js/factories/FPFactory.js"></script>
-  <script type="text/javascript" src="js/factories/OAFactory.js"></script>
-  <script type="text/javascript" src="js/factories/RGFactory.js"></script> -->
-  <script type="text/javascript" src="js/controllers/indexController.js"></script>
-  <script type="text/javascript" src="js/services/notificationService.js"></script>
-  <script type="text/javascript" src="js/controllers/verificacionController.js"></script>
-  <script type="text/javascript" src="js/controllers/configiniController.js"></script>
-  <script type="text/javascript" src="js/controllers/aInfoGeneralController.js"></script>
-  <script type="text/javascript" src="js/controllers/aInvestigacionesControllerS.js"></script>
-  <script type="text/javascript" src="js/controllers/aInvestigacionesControllerP.js"></script>
-  <script type="text/javascript" src="js/controllers/aDocenciaDirectaController.js"></script>
-  <script type="text/javascript" src="js/controllers/aExtensionController.js"></script>
-  <script type="text/javascript" src="js/controllers/aComisionEstudiosController.js"></script>
-  <script type="text/javascript" src="js/controllers/aProyectosController.js"></script>
-  <script type="text/javascript" src="js/controllers/aAsesoriasController.js"></script>
-  <script type="text/javascript" src="js/controllers/aOtrasActividadesController.js"></script>
-  <script type="text/javascript" src="js/controllers/aObservacionesController.js"></script>
+        <!--Import jQuery before materialize.js-->
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="js/minified/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/minified/materialize.min.js"></script>
+        <script type="text/javascript" src="js/minified/angular.min.js"></script>
+        <script type="text/javascript" src="js/minified/angular-materialize.js"></script>
+        <script type="text/javascript" src="js/minified/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="js/minified/angular-local-storage.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/route.js"></script>
+        <script type="text/javascript" src="js/todoScript.js"></script>
+        <script type="text/javascript" src="js/constants/appConstants.js"></script>
+        <script type="text/javascript" src="js/services/loginService.js"></script>
+        <script type="text/javascript" src="js/services/notificationService.js"></script>
+        <script type="text/javascript" src="js/services/DDService.js"></script>
+        <script type="text/javascript" src="js/services/ISService.js"></script>
+        <script type="text/javascript" src="js/services/IPService.js"></script>
+        <script type="text/javascript" src="js/services/AEService.js"></script>
+        <script type="text/javascript" src="js/services/CEService.js"></script>
+        <script type="text/javascript" src="js/services/FPService.js"></script>
+        <!-- <script type="text/javascript" src="js/services/APService.js"></script> -->
+        <script type="text/javascript" src="js/services/OAService.js"></script>
+        <!-- <script type="text/javascript" src="js/services/RGService.js"></script> -->
+        <script type="text/javascript" src="js/services/ptdService.js"></script>
+        <script type="text/javascript" src="js/directives/inputDirectives.js"></script>
+        <script type="text/javascript" src="js/factories/loginFactory.js"></script>
+        <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
+        <script type="text/javascript" src="js/factories/DDFactory.js"></script>
+        <script type="text/javascript" src="js/factories/ISFactory.js"></script>
+        <script type="text/javascript" src="js/factories/IPFactory.js"></script>
+        <script type="text/javascript" src="js/factories/AEFactory.js"></script>
+        <script type="text/javascript" src="js/factories/CEFactory.js"></script>
+        <script type="text/javascript" src="js/factories/FPFactory.js"></script>
+        <!-- <script type="text/javascript" src="js/factories/APFactory.js"></script> -->
+        <script type="text/javascript" src="js/factories/OAFactory.js"></script>
+        <!-- <script type="text/javascript" src="js/factories/RGFactory.js"></script> -->
+        <script type="text/javascript" src="js/controllers/loginController.js"></script>
+        <script type="text/javascript" src="js/controllers/menuPrincipalController.js"></script>
+        <script type="text/javascript" src="js/controllers/indexController.js"></script>
+        <script type="text/javascript" src="js/controllers/concertacionController.js"></script>
+        <script type="text/javascript" src="js/controllers/verificacionController.js"></script>
+        <script type="text/javascript" src="js/controllers/configiniController.js"></script>
+        <script type="text/javascript" src="js/controllers/restablecerController.js"></script>
+        <script type="text/javascript" src="js/controllers/firmaController.js"></script>
+        <script type="text/javascript" src="js/controllers/aInfoGeneralController.js"></script>
+        <script type="text/javascript" src="js/controllers/aInvestigacionesControllerS.js"></script>
+        <script type="text/javascript" src="js/controllers/aInvestigacionesControllerP.js"></script>
+        <script type="text/javascript" src="js/controllers/aDocenciaDirectaController.js"></script>
+        <script type="text/javascript" src="js/controllers/aExtensionController.js"></script>
+        <script type="text/javascript" src="js/controllers/aComisionEstudiosController.js"></script>
+        <script type="text/javascript" src="js/controllers/aProyectosController.js"></script>
+        <script type="text/javascript" src="js/controllers/aAsesoriasController.js"></script>
+        <script type="text/javascript" src="js/controllers/aOtrasActividadesController.js"></script>
+        <script type="text/javascript" src="js/controllers/aObservacionesController.js"></script>
 </body>
 
 </html>

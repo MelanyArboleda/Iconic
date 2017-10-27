@@ -27,7 +27,7 @@ function ptdFactory(ptdService, serviceNotification, $q) {
         var deferred = $q.defer();
         ptdService.createPtd(user).then(function (result) {
             factory.ptd = result.ptd;
-            deferred.resolve(result.ptd.id);
+            deferred.resolve(result.ptd);
         });
         return deferred.promise;
     }
@@ -52,9 +52,9 @@ function ptdFactory(ptdService, serviceNotification, $q) {
         return deferred.promise; 
     }
     
-    function buscarDedicacion(user){
+    function buscarDedicacion(dedic){
         var deferred = $q.defer();
-        ptdService.buscarDedicacion(user).then(function (dedicacion) {
+        ptdService.buscarDedicacion(dedic).then(function (dedicacion) {
             factory.datosig.dedicacion = dedicacion;
             deferred.resolve();
         }); 

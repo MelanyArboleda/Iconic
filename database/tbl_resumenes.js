@@ -18,9 +18,6 @@ var tbl_resumenes = sequelize.define('tbl_resumenes', {
     tblPtdId: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    observacion_ptd: {
-        type: Sequelize.STRING
     }
 });
 
@@ -32,7 +29,7 @@ module.exports = {
 
     buscar_RG: function (req, res, next) {
         tbl_resumenes.sync().then(function () {
-            crud.findAll(tbl_resumenes, { id: req.body.ptd }, null, (resp) => {
+            crud.findAll(tbl_resumenes, { tblPtdId: req.body.ptd }, null, (resp) => {
                 if (resp[0] == undefined) {
                     res.status(200).json({ apartado: 0 }).end();
                 } else {
@@ -44,24 +41,38 @@ module.exports = {
 
     guardar_RG: function (req, res, next) {
         tbl_resumenes.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_resumenes, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_resumenes, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.create(tbl_resumenes, req.body.datos, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     },
+
+    modificar_RG: function (req, res, next) {
+        tbl_resumenes.sync().then(function () {
+            crud.update(tbl_resumenes, { id: req.body.datos.id }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_RG: function (req, res, next) {
+        tbl_resumenes.sync().then(function () {
+            crud.delete(tbl_resumenes, { id: req.body.datos.id }, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    }
+
 };

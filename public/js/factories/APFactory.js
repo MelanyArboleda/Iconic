@@ -7,6 +7,8 @@ function APFactory(APService, serviceNotification, $q) {
         AsePro: [],
         buscarApartAP: buscarApartAP
     }
+    return factoryAP;
+
     function buscarApartAP(apartado) {
         var deferred = $q.defer();
         factoryAP.AsePro = [];

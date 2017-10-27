@@ -1,22 +1,21 @@
 const funciones = require('.././services/funciones');
 const crud = require('.././services/crudService');
 const tbl_usuarios = require('.././database/tbl_usuarios');
-const fs = require('fs');
+const path = require('path');
 const jwt = require("jwt-simple");
 const config = require("../config/config");
 const bcrypt = require('bcryptjs');
 const mail = require('./MailController');
 module.exports = {
-
+    //genera el login
     login: (req, res, next) => {
-        console.log(req.body.correo, req.body.password)
         if (req.body.correo && req.body.password) {
             var correo = req.body.correo;
             var password = req.body.password;
             crud.findOne(tbl_usuarios, { correo: correo }, null, (user) => {
                 if (!user) {
                     res.sendStatus(403);
-                } else if (user.tblEstadoId != '2' || user.createdAt.toString() == user.updatedAt.toString()) {
+                } else if (user.tblEstadoId != '2' /*|| user.createdAt.toString() == user.updatedAt.toString()*/) {
                     if (bcrypt.compareSync(password, user.contraseña)) {
                         var payload = {
                             correo: user.correo
@@ -41,6 +40,8 @@ module.exports = {
                     } else {
                         res.sendStatus(401);
                     }
+                } else {
+                    res.status(401).json({ estado: 2 }).end();
                 }
             });
 
@@ -49,8 +50,8 @@ module.exports = {
             res.sendStatus(401);
         }
     },
-
-    buscarUsuario: function (req, res, next) {
+    //busca el usuario para saber si esta logeado
+    buscar_User: function (req, res, next) {
         var decode = jwt.decode(req.body.token, config.secret);
         crud.findOne(tbl_usuarios, { correo: decode.correo }, null, (user) => {
             user = {
@@ -68,35 +69,85 @@ module.exports = {
             res.status(200).json({ user: user }).end();
         });
     },
-
-    sendVerificationCode: (req, res, next) => {
+    //enviar codigo de verficacion de dos paso del login
+    send_Code: (req, res, next) => {
         const user = req.body;
         var codigo = mail.codigo(user.correo, user.nombre);
-        var b = new Buffer(codigo);
-        codigo = b.toString('base64');
-        res.json(codigo);
-    },
+        if (codigo != "") {
+            var b = new Buffer(codigo);
+            codigo = b.toString('base64');
+            res.json(codigo);
+        } else {
+            res.sendStatus(401);
+        }
 
-    cambio: function (req, res, next) {
+    },
+    //valida el codigo enviado para la activacion de la cuenta
+    validar_Code: function (req, res, next) {
         var codigoEncriptado = new Buffer(req.body.codigoEncriptado, 'base64');
         codigoEncriptado = codigoEncriptado.toString();
         if (req.body.codigo == codigoEncriptado) {
-            crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { tblEstadoId: 4 }, function (data) {
-                if (data == 'update') {
-                    funciones.buscarUser(req.body.doc_identidad, function (user) {
-                        res.status(200).json({ user: user, mensaje: 'usuario activado' }).end();
-                    });
-                };
-            });
+            res.status(200).end();
         } else {
-            res.status(401).json({ mensaje: 'Codigo invalido' }).end();
+            res.sendStatus(401);
         }
     },
-
-    pinicial: function (req, res, next) {
+    //cambia el estado del cliente
+    cambiar_Estado: function (req, res, next) {
+        crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { tblEstadoId: req.body.tblEstadoId }, function (data) {
+            if (data == 'update') {
+                funciones.buscarUser(req.body.doc_identidad, function (user) {
+                    res.status(200).json({ user: user }).end();
+                });
+            };
+        });
+    },
+    //validar datos de restablecer
+    validar_datos: function (req, res, next) {
+        //desencripto la fecha
+        var fecha = new Buffer(req.body.fecha, 'base64');
+        fecha = fecha.toString();
+        //obtengo la fecha actual del sistema
+        var date = new Date();
+        var fecha_act = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+        //desencripto la id del usuario
+        var user = new Buffer(req.body.id, 'base64')
+        user = user.toString();
+        //busco si el usuario existe en el sistema
+        crud.findOne(tbl_usuarios, { doc_identidad: user }, null, function (data) {
+            if (data !== undefined) {
+                if (data.tblEstadoId == 1) {
+                    //si existe valido la fechas
+                    if (fecha >= fecha_act) {
+                        //si no he restablecido la contraseña 
+                        if (data.recuperar == true) {
+                            //me deja ingresar a restablecer
+                            res.status(200).json({ id: user }).end();
+                        } else {
+                            //no me deja restablecer
+                            res.sendStatus(403);
+                        }
+                    } else {
+                        //se paso del tiempo limite de restablecer
+                        crud.update(tbl_usuarios, { doc_identidad: user }, { recuperar: false }, function (data) {
+                            res.sendStatus(403);
+                        });
+                    }
+                } else {
+                    //cuanta inactiva
+                    res.sendStatus(403);
+                }
+            }
+        });
+    },
+    //valida la nueva contraseña
+    validar_password: function (req, res, next) {
+        //consulto el usuario
         crud.findOne(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, null, (user) => {
-            if (!bcrypt.compareSync(req.body.password, user.contraseña)) {
-                crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1 }, function (data) {
+            //comparo si la contraseña es la misma a la que tenia
+            if (!bcrypt.compareSync(req.body.password, user.contraseña) && req.body.password != "Iconic123") {
+                //si es diferente actualizo la contraseña
+                crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña: funciones.encriptar(req.body.password), tblEstadoId: 1, recuperar: false }, function (data) {
                     if (data == 'update') {
                         funciones.buscarUser(req.body.doc_identidad, function (user) {
                             res.status(200).json({ user: user, mensaje: 'contraseña actualizada' }).end();
@@ -104,30 +155,38 @@ module.exports = {
                     }
                 });
             } else {
-                res.status(401).json({ mensaje: 'contraseña invalida' }).end();
+                //si es la misma no lo dejo actualizarla
+                res.sendStatus(401);
             }
         });
     },
 
-    firma: function (req, res, next) {
-        fs.exists('./firmas', (exists) => {
-            if (!exists) {
-                fs.mkdir('./firmas', (err) => {
-                    if (err) throw err;
-                    fs.writeFile('./firmas/message.png', 'Hello Node.js', (err) => {
-                        if (err) throw err;
-                    });
-                });
-            }
+    guardar_Firma: function (req, res, next) {
+        var fs = require('fs'), base64Data, binaryData;
+        if (!fs.existsSync('./firmas')) {
+            fs.mkdir('./firmas', (err) => {
+                if (err) { res.sendStatus(401); }
+            });
+        }
+        base64Data = req.body.firma.replace(/^data:image\/formato;base64,/, "");
+        base64Data += base64Data.replace('+', ' ');
+        binaryData = new Buffer(base64Data, 'base64').toString('binary');
+
+        fs.writeFile('./firmas/firma_' + req.body.doc_identidad + '.jpg', binaryData, "binary", (err) => {
+            if (err) {
+                res.sendStatus(401);
+            } else {
+                res.status(200).end();
+            };
         });
 
-        crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
-            if (data == 'update') {
-                return true
-            } else {
-                return false
-            }
-        });
+        // crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
+        //     if (data == 'update') {
+        //         return true
+        //     } else {
+        //         return false
+        //     }
+        // });
     },
 
     cinicial: function (req, res, next) {
@@ -145,49 +204,9 @@ module.exports = {
 
     },
 
-    recup: function (req, res, next) {
-        var idin = req.params[0];
-        idin = idin.split("/");
-        user = idin[0];
-        var fecha = new Buffer(idin[1], 'base64');
-        fecha = fecha.toString();
-        var date = new Date();
-        var fecha_act = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-        for (var i = 0; i < 4; i++) {
-            b = new Buffer(user, 'base64')
-            user = b.toString();
-        }
-        crud.findOne(tbl_usuarios, { doc_identidad: user }, null, function (data) {
-            if (data !== undefined) {
-                if (fecha >= fecha_act) {
-                    if (data.recuperar == true) {
-                        res.render('users/recu');
-                    } else {
-                        res.redirect('/');
-                    }
-                } else {
-                    var datos = {
-                        recuperar: false
-                    };
-                    crud.update(tbl_usuarios, { doc_identidad: user }, datos, function (data) { });
-                    res.redirect('/');
-                }
-            } else {
-                console.log(err);
-                res.redirect('/');
-            }
-        });
-    },
-
-    nueva: function (req, res, next) {
-        var datos = {
-            contraseña: funciones.encriptar(req.body.contraseña),
-            recuperar: false
-        };
-        crud.update(tbl_usuarios, { doc_identidad: user }, datos, function (data) {
-            if (data == 'update') {
-                res.redirect('/');
-            }
+    buscar_Usuario: function(req, res, next){
+        crud.findOne(tbl_usuarios, { doc_identidad: req.body.usuario }, null, (user) => {
+            res.status(200).json({ user: user }).end();
         });
     }
 };

@@ -152,7 +152,10 @@ p.titulo{
 .again{
   padding-right: 2.9%;
 }
- 
+
+.p-r-26p{
+	padding-right: 26% !important;
+}
 
 .notification-badge {
     position: relative;
@@ -190,8 +193,8 @@ p.titulo{
 	overflow-y: scroll 
 }
 #chat #mensajes .mensaje-autor{
-		margin-bottom: 4%;
-    padding-top: 23%;
+		margin-bottom: 1%;
+    padding-top: 1%;
 }
 #chat #mensajes .mensaje-autor .contenido{
 	background-color: white;

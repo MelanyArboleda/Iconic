@@ -1,15 +1,16 @@
-angular.module("iconic").service("otrasactividadesService", otrasactividadesService);
+angular.module("iconic").service("OAService", OAService);
 
-otrasactividadesService.$inject = ["$http", "$q"];
+OAService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
-function otrasactividadesService($http, $q) {
-    this.buscarActividades = buscarActividades;
-    this.guardarActividades = guardarActividades;
+function OAService($http, $q, appConstant) {
+    this.buscarOA = buscarOA;
+    this.guardarOA = guardarOA;
+    this.modificarOA =modificarOA;
+    this.eliminarOA = eliminarOA;
 
-    function buscarActividades(actividades) {
+    function buscarOA(oa) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/buscarActividades", actividades).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarOA", oa).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
@@ -18,10 +19,31 @@ function otrasactividadesService($http, $q) {
         return deferred.promise;
     }
 
-    function guardarActividades(actividades) {
+    function guardarOA(oa) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/guardarActividades", actividades).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarOA", oa).then(function (res) {
+            deferred.resolve(res.config.data.datos);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function modificarOA(oa) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarOA", oa).then(function (res) {
+            deferred.resolve(res.config.data.datos);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function eliminarOA(oa) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarOA", oa).then(function (res) {
             deferred.resolve(res.config.data.datos);
         }, function (err) {
             deferred.reject(err);

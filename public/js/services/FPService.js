@@ -1,15 +1,16 @@
-angular.module("iconic").service("proyectosService", proyectosService);
+angular.module("iconic").service("FPService", FPService);
 
-proyectosService.$inject = ["$http", "$q"];
+FPService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
-function proyectosService($http, $q) {
+function FPService($http, $q, appConstant) {
     this.buscarFP = buscarFP;
     this.guardarFP = guardarFP;
+    this.modificarFP = modificarFP;
+    this.eliminarFP = eliminarFP;
 
     function buscarFP(fp) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/buscarFP", fp).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarFP", fp).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
@@ -20,8 +21,29 @@ function proyectosService($http, $q) {
 
     function guardarFP(fp) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/guardarFP", fp).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarFP", fp).then(function (res) {
+            deferred.resolve(res.config.data.datos);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function modificarFP(fp) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarFP", fp).then(function (res) {
+            deferred.resolve(res.config.data.datos);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function eliminarFP(fp) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarFP", fp).then(function (res) {
             deferred.resolve(res.config.data.datos);
         }, function (err) {
             deferred.reject(err);

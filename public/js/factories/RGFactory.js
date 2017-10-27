@@ -7,10 +7,12 @@ function RGFactory(RGService, serviceNotification, $q) {
         ResGen: {},
         buscarApartRG: buscarApartRG
     }
+    return factoryRG;
+
     function buscarApartRG(apartado) {
         var deferred = $q.defer();
         factoryRG.ResGen = {};
-        RGService.buscarApart(apartado).then(function (result) {
+        RGService.buscarRG(apartado).then(function (result) {
             factoryRG.ResGen = result.apartado;
             deferred.resolve();
         });

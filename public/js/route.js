@@ -37,6 +37,15 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state({
+		name: "restablecer",
+		templateUrl: 'views/restablecer.html',
+		url: "/restablecer/:id/:fecha",
+		controller: "restablecerCtrl as restablecerVm",
+		params: {
+			login: false
+		}
+	})
+	.state({
 		name: "menuPrincipal",
 		templateUrl: 'views/users/menuPrincipal.html',
 		url: "/menuPrincipal",

@@ -23,9 +23,6 @@ var tbl_observaciones = sequelize.define('tbl_observaciones', {
     tblPtdId: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    observacion_ptd: {
-        type: Sequelize.STRING
     }
 });
 

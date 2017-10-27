@@ -1,5 +1,5 @@
-var Sequelize = require('sequelize');
-var sequelize = require('./config');
+const Sequelize = require('sequelize');
+const sequelize = require('./config');
 
 var tbl_dedicaciones = sequelize.define('tbl_dedicaciones', {
     dedicacion: {

@@ -20,16 +20,16 @@ var tbl_fechas_etapas = sequelize.define('tbl_fechas_etapas', {
         allowNull: false
     },
     año: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         primaryKey: true,
         allowNull: false
     },
     fecha_inicial: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         allowNull: false
     },
     fecha_final: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         allowNull: false
     },
 

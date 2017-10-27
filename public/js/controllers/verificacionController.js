@@ -5,23 +5,38 @@ verificacionCtrl.$inject = ["loginService", "loginFactory", "serviceNotification
 function verificacionCtrl(loginService, loginFactory, serviceNotification, $state) {
 	var vm = this;
 	vm.validar = validar;
-	vm.codigo = "";
+	vm.reenviar = reenviar;
+	vm.codigo = "";	
 
 	function validar(){
 		var data = {
 			codigo: vm.codigo,
-			codigoEncriptado: loginFactory.codigoVerificacion,
-			doc_identidad: loginFactory.user.doc_identidad
+			codigoEncriptado: loginFactory.codigoVerificacion
 		};
-		console.log("llamando al validar");
-		loginService.validarCodigo(data).then(function(resultado){
-			loginFactory.user = resultado.user;
-			console.log(resultado);
-			serviceNotification.success('Código válido', 2000);
-			$state.go("configini");
+		loginService.validarCode(data).then(function(resultado){
+			var data = {
+				doc_identidad: loginFactory.user.doc_identidad,
+				tblEstadoId: 4
+			};
+			loginService.cambiarEstado(data).then(function(result){
+				loginFactory.user = result.user;
+				$state.go("configini");
+			}).catch(function(err){
+				serviceNotification.error('Su cuenta no pudo ser verificada', 2000);
+			});
 		}).catch(function(err){
-			console.log(err);
 			serviceNotification.error('No es un código válido', 2000);
 		});
+	}
+
+	function reenviar(){
+		loginFactory.sendCode().then(function (resp){
+			if(resp){
+				serviceNotification.success('Código enviado', 2000);
+			}
+		});
+	}
+	if(loginFactory.codigoVerificacion == null){
+		$state.go("login");
 	}
 }

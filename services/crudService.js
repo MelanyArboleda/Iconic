@@ -26,7 +26,7 @@ module.exports = {
       callback();
     });
   },
-
+  //crear
   create: function (tabla, dato, callback) {
     tabla.create(dato).then((res) => {
       callback(res.dataValues)
@@ -39,6 +39,15 @@ module.exports = {
   update: function (tabla, donde, dato, callback) {
     tabla.update(dato, { where: donde }).then(() => {
       callback('update')
+    }).catch((e) => {
+      console.log("Error" + e);
+      callback('error')
+    });
+  },
+  //eliminar espesifico
+  delete: function(tabla, donde,callback){
+    tabla.destroy({ where: donde }).then(() => {
+      callback('delete')
     }).catch((e) => {
       console.log("Error" + e);
       callback('error')
@@ -86,19 +95,5 @@ module.exports = {
       console.log(err);
       callback();
     });
-  },
-
-  innerDedicacion : function (tabla, donde, callback) {
-    tabla[0].findAll({
-      attributes: ['dedicacion'],
-      include: [{
-        model: tabla[1], required: true, attributes: [],where: donde
-      }]
-    }).then((tabla) => {
-      callback(tabla[0].dataValues);
-    }).catch((err) => {
-      console.log(err);
-      callback();
-    });
-  },
+  }
 }

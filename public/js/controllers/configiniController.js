@@ -17,7 +17,6 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
             console.log("llamando al comparador");
             loginService.compararcontraseñas(data).then(function (resultado) {
                 loginFactory.user = resultado.user;
-                console.log(resultado);
                 serviceNotification.info('Bienvenido a ICONIC', 2000);
                 $state.go("menuPrincipal.vistaPTD");
             }).catch(function (err) {
@@ -26,7 +25,6 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);
-            console.log('contraseñas no coinciden')
         }
 
     }

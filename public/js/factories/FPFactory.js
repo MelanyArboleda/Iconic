@@ -7,6 +7,8 @@ function FPFactory(FPService, serviceNotification, $q) {
         ForPro: [],
         buscarApartFP: buscarApartFP
     }
+    return factoryFP;
+    
     function buscarApartFP(apartado) {
         var deferred = $q.defer();
         factoryFP.ForPro = [];

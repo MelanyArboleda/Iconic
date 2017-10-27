@@ -6,24 +6,28 @@
 					<p class="justify flow-text titulo"><strong>Te damos la bienvenida a Iconic</strong></p>
 					<br>
 					<div class="row">
-						<p class="justify texto">Hola <strong>{{indexVm.loginFactory.user.nombre}}</strong>, hemos activado la verificación de dos pasos para tu cuenta, se ha enviado a tu correo
-							institucional un código de verificación, introdúcelo a continuación para proceder con la verificación de tu cuenta:</p>
+						<p class="justify texto">Hola <strong>{{indexVm.loginFactory.user.nombre}}</strong>, hemos activado la verificación de dos pasos para tu cuenta,
+							se ha enviado a tu correo institucional un código de verificación, introdúcelo a continuación para proceder con la
+							verificación de tu cuenta:</p>
 					</div>
 
 					<form name="verificarForm" autocomplete="off" ng-submit="verificacionVm.validar()">
 						<div class="row">
 							<div class="input-field col s9 cajasombra">
-								<input ng-model="verificacionVm.codigo" class="validate" type="text" id="codigoVerificacion" name="codigo" maxlength="6" data-length="6" required>
+								<input ng-model="verificacionVm.codigo" class="validate" type="text" id="codigoVerificacion" name="codigo" maxlength="6"
+								 data-length="6" required>
 								<label class="cajasombra" for="codigo">Código de verificación</label>
-
 							</div>
+
 							<div class="input-field col s3 botonverificar" style="padding-top: 1.5%;">
 								<button ng-disabled="verificarForm.$invalid" type="submit" class="waves-effect waves-light btn">Verificar</button>
 							</div>
-							<div class="right again">
-								<a href="">Volver a enviar el código</a>
+							<div class="p-r-26p right">
+								<a href="" ng-click="verificacionVm.reenviar()">Volver a enviar el código</a>
 							</div>
 						</div>
+							
+
 					</form>
 				</div>
 				<div class="card-action amber lighten-1 footerlogin">

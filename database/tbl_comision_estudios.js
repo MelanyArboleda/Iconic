@@ -35,9 +35,6 @@ var tbl_comision_estudios = sequelize.define('tbl_comision_estudios', {
     tblPtdId: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    observacion_ptd: {
-        type: Sequelize.STRING
     }
 });
 
@@ -46,6 +43,7 @@ tbl_comision_estudios.belongsTo(tbl_ptds.tbl_ptds);
 
 module.exports = {
     tbl_comision_estudios: tbl_comision_estudios,
+    
     buscar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
             crud.findAll(tbl_comision_estudios, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -56,24 +54,37 @@ module.exports = {
 
     guardar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_comision_estudios, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_comision_estudios, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.create(tbl_comision_estudios, req.body.datos, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    modificar_CE: function (req, res, next) {
+        tbl_comision_estudios.sync().then(function () {
+            crud.update(tbl_comision_estudios, { id: req.body.datos.id }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_CE: function (req, res, next) {
+        tbl_comision_estudios.sync().then(function () {
+            crud.delete(tbl_comision_estudios, { id: req.body.datos.id }, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     }
 

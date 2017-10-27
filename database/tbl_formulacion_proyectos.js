@@ -24,9 +24,6 @@ var tbl_formulacion_proyectos = sequelize.define('tbl_formulacion_proyectos', {
     tblPtdId: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    observacion_ptd: {
-        type: Sequelize.STRING
     }
 });
 
@@ -48,24 +45,38 @@ module.exports = {
 
     guardar_FP: function (req, res, next) {
         tbl_formulacion_proyectos.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_formulacion_proyectos, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_formulacion_proyectos, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.create(tbl_formulacion_proyectos, req.body.datos, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     },
+
+    modificar_FP: function (req, res, next) {
+        tbl_formulacion_proyectos.sync().then(function () {
+            crud.update(tbl_formulacion_proyectos, { id: req.body.datos.id }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_FP: function (req, res, next) {
+        tbl_formulacion_proyectos.sync().then(function () {
+            crud.delete(tbl_formulacion_proyectos, { id: req.body.datos.id }, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    }
+
 };

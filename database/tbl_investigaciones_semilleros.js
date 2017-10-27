@@ -36,8 +36,8 @@ var tbl_investigaciones_semilleros = sequelize.define('tbl_investigaciones_semil
 
 tbl_ptds.tbl_ptds.hasMany(tbl_investigaciones_semilleros);
 tbl_investigaciones_semilleros.belongsTo(tbl_ptds.tbl_ptds);
-tbl_vinculos.hasMany(tbl_investigaciones_semilleros);
-tbl_investigaciones_semilleros.belongsTo(tbl_vinculos);
+tbl_vinculos.tbl_vinculos.hasMany(tbl_investigaciones_semilleros);
+tbl_investigaciones_semilleros.belongsTo(tbl_vinculos.tbl_vinculos);
 
 module.exports = {
     tbl_investigaciones_semilleros: tbl_investigaciones_semilleros,
@@ -52,24 +52,38 @@ module.exports = {
 
     guardar_IS: function (req, res, next) {
         tbl_investigaciones_semilleros.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_investigaciones_semilleros, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_investigaciones_semilleros, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.create(tbl_investigaciones_semilleros, req.body.datos, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     },
+
+    modificar_IS: function (req, res, next) {
+        tbl_investigaciones_semilleros.sync().then(function () {
+            crud.update(tbl_investigaciones_semilleros, { id: req.body.datos.id }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_IS: function (req, res, next) {
+        tbl_investigaciones_semilleros.sync().then(function () {
+            crud.delete(tbl_investigaciones_semilleros, { id: req.body.datos.id }, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    }
+
 };

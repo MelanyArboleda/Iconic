@@ -24,14 +24,18 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="pI in investigacionesPVm.proyectosInvestigaciones">
+                            <!-- <td>
+                                {{pI}}
+                            </td> -->
                             <td>
                                 <input type="checkbox" ng-model="pI.selectedP" /></td>
                             <td>
                                 <input name="nombre_proyecto" type="text" class="form-control validate" ng-model="pI.nombre_proyecto" required/></td>
-                            <td><select id="tblVinculoId" name="tblVinculoId" ng-model="pI.tblVinculoId" material-select watch
-                                    required>
-                                    <option ng-repeat="vinculos in investigacionesPVm.vinculosP">{{vinculos}}</option>
-                                 </select></td>
+                            <td>
+                                <select id="tblVinculoId" name="tblVinculoId" ng-model="pI.tblVinculoId" material-select watch required>
+                                    <option ng-repeat="vinculos in investigacionesPVm.vinculosP">{{vinculos.vinculo}}</option>
+                                </select>
+                            </td>
                             <td>
                                 <input name="objetivo_principal" type="text" class="form-control validate" ng-model="pI.objetivo_principal" required/></td>
                             <td>

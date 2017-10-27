@@ -3,11 +3,12 @@ angular.module("iconic").factory("OAFactory", OAFactory);
 OAFactory.$inject = ["OAService", "serviceNotification", "$q"];
 
 function OAFactory(OAService, serviceNotification, $q) {
-
     var factoryOA = {
-        OtrAct: []
+        OtrAct: [],
+        buscarApartOA:buscarApartOA
     }
-    
+    return factoryOA;
+
     function buscarApartOA(apartado) {
         var deferred = $q.defer();
         factoryOA.OtrAct = [];

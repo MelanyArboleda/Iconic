@@ -28,7 +28,7 @@ tbl_actividades.belongsTo(tbl_resumenes.tbl_resumenes);
 module.exports = {
     tbl_actividades: tbl_actividades,
 
-    buscar_actividades: function (req, res, next) {
+    buscar_OA: function (req, res, next) {
         tbl_actividades.sync().then(function () {
             crud.findAll(tbl_actividades, { tblResumeneId: req.body.id }, 'id ASC', (resp) => {
                 res.status(200).json({ apartado: resp }).end();
@@ -36,26 +36,39 @@ module.exports = {
         });
     },
 
-    guardar_actividades: function (req, res, next) {
+    guardar_OA: function (req, res, next) {
         tbl_actividades.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_actividades, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_actividades, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.create(tbl_actividades, req.body.datos, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    modificar_OA: function (req, res, next) {
+        tbl_actividades.sync().then(function () {
+            crud.update(tbl_actividades, { id: req.body.datos.id }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_OA: function (req, res, next) {
+        tbl_actividades.sync().then(function () {
+            crud.delete(tbl_actividades, { id: req.body.datos.id }, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     },
 

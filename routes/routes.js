@@ -6,20 +6,34 @@ const modelos = require('.././database');
 const AuthMiddleware = require('../passport/passport').authenticate;
 const inicial = require('.././database/inicial');
 
+//ruta de index
 router.get('/', controllers.HomeController.index);
+//ruta del login
 router.post('/auth/login', controllers.UserController.login);
-router.post('/auth/sendCode', controllers.UserController.sendVerificationCode);
-router.post('/auth/buscarUser', controllers.UserController.buscarUsuario);
-router.post('/auth/buscarArea', controllers.PtdController.buscarArea);
-router.post('/auth/buscarDedicacion', controllers.PtdController.buscarDedicacion);
+//enviar codigo para la verificacion de 2 paso del login
+router.post('/auth/sendCode', controllers.UserController.send_Code);
+//busca el usuario para saber si esta logeado
+router.post('/auth/buscarUser', controllers.UserController.buscar_User);
+//busca el usuario para usar su informacion
+router.post('/auth/buscarUsuario', controllers.UserController.buscar_Usuario);
+//validar codigo para activar cuanta
+router.post('/auth/validarCode', controllers.UserController.validar_Code);
+//cambiar estado del usuario
+router.post('/auth/cambiarEstado', controllers.UserController.cambiar_Estado);
+//enviar correo con el link de restablecer contraseña
+router.post('/auth/sendLink', controllers.MailController.sendLink);
+//ruta de restablecimiento de contraseña
+router.post('/auth/validarDatos', controllers.UserController.validar_datos);
+//comparador de contraseñas
+router.post('/auth/validarPassword', controllers.UserController.validar_password);
+//guardar firma
+router.post('/auth/guardarFirma', controllers.UserController.guardar_Firma);
+//guardar comentario concertacion
+router.post('/auth/guardarConcertacion', modelos.tbl_concertaciones.guardar_Concertacion);
 
-// router.get('/auth/recu/*', controllers.UserController.recup);
-router.post('/auth/send', controllers.MailController.restablecer);
-router.post('/auth/recu', controllers.UserController.nueva);
-router.post('/auth/actic', controllers.UserController.cambio);
-router.post('/auth/configp', controllers.UserController.pinicial);
-router.post('/auth/configf', controllers.UserController.firma);
+
 router.post('/auth/configc', controllers.UserController.cinicial);
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas del ptd
 router.post('/auth/createPtd', modelos.tbl_ptds.crear_ptd);
 router.post('/auth/buscarPtd', modelos.tbl_ptds.buscar_ptd);
@@ -27,35 +41,59 @@ router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_ptd);
 //rutas de docencia directa
 router.post('/auth/buscarDD', modelos.tbl_docencias_directas.buscar_DD);
 router.post('/auth/guardarDD', modelos.tbl_docencias_directas.guardar_DD);
+router.post('/auth/modificarDD', modelos.tbl_docencias_directas.modificar_DD);
+router.post('/auth/eliminarDD', modelos.tbl_docencias_directas.eliminar_DD);
 //rutas de investigaciones de semillero
 router.post('/auth/buscarIS', modelos.tbl_investigaciones_semilleros.buscar_IS);
 router.post('/auth/guardarIS', modelos.tbl_investigaciones_semilleros.guardar_IS);
+router.post('/auth/modificarIS', modelos.tbl_investigaciones_semilleros.modificar_IS);
+router.post('/auth/eliminarIS', modelos.tbl_investigaciones_semilleros.eliminar_IS);
 //rutas de investigaciones de proyectos
 router.post('/auth/buscarIP', modelos.tbl_investigaciones_proyectos.buscar_IP);
 router.post('/auth/guardarIP', modelos.tbl_investigaciones_proyectos.guardar_IP);
+router.post('/auth/modificarIP', modelos.tbl_investigaciones_proyectos.modificar_IP);
+router.post('/auth/eliminarIP', modelos.tbl_investigaciones_proyectos.eliminar_IP);
 //rutas de actividades de extension
 router.post('/auth/buscarAE', modelos.tbl_actividades_extension.buscar_AE);
 router.post('/auth/guardarAE', modelos.tbl_actividades_extension.guardar_AE);
+router.post('/auth/modificarAE', modelos.tbl_actividades_extension.modificar_AE);
+router.post('/auth/eliminarAE', modelos.tbl_actividades_extension.eliminar_AE);
 //rutas de comision de estudios
 router.post('/auth/buscarCE', modelos.tbl_comision_estudios.buscar_CE);
 router.post('/auth/guardarCE', modelos.tbl_comision_estudios.guardar_CE);
+router.post('/auth/modificarCE', modelos.tbl_comision_estudios.modificar_CE);
+router.post('/auth/eliminarCE', modelos.tbl_comision_estudios.eliminar_CE);
 //rutas de formulacion de proyectos
 router.post('/auth/buscarFP', modelos.tbl_formulacion_proyectos.buscar_FP);
 router.post('/auth/guardarFP', modelos.tbl_formulacion_proyectos.guardar_FP);
+router.post('/auth/modificarFP', modelos.tbl_formulacion_proyectos.modificar_FP);
+router.post('/auth/eliminarFP', modelos.tbl_formulacion_proyectos.eliminar_FP);
 //rutas de asesoria de proyectos
 router.post('/auth/buscarAP', modelos.tbl_asesoria_proyectos.buscar_AP);
 router.post('/auth/guardarAP', modelos.tbl_asesoria_proyectos.guardar_AP);
-//rutas de actividades
-router.post('/auth/buscarActividades', modelos.tbl_actividades.buscar_actividades);
-router.post('/auth/guardarActividades', modelos.tbl_actividades.guardar_actividades);
-//rutas de resumenes
+router.post('/auth/modificarAP', modelos.tbl_asesoria_proyectos.modificar_AP);
+router.post('/auth/eliminarAP', modelos.tbl_asesoria_proyectos.eliminar_AP);
+//rutas de resumenes generales
 router.post('/auth/buscarRG', modelos.tbl_resumenes.buscar_RG);
 router.post('/auth/guardarRG', modelos.tbl_resumenes.guardar_RG);
+router.post('/auth/modificarRG', modelos.tbl_resumenes.modificar_RG);
+router.post('/auth/eliminarRG', modelos.tbl_resumenes.eliminar_RG);
+//rutas de actividades
+router.post('/auth/buscarOA', modelos.tbl_actividades.buscar_OA);
+router.post('/auth/guardarOA', modelos.tbl_actividades.guardar_OA);
+router.post('/auth/modificarOA', modelos.tbl_actividades.modificar_OA);
+router.post('/auth/eliminarOA', modelos.tbl_actividades.eliminar_OA);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de observaciones
 router.post('/auth/buscarObservaciones', modelos.tbl_observaciones.buscar_observaciones);
 router.post('/auth/guardarObservaciones', modelos.tbl_observaciones.guardar_observaciones);
 //rutas de seguimiento y evaluacion
 router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);
 router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//obtener datos espesifico
+router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
+router.post('/auth/buscarDedicacion', controllers.PtdController.buscar_Dedicacion);
+router.post('/auth/buscarVP', modelos.tbl_vinculos.buscar_VP);
+router.post('/auth/buscarVS', modelos.tbl_vinculos.buscar_VS);
 module.exports = router;

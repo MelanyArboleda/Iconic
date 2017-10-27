@@ -1,10 +1,9 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./config');
 var tbl_observaciones = require('./tbl_observaciones');
-var tbl_dias = require('./tbl_dias');
 
 var tbl_horarios = sequelize.define('tbl_horarios', {
-    tblDiaId: {
+    dia: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
@@ -24,8 +23,6 @@ var tbl_horarios = sequelize.define('tbl_horarios', {
 
 tbl_observaciones.tbl_observaciones.hasMany(tbl_horarios);
 tbl_horarios.belongsTo(tbl_observaciones.tbl_observaciones);
-tbl_dias.hasMany(tbl_horarios);
-tbl_horarios.belongsTo(tbl_dias);
 
 module.exports = {
     tbl_horarios: tbl_horarios,

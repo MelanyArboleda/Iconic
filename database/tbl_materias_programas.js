@@ -1,11 +1,16 @@
 const Sequelize = require('sequelize');
 const sequelize = require('./config');
-const tbl_usuarios = require('./tbl_usuarios');
 const tbl_programas = require('./tbl_programas');
+const tbl_materias = require('./tbl_materias');
 
-var tbl_usuario_programas = sequelize.define('tbl_usuario_programas', {
-    tblUsuarioDocIdentidad: {
+var tbl_materias_programas = sequelize.define('tbl_materias_programas', {
+    tblMateriaCodigo: {
         type: Sequelize.STRING(15),
+        primaryKey: true,
+        allowNull: false
+    },
+    tblMateriaNombre: {
+        type: Sequelize.STRING(100),
         primaryKey: true,
         allowNull: false
     },
@@ -16,7 +21,6 @@ var tbl_usuario_programas = sequelize.define('tbl_usuario_programas', {
     },
     tblProgramaPrograma: {
         type: Sequelize.STRING(100),
-        primaryKey: true,
         allowNull: false
     },
     tblProgramaSede: {
@@ -26,9 +30,9 @@ var tbl_usuario_programas = sequelize.define('tbl_usuario_programas', {
     }
 });
 
-tbl_usuarios.hasMany(tbl_usuario_programas);
-tbl_usuario_programas.belongsTo(tbl_usuarios);
-tbl_programas.hasMany(tbl_usuario_programas);
-tbl_usuario_programas.belongsTo(tbl_programas);
+tbl_materias.hasMany(tbl_materias_programas);
+tbl_materias_programas.belongsTo(tbl_materias);
+tbl_programas.hasMany(tbl_materias_programas);
+tbl_materias_programas.belongsTo(tbl_programas);
 
-module.exports = tbl_usuario_programas;
+module.exports = tbl_materias_programas;
