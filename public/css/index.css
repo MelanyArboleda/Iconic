@@ -168,12 +168,14 @@ p.titulo{
     right: 5px;
 }
 
-
 #chat{
   background-color: #eee;
 	width: 100%;
+	overflow: hidden;
+	overflow-y: scroll;
+	height: 440px;
 }
-#chat #header-chat{
+#header-chat{
 	background-color: #26a69a; 
 	color: white;
 	padding: 2.2%;
@@ -182,19 +184,15 @@ p.titulo{
 #caja-mensaje{
 	width: 100%;
 }
-#caja-mensaje input{
-	width: 100%;
-}
 #chat #mensajes{
 	padding: 10px;
-	height: 380px;
 	width: 100%;
-	overflow: hidden;
-	overflow-y: scroll 
 }
 #chat #mensajes .mensaje-autor{
 		margin-bottom: 1%;
-    padding-top: 1%;
+		padding-top: 1%;
+		float: right;
+    width: 60%;
 }
 #chat #mensajes .mensaje-autor .contenido{
 	background-color: white;
@@ -209,12 +207,13 @@ p.titulo{
 	font-style: italic;
 	font-size: 13px;
 	text-align: right;
-	margin-left: 35px;
 	margin-top: 10px;
 }
 #chat #mensajes .mensaje-amigo{
 	  margin-bottom: 4%;
-    padding-top: 3%;
+		padding-top: 3%;
+		float: left;
+    width: 60%;
 }
 #chat #mensajes .mensaje-amigo .contenido{
 	background-color: #b0bec5;
@@ -229,9 +228,12 @@ p.titulo{
 	color: #777;
 	font-style: italic;
 	font-size: 13px;
-	text-align: left;
-	
+	text-align: right;
 	margin-top: 10px;
+}
+
+#chat #mensajes .fecha p{
+	margin: 0;
 }
 
 .mensaje{
@@ -246,10 +248,100 @@ p.titulo{
 
 #modalObservaciones{
   max-height: 100%;
-  border-radius: 3%;
+	border-radius: 3%;
+	top: 3% !important;
 }
 
 .message{
-  padding-left: 2%;
+	padding-left: 2%;
+	word-break: break-all;
 }
-      
+
+.leftLogueado{
+	left: 20% !important;
+}
+
+.btnSend{
+	padding: 0px 20px 0px 0px !important;
+	margin: 10px 0px;
+	text-align: right;
+}
+
+.closeIcon{
+	float: left;
+	margin-top: 20px;
+	display: none;
+}
+
+@media only screen and (max-width: 425px) {
+	#logincontainer{  
+		padding: 0;
+ 	}
+ 	#logincontainer .card.z-depth-5{  
+		box-shadow: none;
+		margin: 0px;
+		padding-top: 40px;
+	 }
+	 
+	#loginform {
+		margin-top: 30px;
+	}
+
+	#logincontainer .footerlogin{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
+	#logincontainer .card .card-content {
+    padding: 24px 20px;
+	}
+
+	body{
+		background-color: #fff;
+	}
+
+	.modal {
+		width: 100%;
+	}
+
+	#modalolvidoclave div.input-field.col.s12.cajasombra{
+		padding: 0 .75rem;
+	}
+
+	#modalolvidoclave .modal-footer .btn{
+		right: 30px;
+	}
+
+	header nav .button-collapse{
+		margin: 0;
+		margin-right: 0px !important;
+	}
+
+	.side-nav {
+		top: 0px !important;
+		padding-top: 20px;
+	}
+
+	#modalObservaciones {
+    border-radius: 0%;
+		top: 0% !important;
+		height: 100%;
+	}
+
+	.closeIcon{
+		float: left;
+		margin-top: 20px;
+		display: block;
+	}
+	
+	#chat{
+		background-color: #eee;
+		width: 100%;
+		overflow: hidden;
+		overflow-y: scroll;
+		height: calc(100% - 166px);
+	}
+}

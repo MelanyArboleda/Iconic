@@ -1,5 +1,5 @@
 angular.module("iconic").controller("concertacionCtrl", concertacionCtrl);
-var socket = io.connect('http://192.168.1.18:3000', { 'forceNew': true });
+var socket = io.connect('http://192.168.1.12:3000', { 'forceNew': true });
 concertacionCtrl.$inject = ["loginService", "loginFactory", "ptdService", "ptdFactory", "serviceNotification", "$q", "$scope"];
 
 function concertacionCtrl(loginService, loginFactory, ptdService, ptdFactory, serviceNotification, $q, $scope) {
@@ -17,9 +17,9 @@ function concertacionCtrl(loginService, loginFactory, ptdService, ptdFactory, se
     function render(data) {
         var html = data.map(function (elem, index) {
             if (elem.tblUsuarioDocIdentidad == loginFactory.user.nombre + " " + loginFactory.user.apellido_1 + " " + loginFactory.user.apellido_2) {
-                var clase = "mensaje-autor right"
+                var clase = "mensaje-autor"
             } else {
-                var clase = "mensaje-amigo left"
+                var clase = "mensaje-amigo"
             }
             return (`<div class="${clase}">
                             <div class="contenido">
