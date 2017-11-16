@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aInfoGeneralCtrl", aInfoGeneralCtrl);
 
-aInfoGeneralCtrl.$inject = ["ptdFactory", "loginFactory", "serviceNotification"];
+aInfoGeneralCtrl.$inject = ["ptdFactory", "serviceNotification"];
 
-function aInfoGeneralCtrl(ptdFactory, loginFactory, serviceNotification) {
+function aInfoGeneralCtrl(ptdFactory, serviceNotification) {
 	var vm = this;
 	vm.aInfoGeneral = aInfoGeneral;
 	vm.infoGeneral = ptdFactory.aInfoGeneral;

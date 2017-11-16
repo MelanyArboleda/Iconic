@@ -5,7 +5,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginServ
         loginFactory.isLogin();
 
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-            console.log("Na na na", toState, toParams, fromState);
+            console.log("Rutas", toState, toParams, fromState);
             console.log("Usuario--------", loginFactory.user);
             if (toParams.login) {
                 var name = toState.name.split(".");
@@ -48,16 +48,16 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginServ
                         }
                     }
                 }
-            }else{
-                if(toState.name == "restablecer"){
-                    loginService.validarDatos({id:toParams.id, fecha:toParams.fecha}).then(function(resp){
-                        loginFactory.user.doc_identidad = resp.data.id;
-                    }).catch(function (res) {
-                        login();
-                    });
-                    
+            } else {
+                if (toState.name == "restablecer") {
+                    if (loginFactory.user.doc_identidad == null && toParams.id != null) {
+                        loginService.validarDatos({ id: toParams.id, fecha: toParams.fecha }).then(function (resp) {
+                            loginFactory.user.doc_identidad = resp.data.id;
+                        }).catch(function (res) {
+                            login();
+                        });
+                    }
                 }
-                
             }
 
             function login() {

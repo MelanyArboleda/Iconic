@@ -46,40 +46,6 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, serv
 		}
 	}
 
-	vm.addNewDD = function (dd) {
-		vm.docenciaDirecta.push({
-			'nombre_asignatura': "",
-			'codigo_asignatura': "",
-			'grupo_asignatura': "",
-			'numero_estudiantes': "",
-			'horas_semanales': "",
-			'horas_semestrales': "",
-			'estudiante': "",
-			'jefe': "",
-		});
-	};
-
-	vm.removeDD = function () {
-		var newDataList = [];
-		vm.selectedAll = false;
-		angular.forEach(vm.docenciaDirecta, function (selected) {
-			if (!selected.selected) {
-				newDataList.push(selected);
-			}
-		});
-		vm.docenciaDirecta = newDataList;
-	};
-	vm.checkAllDD = function () {
-		if (!vm.selectedAll) {
-			vm.selectedAll = true;
-		} else {
-			vm.selectedAll = false;
-		}
-		angular.forEach(vm.docenciaDirecta, function (docenciaDirecta) {
-			docenciaDirecta.selected = vm.selectedAll;
-		});
-	};
-
 	vm.calculahoras = function (dd) {
 		return (dd.horas_semestrales = dd.horas_semanales * 16);
 	};

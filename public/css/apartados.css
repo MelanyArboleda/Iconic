@@ -141,17 +141,20 @@ div.buscaPTD{
 }
 
 #asig {
-   width: 40%;
+   width: 20%;
 }
 
 #cod {
-   width: 12%;
+   width: 10%;
 }
 
 .num {
-  width: 3%;
+  width: 7%;
 }
 
+.action{
+	width: 10%;
+}
 .eval {
 	width: 3%;
 }
