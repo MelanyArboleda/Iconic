@@ -5,8 +5,7 @@ body{
 
 .nav-wrapper{ 
 	color: #fff;
-	background-color: #26a69a;   
-
+	background-color: #26a69a;
 }
 
 .header nav .nav-wrapper img {
@@ -257,10 +256,6 @@ p.titulo{
 	word-break: break-all;
 }
 
-.leftLogueado{
-	left: 20% !important;
-}
-
 .btnSend{
 	padding: 0px 20px 0px 0px !important;
 	margin: 10px 0px;
@@ -271,6 +266,25 @@ p.titulo{
 	float: left;
 	margin-top: 20px;
 	display: none;
+}
+
+.no-disabled{
+	color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.p-btn{
+	padding: 0px 0.5rem;
+}
+
+.p-btn-new{
+	padding: 0px 0.7rem;
+}
+
+@media only screen and (max-width: 992px) {
+	.side-nav {
+		top: 0px !important;
+		padding-top: 20px;
+	}
 }
 
 @media only screen and (max-width: 425px) {
@@ -320,15 +334,14 @@ p.titulo{
 		margin-right: 0px !important;
 	}
 
-	.side-nav {
-		top: 0px !important;
-		padding-top: 20px;
-	}
-
 	#modalObservaciones {
     border-radius: 0%;
 		top: 0% !important;
 		height: 100%;
+	}
+
+	.leftLogueado{
+		left: 20% !important;
 	}
 
 	.closeIcon{
@@ -343,5 +356,9 @@ p.titulo{
 		overflow: hidden;
 		overflow-y: scroll;
 		height: calc(100% - 166px);
+	}
+
+	.add{
+		left: 35px !important;
 	}
 }

@@ -78,6 +78,6 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, serv
 		}
 	};
 
-	vm.calculaMin();
-	vm.calculaMax();
+	//vm.calculaMin();
+	//vm.calculaMax();
 };

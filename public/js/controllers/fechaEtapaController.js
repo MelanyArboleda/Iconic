@@ -24,9 +24,9 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
             año = año.getFullYear();
             facultad = loginFactory.estatus.facultad.facultad;
             vm.formfechaEtapa = {
-                tblEtapaId: '',
+                tblEtapaId: '0',
                 tblFacultadeId: facultad,
-                semestre: '',
+                semestre: '0',
                 ano: año,
                 fecha_inicial: '',
                 fecha_final: ''
@@ -41,6 +41,14 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
         vm.formfechaEtapa.tblEtapaId = vm.formfechaEtapa.tblEtapaId.id;
         vm.formfechaEtapa.tblFacultadeId = loginFactory.estatus.facultad.id;
         fechaEtapaService.guardarFechaEtapa(vm.formfechaEtapa).then(function (res) {
+            vm.formfechaEtapa = {
+                tblEtapaId: '0',
+                tblFacultadeId: facultad,
+                semestre: '0',
+                ano: año,
+                fecha_inicial: '',
+                fecha_final: ''
+            }
             cargarFE();
         });
     }

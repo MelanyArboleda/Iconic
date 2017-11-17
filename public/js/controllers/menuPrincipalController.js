@@ -55,18 +55,18 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 		}
 
 		vm.validFechaFinal = function (ext) {
-			if (ext.fecha_inicio) {
-				var auxFechaInico = new Date(ext.fecha_inicio);
-				console.log(auxFechaInico);
+			if (ext.fecha_inicial) {
+				var auxFechaInicial = new Date(ext.fecha_inicial);
+				console.log(auxFechaInicial);
 				console.log(auxFechaFinal);
 				if (ext.fecha_final) {
 					var auxFechaFinal = new Date(ext.fecha_final);
 					console.log(auxFechaFinal);
-					if (auxFechaFinal < auxFechaInico) {
+					if (auxFechaFinal < auxFechaInicial) {
 						delete ext.fecha_final;
 					}
 				}
-				ext.fechaFinalValida = (new Date(auxFechaInico.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+				ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
 			}
 		}
 	}
