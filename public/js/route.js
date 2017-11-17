@@ -55,6 +55,15 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state({
+		name: "menuPrincipal.fechaEtapa",
+		templateUrl: 'views/users/FechaEtapa.html',
+		url: "/fechaEtapa",
+		controller: "fechaEtapaCtrl as fechaEtapaVm",
+		params: {
+			login: true
+		}
+	})
+	.state({
 		name: "menuPrincipal.AinfoGeneral",
 		templateUrl: 'views/users/AinfoGeneral.html',
 		url: "/infoGeneral",

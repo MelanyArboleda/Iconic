@@ -146,7 +146,7 @@ var usuarios = [{
     contraseña: funciones.encriptar("Iconic123"),
     contraseña_firma: funciones.encriptar("0"),
     tblDedicacioneId: 1,
-    tblPerfileId: 6,
+    tblPerfileId: 1,
     tblEstadoId: 1,
     recuperar: false
 },
@@ -225,16 +225,16 @@ var fechas_etapas = [{
     tblEtapaId: 1,
     tblFacultadeId: 6,
     semestre: 1,
-    año: '2017/06/10',
-    fecha_inicial: '2017/06/10',
-    fecha_final: '2017/06/30'
+    ano: '2017',
+    fecha_inicial: '10/06/2017',
+    fecha_final: '10/06/2017'
 }, {
-    tblEtapaId: 1,
+    tblEtapaId: 2,
     tblFacultadeId: 6,
-    semestre: 2,
-    año: '2016/06/10',
-    fecha_inicial: '2016/06/10',
-    fecha_final: '2016/06/30'
+    semestre: 1,
+    ano: '2017',
+    fecha_inicial: '10/06/2017',
+    fecha_final: '10/06/2017'
 }];
 
 var materias = [
@@ -281,7 +281,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
                                         llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
                                             llamado_insert(actores, tbl_actores, actores, () => {
                                                 llamado_insert(etapas, tbl_etapas, etapas, () => {
-                                                    llamado_insert(fechas_etapas, tbl_fechas_etapas, fechas_etapas, () => {
+                                                    llamado_insert(fechas_etapas, tbl_fechas_etapas.tbl_fechas_etapas, fechas_etapas, () => {
                                                         llamado_insert(materias, tbl_materias, materias, () => {
                                                             llamado_insert(materias_programas, tbl_materias_programas, materias_programas, () => {
 

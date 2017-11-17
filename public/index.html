@@ -48,7 +48,7 @@
                                                 {{indexVm.loginFactory.user.nombre}} {{indexVm.loginFactory.user.apellido_1}} {{indexVm.loginFactory.user.apellido_2}}
                                             </li>
                                             <div class="indicator" style="right: 430px; left: 0px;"></div>
-                                            <li id="perfil">Administrador</li>
+                                            <li id="perfil">{{indexVm.loginFactory.datosig.perfil}}</li>
                                             <li>
                                                 <a href="" id="select">Cambiar contraseña</a>
                                             </li>
@@ -204,6 +204,7 @@
         <script type="text/javascript" src="js/constants/appConstants.js"></script>
         <script type="text/javascript" src="js/services/loginService.js"></script>
         <script type="text/javascript" src="js/services/notificationService.js"></script>
+        <script type="text/javascript" src="js/services/fechaEtapaService.js"></script>
         <script type="text/javascript" src="js/services/DDService.js"></script>
         <script type="text/javascript" src="js/services/ISService.js"></script>
         <script type="text/javascript" src="js/services/IPService.js"></script>
@@ -217,6 +218,7 @@
         <script type="text/javascript" src="js/directives/inputDirectives.js"></script>
         <script type="text/javascript" src="js/factories/loginFactory.js"></script>
         <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
+        <script type="text/javascript" src="js/factories/fechaEtapaFactory.js"></script>
         <script type="text/javascript" src="js/factories/DDFactory.js"></script>
         <script type="text/javascript" src="js/factories/ISFactory.js"></script>
         <script type="text/javascript" src="js/factories/IPFactory.js"></script>
@@ -228,6 +230,7 @@
         <!-- <script type="text/javascript" src="js/factories/RGFactory.js"></script> -->
         <script type="text/javascript" src="js/controllers/loginController.js"></script>
         <script type="text/javascript" src="js/controllers/menuPrincipalController.js"></script>
+        <script type="text/javascript" src="js/controllers/fechaEtapaController.js"></script>
         <script type="text/javascript" src="js/controllers/indexController.js"></script>
         <script type="text/javascript" src="js/controllers/concertacionController.js"></script>
         <script type="text/javascript" src="js/controllers/verificacionController.js"></script>

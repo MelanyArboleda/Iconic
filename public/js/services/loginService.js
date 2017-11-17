@@ -5,6 +5,11 @@ loginService.$inject = ["$http", "$q", "APP_CONSTANT"];
 function loginService($http, $q, appConstant) {
 	//defino métodos que va a tener el servicio
 	this.login = login;
+	this.buscarPerfil = buscarPerfil;
+	this.buscarPrograma = buscarPrograma;
+	this.buscarArea = buscarArea;
+	this.buscarFacultad = buscarFacultad;
+	this.buscarEtapa = buscarEtapa;
 	this.sendCode = sendCode;
 	this.validarCode = validarCode;
 	this.compararcontraseñas = compararcontraseñas;
@@ -15,9 +20,10 @@ function loginService($http, $q, appConstant) {
 	this.validarDatos = validarDatos;
 	this.guardarFirma = guardarFirma;
 
+
 	function login(user) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/login", user).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/login", user).then(function (res) {
 			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
@@ -27,9 +33,64 @@ function loginService($http, $q, appConstant) {
 		return deferred.promise;
 	}
 
+	function buscarPerfil(data) {
+		var deferred = $q.defer();
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarPerfil", data).then(function (res) {
+			deferred.resolve(res.data.perfil);
+		}, function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function buscarPrograma(data) {
+		var deferred = $q.defer();
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarPrograma", data).then(function (res) {
+			deferred.resolve(res.data.programa);
+		}, function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function buscarArea(data) {
+		var deferred = $q.defer();
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarArea", data).then(function (res) {
+			deferred.resolve(res.data.area);
+		}, function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function buscarFacultad(data) {
+		var deferred = $q.defer();
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarFacultad", data).then(function (res) {
+			deferred.resolve(res.data.facultad);
+		}, function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
+	function buscarEtapa() {
+		var deferred = $q.defer();
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarEtapa").then(function (res) {
+			deferred.resolve(res.data.etapa);
+		}, function (err) {
+			deferred.reject(err);
+			console.log(err);
+		});
+		return deferred.promise;
+	}
+
 	function sendCode(user) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/sendCode", user).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/sendCode", user).then(function (res) {
 			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
@@ -41,7 +102,7 @@ function loginService($http, $q, appConstant) {
 
 	function validarCode(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/validarCode", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/validarCode", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -52,7 +113,7 @@ function loginService($http, $q, appConstant) {
 
 	function compararcontraseñas(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/validarPassword", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/validarPassword", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -63,7 +124,7 @@ function loginService($http, $q, appConstant) {
 
 	function buscarUser(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarUser", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarUser", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -74,7 +135,7 @@ function loginService($http, $q, appConstant) {
 
 	function buscarUsuario(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarUsuario", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarUsuario", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -85,7 +146,7 @@ function loginService($http, $q, appConstant) {
 
 	function cambiarEstado(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/cambiarEstado", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/cambiarEstado", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -96,7 +157,7 @@ function loginService($http, $q, appConstant) {
 
 	function sendLink(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/sendLink", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/sendLink", data).then(function (res) {
 			deferred.resolve(res.data);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -107,7 +168,7 @@ function loginService($http, $q, appConstant) {
 
 	function validarDatos(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/validarDatos", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/validarDatos", data).then(function (res) {
 			deferred.resolve(res);
 		}).catch(function (err) {
 			deferred.reject(err);
@@ -118,7 +179,7 @@ function loginService($http, $q, appConstant) {
 
 	function guardarFirma(data) {
 		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarFirma", data).then(function (res) {
+		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarFirma", data).then(function (res) {
 			deferred.resolve(res);
 		}).catch(function (err) {
 			deferred.reject(err);

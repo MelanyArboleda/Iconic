@@ -39,10 +39,10 @@ module.exports = {
     crear_ptd: function (req, res, next) {
         crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
             crud.innerFacultad([tbl_facultades, tbl_areas, tbl_programas], { codigo: programa.tblProgramaCodigo }, (facultad) => {
-                crud.findOne(tbl_fechas_etapas, { tblFacultadeId: facultad.id }, 'año desc', (fechas) => {
+                crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id }, 'ano desc', (fechas) => {
                     var datos = {
                         tblUsuarioDocIdentidad: req.body.doc_identidad,
-                        fecha: fechas.año,
+                        fecha: fechas.ano,
                         semestre: fechas.semestre,
                         version: 1
                     }

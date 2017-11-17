@@ -1,0 +1,94 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th id="">Etapa</th>
+                        <th id="">Facultad</th>
+                        <th class="">Semetre</th>
+                        <th class="">Año</th>
+                        <th class="">Fecha Inicial</th>
+                        <th class="">Fecha Final</th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fe in fechaEtapaVm.fechaEtapa">
+                        <td>{{fe.tblEtapaId.etapa}}</td>
+                        <td>{{fe.tblFacultadeId.facultad}}</td>
+                        <td>{{fe.semestre}}</td>
+                        <td>{{fe.ano}}</td>
+                        <td>{{fe.fecha_inicial}}</td>
+                        <td>{{fe.fecha_final}}</td>
+                        <td>
+                            <input type="button" value="editar">
+                            <input type="button" value="eliminar">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="fixed-action-btn add">
+                <a class="btn-floating btn-large waves-effect waves-light modal-action modal-close modal-trigger btn" data-target='modalFechaEtapa'
+                    modal>
+                    <i class="material-icons">&#xE145;</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFechaEtapa" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5>
+            <strong>Fecha Etapas</strong>
+        </h5>
+        <div class="row">
+            <form name="fechaEtapaForm" autocomplete="off" ng-submit="fechaEtapaVm.saveFechaEtapa()">
+                <div class="input-field col s3 cajasombra" ng-controller="menuPrincipalCtrl as mnuPVm">
+                    <select id="tblEtapaId" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
+                        <option disabled selected>Etapa</option>
+                        <option id="fe.tblEtapaId.etapa" ng-repeat="fe in fechaEtapaVm.etapas">{{fe.etapa}}</option>
+                    </select>
+                </div>
+                <div class="input-field col s4 cajasombra">
+                    <input id="tblFacultadeId" type="text" name="tblFacultadeId" ng-model="fechaEtapaVm.formfechaEtapa.tblFacultadeId" required disabled>
+                </div>
+                <div class="input-field col s2 cajasombra">
+                    <select id="semestre" name="semestre" ng-model="fechaEtapaVm.formfechaEtapa.semestre" material-select watch required>
+                        <option disabled selected>Semestre</option>
+                        <option id="1">1</option>
+                        <option id="2">2</option>
+                    </select>
+                </div>
+                <div class="input-field col s2 cajasombra">
+                    <input id="ano" type="text" name="ano" ng-model="fechaEtapaVm.formfechaEtapa.ano" required disabled>
+                </div>
+                <div class="input-field col s3 cajasombra">
+                    <input input-date type="text" name="fecha_inicial" id="fecha_inicial" class="form-control fecha" ng-change="mnuPVm.validFechaFinal(ext)"
+                        ng-model="fechaEtapaVm.formfechaEtapa.fecha_inicial" format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}"
+                        weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateIExt}}"
+                        max="{{mnuPVm.maxDateIExt}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close"
+                        select-years="15" required>
+                </div>
+                <div class="input-field col s3 cajasombra">
+                    <input input-date ng-if="fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final" id="fecha_final" class="form-control fecha"
+                        ng-model="fechaEtapaVm.formfechaEtapa.fecha_final" format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}"
+                        weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{ext.fechaFinalValida}}"
+                        max="{{mnuPVm.maxDateFExt}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close"
+                        select-years="15" required>
+                </div>
+
+                <div class="input-field col s12 ">
+                    <button ng-disabled="fechaEtapaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>

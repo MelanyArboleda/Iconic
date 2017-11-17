@@ -92,8 +92,15 @@ router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);
 router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //obtener datos espesifico
+router.post('/auth/buscarPerfil', controllers.PtdController.buscar_Perfil);
+router.post('/auth/buscarPrograma', controllers.PtdController.buscar_Programa);
 router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
-router.post('/auth/buscarDedicacion', controllers.PtdController.buscar_Dedicacion);
+router.post('/auth/buscarFacultad', controllers.PtdController.buscar_Facultad);
+router.post('/auth/buscarEtapa', controllers.PtdController.buscar_Etapa);
 router.post('/auth/buscarVP', modelos.tbl_vinculos.buscar_VP);
 router.post('/auth/buscarVS', modelos.tbl_vinculos.buscar_VS);
+//rutas de fechas para las etapas
+router.post('/auth/buscarFechaEtapa', modelos.tbl_fechas_etapas.buscar_FechaEtapa);
+router.post('/auth/guardarFechaEtapa', modelos.tbl_fechas_etapas.guardar_FechaEtapa);
+
 module.exports = router;
