@@ -124,8 +124,10 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 		var deferred = $q.defer();
 		buscarPrograma().then(function () {
 			buscarArea().then(function () {
-				buscarFacultad().then(function () { 
-					deferred.resolve();
+				buscarFacultad().then(function () {
+					buscarEtapa().then(function () {
+						deferred.resolve();
+					});
 				});
 			})
 		});

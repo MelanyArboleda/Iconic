@@ -15,11 +15,10 @@ function fechaEtapaFactory(fechaEtapaService, loginFactory, serviceNotification,
         var d = new Date();
         var año = d.getFullYear();
         loginFactory.cargarEstatus().then(function () {
+            console.log("Estatus--------",loginFactory.estatus);
             fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año }).then(function (result) {
-                loginFactory.buscarEtapa().then(function () {
-                    factoryFechaEtapa.fechaEtapa = result.apartado;
-                    deferred.resolve();
-                });
+                factoryFechaEtapa.fechaEtapa = result.apartado;
+                deferred.resolve();
             });
         });
         return deferred.promise;

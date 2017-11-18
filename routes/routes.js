@@ -102,5 +102,7 @@ router.post('/auth/buscarVS', modelos.tbl_vinculos.buscar_VS);
 //rutas de fechas para las etapas
 router.post('/auth/buscarFechaEtapa', modelos.tbl_fechas_etapas.buscar_FechaEtapa);
 router.post('/auth/guardarFechaEtapa', modelos.tbl_fechas_etapas.guardar_FechaEtapa);
+router.post('/auth/modificarFechaEtapa', modelos.tbl_fechas_etapas.modificar_FechaEtapa);
+router.post('/auth/eliminarFechaEtapa', modelos.tbl_fechas_etapas.eliminar_FechaEtapa);
 
 module.exports = router;

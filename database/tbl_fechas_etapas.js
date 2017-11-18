@@ -53,15 +53,39 @@ module.exports = {
     },
 
     guardar_FechaEtapa: function (req, res, next) {
-		tbl_fechas_etapas.sync().then(function () {
-			crud.create(tbl_fechas_etapas, req.body, (resp) => {
-				if (resp != 'error') {
-					res.status(200).end();
-				} else {
-					res.sendStatus(403);
-				}
-			});
-		});
-	},
+        tbl_fechas_etapas.sync().then(function () {
+            crud.create(tbl_fechas_etapas, req.body, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    modificar_FechaEtapa: function (req, res, next) {
+        tbl_fechas_etapas.sync().then(function () {
+            crud.update(tbl_fechas_etapas, req.body.donde, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    eliminar_FechaEtapa: function (req, res, next) {
+        tbl_fechas_etapas.sync().then(function () {
+            crud.delete(tbl_fechas_etapas, req.body, (resp) => {
+                if (resp == 'delete') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    }
 
 };

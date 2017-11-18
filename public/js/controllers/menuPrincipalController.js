@@ -33,9 +33,8 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 	} else {
 		loginFactory.buscarPerfil().then(function () { });
 		loginFactory.cargarEstatus().then(function () { });
-		fechaEtapaFactory.buscarFechaEtapa().then(function () {
-			loginFactory.buscarEtapa().then(function () { });
-		});
+		fechaEtapaFactory.buscarFechaEtapa().then(function () {});
+		loginFactory.buscarEtapa().then(function () { });
 		if (loginFactory.user.perfil == 1) {
 			if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 				ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
@@ -66,7 +65,7 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 						delete ext.fecha_final;
 					}
 				}
-				ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+				// ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
 			}
 		}
 	}

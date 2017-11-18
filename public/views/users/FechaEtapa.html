@@ -13,7 +13,8 @@
                         <th>Fecha Inicial</th>
                         <th>Fecha Final</th>
                         <th>
-                            <a class="waves-effect waves-light btn p-btn-new green" data-target='modalFechaEtapa' modal>Nuevo</a>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" data-target='modalFechaEtapa'
+                                modal>Nuevo</a>
                         </th>
                     </tr>
                 </thead>
@@ -23,13 +24,14 @@
                         <td>{{fe.tblFacultadeId.facultad}}</td>
                         <td>{{fe.semestre}}</td>
                         <td>{{fe.ano}}</td>
-                        <td>{{fe.fecha_inicial}}</td>
-                        <td>{{fe.fecha_final}}</td>
+                        <td>{{fe.fecha_inicial | date}}</td>
+                        <td>{{fe.fecha_final | date}}</td>
                         <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="editFechaEtapa()">
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="fechaEtapaVm.llenarModal(fe)" data-target='modalFechaEtapa'
+                                modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="deleteFechaEtapa()">
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -46,11 +48,11 @@
             <strong>Fecha Etapas</strong>
         </h5>
         <div class="row" ng-controller="menuPrincipalCtrl as mnuPVm">
-            <form id="formFechaEtapa" name="fechaEtapaForm" autocomplete="off" ng-submit="fechaEtapaVm.saveFechaEtapa()">
+            <form id="formFechaEtapa" name="fechaEtapaForm" autocomplete="off" ng-submit="fechaEtapaVm.accion()">
                 <div class="input-field col l3 offset-l1 s6 cajasombra">
                     <select id="tblEtapaId" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
                         <option value="0" disabled>Etapa</option>
-                        <option value="fe.tblEtapaId.etapa" ng-repeat="fe in fechaEtapaVm.etapas">{{fe.etapa}}</option>
+                        <option ng-repeat="fe in fechaEtapaVm.etapas">{{fe.etapa}}</option>
                     </select>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">

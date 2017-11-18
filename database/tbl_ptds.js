@@ -14,7 +14,7 @@ var tbl_ptds = sequelize.define('tbl_ptds', {
         allowNull: false
     },
     fecha: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     semestre: {
@@ -39,7 +39,7 @@ module.exports = {
     crear_ptd: function (req, res, next) {
         crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
             crud.innerFacultad([tbl_facultades, tbl_areas, tbl_programas], { codigo: programa.tblProgramaCodigo }, (facultad) => {
-                crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id }, 'ano desc', (fechas) => {
+                crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id }, 'ano desc, semestre asc', (fechas) => {
                     var datos = {
                         tblUsuarioDocIdentidad: req.body.doc_identidad,
                         fecha: fechas.ano,
