@@ -1,75 +1,96 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div ng-show="aInvestigacionesForm.$pristine" class="alert alert-info contenido container contenido-alert">
-    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus investigaciones antes de presionar el botón "Guardar
-    Apartado".
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th id="nombrep">Nombre del Semillero y/o Grupo</th>
+                        <th id="gvinculo">Tipo de vínculo</th>
+                        <th class="act">Actividad desarrollada</th>
+                        <th class="prod">Productos para cada actividad</th>
+                        <th class="num">Horas Semanales</th>
+                        <th class="num">Horas Semestre</th>
+                        <th id="vbci">Vo. Bo. Coord. Investigación</th>
+                        <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesSVm." data-target='modalInvestigacionesS'
+                                modal>Nuevo</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="gI in investigacionesSVm.semillerosInvestigaciones">
+                        <td>{{gI.nombre_semillero}}</td>
+                        <td>{{gI.tblVinculoId}}</td>
+                        <td>{{gI.actividad_desarrollada}}</td>
+                        <td>{{gI.producto}}</td>
+                        <td>{{gI.horas_semanales}}</td>
+                        <td>{{gI.horas_semestrales}}</td>
+                        <td>{{gI.aprobado}}</td>
+                        <td>
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesSVm." data-target='modalInvestigacionesS' modal>
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="investigacionesSVm.">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                        <i class="material-icons">&#xE85F;</i></a>
+        </div>
+    </div>
 </div>
 
-<form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesSVm.aInvestigacionesS()">
-    <div class="container white contenido">
+<div id="modalInvestigacionesS" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Semilleros de Investigación</strong>
+        </h5>
         <div class="row">
-            <div class="col s12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" ng-model="selectedAllG" ng-click="investigacionesSVm.gInvCheckAll()" /></th>
-                            <th class="invgr">*Nombre del Semillero y/o Grupo</th>
-                            <th id="gvinculo">*Tipo de vínculo
-                                <br>(Director ó Miembro)
-                            </th>
-                            <th class="act">*Actividad desarrollada</th>
-                            <th class="prod">*Productos para cada actividad</th>
-                            <th class="invnum">*Horas Semanales</th>
-                            <th class="invnum">*Horas Semestre</th>
-                            <th>Vo. Bo. Coordinación Investigación</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="gI in investigacionesSVm.semillerosInvestigaciones">
-                            <td>
-                                <input type="checkbox" ng-model="gI.selectedG" /></td>
-                            <td>
-                                <input name="nombre_semillero" type="text" class="form-control validate" ng-model="gI.nombre_semillero" required/></td>
-                            <td><select id="tblVinculoId" name="tblVinculoId" ng-model="gI.tblVinculoId" material-select watch
-                                    required>
-                                    <option ng-repeat="vinculos in investigacionesSVm.vinculosG">{{vinculos}}</option>
-                                 </select></td>
-                            <td>
-                                <input name="actividad_desarrollada" type="text" class="form-control validate" ng-model="gI.actividad_desarrollada" required/></td>
-                            <td>
-                                <input name="producto" type="text" class="form-control validate" ng-model="gI.producto" required/></td>
-                            <td>
-                                <input name="horas_semanales" type="number" ng-change="investigacionesSVm.calculahoras(gI)" class="form-control validate"
-                                    ng-model="gI.horas_semanales" required/>
-                                <td>
-                                    <input name="horas_semestrales" type="number" class="form-control" ng-model="gI.horas_semestrales" readonly/></td>
-                                <td>
-                                    <input name="aprobado" type="checkbox" class="form-control validate" ng-model="gI.aprobado" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="form-group">
-                    <div class="fixed-action-btn cancel">
-                        <a class="btn-floating waves-effect waves-light btn red" ng-click="investigacionesSVm.gInvRemove()" title="Eliminar Línea">
-                            <i class="material-icons">&#xE15B;</i>
-                        </a>
-                    </div>
-                    <div class="fixed-action-btn add">
-                        <button type="submit" ng-disabled="aInvestigacionesForm.$invalid" ng-click="investigacionesSVm.gInvAddNew()" class="btn-floating btn-large waves-effect waves-light"
-                            title="Agregar Línea">
-                            <i class="material-icons">&#xE145;</i>
-                        </button>
-                    </div>
+            <form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesSVm.aInvestigacionesS()">
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="nombre_semillero" type="text" class="form-control validate" ng-model="gI.nombre_semillero" placeholder="Nombre Semillero"
+                        required/>
                 </div>
-            </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <select id="tblVinculoId" name="tblVinculoId" ng-model="gI.tblVinculoId" material-select watch required>
+                        <option value="" disabled selected>Tipo de Vínculo</option>
+                        <option ng-repeat="vinculos in investigacionesSVm.vinculosG">{{vinculos}}</option>
+                    </select>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="actividad_desarrollada" type="text" class="form-control validate" ng-model="gI.actividad_desarrollada" placeholder="Actividad Desarrollada" required/>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="producto" type="text" class="form-control validate" ng-model="gI.producto" placeholder="Productos por actividad" required/>
+                </div>
+                <div class="input-field col l5 s5 cajasombra">
+                    <input name="horas_semanales" type="number" ng-change="investigacionesSVm.calculahoras(gI)" class="form-control validate" ng-model="gI.horas_semanales" placeholder="Horas Semanales" required/>
+                </div>
+                <div class="input-field col l5 s5 cajasombra">
+                    <input name="horas_semestrales" type="number" class="form-control" ng-model="gI.horas_semestrales" placeholder="Horas Semestrales" readonly/>
+                </div>
+                <div class="input-field col l2 s2 cajasombra">
+                    <input name="aprobado" type="checkbox" class="form-control validate" ng-model="gI.aprobado" placeholder="Aprobado" />
+                </div>
+                <div class="input-field col l12 s12 center ">
+                    <button ng-disabled="aInvestigacionesForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="row center" input-field>
-        <button ng-disabled="aInvestigacionesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
-</form>
+</div>
 
 <script type="text/javascript" src="js/todoScript.js"></script>

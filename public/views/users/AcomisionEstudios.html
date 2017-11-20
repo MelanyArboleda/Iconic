@@ -1,75 +1,106 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div ng-show="aComisionEstudiosForm.$pristine" class="alert alert-info contenido container contenido-alert">
-    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus comisiones de estudio antes de presionar el botón "Guardar Apartado".
-</div>
-
-<form name="aComisionEstudiosForm" autocomplete="off" ng-submit="comisionEstudiosVm.comisionEstudios()">
-    <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
+    <div class="container white contenido">
         <div class="row">
             <div class="col s12">
-                <table class="table">
+                <table class="responsive-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="comisionEstudiosVm.checkAllComE()" /></th>
-                            <th>*Universidad / Centro de estudio</th>
-                            <th>*Tipo de estudio</th>
-                            <th>*Nombre específico del estudio</th>
-                            <th>*Fecha Inicio</th>
-                            <th>*Fecha Graduación</th>
-                            <th>*Fecha Obtención de autorización</th>
-                            <th>*Aportes institucionales obtenidos y/o esperados</th>
+                            <th>Universidad / Centro de estudio</th>
+                            <th>Tipo de estudio</th>
+                            <th>Nombre específico del estudio</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Graduación</th>
+                            <th>Fecha Obtención de autorización</th>
+                            <th>Aportes institucionales obtenidos y/o esperados</th>
+                            <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="comisionEstudiosVm." data-target='ModalComisionEstudios'
+                                modal>Nuevo</a>
+                            </th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        <tr ng-repeat="comE in comisionEstudiosVm.comisionE">
-                            <td><input type="checkbox" ng-model="comE.selected" /></td>
-                            <td><input name="universidad" type="text" class="form-control validate" ng-model="comE.universidad" required/></td>
-                            <td><input name="tipo_estudio" type="text" class="form-control validate" ng-model="comE.tipo_estudio" required/></td>
-                            <td><input name="nombre_estudio" type="text" class="form-control validate" ng-model="comE.nombre_estudio" required/></td>
-                            <td>
-                                <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="comE.fecha_inicio" format="mm/dd/yyyy"
-                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
-                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
-                                    required> </td>
-                            <td>
-                                <input input-date type="text" name="fecha_graduacion" id="fecha_graduacion" class="form-control fecha" ng-model="comE.fecha_graduacion" format="mm/dd/yyyy"
-                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
-                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
-                                    required> </td>
-                            <td>
-                                <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control fecha" ng-model="comE.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
-                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
-                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
-                                    required> </td>
-                            <td> <input type="text" name="aportes_inst_obtenidos" class="form-control validate" ng-model="comE.aportes_inst_obtenidos" required/> </td>
-                        </tr>
-                    </tbody>
+                    <tr ng-repeat="comE in comisionEstudiosVm.comisionE">
+                        <td>{{comE.universidad}}</td>
+                        <td>{{comE.tipo_estudio}}</td>
+                        <td>{{comE.nombre_estudio}}</td>
+                        <td>{{comE.fecha_inicio}}</td>
+                        <td>{{comE.fecha_graduacion}}</td>
+                        <td>{{comE.fecha_obtencion_autorizacion}}</td>
+                        <td>{{comE.aportes_inst_obtenidos}}</td>
+                        <td>
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="comisionEstudiosVm." data-target='ModalComisionEstudios'
+                                modal>
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="comisionEstudiosVm.">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody> 
                 </table>
-                <div class="form-group">
-                    <div class="fixed-action-btn cancel">
-                        <a class="btn-floating waves-effect waves-light btn red" ng-click="comisionEstudiosVm.removeComE()" title="Eliminar Línea">
-                            <i class="material-icons">&#xE15B;</i>
-                        </a>
-                    </div>
-                    <div class="fixed-action-btn add">
-                        <button type="submit" ng-click="comisionEstudiosVm.addNewComE()" ng-disabled="aComisionEstudiosForm.$invalid" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
-                            <i class="material-icons">&#xE145;</i>
-                        </button>
-                    </div> 
-                </div>
-                <br>
-                <div class="row center" input-field>
-                    <button ng-disabled="aComisionEstudiosForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
-                </div>
             </div>
         </div>
+            <div class="form-group">
+                <div class="fixed-action-btn add_observaciones">
+                    <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                        <i class="material-icons">&#xE85F;</i>
+                    </a>
+                </div>
+            </div>
     </div>
-</form>
+
+    <div id="ModalComisionEstudios" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Comisión de Estudios</strong>
+        </h5>
+        <div class="row" ng-controller="menuPrincipalCtrl as mnuPVm">
+            <form name="aComisionEstudiosForm" autocomplete="off" ng-submit="comisionEstudiosVm.comisionEstudios()">
+                <div class="input-field col l6 s6 cajasombra">
+                    <input name="universidad" type="text" class="form-control validate" ng-model="comE.universidad" placeholder="Universidad" required/>
+                </div>
+                <div class="input-field col l6 s6 cajasombra">
+                    <input name="tipo_estudio" type="text" class="form-control validate" ng-model="comE.tipo_estudio" placeholder="Tipo de Estudio" required/>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                     <input name="nombre_estudio" type="text" class="form-control validate" ng-model="comE.nombre_estudio" placeholder="Nombre del Estudio" required/>
+                </div>
+                <div class="input-field col l4 s4 cajasombra">
+                    <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="comE.fecha_inicio" format="mm/dd/yyyy"
+                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
+                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
+                                    placeholder="Fecha Inicio" required>
+                </div>
+                <div class="input-field col l4 s4 cajasombra">
+                    <input input-date type="text" name="fecha_graduacion" id="fecha_graduacion" class="form-control fecha" ng-model="comE.fecha_graduacion" format="mm/dd/yyyy"
+                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
+                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
+                                    placeholder="Fecha Graduación" required>
+                </div>
+                <div class="input-field col l4 s4 cajasombra">
+                    <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control fecha" ng-model="comE.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
+                                    months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                    weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
+                                    today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15"
+                                    placeholder="Fecha Autorización" required>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <input type="text" name="aportes_inst_obtenidos" class="form-control validate" ng-model="comE.aportes_inst_obtenidos" placeholder="Aportes Obtenidos" required/>
+                </div>
+                <div class="input-field col l12 s12 center ">
+                    <button ng-disabled="aComisionEstudiosForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>
 
 <script type="text/javascript" src="js/todoScript.js"></script>

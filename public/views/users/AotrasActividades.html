@@ -1,54 +1,40 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div ng-show="aOtrasActividadesForm.$pristine" class="alert alert-info contenido container contenido-alert">
-    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus otras actividades académicas antes de presionar el botón
-    "Guardar Apartado".
-</div>
-
-<form name="aOtrasActividadesForm" autocomplete="off" ng-submit="otrasActividadesVm.aOtrasActividades()">
     <div class="container white contenido">
         <div class="row">
             <div class="col s12">
-                <table class="table">
+                <table class="responsive-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="otrasActividadesVm.checkAllOAct()" /></th>
-                            <th>*Actividad</th>
-                            <th>*Dedicación Horas Semanales</th>
-                            <th>*Dedicación Horas Semestre</th>
+                            <th>Actividad</th>
+                            <th>Dedicación Horas Semanales</th>
+                            <th>Dedicación Horas Semestre</th>
                             <th>Descripción y Productos</th>
+                            <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm." data-target='modalOActividades'
+                                modal>Nuevo</a>
+                            </th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="oact in otrasActividadesVm.otrasActividades">
-                            <td><input type="checkbox" ng-model="oact.selected" /></td>
-                            <td><input name="nombre_actividad" type="text" class="form-control validate" ng-model="oact.nombre_actividad"
-                                    required/></td>
-                            <td> <input name="horas_semanales" type="number" ng-change="otrasActividadesVm.calculahoras(oact)"
-                                    class="form-control validate" ng-model="oact.horas_semanales" required/>
-                            </td>
-                            <td> <input name="horas_semestrales" type="number" class="form-control" ng-model="oact.horas_semestrales"
-                                    disabled/> </td>
-                            <td> <input name="descripcion_productos" type="text" class="form-control validate" ng-model="oact.descripcion_productos"
-                                /> </td>
-                        </tr>
-                    </tbody>
+                    <tr ng-repeat="oact in otrasActividadesVm.otrasActividades">
+                        <td>{{oact.nombre_actividad}}</td>
+                        <td>{{oact.horas_semanales}}</td>
+                        <td>{{oact.horas_semestrales}}</td>
+                        <td>{{oact.descripcion_productos}}</td>
+                        <td>
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm." data-target='modalOActividades'
+                                modal>
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody> 
                 </table>
-                <div class="form-group">
-                    <div class="fixed-action-btn cancel">
-                        <a class="btn-floating waves-effect waves-light btn red" ng-click="otrasActividadesVm.removeOAct()" title="Eliminar Línea">
-                            <i class="material-icons">&#xE15B;</i>
-                        </a>
-                    </div>
-                    <div class="fixed-action-btn add">
-                        <button type="submit" ng-click="otrasActividadesVm.addNewOAct()" ng-disabled="aOtrasActividadesForm.$invalid" class="btn-floating btn-large waves-effect waves-light"
-                            title="Agregar Línea">
-                            <i class="material-icons">&#xE145;</i>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -57,7 +43,7 @@
     <div class="container white contenido">
         <div class="row">
             <div class="col s12">
-                <table class="table">
+                <table  class="responsive-table">
                     <thead>
                         <tr>
                             <th>*Resumen</th>
@@ -82,11 +68,53 @@
                 </table>
             </div>
         </div>
+        <div class="row center">
+            <button ng-disabled="aOtrasActividadesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+        </div>
+
+        <div class="form-group">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                    <i class="material-icons">&#xE85F;</i>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="row center">
-        <button ng-disabled="aOtrasActividadesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
+     <div id="modalOActividades" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Otras Actividades Académicas</strong>
+        </h5>
+        <div class="row">
+            <form name="aOtrasActividadesForm" autocomplete="off" ng-submit="otrasActividadesVm.aOtrasActividades()">
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="nombre_actividad" type="text" class="form-control validate" ng-model="oact.nombre_actividad"
+                                   placeholder="Nombre de la Actividad" required/>
+                </div>
+                <div class="input-field col l6 s6 cajasombra">
+                    <input name="horas_semanales" type="number" ng-change="otrasActividadesVm.calculahoras(oact)"
+                                    class="form-control validate" ng-model="oact.horas_semanales" placeholder="Horas Semanales" required/>
+                </div>
+                <div class="input-field col l6 s6 cajasombra">
+                     <input name="horas_semestrales" type="number" class="form-control" ng-model="oact.horas_semestrales"
+                                   placeholder="Horas Semestrales" disabled/>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="descripcion_productos" type="text" class="form-control validate" ng-model="oact.descripcion_productos" placeholder="Descripción de Productos"/> 
+                </div>
+
+                <div class="input-field col l12 s12 center ">
+                    <button ng-disabled="aOtrasActividadesForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>
+
 
 <script type="text/javascript" src="js/todoScript.js"></script>

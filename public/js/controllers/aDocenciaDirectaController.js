@@ -72,7 +72,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, serv
 		}
 		else if (vm.ig.dedicacionIG == "Medio Tiempo") {
 			vm.max = 14;
-		}
+		} 
 		else {
 			vm.max = 10;
 		}

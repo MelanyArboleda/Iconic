@@ -4,7 +4,7 @@ fechaEtapaCtrl.$inject = ["fechaEtapaService", "fechaEtapaFactory", "loginFactor
 
 function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
     var vm = this;
-    var acciones = "";
+    var acciones = ""; 
     cargarFE();
     function cargarFE() {
         fechaEtapaFactory.buscarFechaEtapa().then(function () {

@@ -1,58 +1,88 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-<div ng-show="aAsesoriasForm.$pristine" class="alert alert-info contenido container contenido-alert">
-    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-    <strong>¡Importante!</strong> Recuerda siempre agregar todas tus asesorías en proyectos antes de presionar el botón "Guardar Apartado".
-</div>
-
-<form name="aAsesoriasForm" autocomplete="off" ng-submit="asesoriasVm.aAsesorias()">
-<div class="container white contenido"> 
+<div class="container white contenido">
     <div class="row">
         <div class="col s12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" ng-model="selectedAll" ng-click="asesoriasVm.checkAllAse()" /></th>
-                            <th>*Integrantes del Equipo</th>
-                            <th>*Título</th>
-                            <th>*Aspectos Relevantes del Trabajo</th>
-                            <th>*Dedicación Horas Semestre</th>
-                            <th>Evaluación Estudiante</th>
-                            <th>Evaluación Jefe</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="ase in asesoriasVm.asesorias">
-                            <td><input name="" type="checkbox" ng-model="ase.selected" /></td>
-                            <td><input name="integrantes" type="text" class="form-control validate" ng-model="ase.integrantes" required/></td>
-                            <td> <input name="titulo" type="text" class="form-control validate" ng-model="ase.titulo" required/> </td>
-                            <td> <input name="aspectos" type="text" class="form-control validate" ng-model="ase.aspectos" required/> </td>
-                            <td> <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="ase.horas_semestrales" required/> </td>
-                            <td> <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="ase.estudiante" /> </td>
-                            <td> <input name="jefe" type="number" class="form-control validate" min="1" max="5" ng-model="ase.jefe" /> </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="form-group">
-                    <div class="fixed-action-btn cancel">
-                        <a class="btn-floating waves-effect waves-light btn red" ng-click="asesoriasVm.removeAse()" title="Eliminar Línea">
-                            <i class="material-icons">&#xE15B;</i>
-                        </a>
-                    </div>
-                    <div class="fixed-action-btn add">
-                        <button type="submit" ng-click="asesoriasVm.addNewAse()" ng-disabled="aAsesoriasForm.$invalid" class="btn-floating btn-large waves-effect waves-light" title="Agregar Línea" >
-                            <i class="material-icons">&#xE145;</i>
-                        </button>
-                    </div> 
-                </div>
-                <br>
-                <div class="row center" input-field>
-                    <button ng-disabled="aAsesoriasForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
-                </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Integrantes del Equipo</th>
+                        <th>Título</th>
+                        <th>Aspectos Relevantes del Trabajo</th>
+                        <th>Dedicación Horas Semestre</th>
+                        <th>Evaluación Estudiante</th>
+                        <th>Evaluación Jefe</th>
+                        <th>
+                        <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm." data-target='modalAsesorias'
+                                modal>Nuevo</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ase in asesoriasVm.asesorias">
+                        <td>{{ase.integrantes}}</td>
+                        <td>{{ase.titulo}}</td>
+                        <td>{{ase.aspectos}}</td>
+                        <td>{{ase.horas_semestrales}}</td>
+                        <td>{{ase.estudiante}}</td>
+                        <td>{{ase.jefe}}</td>
+                        <td>
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="asesoriasVm." data-target='modalAsesorias' modal>
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+        <div class="form-group">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                    <i class="material-icons">&#xE85F;</i>
+                </a>
+            </div>
+        </div>
 </div>
-</form>
+
+<div id="modalAsesorias" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Asesorías en Proyectos</strong>
+        </h5>
+        <div class="row">
+            <form name="aAsesoriasForm" autocomplete="off" ng-submit="asesoriasVm.aAsesorias()">
+                <div class="input-field col l12 s12 cajasombra">
+                    <input name="integrantes" type="text" class="form-control validate" ng-model="ase.integrantes" placeholder="Integrntes del Equipo" required/>
+                </div>
+                <div class="input-field col l6 s6 cajasombra">
+                    <input name="titulo" type="text" class="form-control validate" ng-model="ase.titulo" placeholder="Título" required/>
+                </div>
+                <div class="input-field col l6 s6 cajasombra">
+                    <input name="aspectos" type="text" class="form-control validate" ng-model="ase.aspectos" placeholder="Aspectos Reelevantes" required/>
+                </div>
+                <div class="input-field col l4 s4 cajasombra">
+                    <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="ase.horas_semestrales" placeholder="Horas Semestrales" required/>
+                </div>
+                <div class="input-field col l4 s4 cajasombra hscss">
+                    <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="ase.estudiante" placeholder="Eval. Estudiante" /> 
+                </div>
+                <div class="input-field col l4 s4 cajasombra">
+                    <input name="jefe" type="number" class="form-control validate" min="1" max="5" ng-model="ase.jefe" placeholder="Eval. Jefe" />
+                </div>
+                <div class="input-field col l12 s12 center ">
+                    <button ng-disabled="aAsesoriasForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>
 
 <script type="text/javascript" src="js/todoScript.js"></script>

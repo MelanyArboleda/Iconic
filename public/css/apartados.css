@@ -17,7 +17,7 @@
 }
 
 .alert-danger {
-    color: #a94442;
+    color: #a94442; 
 	display: block;
 	text-align: left;
     /*background-color: #f2dede;
@@ -137,7 +137,15 @@ div.buscaPTD{
 }
 
 .fixed-action-btn.add_observaciones{
-    right: 105px;
+    bottom: 20px;
+}
+
+.select-wrapper input.select-dropdown{
+	color: #bdbdbd;
+}
+
+.select-wrapper input.select-dropdown{
+  color: black;
 }
 
 #asig {
@@ -149,11 +157,11 @@ div.buscaPTD{
 }
 
 .num {
-  width: 7%;
+  width: 10%;
 }
 
 .action{
-	width: 10%;
+	width: 5%;
 }
 .eval {
 	width: 3%;
@@ -164,16 +172,18 @@ div.buscaPTD{
 }
 
 #gvinculo {
-	width: 12%;
+	width: 15%;
 }
 
 #pvinculo {
-	width: 21%;
+	width: 15%;
 }
 
-.invgr {
-	width: 35%;
+#nombrep {
+	width: 20%;
 }
+
+#vbci{width: 5%;}
 
 .act {
 	width: 25%;
@@ -225,6 +235,15 @@ textarea.ng-valid.ng-dirty, .fecha.ng-dirty, .select-wrapper.ng-valid.ng-dirty i
 	color: #F44336;
 }
 
+@media (min-width: 1200px){
+.hscss{
+	margin-left: -34% !important;
+}
+}
+
+@media only screen and (max-width: 992px){
+	table.responsive-table th {text-align: left;}
+}
 
 
 
