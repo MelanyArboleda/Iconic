@@ -8,9 +8,11 @@ function DDService($http, $q, appConstant) {
     this.modificarDD = modificarDD;
     this.eliminarDD = eliminarDD;
 
+    this.buscarMaterias = buscarMaterias;
+
     function buscarDD(dd) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarDD", dd).then(function (res) {
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarDD", dd).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
@@ -21,8 +23,8 @@ function DDService($http, $q, appConstant) {
 
     function guardarDD(dd) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarDD", dd).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarDD", dd).then(function (res) {
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -32,8 +34,8 @@ function DDService($http, $q, appConstant) {
 
     function modificarDD(dd) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarDD", dd).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/modificarDD", dd).then(function (res) {
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -43,8 +45,19 @@ function DDService($http, $q, appConstant) {
 
     function eliminarDD(dd) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarDD", dd).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/eliminarDD", dd).then(function (res) {
+            deferred.resolve(res);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function buscarMaterias(dd) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarMaterias", dd).then(function (res) {
+            deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

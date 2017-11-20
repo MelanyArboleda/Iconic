@@ -5,6 +5,8 @@ const tbl_programas = require('.././database/tbl_programas');
 const tbl_areas = require('.././database/tbl_areas');
 const tbl_facultades = require('.././database/tbl_facultades');
 const tbl_etapas = require('.././database/tbl_etapas');
+const tbl_materias = require('.././database/tbl_materias');
+const tbl_materias_programas = require('.././database/tbl_materias_programas');
 
 module.exports = {
     buscar_Perfil: function (req, res, next) {
@@ -48,4 +50,12 @@ module.exports = {
             });
         });
     },
+
+    buscar_Materias: function (req, res, next) {
+        tbl_materias.sync().then(function () {
+            crud.innerMateria([tbl_materias,tbl_materias_programas,tbl_programas], { tblAreaId: req.body.id }, (resp) => {
+                res.status(200).json(resp).end();
+            });
+        });
+    }
 };

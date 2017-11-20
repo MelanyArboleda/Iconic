@@ -39,7 +39,7 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 			if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 				ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
 					console.log("PTD--------", ptd);
-					DDFactory.buscarApartDD({ ptd: ptdFactory.ptd.id }).then(function () { });
+					DDFactory.buscarDocenciaDirecta().then(function () { });
 					ISFactory.buscarApartIS({ ptd: ptdFactory.ptd.id }).then(function () { });
 					IPFactory.buscarApartIP({ ptd: ptdFactory.ptd.id }).then(function () { });
 					AEFactory.buscarApartAE({ ptd: ptdFactory.ptd.id }).then(function () { });

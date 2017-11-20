@@ -14,15 +14,19 @@ var tbl_permisos_iniciales = sequelize.define('tbl_permisos_iniciales', {
         primaryKey: true,
         allowNull: false
     },
-    consultar: {
+    ver: {
         type: Sequelize.BOOLEAN,
         allowNull: false
     },
-    guardar: {
+    crear: {
         type: Sequelize.BOOLEAN,
         allowNull: false
     },
     modificar: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    },
+    eliminar: {
         type: Sequelize.BOOLEAN,
         allowNull: false
     }

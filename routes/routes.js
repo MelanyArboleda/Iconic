@@ -94,6 +94,7 @@ router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
 //obtener datos espesifico
 router.post('/auth/buscarPerfil', controllers.PtdController.buscar_Perfil);
 router.post('/auth/buscarPrograma', controllers.PtdController.buscar_Programa);
+router.post('/auth/buscarMaterias', controllers.PtdController.buscar_Materias);
 router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
 router.post('/auth/buscarFacultad', controllers.PtdController.buscar_Facultad);
 router.post('/auth/buscarEtapa', controllers.PtdController.buscar_Etapa);

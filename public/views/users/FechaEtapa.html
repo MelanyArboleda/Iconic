@@ -50,7 +50,7 @@
         <div class="row" ng-controller="menuPrincipalCtrl as mnuPVm">
             <form id="formFechaEtapa" name="fechaEtapaForm" autocomplete="off" ng-submit="fechaEtapaVm.accion()">
                 <div class="input-field col l3 offset-l1 s6 cajasombra">
-                    <select id="tblEtapaId" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
+                    <select id="tblEtapaId" ng-disabled="fechaEtapaVm.acciones == 2" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
                         <option value="0" disabled>Etapa</option>
                         <option ng-repeat="fe in fechaEtapaVm.etapas">{{fe.etapa}}</option>
                     </select>
@@ -60,7 +60,7 @@
                         required disabled>
                 </div>
                 <div class="input-field col l2 s6 cajasombra">
-                    <select id="semestre" name="semestre" ng-model="fechaEtapaVm.formfechaEtapa.semestre" material-select watch required>
+                    <select id="semestre" ng-disabled="fechaEtapaVm.acciones == 2" name="semestre" ng-model="fechaEtapaVm.formfechaEtapa.semestre" material-select watch required>
                         <option value="0" disabled>Semestre</option>
                         <option value="1">1</option>
                         <option value="2">2</option>

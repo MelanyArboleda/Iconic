@@ -1,5 +1,5 @@
 angular.module("iconic").controller("concertacionCtrl", concertacionCtrl);
-var socket = io.connect('http://192.168.137.1:3000', { 'forceNew': true });
+var socket = io.connect('http://192.168.1.19:3000', { 'forceNew': true });
 concertacionCtrl.$inject = ["loginService", "loginFactory", "ptdService", "ptdFactory", "serviceNotification", "$q", "$scope"];
 
 function concertacionCtrl(loginService, loginFactory, ptdService, ptdFactory, serviceNotification, $q, $scope) {
@@ -59,6 +59,7 @@ function concertacionCtrl(loginService, loginFactory, ptdService, ptdFactory, se
                 mensaje: resp.concertacion.mensaje,
                 fecha: hora + ":" + minuto + " " + meridiano + " - " + dia + "/" + mes + "/" + año
             }
+            vm.mensaje = "";
             socket.emit('new-message', concertacion_new);
         }).catch(function (err) {
             serviceNotification.error('No se pudo enviar el mensaje.', 2000);

@@ -4,24 +4,18 @@ fechaEtapaCtrl.$inject = ["fechaEtapaService", "fechaEtapaFactory", "loginFactor
 
 function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
     var vm = this;
-    var acciones = ""; 
+    vm.acciones = "";
     cargarFE();
     function cargarFE() {
         fechaEtapaFactory.buscarFechaEtapa().then(function () {
             vm.fechaEtapa = fechaEtapaFactory.fechaEtapa;
             for (var i = 0; i < vm.fechaEtapa.length; i++) {
-                // var inico = new Date(vm.fechaEtapa[i].fecha_inicial);
-                // var fin = new Date(vm.fechaEtapa[i].fecha_final);
-                // vm.fechaEtapa[i].fecha_inicial = inico.getDay() + "/" + inico.getMonth() + "/" + inico.getFullYear();
-                // vm.fechaEtapa[i].fecha_final = fin.getDay() + "/" + fin.getMonth() + "/" + fin.getFullYear();
                 vm.fechaEtapa[i].tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
                     return vm.fechaEtapa[i].tblEtapaId === etapa.id;
                 });
                 vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
             }
             vm.accion = accion;
-            vm.saveFechaEtapa = saveFechaEtapa;
-            vm.editFechaEtapa = editFechaEtapa;
             vm.deleteFechaEtapa = deleteFechaEtapa;
             vm.etapas = loginFactory.estatus.etapa;
             vm.llenarModal = llenarModal;
@@ -46,7 +40,7 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
         });
         vm.formfechaEtapa.tblEtapaId = vm.formfechaEtapa.tblEtapaId.id;
         vm.formfechaEtapa.tblFacultadeId = loginFactory.estatus.facultad.id;
-        if (acciones == "1") {
+        if (vm.acciones == "1") {
             saveFechaEtapa();
         } else {
             vm.formfechaEtapa.semestre = vm.formfechaEtapa.semestre;
@@ -56,7 +50,10 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
 
     function saveFechaEtapa() {
         fechaEtapaService.guardarFechaEtapa(vm.formfechaEtapa).then(function (res) {
+            serviceNotification.success('Fecha creada correctamente', 3000);
             cargarFE();
+        }).catch(function (err) {
+            serviceNotification.error('No se creo la fecha de la etapa', 2000);
         });
     }
 
@@ -68,7 +65,10 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
             ano: vm.formfechaEtapa.ano
         }
         fechaEtapaService.modificarFechaEtapa({ donde: donde, datos: vm.formfechaEtapa }).then(function (res) {
+            serviceNotification.success('Fecha modificada correctamente', 3000);
             cargarFE();
+        }).catch(function (err) {
+            serviceNotification.error('No se modifico la fecha de la etapa', 2000);
         });
     }
 
@@ -80,12 +80,15 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
             ano: fe.ano
         }
         fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
+            serviceNotification.success('Fecha modificada correctamente', 3000);
             cargarFE();
+        }).catch(function (err) {
+            serviceNotification.error('No elimino la fecha de la etapa', 2000);
         });
     }
 
     function llenarModal(fe) {
-        acciones = "2";
+        vm.acciones = "2";
         vm.formfechaEtapa = {
             tblEtapaId: fe.tblEtapaId.etapa,
             tblFacultadeId: facultad,
@@ -97,7 +100,7 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
     }
 
     function vaciarMadal() {
-        acciones = "1";
+        vm.acciones = "1";
         vm.formfechaEtapa = {
             tblEtapaId: '0',
             tblFacultadeId: facultad,

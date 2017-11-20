@@ -1,83 +1,172 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "serviceNotification"];
+aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification"];
 
-function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, serviceNotification) {
+function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, loginFactory, serviceNotification) {
 	var vm = this;
-	vm.aDocenciaDirecta = aDocenciaDirecta;
-	RecargarDD();
-	function RecargarDD() {
-		vm.docenciaDirecta = DDFactory.DocDir;
-		// for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-		// 	var semestre = vm.calculahoras(vm.docenciaDirecta[i]);
-		// 	ptdFactory.horasemestre.docenciaDirecta += semestre;
-		// }
-	}
-	vm.observacion = {
-		id: ptdFactory.ptd.id,
-		observaciones_dd: ptdFactory.ptd.observaciones_dd,
-	};
-
-	function aDocenciaDirecta() {
-		for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-			vm.docenciaDirecta[i].tblPtdId = ptdFactory.ptd.id;
-			DDService.guardarDD({ datos: vm.docenciaDirecta[i] }).then(function (resultado) {
-				if (angular.toJson(resultado) === angular.toJson(vm.docenciaDirecta[i - 1]) || vm.docenciaDirecta[i - 1] == undefined) {
-					serviceNotification.success('Apartado guardado correctamente', 3000);
-				}
-			}).catch(function (err) {
-				serviceNotification.error('No se guardó el apartado.', 2000);
-			});
-		}
-		if (vm.observacion.observaciones_dd != null) {
-			ptdService.guardarPtd({ datos: vm.observacion }).then(function (next) {
-				ptdFactory.buscarPtd({ ptd: ptdFactory.ptd.id }).then(function () {
-					RecargarDD();
-					vm.observacion = {
-						id: ptdFactory.ptd.id,
-						observaciones_dd: ptdFactory.ptd.observaciones_dd,
-					};
+	var acciones = "";
+	var max;
+	var min;
+	cargarDD();
+	calculaMin();
+	calculaMax();
+	function cargarDD() {
+		loginFactory.cargarEstatus().then(function () {
+			DDFactory.buscarMaterias().then(function () {
+				DDFactory.buscarDocenciaDirecta().then(function () {
+					vm.docenciaDirecta = DDFactory.DocDir;
+					for (var i = 0; i < vm.docenciaDirecta.length; i++) {
+						vm.docenciaDirecta[i].horas_semanales = DDFactory.materias.find(function (materia) {
+							return vm.docenciaDirecta[i].tblMateriaCodigo == materia.codigo;
+						});
+						vm.docenciaDirecta[i].horas_semanales = vm.docenciaDirecta[i].horas_semanales.horas_semanales;
+						vm.docenciaDirecta[i].horas_semestrales = calculahoras(vm.docenciaDirecta[i].horas_semanales);
+					}
 				});
-				serviceNotification.success('PTD guardado correctamente', 3000);
-			}).catch(function (err) {
-				console.log(err);
-				serviceNotification.error('Error PTD', 2000);
+				vm.materias = DDFactory.materias;
+				cargarObservacion();
 			});
+		});
+
+		vm.accion = accion;
+		vm.llenarModal = llenarModal;
+		vm.vaciarMadal = vaciarMadal;
+		vm.asignarData = asignarData;
+		vm.saveObservaciones = saveObservaciones;
+		vm.deleteDocenciaDirecta = deleteDocenciaDirecta;
+		vm.formDocenciaDirecta = {
+			tblMateriaCodigo: '0',
+			tblMateriaNombre: '0',
+			grupo_asignatura: '',
+			numero_estudiantes: '',
+			horas_semanales: '',
+			horas_semestrales: '',
+			estudiante: '',
+			jefe: '',
+			tblPtdId: ''
+		}
+	}
+	function cargarObservacion() {
+		ptdFactory.buscarPtd({ ptd: ptdFactory.ptd.id }).then(function () {
+			vm.observacion = {
+				id: ptdFactory.ptd.id,
+				observaciones_dd: ptdFactory.ptd.observaciones_dd
+			};
+		});
+	}
+
+	function accion() {
+		if (acciones == "1") {
+			saveDocenciaDirecta();
+		} else {
+			editDocenciaDirecta();
 		}
 	}
 
-	vm.calculahoras = function (dd) {
-		return (dd.horas_semestrales = dd.horas_semanales * 16);
+	function saveDocenciaDirecta() {
+		DDService.guardarDD(vm.formDocenciaDirecta).then(function (resultado) {
+			serviceNotification.success('Asignatura guardada correctamente', 3000);
+			cargarDD();
+		}).catch(function (err) {
+			serviceNotification.error('No se guardó la asignatura', 2000);
+		});
+	}
+
+	function editDocenciaDirecta() {
+		DDService.modificarDD({ donde: vm.formDocenciaDirecta.id, datos: vm.formDocenciaDirecta }).then(function (res) {
+			serviceNotification.success('Asignatura modificada correctamente', 3000);
+			cargarDD();
+		}).catch(function (err) {
+			serviceNotification.error('No se modifico la asignatura', 2000);
+		});
+	}
+
+	function deleteDocenciaDirecta(dd) {
+		console.log("docencia directa", dd)
+		DDService.eliminarDD(dd).then(function (res) {
+			serviceNotification.success('Asignatura modificada correctamente', 3000);
+			cargarDD();
+		}).catch(function (err) {
+			serviceNotification.error('No elimino la asignatura', 2000);
+		});
+	}
+
+	function saveObservaciones() {
+		ptdService.guardarPtd({ datos: vm.observacion }).then(function (next) {
+			serviceNotification.success('Observación guardada correctamente', 3000);
+			cargarObservacion();
+		}).catch(function (err) {
+			serviceNotification.error('No se guardó la Observación', 2000);
+		});
+	}
+
+	function llenarModal(fe) {
+		acciones = "2";
+		vm.formDocenciaDirecta = {
+			id: fe.id,
+			tblMateriaCodigo: fe.tblMateriaCodigo,
+			tblMateriaNombre: fe.tblMateriaNombre,
+			grupo_asignatura: fe.grupo_asignatura,
+			numero_estudiantes: fe.numero_estudiantes,
+			horas_semanales: fe.horas_semanales,
+			horas_semestrales: fe.horas_semestrales,
+			estudiante: fe.estudiante,
+			jefe: fe.jefe,
+			tblPtdId: ptdFactory.ptd.id
+		}
+	}
+
+	function vaciarMadal() {
+		acciones = "1";
+		vm.formDocenciaDirecta = {
+			tblMateriaCodigo: '',
+			tblMateriaNombre: '',
+			grupo_asignatura: '',
+			numero_estudiantes: '',
+			horas_semanales: '',
+			horas_semestrales: '',
+			estudiante: '',
+			jefe: '',
+			tblPtdId: ptdFactory.ptd.id
+		}
+	}
+
+	function asignarData(data) {
+		info = DDFactory.materias.find(function (materia) {
+			return data == materia.codigo || data == materia.nombre;
+		});
+		vm.formDocenciaDirecta.tblMateriaCodigo = info.codigo;
+		vm.formDocenciaDirecta.tblMateriaNombre = info.nombre;
+		vm.formDocenciaDirecta.horas_semanales = info.horas_semanales;
+		vm.formDocenciaDirecta.horas_semestrales = calculahoras(info.horas_semanales);
+		return vm.formDocenciaDirecta;
+	}
+
+	function calculahoras(horas_semanales) {
+		return horas_semanales * 16;
 	};
 
-	vm.ig = ptdFactory.aInfoGeneral;
-	vm.min;
-	vm.max;
-
-	vm.calculaMin = function () {
-		if (vm.ig.dedicacionIG == "Tiempo Completo") {
-			vm.min = 14;
+	function calculaMin() {
+		if (loginFactory.user.dedicacion == 1) {
+			min = 14;
 		}
-		else if (vm.ig.dedicacionIG == "Medio Tiempo") {
-			vm.min = 10;
+		else if (loginFactory.user.dedicacion == 2) {
+			min = 10;
 		}
 		else {
-			vm.min = 8;
+			min = 8;
 		}
 	};
 
-	vm.calculaMax = function () {
-		if (vm.ig.dedicacionIG == "Tiempo Completo") {
-			vm.max = 18;
+	function calculaMax() {
+		if (loginFactory.user.dedicacion == 1) {
+			max = 18;
 		}
-		else if (vm.ig.dedicacionIG == "Medio Tiempo") {
-			vm.max = 14;
-		} 
+		else if (loginFactory.user.dedicacion == 2) {
+			max = 14;
+		}
 		else {
-			vm.max = 10;
+			max = 10;
 		}
 	};
-
-	//vm.calculaMin();
-	//vm.calculaMax();
 };

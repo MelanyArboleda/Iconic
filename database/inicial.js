@@ -55,7 +55,8 @@ var recursos = [
     { id: 14, recurso: "Generar reportes" },
     { id: 15, recurso: "ver reportes" }];
 
-var permisos_iniciales = [];
+var permisos_iniciales = [
+    { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true}];
 
 var facultades = [
     { id: 1, facultad: "Administración" },
@@ -179,16 +180,16 @@ var usuarios = [{
 
 var usuario_doc = [{
     doc_identidad: "1039470240"
-},{
+}, {
     doc_identidad: "1152710692"
-},{
+}, {
     doc_identidad: "1234567890"
 }];
 
 var usuario_programas = [{
     tblUsuarioDocIdentidad: "1039470240",
-    tblProgramaCodigo: "6",
-    tblProgramaPrograma: "Ingeniería",
+    tblProgramaCodigo: "53587",
+    tblProgramaPrograma: "Tecnología en Sistematización de Datos",
     tblProgramaSede: 1
 },
 {

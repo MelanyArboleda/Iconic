@@ -1,29 +1,30 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-    <div class="container white contenido">
-        <div class="row">
-            <div class="col s12">
-                <table class="responsive-table"> 
-                    <thead>
-                        <tr>
-                            <th id="asig">Nombre Asignatura</th> 
-                            <th id="cod">Código</th>
-                            <th class="num">Grupo</th>
-                            <th class="num">Número de Estudiantes</th>
-                            <th class="num">Horas Semanales</th>
-                            <th class="num">Horas Semestre</th>
-                            <th class="action">Estudiante</th>
-                            <th class="action">Jefe</th>
-                            <th>
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="docenciaDirectaVm." data-target='modalDocenciaDirecta'
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th id="asig">Nombre Asignatura</th>
+                        <th>Código</th>
+                        <th>Grupo</th>
+                        <th>Número de Estudiantes</th>
+                        <th>Horas Semanales</th>
+                        <th>Horas Semestre</th>
+                        <th>Estudiante</th>
+                        <th>Jefe</th>
+                        <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="docenciaDirectaVm.vaciarMadal()" data-target='modalDocenciaDirecta'
                                 modal>Nuevo</a>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr ng-repeat="dd in docenciaDirectaVm.docenciaDirecta">
-                        <td>{{dd.nombre_asignatura}}</td>
-                        <td>{{dd.codigo_asignatura}}</td>
+                        <td>{{dd.tblMateriaNombre}}</td>
+                        <td>
+                            <br>{{dd.tblMateriaCodigo}}</td>
                         <td>{{dd.grupo_asignatura}}</td>
                         <td>{{dd.numero_estudiantes}}</td>
                         <td>{{dd.horas_semanales}}</td>
@@ -31,24 +32,25 @@
                         <td>{{dd.estudiante}}</td>
                         <td>{{dd.jefe}}</td>
                         <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="docenciaDirectaVm." data-target='modalDocenciaDirecta'
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="docenciaDirectaVm.llenarModal(dd)" data-target='modalDocenciaDirecta'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="docenciaDirectaVm.">
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="docenciaDirectaVm.deleteDocenciaDirecta(dd)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
                     </tr>
-                    </tbody>         
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
-    <br>
+<br>
 
-    <div class="container white contenido">
+<div class="container white contenido">
+    <form name="observaciones_dd" autocomplete="off" ng-submit="docenciaDirectaVm.saveObservaciones()">
         <div class="row">
             <div class="input-field col s12 areaO" style="padding-right:3%;">
                 <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea validate"
@@ -67,39 +69,55 @@
                 </a>
             </div>
         </div>
- 
-    </div>
+    </form>
+</div>
 
-    <div id="modalDocenciaDirecta" class="modal">
+<div id="modalDocenciaDirecta" class="modal">
     <div class="modal-content">
         <h5 class="center">
             <strong>Docencia Directa</strong>
         </h5>
         <div class="row">
-            <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.aDocenciaDirecta()">
-                <div class="input-field col l12 s6 cajasombra">
-                    <input name="nombre_asignatura" type="text" class="form-control validate" ng-model="dd.nombre_asignatura" placeholder="Nombre Asignatura" required/>
+            <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.accion()">
+                <div class="input-field col l12 s12 cajasombra">
+                    <select id="nombre_asignatura" name="nombre_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre"
+                        ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre)" material-select
+                        watch required>
+                        <option value="0" disabled>Nombre Asignatura</option>
+                        <option ng-repeat="nm in docenciaDirectaVm.materias">{{nm.nombre}}</option>
+                    </select>
+                </div>
+                <div class="input-field col l12 s12 cajasombra">
+                    <select id="codigo_asignatura" name="codigo_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo"
+                        ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo)" material-select
+                        watch required>
+                        <option value="0" disabled>Código Asignatura</option>
+                        <option ng-repeat="cm in docenciaDirectaVm.materias">{{cm.codigo}}</option>
+                    </select>
+                </div>
+                <div class="input-field col l2 s6 cajasombra">
+                    <input name="grupo_asignatura" type="number" class="form-control validate" min="1" ng-model="docenciaDirectaVm.formDocenciaDirecta.grupo_asignatura"
+                        placeholder="Grupo" required/>
                 </div>
                 <div class="input-field col l4 s6 cajasombra">
-                    <input name="codigo_asignatura" id="codigo_asignatura" type="text" class="form-control validate" data-length="10" ng-model="dd.codigo_asignatura" placeholder="Código" required/>
+                    <input name="numero_estudiantes" type="number" min="1" max="100" class="form-control validate" ng-model="docenciaDirectaVm.formDocenciaDirecta.numero_estudiantes"
+                        placeholder="Número Estudiantes" required/>
                 </div>
-                <div class="input-field col l4 s6 cajasombra">
-                     <input name="grupo_asignatura" type="number" class="form-control validate" min="1" ng-model="dd.grupo_asignatura" placeholder="Grupo" required/>
+                <div class="input-field col l3 s6 cajasombra ">
+                    <input name="horas_semanales" type="number" class="form-control no-disabled" ng-model="docenciaDirectaVm.formDocenciaDirecta.horas_semanales"
+                        placeholder="Horas Semanales" required disabled/>
                 </div>
-                <div class="input-field col l4 s6 cajasombra">
-                    <input name="numero_estudiantes" type="number" min="1" max="100" class="form-control validate" ng-model="dd.numero_estudiantes" placeholder="Número Estudiantes" required/>
-                </div>
-                <div class="input-field col l6 s6 cajasombra hscss">
-                    <input name="horas_semanales" type="number" min="{{docenciaDirectaVm.min}}" max="{{docenciaDirectaVm.max}}" ng-change="docenciaDirectaVm.calculahoras(dd)" class="form-control validate" ng-model="dd.horas_semanales" placeholder="Horas Semanales" required/>
-                </div>
-                <div class="input-field col l6 s6 cajasombra">
-                    <input name="horas_semestrales" type="number" class="form-control" ng-model="dd.horas_semestrales" placeholder="Horas Semestrales" readonly/>
+                <div class="input-field col l3 s6 cajasombra">
+                    <input name="horas_semestrales" type="number" class="form-control no-disabled" ng-model="docenciaDirectaVm.formDocenciaDirecta.horas_semestrales"
+                        placeholder="Horas Semestrales" required disabled/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="estudiante" type="number" min="1" max="5" class="form-control validate" ng-model="dd.estudiante" placeholder="Evaluación Estudiante" />
+                    <input name="estudiante" type="number" min="1" max="5" class="form-control validate " ng-model="docenciaDirectaVm.formDocenciaDirecta.estudiante"
+                        placeholder="Evaluación Estudiante" />
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="jefe" type="number" min="1" max="5" class="form-control validate" ng-model="dd.jefe" placeholder="Evaluación Jefe" />
+                    <input name="jefe" type="number" min="1" max="5" class="form-control validate" ng-model="docenciaDirectaVm.formDocenciaDirecta.jefe"
+                        placeholder="Evaluación Jefe" />
                 </div>
                 <div class="input-field col l12 s12 center ">
                     <button ng-disabled="aDocenciaDirectaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
@@ -113,6 +131,6 @@
     </div>
 </div>
 
-    
+
 
 <script type="text/javascript" src="js/todoScript.js"></script>

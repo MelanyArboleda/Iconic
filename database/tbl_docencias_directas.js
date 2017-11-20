@@ -51,7 +51,7 @@ module.exports = {
 
 	guardar_DD: function (req, res, next) {
 		tbl_docencias_directas.sync().then(function () {
-			crud.create(tbl_docencias_directas, req.body.datos, (resp) => {
+			crud.create(tbl_docencias_directas, req.body, (resp) => {
 				if (resp != 'error') {
 					res.status(200).end();
 				} else {
@@ -63,7 +63,7 @@ module.exports = {
 
 	modificar_DD: function (req, res, next) {
 		tbl_docencias_directas.sync().then(function () {
-			crud.update(tbl_docencias_directas, { id: req.body.datos.id }, req.body.datos, (resp) => {
+			crud.update(tbl_docencias_directas, { id: req.body.donde }, req.body.datos, (resp) => {
 				if (resp == 'update') {
 					res.status(200).end();
 				} else {
@@ -75,7 +75,7 @@ module.exports = {
 
 	eliminar_DD: function (req, res, next) {
 		tbl_docencias_directas.sync().then(function () {
-			crud.delete(tbl_docencias_directas, { id: req.body.datos.id }, (resp) => {
+			crud.delete(tbl_docencias_directas, { id: req.body.id }, (resp) => {
 				if (resp == 'delete') {
 					res.status(200).end();
 				} else {
@@ -84,5 +84,4 @@ module.exports = {
 			});
 		});
 	}
-
 };

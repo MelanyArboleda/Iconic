@@ -95,5 +95,22 @@ module.exports = {
       console.log(err);
       callback();
     });
-  }
+  },
+  //inner join materia
+  innerMateria : function (tabla, donde, callback) {
+    tabla[0].findAll({
+      attributes: ['codigo','nombre','horas_semanales'],
+      include: [{
+        model: tabla[1], required: true, attributes: [],
+        include: [{
+          model: tabla[2], required: true, attributes: [], where: donde
+        }]
+      }]
+    }).then((tabla) => {
+      callback(tabla);
+    }).catch((err) => {
+      console.log(err);
+      callback();
+    });
+  },
 }
