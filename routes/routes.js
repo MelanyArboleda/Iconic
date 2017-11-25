@@ -98,6 +98,7 @@ router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
 router.post('/auth/buscarFacultad', controllers.PtdController.buscar_Facultad);
 router.post('/auth/buscarEtapa', controllers.PtdController.buscar_Etapa);
 router.post('/auth/buscarActor', controllers.PtdController.buscar_Actor);
+router.post('/auth/buscarProgramaMateria', controllers.PtdController.buscar_Programa_Materia);
 router.post('/auth/buscarVinculosP', modelos.tbl_vinculos.buscar_VinculosP);
 router.post('/auth/buscarVinculosS', modelos.tbl_vinculos.buscar_VinculosS);
 //rutas de fechas para las etapas

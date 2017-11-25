@@ -7,7 +7,7 @@ function ptdFactory(ptdService, serviceNotification, $q) {
     var factory = {
         ptd: {},
         createPtd: createPtd,
-        buscarPtd: buscarPtd,
+        buscarPtd: buscarPtd
     };
     return factory;
 

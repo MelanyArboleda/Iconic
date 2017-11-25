@@ -240,9 +240,9 @@ var fechas_etapas = [{
 }];
 
 var materias = [
-    { codigo: "ING00812", nombre: "Identificación del Ciclo de Vida del Software", horas_semanales: 4 },
-    { codigo: "ING00813", nombre: "Comprensión y respeto del entorno", horas_semanales: 4 },
-    { codigo: "ING00814", nombre: "Desarrollo de actitudes ciudadanas", horas_semanales: 4 },
+    { codigo: "ING00812", nombre: "Identificación del Ciclo de Vida del Software", horas_semanales: 3 },
+    { codigo: "ING00813", nombre: "Comprensión y respeto del entorno", horas_semanales: 3 },
+    { codigo: "ING00814", nombre: "Desarrollo de actitudes ciudadanas", horas_semanales: 3 },
     { codigo: "ING00814", nombre: "Desarrollo de Habilidades Comunicativas y de negociación", horas_semanales: 4 },
     { codigo: "ING00816", nombre: "Desarrollo del pensamiento lógico y matemático 1 (A)", horas_semanales: 4 },
     { codigo: "ING00817", nombre: "Desarrollo del pensamiento analítico y sistémico 1", horas_semanales: 4 },

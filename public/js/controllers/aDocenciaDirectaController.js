@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification"];
+aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, loginFactory, serviceNotification) {
+function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
 	var vm = this;
 	var acciones = "";
 	var max;
@@ -18,7 +18,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 							return vm.docenciaDirecta[i].tblMateriaCodigo == materia.codigo;
 						});
 						vm.docenciaDirecta[i].horas_semanales = vm.docenciaDirecta[i].horas_semanales.horas_semanales;
-						vm.docenciaDirecta[i].horas_semestrales = calculahoras(vm.docenciaDirecta[i].horas_semanales);
+						cargarProgremaMateria({ tblMateriaCodigo: vm.docenciaDirecta[i].tblMateriaCodigo }, i);
 					}
 				});
 				vm.materias = DDFactory.materias;
@@ -54,6 +54,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	}
 
 	function accion() {
+		cargarProgremaMateria({ tblMateriaCodigo: vm.formDocenciaDirecta.tblMateriaCodigo });
 		if (acciones == "1") {
 			saveDocenciaDirecta();
 		} else {
@@ -135,13 +136,24 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		vm.formDocenciaDirecta.tblMateriaCodigo = info.codigo;
 		vm.formDocenciaDirecta.tblMateriaNombre = info.nombre;
 		vm.formDocenciaDirecta.horas_semanales = info.horas_semanales;
-		vm.formDocenciaDirecta.horas_semestrales = calculahoras(info.horas_semanales);
+		DDFactory.buscarProgramaMateria({ tblMateriaCodigo: vm.formDocenciaDirecta.tblMateriaCodigo }).then(function () {
+			vm.proMat = DDFactory.proMat;
+			vm.formDocenciaDirecta.horas_semestrales = calculahoras(info.horas_semanales);
+		});
 		return vm.formDocenciaDirecta;
 	}
-
+	function cargarProgremaMateria(data, i) {
+		DDFactory.buscarProgramaMateria(data).then(function () {
+			vm.proMat = DDFactory.proMat;
+			vm.docenciaDirecta[i].horas_semestrales = calculahoras(vm.docenciaDirecta[i].horas_semanales);
+		});
+	}
 	function calculahoras(horas_semanales) {
-		//validar el programa del usuario para saber si son 16 o 18
-		return horas_semanales * 16;
+		if (vm.proMat.tblProgramaCodigo == '53588' || vm.proMat.tblProgramaCodigo == '53587') {
+			return horas_semanales * 18;
+		} else {
+			return horas_semanales * 16;
+		}
 	};
 
 	(function () {

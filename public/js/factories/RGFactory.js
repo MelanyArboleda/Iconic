@@ -9,6 +9,7 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
         buscarResumenGeneral: buscarResumenGeneral,
         modificarResumenGeneral: modificarResumenGeneral
     }
+    var ddSemestre = 0;
     return factoryRG;
 
     function crearResumenGeneral(ptdId) {
@@ -37,7 +38,7 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
         return deferred.promise;
     }
 
-    function modificarResumenGeneral(){
+    function modificarResumenGeneral() {
         var deferred = $q.defer();
         cargarApartados().then(function (horas) {
             var datos = {
@@ -65,10 +66,12 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
                     DDFactory.DocDir[i].horas_semanales = DDFactory.DocDir[i].horas_semanales.horas_semanales;
                 }
                 var dd = obtenerhorasemanales(DDFactory.DocDir);
+                ddSemestre = 0;
+                calcularHorasSemestreDD(DDFactory.DocDir);
                 ISFactory.buscarInvestigacionesSemilleros().then(function () {
-                    var is = obtenerhorasemanales(ISFactory.InvSem);
+                    var is = obtenerhorasemanalesinv(ISFactory.InvSem);
                     IPFactory.buscarInvestigacionesProyectos().then(function () {
-                        var ip = obtenerhorasemanales(IPFactory.InvPro);
+                        var ip = obtenerhorasemanalesinv(IPFactory.InvPro);
                         AEFactory.buscartActividadesExtension().then(function () {
                             var ae = obtenerhorasemestrales(AEFactory.ExtPro);
                             FPFactory.buscarFormulacionProyectos().then(function () {
@@ -77,9 +80,9 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
                                     var ap = obtenerhorasemestrales(APFactory.AsePro);
                                     OAFactory.buscarOtrasActividades(factoryRG.ResGen.id).then(function () {
                                         var oa = obtenerhorasemanales(OAFactory.OtrAct);
-                                        var totalHorasSemana = dd + is + ip + oa;//validar el programa del usuario para saber si son 16 o 18
-                                        var totalHorasSemestre = ae + fp + ap + (dd * 16) + (is * 22.5) + (ip * 22.5) + (oa * 22.5);// y mirar bien que actividades se multimplican por 18 o 22.5
-                                        deferred.resolve({semana :totalHorasSemana, semestre:totalHorasSemestre});
+                                        var totalHorasSemana = dd + is + ip + oa;
+                                        var totalHorasSemestre = ae + fp + ap + ddSemestre + (is * 22.5) + (ip * 22.5) + (oa * 22.5);// y mirar bien que actividades se multimplican por 18 o 22.5
+                                        deferred.resolve({ semana: totalHorasSemana, semestre: totalHorasSemestre });
                                     });
                                 });
                             });
@@ -98,6 +101,15 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
         }
         return acum
     }
+    function obtenerhorasemanalesinv(apartado) {
+        var acum = 0;
+        for (var i = 0; i < apartado.length; i++) {
+            if (apartado[i].tblVinculoId == 1 || apartado[i].tblVinculoId == 3) {
+                acum += apartado[i].horas_semanales;
+            }
+        }
+        return acum
+    }
     function obtenerhorasemestrales(apartado) {
         var acum = 0;
         for (var i = 0; i < apartado.length; i++) {
@@ -105,4 +117,26 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
         }
         return acum
     }
+
+    function calcularHorasSemestreDD(apartado) {
+        for (var i = 0; i < apartado.length; i++) {
+            cargarProgremaMateria(apartado,{ tblMateriaCodigo: apartado[i].tblMateriaCodigo }, i);
+        }
+    }
+
+    function cargarProgremaMateria(apartado,data, i) {
+        DDFactory.buscarProgramaMateria(data).then(function () {
+            var proMat = DDFactory.proMat;
+            calculahoras(apartado[i].horas_semanales,proMat);            
+        });
+    }
+
+    function calculahoras(horas_semanales,proMat) {
+		if (proMat.tblProgramaCodigo == '53588' || proMat.tblProgramaCodigo == '53587') {
+            ddSemestre += horas_semanales * 18;
+        } else {
+            ddSemestre += horas_semanales * 16;
+        }
+	};
+
 }

@@ -67,5 +67,13 @@ module.exports = {
                 res.status(200).json(resp).end();
             });
         })
+    },
+
+    buscar_Programa_Materia:function(req, res, next) {
+        tbl_materias_programas.sync().then(function () {
+            crud.findAll(tbl_materias_programas, req.body, null, (resp) => {
+                res.status(200).json(resp[0].dataValues).end();
+            });
+        });
     }
 };

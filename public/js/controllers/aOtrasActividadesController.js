@@ -1,21 +1,23 @@
 angular.module("iconic").controller("aOtrasActividadesCtrl", aOtrasActividadesCtrl);
 
-aOtrasActividadesCtrl.$inject = ["OAFactory", "OAService", "RGFactory", "RGService", "ptdFactory", "serviceNotification", "$q"];
+aOtrasActividadesCtrl.$inject = ["OAFactory", "OAService", "RGFactory", "RGService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aOtrasActividadesCtrl(OAFactory, OAService, RGFactory, RGService, ptdFactory, serviceNotification, $q) {
+function aOtrasActividadesCtrl(OAFactory, OAService, RGFactory, RGService, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
     cargarData();
     function cargarData() {
-        RGFactory.modificarResumenGeneral().then(function () {
-            RGFactory.buscarResumenGeneral().then(function () {
-                OAFactory.buscarOtrasActividades(RGFactory.ResGen.id).then(function () {
-                    vm.otrasActividades = OAFactory.OtrAct;
-                    for (var i = 0; i < vm.otrasActividades.length; i++) {
-                        vm.otrasActividades[i].horas_semestrales = calculahoras(vm.otrasActividades[i].horas_semanales);
-                    }
+        ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+            RGFactory.modificarResumenGeneral().then(function () {
+                RGFactory.buscarResumenGeneral().then(function () {
+                    OAFactory.buscarOtrasActividades(RGFactory.ResGen.id).then(function () {
+                        vm.otrasActividades = OAFactory.OtrAct;
+                        for (var i = 0; i < vm.otrasActividades.length; i++) {
+                            vm.otrasActividades[i].horas_semestrales = calculahoras(vm.otrasActividades[i].horas_semanales);
+                        }
+                    });
+                    vm.resumenGeneral = RGFactory.ResGen;
                 });
-                vm.resumenGeneral = RGFactory.ResGen;
             });
         });
         vm.accion = accion;
@@ -106,7 +108,6 @@ function aOtrasActividadesCtrl(OAFactory, OAService, RGFactory, RGService, ptdFa
     }
 
     function calculahoras(horas_semanales) {
-        //validar el programa del usuario para saber si son 16 o 18
-        return horas_semanales * 16;
+        return horas_semanales * 18;
     };
 };
