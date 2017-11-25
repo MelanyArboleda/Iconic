@@ -45,7 +45,7 @@ module.exports = {
 
     guardar_FP: function (req, res, next) {
         tbl_formulacion_proyectos.sync().then(function () {
-            crud.create(tbl_formulacion_proyectos, req.body.datos, (resp) => {
+            crud.create(tbl_formulacion_proyectos, req.body, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
@@ -57,7 +57,7 @@ module.exports = {
 
     modificar_FP: function (req, res, next) {
         tbl_formulacion_proyectos.sync().then(function () {
-            crud.update(tbl_formulacion_proyectos, { id: req.body.datos.id }, req.body.datos, (resp) => {
+            crud.update(tbl_formulacion_proyectos, { id: req.body.donde }, req.body.datos, (resp) => {
                 if (resp == 'update') {
                     res.status(200).end();
                 } else {
@@ -69,7 +69,7 @@ module.exports = {
 
     eliminar_FP: function (req, res, next) {
         tbl_formulacion_proyectos.sync().then(function () {
-            crud.delete(tbl_formulacion_proyectos, { id: req.body.datos.id }, (resp) => {
+            crud.delete(tbl_formulacion_proyectos, { id: req.body.id }, (resp) => {
                 if (resp == 'delete') {
                     res.status(200).end();
                 } else {

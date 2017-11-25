@@ -5,14 +5,14 @@ OAFactory.$inject = ["OAService", "serviceNotification", "$q"];
 function OAFactory(OAService, serviceNotification, $q) {
     var factoryOA = {
         OtrAct: [],
-        buscarApartOA:buscarApartOA
+        buscarOtrasActividades:buscarOtrasActividades
     }
     return factoryOA;
 
-    function buscarApartOA(apartado) {
+    function buscarOtrasActividades(id) {
         var deferred = $q.defer();
         factoryOA.OtrAct = [];
-        OAService.buscarOA(apartado).then(function (result) {
+        OAService.buscarOA({id:id}).then(function (result) {
             factoryOA.OtrAct = result.apartado;
             deferred.resolve();
         });

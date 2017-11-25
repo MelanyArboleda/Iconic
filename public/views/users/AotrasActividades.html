@@ -1,107 +1,108 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-    <div class="container white contenido">
-        <div class="row">
-            <div class="col s12">
-                <table class="responsive-table">
-                    <thead>
-                        <tr>
-                            <th>Actividad</th>
-                            <th>Dedicación Horas Semanales</th>
-                            <th>Dedicación Horas Semestre</th>
-                            <th>Descripción y Productos</th>
-                            <th>
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm." data-target='modalOActividades'
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Dedicación Horas Semanales</th>
+                        <th>Dedicación Horas Semestre</th>
+                        <th>Descripción y Productos</th>
+                        <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal()" data-target='modalOActividades'
                                 modal>Nuevo</a>
-                            </th>
-                        </tr>
-                    </thead>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                    <tr ng-repeat="oact in otrasActividadesVm.otrasActividades">
-                        <td>{{oact.nombre_actividad}}</td>
-                        <td>{{oact.horas_semanales}}</td>
-                        <td>{{oact.horas_semestrales}}</td>
-                        <td>{{oact.descripcion_productos}}</td>
+                <tbody>
+                    <tr ng-repeat="oa in otrasActividadesVm.otrasActividades">
+                        <td>{{oa.nombre_actividad}}</td>
+                        <td>{{oa.horas_semanales}}</td>
+                        <td>{{oa.horas_semestrales}}</td>
+                        <td>{{oa.descripcion_productos}}</td>
                         <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm." data-target='modalOActividades'
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)" data-target='modalOActividades'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.">
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
                     </tr>
-                    </tbody> 
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
-    <br>
-    <!-- resumen general -->
-    <div class="container white contenido">
-        <div class="row">
-            <div class="col s12">
-                <table  class="responsive-table">
-                    <thead>
-                        <tr>
-                            <th>*Resumen</th>
-                            <th>*Dedicación Horas Semanales</th>
-                            <th>*Dedicación Horas Semestre</th>
-                            <th>Observaciones</th>
-                        </tr>
-                    </thead>
+</div>
+<br>
+<!-- resumen general -->
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>*Resumen</th>
+                        <th>*Dedicación Horas Semanales</th>
+                        <th>*Dedicación Horas Semestre</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <tr>
-                            <td> <input type="text" class="form-control validate" value="Total horas de trabajo en el semestre"
-                                    readonly/></td>
-                            <td> <input name="horas_semanales_tot" type="number" ng-model="otrasActividadesVm.resumen.horas_semanales_tot"
-                                    class="form-control " readonly/> </td>
-                            <td> <input name="horas_semestrales_tot" type="number" ng-model="otrasActividadesVm.resumen.horas_semestrales_tot"
-                                    class="form-control " readonly /> </td>
-                            <td> <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumen.observaciones" class="form-control validate"
-                                /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row center">
-            <button ng-disabled="aOtrasActividadesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Apartado</button>
-        </div>
-
-        <div class="form-group">
-            <div class="fixed-action-btn add_observaciones">
-                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                    <i class="material-icons">&#xE85F;</i>
-                </a>
-            </div>
+                <tbody>
+                    <tr>
+                        <td> Total horas de trabajo en el semestre</td>
+                        <td> {{otrasActividadesVm.resumenGeneral.horas_semanales_tot}} </td>
+                        <td> {{otrasActividadesVm.resumenGeneral.horas_semestrales_tot}}</td>
+                        <td>
+                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control validate"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="row center">
+        <button type="submit" ng-click="otrasActividadesVm.saveObservaciones()" class="waves-effect waves-light btn">Guardar Observación</button>
+    </div>
 
-     <div id="modalOActividades" class="modal">
+    <div class="form-group">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                <i class="material-icons">&#xE85F;</i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="modalOActividades" class="modal">
     <div class="modal-content">
         <h5 class="center">
             <strong>Otras Actividades Académicas</strong>
         </h5>
         <div class="row">
-            <form name="aOtrasActividadesForm" autocomplete="off" ng-submit="otrasActividadesVm.aOtrasActividades()">
+            <form name="aOtrasActividadesForm" autocomplete="off" ng-submit="otrasActividadesVm.accion()">
                 <div class="input-field col l12 s12 cajasombra">
-                    <input name="nombre_actividad" type="text" class="form-control validate" ng-model="oact.nombre_actividad"
-                                   placeholder="Nombre de la Actividad" required/>
+                    <input name="nombre_actividad" type="text" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.nombre_actividad"
+                        placeholder="Nombre de la Actividad" required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="horas_semanales" type="number" ng-change="otrasActividadesVm.calculahoras(oact)"
-                                    class="form-control validate" ng-model="oact.horas_semanales" placeholder="Horas Semanales" required/>
+                    <input name="horas_semanales" type="number" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.horas_semanales"
+                        ng-change="otrasActividadesVm.asignarData(otrasActividadesVm.formOtrasActividades.horas_semanales)"
+                        placeholder="Horas Semanales" required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                     <input name="horas_semestrales" type="number" class="form-control" ng-model="oact.horas_semestrales"
-                                   placeholder="Horas Semestrales" disabled/>
+                    <input name="horas_semestrales" type="number" class="form-control" ng-model="otrasActividadesVm.formOtrasActividades.horas_semestrales"
+                        placeholder="Horas Semestrales" readonly/>
                 </div>
                 <div class="input-field col l12 s12 cajasombra">
-                    <input name="descripcion_productos" type="text" class="form-control validate" ng-model="oact.descripcion_productos" placeholder="Descripción de Productos"/> 
+                    <input name="descripcion_productos" type="text" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.descripcion_productos"
+                        placeholder="Descripción de Productos" required/>
                 </div>
 
                 <div class="input-field col l12 s12 center ">

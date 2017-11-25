@@ -1,58 +1,91 @@
 angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
-aAsesoriasCtrl.$inject = ["APService", "APFactory", "ptdFactory", "serviceNotification", "$q"];
+aAsesoriasCtrl.$inject = ["APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aAsesoriasCtrl(APService, APFactory, ptdFactory, serviceNotification, $q) {
+function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
-    vm.aAsesorias = aAsesorias;
-    recargaAP();
-    function recargaAP() {
-        vm.asesorias = APFactory.AsePro;
-    }
-
-    function aAsesorias() {
-        for (var i = 0; i < vm.asesorias.length; i++) {
-            vm.asesorias[i].tblPtdId = ptdFactory.ptd.id
-            APService.guardarAP({ datos: vm.asesorias[i] }).then(function (resultado) {
-                if (JSON.stringify(resultado) === JSON.stringify(vm.asesorias[i - 1]) || vm.asesorias[i - 1] == undefined) {
-                    serviceNotification.success('Apartado guardado correctamente', 3000);
-                    recargaAP();
-                }
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado', 2000);
+    var acciones = "";
+    cargaAP();
+    function cargaAP() {
+        loginFactory.cargarEstatus().then(function () {
+            APFactory.buscarAsesoriasProyectos().then(function () {
+                vm.asesoriasProyectos = APFactory.AsePro;
             });
+        });
+        vm.accion = accion;
+        vm.llenarModal = llenarModal;
+        vm.vaciarMadal = vaciarMadal;
+        vm.deleteAsesoriasProyectos = deleteAsesoriasProyectos;
+        vm.formAsesoriasProyectos = {
+            integrantes: '',
+            titulo: '',
+            aspectos: '',
+            horas_semestrales: '',
+            estudiante: '',
+            jefe: '',
+            tblPtdId: ''
         }
     }
 
-    vm.addNewAse = function (ase) {
-        vm.asesorias.push({
-            'integrantes': "",
-            'titulo': "",
-            'aspectos': "",
-            'horas_semestrales': "",
-            'estudiante': "",
-            'jefe': "",
-        });
-    };
-    vm.removeAse = function () {
-        var newDataList = [];
-        vm.selectedAll = false;
-        angular.forEach(vm.asesorias, function (selected) {
-            if (!selected.selected) {
-                newDataList.push(selected);
-            }
-        });
-        vm.asesorias = newDataList;
-    };
-    vm.checkAllAse = function () {
-        if (!vm.selectedAll) {
-            vm.selectedAll = true;
+    function accion() {
+        if (acciones == "1") {
+            saveAsesoriasProyectos();
         } else {
-            vm.selectedAll = false;
+            editAsesoriasProyectos();
         }
-        angular.forEach(vm.asesorias, function (asesorias) {
-            asesorias.selected = vm.selectedAll;
+    }
+
+    function saveAsesoriasProyectos() {
+        APService.guardarAP(vm.formAsesoriasProyectos).then(function (res) {
+            serviceNotification.success('Asesoria guardada correctamente', 3000);
+            cargaAP();
+        }).catch(function (err) {
+            serviceNotification.error('No se guardó la Asesoria', 2000);
         });
-    };
+    }
+
+    function editAsesoriasProyectos() {
+        APService.modificarAP({ donde: vm.formAsesoriasProyectos.id, datos: vm.formAsesoriasProyectos }).then(function (res) {
+            serviceNotification.success('Asesoria modificada correctamente', 3000);
+            cargaAP();
+        }).catch(function (err) {
+            serviceNotification.error('No se modifico la Asesoria', 2000);
+        });
+    }
+
+    function deleteAsesoriasProyectos(ap) {
+        APService.eliminarAP(ap).then(function (res) {
+            serviceNotification.success('Asesoria eliminado correctamente', 3000);
+            cargaAP();
+        }).catch(function (err) {
+            serviceNotification.error('No elimino la Asesoria', 2000);
+        });
+    }
+
+    function llenarModal(ap) {
+        acciones = "2";
+        vm.formAsesoriasProyectos = {
+            id: ap.id,
+            integrantes: ap.integrantes,
+            titulo: ap.titulo,
+            aspectos: ap.aspectos,
+            horas_semestrales: ap.horas_semestrales,
+            estudiante: ap.estudiante,
+            jefe: ap.jefe,
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
+
+    function vaciarMadal() {
+        acciones = "1";
+        vm.formAsesoriasProyectos = {
+            integrantes: '',
+            titulo: '',
+            aspectos: '',
+            horas_semestrales: '',
+            estudiante: '',
+            jefe: '',
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
 };

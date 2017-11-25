@@ -8,8 +8,6 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	var max;
 	var min;
 	cargarDD();
-	calculaMin();
-	calculaMax();
 	function cargarDD() {
 		loginFactory.cargarEstatus().then(function () {
 			DDFactory.buscarMaterias().then(function () {
@@ -64,7 +62,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	}
 
 	function saveDocenciaDirecta() {
-		DDService.guardarDD(vm.formDocenciaDirecta).then(function (resultado) {
+		DDService.guardarDD(vm.formDocenciaDirecta).then(function (res) {
 			serviceNotification.success('Asignatura guardada correctamente', 3000);
 			cargarDD();
 		}).catch(function (err) {
@@ -82,9 +80,8 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	}
 
 	function deleteDocenciaDirecta(dd) {
-		console.log("docencia directa", dd)
 		DDService.eliminarDD(dd).then(function (res) {
-			serviceNotification.success('Asignatura modificada correctamente', 3000);
+			serviceNotification.success('Asignatura eliminado correctamente', 3000);
 			cargarDD();
 		}).catch(function (err) {
 			serviceNotification.error('No elimino la asignatura', 2000);
@@ -92,7 +89,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	}
 
 	function saveObservaciones() {
-		ptdService.guardarPtd({ datos: vm.observacion }).then(function (next) {
+		ptdService.guardarPtd({ datos: vm.observacion }).then(function (res) {
 			serviceNotification.success('Observación guardada correctamente', 3000);
 			cargarObservacion();
 		}).catch(function (err) {
@@ -119,8 +116,8 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	function vaciarMadal() {
 		acciones = "1";
 		vm.formDocenciaDirecta = {
-			tblMateriaCodigo: '',
-			tblMateriaNombre: '',
+			tblMateriaCodigo: '0',
+			tblMateriaNombre: '0',
 			grupo_asignatura: '',
 			numero_estudiantes: '',
 			horas_semanales: '',
@@ -143,30 +140,13 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	}
 
 	function calculahoras(horas_semanales) {
+		//validar el programa del usuario para saber si son 16 o 18
 		return horas_semanales * 16;
 	};
 
-	function calculaMin() {
-		if (loginFactory.user.dedicacion == 1) {
-			min = 14;
-		}
-		else if (loginFactory.user.dedicacion == 2) {
-			min = 10;
-		}
-		else {
-			min = 8;
-		}
-	};
-
-	function calculaMax() {
-		if (loginFactory.user.dedicacion == 1) {
-			max = 18;
-		}
-		else if (loginFactory.user.dedicacion == 2) {
-			max = 14;
-		}
-		else {
-			max = 10;
-		}
-	};
+	(function () {
+		if (loginFactory.user.dedicacion == 1) { min = 14; max = 18; }
+		else if (loginFactory.user.dedicacion == 2) { min = 10; max = 14; }
+		else { min = 8; max = 10; }
+	})();
 };

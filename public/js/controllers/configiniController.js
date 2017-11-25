@@ -15,8 +15,8 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
                 doc_identidad: loginFactory.user.doc_identidad
             };
             console.log("llamando al comparador");
-            loginService.compararcontraseñas(data).then(function (resultado) {
-                loginFactory.user = resultado.user;
+            loginService.compararcontraseñas(data).then(function (res) {
+                loginFactory.user = res.user;
                 serviceNotification.info('Bienvenido a ICONIC', 2000);
                 $state.go("menuPrincipal.vistaPTD");
             }).catch(function (err) {

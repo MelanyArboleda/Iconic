@@ -1,96 +1,117 @@
 angular.module("iconic").controller("aInvestigacionesPCtrl", aInvestigacionesPCtrl);
 
-aInvestigacionesPCtrl.$inject = ["IPService", "IPFactory", "ptdService", "ptdFactory", "serviceNotification", "$q"];
+aInvestigacionesPCtrl.$inject = ["IPService", "IPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aInvestigacionesPCtrl(IPService, IPFactory, ptdService, ptdFactory, serviceNotification, $q) {
+function aInvestigacionesPCtrl(IPService, IPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
-    vm.aInvestigacionesP = aInvestigacionesP;
-    vm.vinculosP = [];
-    function recargarIP() {
-        vm.proyectosInvestigaciones = IPFactory.InvPro;
-        for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-            vm.proyectosInvestigaciones[i].tblVinculoId = vm.vinculosP.find(function(vin){
-                console.log('hola', vm.proyectosInvestigaciones[i].tblVinculoId === vin.id)
-                return vm.proyectosInvestigaciones[i].tblVinculoId === vin.id
+    var acciones = "";
+    cargarIP();
+    function cargarIP() {
+        loginFactory.cargarEstatus().then(function () {
+            IPFactory.buscarVinculosP().then(function () {
+                IPFactory.buscarInvestigacionesProyectos().then(function () {
+                    vm.investigacionesProyectos = IPFactory.InvPro;
+                    for (var i = 0; i < vm.investigacionesProyectos.length; i++) {
+                        vm.investigacionesProyectos[i].tblVinculoId = IPFactory.vinculos.find(function (vinculo) {
+                            return vm.investigacionesProyectos[i].tblVinculoId == vinculo.id;
+                        });
+                        vm.investigacionesProyectos[i].tblVinculoId = vm.investigacionesProyectos[i].tblVinculoId.vinculo;
+                        vm.investigacionesProyectos[i].horas_semestrales = calculahoras(vm.investigacionesProyectos[i].horas_semanales);
+                    }
+                });            
+                vm.vinculos = IPFactory.vinculos;
             });
-            // if (vm.proyectosInvestigaciones[i].tblVinculoId == 3) {
-            //     vm.proyectosInvestigaciones[i].tblVinculoId = 'Investigador Principal';
-            // } else {
-            //     vm.proyectosInvestigaciones[i].tblVinculoId = 'Co-Investigador';
-            // }
-        }
-
-        // for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-        //     var semestre = vm.calculahoras(vm.proyectosInvestigaciones[i]);
-        //     ptdFactory.horasemestre.proyectosInvestigaciones += semestre;
-        // }
-    }
-
-    function aInvestigacionesP() {
-        for (var i = 0; i < vm.proyectosInvestigaciones.length; i++) {
-            vm.proyectosInvestigaciones[i].tblPtdId = ptdFactory.ptd.id;
-            vm.proyectosInvestigaciones[i].tblVinculoId = vm.proyectosInvestigaciones[i].tblVinculoId.id;
-            // if (vm.proyectosInvestigaciones[i].tblVinculoId == 'Investigador Principal') {
-            //     vm.proyectosInvestigaciones[i].tblVinculoId = 3;
-            // } else {
-            //     vm.proyectosInvestigaciones[i].tblVinculoId = 4;
-            // }
-            if (vm.proyectosInvestigaciones[i].aprobado == "") {
-                vm.proyectosInvestigaciones[i].aprobado = false;
-            }
-
-            IPService.guardarIP({ datos: vm.proyectosInvestigaciones[i] }).then(function (resultado) {
-                if (angular.toJson(resultado) === angular.toJson(vm.proyectosInvestigaciones[i - 1]) || vm.proyectosInvestigaciones[i - 1] == undefined) {
-                    serviceNotification.success('Apartado guardado correctamente', 3000);
-                    console.log('save', vm.proyectosInvestigaciones )
-                    recargarIP();
-                }
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado P', 2000);
-            });
+        });
+        vm.accion = accion;
+        vm.llenarModal = llenarModal;
+        vm.vaciarMadal = vaciarMadal;
+        vm.asignarData = asignarData;
+        vm.deleteInvestigacionesProyectos = deleteInvestigacionesProyectos;
+        vm.formInvestigacionesProyectos = {
+            nombre_proyecto: '',
+            tblVinculoId: '0',
+            objetivo_principal: '',
+            producto: '',
+            horas_semanales: '',
+            horas_semestrales: '',
+            aprobado: '',
+            tblPtdId: ''
         }
     }
 
-    IPService.buscarVP().then(function (resultado) {
-        vm.vinculosP = resultado;
-        recargarIP();
-    });
-
-    vm.pInvAddNew = function (pI) {
-        vm.proyectosInvestigaciones.push({
-            'nombre_proyecto': "",
-            'tblVinculoId': "",
-            'objetivo_principal': "",
-            'producto': "",
-            'horas_semanales': "",
-            'horas_semestrales': "",
-            'aprobado': "",
+    function accion() {
+        vm.formInvestigacionesProyectos.tblVinculoId = IPFactory.vinculos.find(function (vinculo) {
+            return vm.formInvestigacionesProyectos.tblVinculoId == vinculo.vinculo;
         });
-    };
-
-    vm.pInvRemove = function () {
-        var newDataList = [];
-        vm.selectedAllP = false;
-        angular.forEach(vm.proyectosInvestigaciones, function (selectedP) {
-            if (!selectedP.selectedP) {
-                newDataList.push(selectedP);
-            }
-        });
-        vm.proyectosInvestigaciones = newDataList;
-    };
-
-    vm.pInvCheckAll = function () {
-        if (!vm.selectedAllP) {
-            vm.selectedAllP = true;
+        vm.formInvestigacionesProyectos.tblVinculoId = vm.formInvestigacionesProyectos.tblVinculoId.id;        
+        if (acciones == "1") {
+            saveInvestigacionesProyectos();
         } else {
-            vm.selectedAllP = false;
+            editInvestigacionesProyectos();
         }
-        angular.forEach(vm.proyectosInvestigaciones, function (proyectosInvestigaciones) {
-            proyectosInvestigaciones.selected = vm.selectedAllP;
+    }
+
+    function saveInvestigacionesProyectos() {
+        IPService.guardarIP(vm.formInvestigacionesProyectos).then(function (res) {
+            serviceNotification.success('Proyecto guardada correctamente', 3000);
+            cargarIP();
+        }).catch(function (err) {
+            serviceNotification.error('No se guardó el proyecto', 2000);
         });
-    };
-    vm.calculahoras = function (inv) {
-        return (inv.horas_semestrales = inv.horas_semanales * 22.5);
+    }
+
+    function editInvestigacionesProyectos() {
+        IPService.modificarIP({ donde: vm.formInvestigacionesProyectos.id, datos: vm.formInvestigacionesProyectos }).then(function (res) {
+            serviceNotification.success('Proyecto modificada correctamente', 3000);
+            cargarIP();
+        }).catch(function (err) {
+            serviceNotification.error('No se modifico el proyecto', 2000);
+        });
+    }
+
+    function deleteInvestigacionesProyectos(ip) {
+        IPService.eliminarIP(ip).then(function (res) {
+            serviceNotification.success('Proyecto eliminado correctamente', 3000);
+            cargarIP();
+        }).catch(function (err) {
+            serviceNotification.error('No elimino el proyecto', 2000);
+        });
+    }
+
+    function llenarModal(ip) {
+        acciones = "2";
+        vm.formInvestigacionesProyectos = {
+            id: ip.id,
+            nombre_proyecto: ip.nombre_proyecto,
+            tblVinculoId: ip.tblVinculoId,
+            objetivo_principal: ip.objetivo_principal,
+            producto: ip.producto,
+            horas_semanales: ip.horas_semanales,
+            horas_semestrales: ip.horas_semestrales,
+            aprobado: ip.aprobado,
+            tblPtdId: ip.tblPtdId
+        }
+    }
+
+    function vaciarMadal() {
+        acciones = "1";
+        vm.formInvestigacionesProyectos = {
+            nombre_proyecto: '',
+            tblVinculoId: '0',
+            objetivo_principal: '',
+            producto: '',
+            horas_semanales: '',
+            horas_semestrales: '',
+            aprobado: false,
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
+
+    function asignarData(data) {
+        vm.formInvestigacionesProyectos.horas_semestrales = calculahoras(data);
+    }
+
+    function calculahoras(horas_semanales) {
+        return horas_semanales * 22.5;
     };
 };

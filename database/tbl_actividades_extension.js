@@ -46,7 +46,7 @@ module.exports = {
 
     guardar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
-            crud.create(tbl_actividades_extension, req.body.datos, (resp) => {
+            crud.create(tbl_actividades_extension, req.body, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
@@ -58,7 +58,7 @@ module.exports = {
 
     modificar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
-            crud.update(tbl_actividades_extension, { id: req.body.datos.id }, req.body.datos, (resp) => {
+            crud.update(tbl_actividades_extension, { id: req.body.donde }, req.body.datos, (resp) => {
                 if (resp == 'update') {
                     res.status(200).end();
                 } else {
@@ -70,7 +70,7 @@ module.exports = {
 
     eliminar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
-            crud.delete(tbl_actividades_extension, { id: req.body.datos.id }, (resp) => {
+            crud.delete(tbl_actividades_extension, { id: req.body.id }, (resp) => {
                 if (resp == 'delete') {
                     res.status(200).end();
                 } else {

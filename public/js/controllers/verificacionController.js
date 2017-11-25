@@ -13,7 +13,7 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 			codigo: vm.codigo,
 			codigoEncriptado: loginFactory.codigoVerificacion
 		};
-		loginService.validarCode(data).then(function(resultado){
+		loginService.validarCode(data).then(function(res){
 			var data = {
 				doc_identidad: loginFactory.user.doc_identidad,
 				tblEstadoId: 4

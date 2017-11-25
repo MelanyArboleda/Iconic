@@ -1,59 +1,94 @@
 angular.module("iconic").controller("aComisionEstudiosCtrl", aComisionEstudiosCtrl);
 
-aComisionEstudiosCtrl.$inject = ["CEService", "CEFactory", "ptdFactory", "serviceNotification", "$q"];
+aComisionEstudiosCtrl.$inject = ["CEService", "CEFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, serviceNotification, $q) {
+function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
-    vm.comisionEstudios = comisionEstudios;
-    recargarCE();
-    function recargarCE() {
-        vm.comisionE = CEFactory.ComEst;
-    }
-
-    function comisionEstudios() {
-        var deferred = $q.defer();
-        for (var i = 0; i < vm.comisionE.length; i++) {
-            vm.comisionE[i].tblPtdId = ptdFactory.ptd.id
-            CEService.guardarCE({ datos: vm.comisionE[i] }).then(function (resultado) {
-                if (JSON.stringify(resultado) === JSON.stringify(vm.comisionE[i - 1]) || vm.comisionE[i - 1] == undefined) {
-                    serviceNotification.success('Apartado guardado correctamente', 3000);
-                }
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado', 2000);
+    var acciones = "";
+    cargarCE();
+    function cargarCE() {
+        loginFactory.cargarEstatus().then(function () {
+            CEFactory.buscarComisionEstudios().then(function () {
+                vm.comisionEstudios = CEFactory.ComEst;
             });
+        });
+        vm.accion = accion;
+        vm.llenarModal = llenarModal;
+        vm.vaciarMadal = vaciarMadal;
+        vm.deleteComisionEstudios = deleteComisionEstudios;
+        vm.formComisionEstudios = {
+            universidad: '',
+            tipo_estudio: '',
+            nombre_estudio: '',
+            fecha_inicio: '',
+            fecha_graduacion: '',
+            fecha_obtencion_autorizacion: '',
+            aportes_inst_obtenidos: '',
+            tblPtdId: ''
         }
     }
 
-    vm.addNewComE = function (comE) {
-        vm.comisionE.push({
-            'universidad': "",
-            'tipo_estudio': "",
-            'nombre_estudio': "",
-            'fecha_inicio': "",
-            'fecha_graduacion': "",
-            'fecha_obtencion_autorizacion': "",
-            'aportes_inst_obtenidos': "",
-        });
-    };
-    vm.removeComE = function () {
-        var newDataList = [];
-        vm.selectedAll = false;
-        angular.forEach(vm.comisionE, function (selected) {
-            if (!selected.selected) {
-                newDataList.push(selected);
-            }
-        });
-        vm.comisionE = newDataList;
-    };
-    vm.checkAllcomE = function () {
-        if (!vm.selectedAll) {
-            vm.selectedAll = true;
+    function accion() {
+        if (acciones == "1") {
+            saveComisionEstudios();
         } else {
-            vm.selectedAll = false;
+            editComisionEstudios();
         }
-        angular.forEach(vm.comisionE, function (comisionE) {
-            comisionE.selected = vm.selectedAll;
+    }
+
+    function saveComisionEstudios() {
+        CEService.guardarCE(vm.formComisionEstudios).then(function (res) {
+            serviceNotification.success('Comision guardada correctamente', 3000);
+            cargarCE();
+        }).catch(function (err) {
+            serviceNotification.error('No se guardó la Comision', 2000);
         });
-    };
+    }
+
+    function editComisionEstudios() {
+        CEService.modificarCE({ donde: vm.formComisionEstudios.id, datos: vm.formComisionEstudios }).then(function (res) {
+            serviceNotification.success('Comision modificada correctamente', 3000);
+            cargarCE();
+        }).catch(function (err) {
+            serviceNotification.error('No se modifico la Comision', 2000);
+        });
+    }
+
+    function deleteComisionEstudios(ce) {
+        CEService.eliminarCE(ce).then(function (res) {
+            serviceNotification.success('Comision eliminado correctamente', 3000);
+            cargarCE();
+        }).catch(function (err) {
+            serviceNotification.error('No elimino la Comision', 2000);
+        });
+    }
+
+    function llenarModal(ce) {
+        acciones = "2";
+        vm.formComisionEstudios = {
+            id: ce.id,
+            universidad: ce.universidad,
+            tipo_estudio: ce.tipo_estudio,
+            nombre_estudio: ce.nombre_estudio,
+            fecha_inicio: ce.fecha_inicio,
+            fecha_graduacion: ce.fecha_graduacion,
+            fecha_obtencion_autorizacion: ce.fecha_obtencion_autorizacion,
+            aportes_inst_obtenidos: ce.aportes_inst_obtenidos,
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
+
+    function vaciarMadal() {
+        acciones = "1";
+        vm.formComisionEstudios = {
+            universidad: '',
+            tipo_estudio: '',
+            nombre_estudio: '',
+            fecha_inicio: '',
+            fecha_graduacion: '',
+            fecha_obtencion_autorizacion: '',
+            aportes_inst_obtenidos: '',
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
 };

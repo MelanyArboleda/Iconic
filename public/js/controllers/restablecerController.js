@@ -14,7 +14,7 @@ function restablecerCtrl(loginService, loginFactory, serviceNotification, $state
                 password: vm.passwordNew,
                 doc_identidad: loginFactory.user.doc_identidad
             };
-            loginService.compararcontraseñas(data).then(function (resultado) {
+            loginService.compararcontraseñas(data).then(function (res) {
                 $state.go("login");
             }).catch(function (err) {
                 console.log(err);

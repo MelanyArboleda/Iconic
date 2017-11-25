@@ -22,7 +22,7 @@ function AEService($http, $q, appConstant) {
     function guardarAE(ae) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarAE", ae).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -33,7 +33,7 @@ function AEService($http, $q, appConstant) {
     function modificarAE(ae) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarAE", ae).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -44,7 +44,7 @@ function AEService($http, $q, appConstant) {
     function eliminarAE(ae) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarAE", ae).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

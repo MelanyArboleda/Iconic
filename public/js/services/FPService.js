@@ -7,6 +7,7 @@ function FPService($http, $q, appConstant) {
     this.guardarFP = guardarFP;
     this.modificarFP = modificarFP;
     this.eliminarFP = eliminarFP;
+    this.buscarActor = buscarActor;
 
     function buscarFP(fp) {
         var deferred = $q.defer();
@@ -22,7 +23,7 @@ function FPService($http, $q, appConstant) {
     function guardarFP(fp) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarFP", fp).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -33,7 +34,7 @@ function FPService($http, $q, appConstant) {
     function modificarFP(fp) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarFP", fp).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -44,7 +45,18 @@ function FPService($http, $q, appConstant) {
     function eliminarFP(fp) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarFP", fp).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+     
+    function buscarActor(){
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarActor").then(function (res) {
+            deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

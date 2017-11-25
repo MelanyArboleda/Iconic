@@ -21,8 +21,8 @@ function APService($http, $q, appConstant) {
 
     function guardarAP(ap) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarAP", ap).then(function (res) {¿
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarAP", ap).then(function (res) {
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -32,8 +32,8 @@ function APService($http, $q, appConstant) {
 
     function modificarAP(ap) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarAP", ap).then(function (res) {¿
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarAP", ap).then(function (res) {
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -43,8 +43,8 @@ function APService($http, $q, appConstant) {
 
     function eliminarAP(ap) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarAP", ap).then(function (res) {¿
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarAP", ap).then(function (res) {
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

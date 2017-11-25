@@ -1,18 +1,18 @@
 angular.module("iconic").factory("AEFactory", AEFactory);
 
-AEFactory.$inject = ["AEService", "serviceNotification", "$q"];
+AEFactory.$inject = ["AEService", "ptdFactory", "serviceNotification", "$q"];
 
-function AEFactory(AEService, serviceNotification, $q) {
+function AEFactory(AEService, ptdFactory, serviceNotification, $q) {
     var factoryAE = {
         ExtPro: [],
-        buscarApartAE: buscarApartAE
+        buscartActividadesExtension: buscartActividadesExtension
     }
     return factoryAE;
 
-    function buscarApartAE(apartado) {
+    function buscartActividadesExtension() {
         var deferred = $q.defer();
         factoryAE.ExtPro = [];
-        AEService.buscarAE(apartado).then(function (result) {
+        AEService.buscarAE({ ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryAE.ExtPro = result.apartado;
             deferred.resolve();
         });

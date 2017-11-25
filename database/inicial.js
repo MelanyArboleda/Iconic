@@ -16,6 +16,7 @@ var tbl_etapas = require('./tbl_etapas');
 var tbl_fechas_etapas = require('./tbl_fechas_etapas');
 var tbl_materias = require('./tbl_materias');
 var tbl_materias_programas = require('./tbl_materias_programas');
+const moment = require('moment');
 
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [
@@ -227,15 +228,15 @@ var fechas_etapas = [{
     tblFacultadeId: 6,
     semestre: 1,
     ano: '2017',
-    fecha_inicial: '10/06/2017',
-    fecha_final: '10/06/2017'
+    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
 }, {
     tblEtapaId: 2,
     tblFacultadeId: 6,
     semestre: 1,
     ano: '2017',
-    fecha_inicial: '10/06/2017',
-    fecha_final: '10/06/2017'
+    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
 }];
 
 var materias = [

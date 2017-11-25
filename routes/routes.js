@@ -75,9 +75,8 @@ router.post('/auth/modificarAP', modelos.tbl_asesoria_proyectos.modificar_AP);
 router.post('/auth/eliminarAP', modelos.tbl_asesoria_proyectos.eliminar_AP);
 //rutas de resumenes generales
 router.post('/auth/buscarRG', modelos.tbl_resumenes.buscar_RG);
-router.post('/auth/guardarRG', modelos.tbl_resumenes.guardar_RG);
+router.post('/auth/crearRG', modelos.tbl_resumenes.crear_RG);
 router.post('/auth/modificarRG', modelos.tbl_resumenes.modificar_RG);
-router.post('/auth/eliminarRG', modelos.tbl_resumenes.eliminar_RG);
 //rutas de actividades
 router.post('/auth/buscarOA', modelos.tbl_actividades.buscar_OA);
 router.post('/auth/guardarOA', modelos.tbl_actividades.guardar_OA);
@@ -98,8 +97,9 @@ router.post('/auth/buscarMaterias', controllers.PtdController.buscar_Materias);
 router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
 router.post('/auth/buscarFacultad', controllers.PtdController.buscar_Facultad);
 router.post('/auth/buscarEtapa', controllers.PtdController.buscar_Etapa);
-router.post('/auth/buscarVP', modelos.tbl_vinculos.buscar_VP);
-router.post('/auth/buscarVS', modelos.tbl_vinculos.buscar_VS);
+router.post('/auth/buscarActor', controllers.PtdController.buscar_Actor);
+router.post('/auth/buscarVinculosP', modelos.tbl_vinculos.buscar_VinculosP);
+router.post('/auth/buscarVinculosS', modelos.tbl_vinculos.buscar_VinculosS);
 //rutas de fechas para las etapas
 router.post('/auth/buscarFechaEtapa', modelos.tbl_fechas_etapas.buscar_FechaEtapa);
 router.post('/auth/guardarFechaEtapa', modelos.tbl_fechas_etapas.guardar_FechaEtapa);

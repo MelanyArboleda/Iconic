@@ -1,21 +1,34 @@
 angular.module("iconic").factory("IPFactory", IPFactory);
 
-IPFactory.$inject = ["IPService", "serviceNotification", "$q"];
+IPFactory.$inject = ["IPService", "ptdFactory", "serviceNotification", "$q"];
 
-function IPFactory(IPService, serviceNotification, $q) {
+function IPFactory(IPService, ptdFactory, serviceNotification, $q) {
     var factoryIP = {
         InvPro: [],
-        buscarApartIP: buscarApartIP
+        vinculos: [],
+        buscarVinculosP: buscarVinculosP,
+        buscarInvestigacionesProyectos: buscarInvestigacionesProyectos
+
     }
     return factoryIP;
     
-    function buscarApartIP(apartado) {
+    function buscarInvestigacionesProyectos() {
         var deferred = $q.defer();
         factoryIP.InvPro = [];
-        IPService.buscarIP(apartado).then(function (result) {
+        IPService.buscarIP({ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryIP.InvPro = result.apartado;
             deferred.resolve();
         });
+        return deferred.promise;
+    }
+
+    function buscarVinculosP(){
+        var deferred = $q.defer();
+        factoryIP.vinculos = [];
+        IPService.buscarVinculosP().then(function (vinculo){
+            factoryIP.vinculos = vinculo;
+            deferred.resolve();
+        })
         return deferred.promise;
     }
 }

@@ -6,7 +6,7 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 
 	var factory = {
 		user: {},
-		datosig: {},
+		perfil: {},
 		estatus: {},
 		buscarPerfil: buscarPerfil,
 		cargarEstatus: cargarEstatus,
@@ -115,7 +115,7 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 	function buscarPerfil() {
 		var deferred = $q.defer();
 		loginService.buscarPerfil({ id: factory.user.perfil }).then(function (perfil) {
-			factory.datosig.perfil = perfil;
+			factory.perfil = perfil;
 			deferred.resolve();
 		});
 		return deferred.promise;

@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "fechaEtapaFactory", "DDFactory", "ISFactory", "IPFactory", "AEFactory", "CEFactory", "FPFactory", /*"APFactory",*/ /*"RGFactory",*/ "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "serviceNotification", "$state", "$q"];
 
-function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, FPFactory, /*APFactory,*/ /*RGFactory,*/ serviceNotification, $state, $q) {
+function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFactory, RGFactory, serviceNotification, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -33,20 +33,15 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 	} else {
 		loginFactory.buscarPerfil().then(function () { });
 		loginFactory.cargarEstatus().then(function () { });
-		fechaEtapaFactory.buscarFechaEtapa().then(function () {});
+		fechaEtapaFactory.buscarFechaEtapa().then(function () { });
 		loginFactory.buscarEtapa().then(function () { });
 		if (loginFactory.user.perfil == 1) {
 			if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 				ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
 					console.log("PTD--------", ptd);
-					DDFactory.buscarDocenciaDirecta().then(function () { });
-					ISFactory.buscarApartIS({ ptd: ptdFactory.ptd.id }).then(function () { });
-					IPFactory.buscarApartIP({ ptd: ptdFactory.ptd.id }).then(function () { });
-					AEFactory.buscarApartAE({ ptd: ptdFactory.ptd.id }).then(function () { });
-					CEFactory.buscarApartCE({ ptd: ptdFactory.ptd.id }).then(function () { });
-					FPFactory.buscarApartFP({ ptd: ptdFactory.ptd.id }).then(function () { });
-					APFactory.buscarApartAP({ ptd: ptdFactory.ptd.id }).then(function () { });
-					//RGFactory.buscarApartRG({ ptd: ptdFactory.ptd.id }).then(function () {});
+					RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
+						console.log("resumen--------");
+					});
 				});
 			}
 		} else {

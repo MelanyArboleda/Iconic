@@ -1,21 +1,33 @@
 angular.module("iconic").factory("ISFactory", ISFactory);
 
-ISFactory.$inject = ["ISService", "serviceNotification", "$q"];
+ISFactory.$inject = ["ISService", "ptdFactory", "serviceNotification", "$q"];
 
-function ISFactory(ISService, serviceNotification, $q) {
+function ISFactory(ISService, ptdFactory, serviceNotification, $q) {
     var factoryIS = {
         InvSem: [],
-        buscarApartIS: buscarApartIS
+        vinculos:[],
+        buscarVinculosS: buscarVinculosS,
+        buscarInvestigacionesSemilleros: buscarInvestigacionesSemilleros
     }
     return factoryIS;
 
-    function buscarApartIS(apartado) {
+    function buscarInvestigacionesSemilleros() {
         var deferred = $q.defer();
         factoryIS.InvSem = [];
-        ISService.buscarIS(apartado).then(function (result) {
+        ISService.buscarIS({ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryIS.InvSem = result.apartado;
             deferred.resolve();
         });
+        return deferred.promise;
+    }
+
+    function buscarVinculosS(){
+        var deferred = $q.defer();
+        factoryIS.vinculos = [];
+        ISService.buscarVinculosS().then(function (vinculo){
+            factoryIS.vinculos = vinculo;
+            deferred.resolve();
+        })
         return deferred.promise;
     }
 }

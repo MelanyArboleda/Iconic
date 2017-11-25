@@ -280,6 +280,13 @@ p.titulo{
 	padding: 0px 0.7rem;
 }
 
+.filtrando{
+  color:rgb(200, 255, 0);
+}
+
+.sinfoco{
+  color:rgb(247, 0, 255);
+}
 @media only screen and (max-width: 992px) {
 	.side-nav {
 		top: 0px !important;

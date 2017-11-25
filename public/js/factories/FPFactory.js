@@ -1,21 +1,34 @@
 angular.module("iconic").factory("FPFactory", FPFactory);
 
-FPFactory.$inject = ["FPService", "serviceNotification", "$q"];
+FPFactory.$inject = ["FPService", "ptdFactory", "serviceNotification", "$q"];
 
-function FPFactory(FPService, serviceNotification, $q) {
+function FPFactory(FPService, ptdFactory, serviceNotification, $q) {
     var factoryFP = {
         ForPro: [],
-        buscarApartFP: buscarApartFP
+        actores: [],
+        buscarActor: buscarActor,
+        buscarFormulacionProyectos: buscarFormulacionProyectos
+
     }
     return factoryFP;
-    
-    function buscarApartFP(apartado) {
+
+    function buscarFormulacionProyectos(apartado) {
         var deferred = $q.defer();
         factoryFP.ForPro = [];
-        FPService.buscarFP(apartado).then(function (result) {
+        FPService.buscarFP({ ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryFP.ForPro = result.apartado;
             deferred.resolve();
         });
+        return deferred.promise;
+    }
+
+    function buscarActor() {
+        var deferred = $q.defer();
+        factoryFP.actores = [];
+        FPService.buscarActor().then(function (actor) {
+            factoryFP.actores = actor;
+            deferred.resolve();
+        })
         return deferred.promise;
     }
 }

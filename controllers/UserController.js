@@ -62,9 +62,7 @@ module.exports = {
                 correo: user.correo,
                 dedicacion: user.tblDedicacioneId,
                 perfil: user.tblPerfileId,
-                estado: user.tblEstadoId,
-                created: user.createdAt,
-                updated: user.updatedAt
+                estado: user.tblEstadoId
             };
             res.status(200).json({ user: user }).end();
         });

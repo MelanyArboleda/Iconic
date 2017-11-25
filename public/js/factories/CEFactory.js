@@ -1,18 +1,18 @@
 angular.module("iconic").factory("CEFactory", CEFactory);
 
-CEFactory.$inject = ["CEService", "serviceNotification", "$q"];
+CEFactory.$inject = ["CEService", "ptdFactory", "serviceNotification", "$q"];
 
-function CEFactory(CEService, serviceNotification, $q) {
+function CEFactory(CEService, ptdFactory, serviceNotification, $q) {
     var factoryCE = {
         ComEst: [],
-        buscarApartCE: buscarApartCE
+        buscarComisionEstudios: buscarComisionEstudios
     }
     return factoryCE;
     
-    function buscarApartCE(apartado) {
+    function buscarComisionEstudios() {
         var deferred = $q.defer();
         factoryCE.ComEst = [];
-        CEService.buscarCE(apartado).then(function (result) {
+        CEService.buscarCE({ ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryCE.ComEst = result.apartado;
             deferred.resolve();
         });

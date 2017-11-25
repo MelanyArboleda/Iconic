@@ -38,7 +38,7 @@ module.exports = {
 
     guardar_OA: function (req, res, next) {
         tbl_actividades.sync().then(function () {
-            crud.create(tbl_actividades, req.body.datos, (resp) => {
+            crud.create(tbl_actividades, req.body, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
@@ -50,7 +50,7 @@ module.exports = {
 
     modificar_OA: function (req, res, next) {
         tbl_actividades.sync().then(function () {
-            crud.update(tbl_actividades, { id: req.body.datos.id }, req.body.datos, (resp) => {
+            crud.update(tbl_actividades, { id: req.body.donde }, req.body.datos, (resp) => {
                 if (resp == 'update') {
                     res.status(200).end();
                 } else {
@@ -62,7 +62,7 @@ module.exports = {
 
     eliminar_OA: function (req, res, next) {
         tbl_actividades.sync().then(function () {
-            crud.delete(tbl_actividades, { id: req.body.datos.id }, (resp) => {
+            crud.delete(tbl_actividades, { id: req.body.id }, (resp) => {
                 if (resp == 'delete') {
                     res.status(200).end();
                 } else {

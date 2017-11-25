@@ -1,71 +1,98 @@
 angular.module("iconic").controller("aProyectosCtrl", aProyectosCtrl);
 
-aProyectosCtrl.$inject = ["FPService", "FPFactory","ptdService", "ptdFactory", "serviceNotification", "$q"];
+aProyectosCtrl.$inject = ["FPService", "FPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, serviceNotification, $q) {
+function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
-    vm.aProyectos = aProyectos;
-    recargarFP();
-    function recargarFP() {
-        vm.proyectos = FPFactory.ForPro;
-        for (var i = 0; i < vm.proyectos.length; i++) {
-            if (vm.proyectos[i].tblActoreId == 1) {
-                vm.proyectos[i].tblActoreId = 'Principal';
-            } else {
-                vm.proyectos[i].tblActoreId = 'Co-Autor';
-            }
-        }
-    }
-
-    function aProyectos() {
-        for (var i = 0; i < vm.proyectos.length; i++) {
-            vm.proyectos[i].tblPtdId = ptdFactory.ptd.id;
-            if (vm.proyectos[i].tblActoreId == 'Principal') {
-                vm.proyectos[i].tblActoreId = 1;
-            } else {
-                vm.proyectos[i].tblActoreId = 2;
-            }
-
-            FPService.guardarFP({ datos: vm.proyectos[i] }).then(function (resultado) {
-                if (angular.toJson(resultado) === angular.toJson(vm.proyectos[i - 1]) || vm.proyectos[i - 1] == undefined) {
-                    serviceNotification.success('Apartado guardado correctamente', 3000);
-                    recargarFP();
-                }
-            }).catch(function (err) {
-                console.log(err);
-                serviceNotification.error('No se guardó el apartado', 2000);
+    var acciones = "";
+    cargarFP();
+    function cargarFP() {
+        loginFactory.cargarEstatus().then(function () {
+            FPFactory.buscarActor().then(function () {
+                FPFactory.buscarFormulacionProyectos().then(function () {
+                    vm.formulacionProyectos = FPFactory.ForPro;
+                    for (var i = 0; i < vm.formulacionProyectos.length; i++) {
+                        vm.formulacionProyectos[i].tblActoreId = FPFactory.actores.find(function (actor) {
+                            return vm.formulacionProyectos[i].tblActoreId == actor.id;
+                        });
+                        vm.formulacionProyectos[i].tblActoreId = vm.formulacionProyectos[i].tblActoreId.actor;
+                    }
+                });
+                vm.actores = FPFactory.actores;
             });
+        });
+        vm.accion = accion;
+        vm.llenarModal = llenarModal;
+        vm.vaciarMadal = vaciarMadal;
+        vm.deleteFormulacionProyectos = deleteFormulacionProyectos;
+        vm.formFormulacionProyectos = {
+            nombre_articulo: '',
+            tblActoreId: '0',
+            tema_ppal: '',
+            horas_semestrales: '',
+            tblPtdId: ''
         }
     }
 
-    vm.actores = ['Principal', 'Co-Autor'];
-
-    vm.addNewProy = function (proy) {
-        vm.proyectos.push({
-            'nombre_articulo': "",
-            'tblActoreId': "",
-            'tema_ppal': "",
-            'horas_semestrales': "",
+    function accion() {
+        vm.formFormulacionProyectos.tblActoreId = FPFactory.actores.find(function (actor) {
+            return vm.formFormulacionProyectos.tblActoreId == actor.actor;
         });
-    };
-    vm.removeProy = function () {
-        var newDataList = [];
-        vm.selectedAll = false;
-        angular.forEach(vm.proyectos, function (selected) {
-            if (!selected.selected) {
-                newDataList.push(selected);
-            }
-        });
-        vm.proyectos = newDataList;
-    };
-    vm.checkAllProy = function () {
-        if (!vm.selectedAll) {
-            vm.selectedAll = true;
+        vm.formFormulacionProyectos.tblActoreId = vm.formFormulacionProyectos.tblActoreId.id;        
+        if (acciones == "1") {
+            saveFormulacionProyectos();
         } else {
-            vm.selectedAll = false;
+            editFormulacionProyectos();
         }
-        angular.forEach(vm.proyectos, function (proyectos) {
-            proyectos.selected = vm.selectedAll;
+    }
+
+    function saveFormulacionProyectos() {
+        FPService.guardarFP(vm.formFormulacionProyectos).then(function (res) {
+            serviceNotification.success('Proyecto guardado correctamente', 3000);
+            cargarFP();
+        }).catch(function (err) {
+            serviceNotification.error('No se guardó el Proyecto', 2000);
         });
-    };
+    }
+
+    function editFormulacionProyectos() {
+        FPService.modificarFP({ donde: vm.formFormulacionProyectos.id, datos: vm.formFormulacionProyectos }).then(function (res) {
+            serviceNotification.success('Proyecto modificada correctamente', 3000);
+            cargarFP();
+        }).catch(function (err) {
+            serviceNotification.error('No se modifico la Proyecto', 2000);
+        });
+    }
+
+    function deleteFormulacionProyectos(fp) {
+        FPService.eliminarFP(fp).then(function (res) {
+            serviceNotification.success('Proyecto eliminado correctamente', 3000);
+            cargarFP();
+        }).catch(function (err) {
+            serviceNotification.error('No elimino la Proyecto', 2000);
+        });
+    }
+
+    function llenarModal(fp) {
+        acciones = "2";
+        vm.formFormulacionProyectos = {
+            id: fp.id,
+            nombre_articulo: fp.nombre_articulo,
+            tblActoreId: fp.tblActoreId,
+            tema_ppal: fp.tema_ppal,
+            horas_semestrales: fp.horas_semestrales,
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
+
+    function vaciarMadal() {
+        acciones = "1";
+        vm.formFormulacionProyectos = {
+            nombre_articulo: '',
+            tblActoreId: '0',
+            tema_ppal: '',
+            horas_semestrales: '',
+            tblPtdId: ptdFactory.ptd.id
+        }
+    }
 };

@@ -6,7 +6,7 @@
             <table class="responsive-table">
                 <thead>
                     <tr>
-                        <th id="asig">Nombre Asignatura</th>
+                        <th>Nombre Asignatura</th>
                         <th>Código</th>
                         <th>Grupo</th>
                         <th>Número de Estudiantes</th>
@@ -23,8 +23,7 @@
                 <tbody>
                     <tr ng-repeat="dd in docenciaDirectaVm.docenciaDirecta">
                         <td>{{dd.tblMateriaNombre}}</td>
-                        <td>
-                            <br>{{dd.tblMateriaCodigo}}</td>
+                        <td>{{dd.tblMateriaCodigo}}</td>
                         <td>{{dd.grupo_asignatura}}</td>
                         <td>{{dd.numero_estudiantes}}</td>
                         <td>{{dd.horas_semanales}}</td>
@@ -79,7 +78,9 @@
         </h5>
         <div class="row">
             <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.accion()">
-                <div class="input-field col l12 s12 cajasombra">
+                <div class="input-field col l12 s12 cajasombra" id="content-asignatura">
+                </div>
+                <div class="input-field col l12 s12 cajasombra" id="content-asignatura">
                     <select id="nombre_asignatura" name="nombre_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre"
                         ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre)" material-select
                         watch required>
@@ -92,7 +93,7 @@
                         ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo)" material-select
                         watch required>
                         <option value="0" disabled>Código Asignatura</option>
-                        <option ng-repeat="cm in docenciaDirectaVm.materias">{{cm.codigo}}</option>
+                        <option ng-repeat="cm in docenciaDirectaVm.materias | filter: filter">{{cm.codigo}}</option>
                     </select>
                 </div>
                 <div class="input-field col l2 s6 cajasombra">

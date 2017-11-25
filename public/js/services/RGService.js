@@ -4,9 +4,8 @@ RGService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
 function RGService($http, $q, appConstant) {
     this.buscarRG = buscarRG;
-    this.guardarRG = guardarRG;
+    this.crearRG = crearRG;
     this.modificarRG = modificarRG;
-    this.eliminarRG = eliminarRG;
 
     function buscarRG(rg) {
         var deferred = $q.defer();
@@ -19,10 +18,10 @@ function RGService($http, $q, appConstant) {
         return deferred.promise;
     }
 
-    function guardarRG(rg) {
+    function crearRG(rg) {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarRG", rg).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/crearRG", rg).then(function (res) {
+            deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -33,18 +32,7 @@ function RGService($http, $q, appConstant) {
     function modificarRG(rg) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarRG", rg).then(function (res) {
-            deferred.resolve(res.config.data.datos);
-        }, function (err) {
-            deferred.reject(err);
-            console.log(err);
-        });
-        return deferred.promise;
-    }
-
-    function eliminarRG(rg) {
-        var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarRG", rg).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

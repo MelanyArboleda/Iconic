@@ -1,18 +1,18 @@
 angular.module("iconic").factory("APFactory", APFactory);
 
-APFactory.$inject = ["APService", "serviceNotification", "$q"];
+APFactory.$inject = ["APService", "ptdFactory", "serviceNotification", "$q"];
 
-function APFactory(APService, serviceNotification, $q) {
+function APFactory(APService, ptdFactory, serviceNotification, $q) {
     var factoryAP = {
         AsePro: [],
-        buscarApartAP: buscarApartAP
+        buscarAsesoriasProyectos: buscarAsesoriasProyectos
     }
     return factoryAP;
 
-    function buscarApartAP(apartado) {
+    function buscarAsesoriasProyectos() {
         var deferred = $q.defer();
         factoryAP.AsePro = [];
-        APService.buscarAP(apartado).then(function (result) {
+        APService.buscarAP({ ptd: ptdFactory.ptd.id }).then(function (result) {
             factoryAP.AsePro = result.apartado;
             deferred.resolve();
         });

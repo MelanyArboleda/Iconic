@@ -7,7 +7,7 @@ function IPService($http, $q, appConstant) {
     this.guardarIP = guardarIP;
     this.modificarIP = modificarIP;
     this.eliminarIP = eliminarIP;
-    this.buscarVP = buscarVP;
+    this.buscarVinculosP = buscarVinculosP;
 
     function buscarIP(ip) {
         var deferred = $q.defer();
@@ -23,7 +23,7 @@ function IPService($http, $q, appConstant) {
     function guardarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarIP", ip).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -34,7 +34,7 @@ function IPService($http, $q, appConstant) {
     function modificarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarIP", ip).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -45,7 +45,7 @@ function IPService($http, $q, appConstant) {
     function eliminarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarIP", ip).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
@@ -53,10 +53,10 @@ function IPService($http, $q, appConstant) {
         return deferred.promise;
     }
 
-    function buscarVP() {
+    function buscarVinculosP() {
         var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarVP").then(function (res) {
-            deferred.resolve(res.data.vinculo);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarVinculosP").then(function (res) {
+            deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

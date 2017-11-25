@@ -24,7 +24,7 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
     function firmar() {
         var formato = vm.firma.substring(vm.firma.indexOf("/")+1, vm.firma.indexOf(";"));
         vm.firma = vm.firma.replace(formato, "formato");
-        loginService.guardarFirma({ doc_identidad: loginFactory.user.doc_identidad, firma: vm.firma }).then(function (resultado) {
+        loginService.guardarFirma({ doc_identidad: loginFactory.user.doc_identidad, firma: vm.firma }).then(function (res) {
             //siga
         }).catch(function (err) {
             console.log(err);

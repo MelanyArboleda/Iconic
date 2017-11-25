@@ -49,7 +49,7 @@ module.exports = {
 
     guardar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
-            crud.create(tbl_asesoria_proyectos, req.body.datos, (resp) => {
+            crud.create(tbl_asesoria_proyectos, req.body, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
@@ -61,8 +61,8 @@ module.exports = {
 
     modificar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
-            crud.delete(tbl_asesoria_proyectos, { id: req.body.datos.id }, (resp) => {
-                if (resp == 'delete') {
+            crud.update(tbl_asesoria_proyectos, { id: req.body.donde }, req.body.datos, (resp) => {
+                if (resp == 'update') {
                     res.status(200).end();
                 } else {
                     res.sendStatus(403);
@@ -73,8 +73,8 @@ module.exports = {
 
     eliminar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
-            crud.update(tbl_asesoria_proyectos, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                if (resp == 'update') {
+            crud.delete(tbl_asesoria_proyectos, { id: req.body.id }, (resp) => {
+                if (resp == 'delete') {
                     res.status(200).end();
                 } else {
                     res.sendStatus(403);

@@ -1,74 +1,77 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
-    <div class="container white contenido">
-        <div class="row">
-            <div class="col s12">
-                <table class="responsive-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre del Artículo, Texto. Etc.</th>
-                            <th>Autor Principal o Coautor</th>
-                            <th>Tema Principal</th>
-                            <th>Dedicación Horas Semestre</th>
-                            <th>
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="proyectosVm." data-target='modalProyectos'
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nombre del Artículo, Texto. Etc.</th>
+                        <th>Autor Principal o Coautor</th>
+                        <th>Tema Principal</th>
+                        <th>Dedicación Horas Semestre</th>
+                        <th>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="proyectosVm.vaciarMadal()" data-target='modalProyectos'
                                 modal>Nuevo</a>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="proy in proyectosVm.proyectos">
-                        <td>{{proy.nombre_articulo}}</td>
-                        <td>{{proy.tblActoreId}}</td>
-                        <td>{{proy.tema_ppal}}</td>
-                        <td>{{proy.horas_semestrales}}</td>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fp in proyectosVm.formulacionProyectos">
+                        <td>{{fp.nombre_articulo}}</td>
+                        <td>{{fp.tblActoreId}}</td>
+                        <td>{{fp.tema_ppal}}</td>
+                        <td>{{fp.horas_semestrales}}</td>
                         <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="proyectosVm." data-target='modalProyectos'
-                                modal>
+                            <a class="waves-effect waves-light btn p-btn blue" ng-click="proyectosVm.llenarModal(fp)" data-target='modalProyectos' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="proyectosVm.">
+                            <a class="waves-effect waves-light btn p-btn red" ng-click="proyectosVm.deleteFormulacionProyectos(fp)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
                     </tr>
-                    </tbody> 
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
-            <div class="form-group">
-                <div class="fixed-action-btn add_observaciones">
-                    <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                        <i class="material-icons">&#xE85F;</i>
-                    </a>
-                </div>
-            </div>
     </div>
+    <div class="form-group">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                <i class="material-icons">&#xE85F;</i>
+            </a>
+        </div>
+    </div>
+</div>
 
-    <div id="modalProyectos" class="modal">
+<div id="modalProyectos" class="modal">
     <div class="modal-content">
         <h5 class="center">
             <strong>Proyectos y Publicaciones</strong>
         </h5>
         <div class="row">
-            <form name="aProyectosForm" autocomplete="off" ng-submit="proyectosVm.aProyectos()">
+            <form name="aProyectosForm" autocomplete="off" ng-submit="proyectosVm.accion()">
                 <div class="input-field col l12 s12 cajasombra">
-                    <input name="nombre_articulo" type="text" class="form-control validate" ng-model="proy.nombre_articulo" placeholder="Nombre del Artículo" required/>
+                    <input name="nombre_articulo" type="text" class="form-control validate" ng-model="proyectosVm.formFormulacionProyectos.nombre_articulo"
+                        placeholder="Nombre del Artículo" required/>
                 </div>
                 <div class="input-field col l12 s12 cajasombra">
-                    <select id="tblVinculoId" name="tblActoreId" ng-model="proy.tblActoreId" material-select watch required>
-                        <option value="" disabled selected>Autor Principal o Coautor</option>
-                        <option ng-repeat="actor in proyectosVm.actores">{{actor}}</option>
+                    <select id="tblVinculoId" name="tblActoreId" ng-model="proyectosVm.formFormulacionProyectos.tblActoreId" material-select
+                        watch required>
+                        <option value="0" disabled selected>Tipo Autor</option>
+                        <option ng-repeat="ta in proyectosVm.actores">{{ta.actor}}</option>
                     </select>
                 </div>
                 <div class="input-field col l8 s6 cajasombra">
-                    <input name="tema_ppal" type="text" class="form-control validate" ng-model="proy.tema_ppal" placeholder="Tema Principal" required/>
+                    <input name="tema_ppal" type="text" class="form-control validate" ng-model="proyectosVm.formFormulacionProyectos.tema_ppal"
+                        placeholder="Tema Principal" required/>
                 </div>
                 <div class="input-field col l4 s6 cajasombra">
-                    <input name="horas_semestrales" type="number" class="form-control validate" ng-model="proy.horas_semestrales" placeholder="Horas Semestrales" required/>
+                    <input name="horas_semestrales" type="number" class="form-control validate" ng-model="proyectosVm.formFormulacionProyectos.horas_semestrales"
+                        placeholder="Horas Semestrales" required/>
                 </div>
                 <div class="input-field col l12 s12 center ">
-                    <button ng-disabled="aProyectosForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    <button ng-disabled="aProyectosForm.$invalid || proyectosVm.formFormulacionProyectos.tblActoreId==0" type="submit" class="waves-effect btn modal-close">Guardar</button>
                 </div>
             </form>
         </div>

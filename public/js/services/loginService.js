@@ -36,7 +36,7 @@ function loginService($http, $q, appConstant) {
 	function buscarPerfil(data) {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarPerfil", data).then(function (res) {
-			deferred.resolve(res.data.perfil);
+			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
 			console.log(err);
@@ -47,7 +47,7 @@ function loginService($http, $q, appConstant) {
 	function buscarPrograma(data) {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarPrograma", data).then(function (res) {
-			deferred.resolve(res.data.programa);
+			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
 			console.log(err);
@@ -58,7 +58,7 @@ function loginService($http, $q, appConstant) {
 	function buscarArea(data) {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarArea", data).then(function (res) {
-			deferred.resolve(res.data.area);
+			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
 			console.log(err);
@@ -69,7 +69,7 @@ function loginService($http, $q, appConstant) {
 	function buscarFacultad(data) {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarFacultad", data).then(function (res) {
-			deferred.resolve(res.data.facultad);
+			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
 			console.log(err);
@@ -80,7 +80,7 @@ function loginService($http, $q, appConstant) {
 	function buscarEtapa() {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarEtapa").then(function (res) {
-			deferred.resolve(res.data.etapa);
+			deferred.resolve(res.data);
 		}, function (err) {
 			deferred.reject(err);
 			console.log(err);

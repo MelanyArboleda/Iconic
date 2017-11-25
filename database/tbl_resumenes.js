@@ -33,17 +33,17 @@ module.exports = {
                 if (resp[0] == undefined) {
                     res.status(200).json({ apartado: 0 }).end();
                 } else {
-                    res.status(200).json({ apartado: resp[0].dataValues }).end();
+                    res.status(200).json({ resumen: resp[0] }).end();
                 }
             });
         });
     },
 
-    guardar_RG: function (req, res, next) {
+    crear_RG: function (req, res, next) {
         tbl_resumenes.sync().then(function () {
-            crud.create(tbl_resumenes, req.body.datos, (resp) => {
+            crud.findOrCreate(tbl_resumenes, req.body, req.body.tblPtdId, (resp) => {
                 if (resp != 'error') {
-                    res.status(200).end();
+                    res.status(200).json({ resumen: resp }).end();
                 } else {
                     res.sendStatus(403);
                 }
@@ -53,7 +53,7 @@ module.exports = {
 
     modificar_RG: function (req, res, next) {
         tbl_resumenes.sync().then(function () {
-            crud.update(tbl_resumenes, { id: req.body.datos.id }, req.body.datos, (resp) => {
+            crud.update(tbl_resumenes, { id: req.body.id }, req.body, (resp) => {
                 if (resp == 'update') {
                     res.status(200).end();
                 } else {
@@ -61,18 +61,5 @@ module.exports = {
                 }
             });
         });
-    },
-
-    eliminar_RG: function (req, res, next) {
-        tbl_resumenes.sync().then(function () {
-            crud.delete(tbl_resumenes, { id: req.body.datos.id }, (resp) => {
-                if (resp == 'delete') {
-                    res.status(200).end();
-                } else {
-                    res.sendStatus(403);
-                }
-            });
-        });
     }
-
 };

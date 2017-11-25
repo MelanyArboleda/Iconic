@@ -7,7 +7,6 @@ function DDService($http, $q, appConstant) {
     this.guardarDD = guardarDD;
     this.modificarDD = modificarDD;
     this.eliminarDD = eliminarDD;
-
     this.buscarMaterias = buscarMaterias;
 
     function buscarDD(dd) {
