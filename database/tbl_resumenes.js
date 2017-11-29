@@ -41,7 +41,7 @@ module.exports = {
 
     crear_RG: function (req, res, next) {
         tbl_resumenes.sync().then(function () {
-            crud.findOrCreate(tbl_resumenes, req.body, req.body.tblPtdId, (resp) => {
+            crud.findOrCreate(tbl_resumenes, req.body, req.body.tblPtdId,null, (resp) => {
                 if (resp != 'error') {
                     res.status(200).json({ resumen: resp }).end();
                 } else {

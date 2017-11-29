@@ -7,6 +7,7 @@ const tbl_facultades = require('.././database/tbl_facultades');
 const tbl_areas = require('.././database/tbl_areas');
 const tbl_programas = require('.././database/tbl_programas');
 const tbl_fechas_etapas = require('.././database/tbl_fechas_etapas');
+const moment = require('moment');
 
 var tbl_ptds = sequelize.define('tbl_ptds', {
     tblUsuarioDocIdentidad: {
@@ -14,7 +15,7 @@ var tbl_ptds = sequelize.define('tbl_ptds', {
         allowNull: false
     },
     fecha: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DATE,
         allowNull: false
     },
     semestre: {
@@ -39,16 +40,16 @@ module.exports = {
     crear_ptd: function (req, res, next) {
         crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
             crud.innerFacultad([tbl_facultades, tbl_areas, tbl_programas], { codigo: programa.tblProgramaCodigo }, (facultad) => {
-                crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id }, 'ano desc, semestre asc', (fechas) => {
+                crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id, tblEtapaId: 1 }, 'ano desc, semestre desc', (fechas) => {
                     var datos = {
                         tblUsuarioDocIdentidad: req.body.doc_identidad,
-                        fecha: fechas.ano,
+                        fecha: moment().format("MM-DD-YYYY"),
                         semestre: fechas.semestre,
                         version: 1
-                    }
+                    }//si la fecha semestre es igual al año actual siga si no mandar un mensaje que diga que no se an creado las fehas
                     tbl_ptds.sync().then(function () {
-                        crud.findOrCreate(tbl_ptds, datos, { tblUsuarioDocIdentidad: datos.tblUsuarioDocIdentidad }, (ptd, resp) => {
-                            res.status(200).json({ ptd: ptd, mensaje: 'ptd' }).end();
+                        crud.findOrCreate(tbl_ptds, datos, { tblUsuarioDocIdentidad: datos.tblUsuarioDocIdentidad, semestre: datos.semestre }, 'version desc', (ptd, resp) => {
+                            res.status(200).json({ ptd: ptd }).end();
                         });
                     });
                 });
@@ -69,13 +70,13 @@ module.exports = {
     },
 
     guardar_ptd: function (req, res, next) {
-            crud.update(tbl_ptds, { id: req.body.datos.id },  req.body.datos, (resp) => {
-                if (resp == 'update') {
-                    res.status(200).end();
-                } else {
-                    res.sendStatus(403);
-                }
-            });
+        crud.update(tbl_ptds, { id: req.body.datos.id }, req.body.datos, (resp) => {
+            if (resp == 'update') {
+                res.status(200).end();
+            } else {
+                res.sendStatus(403);
+            }
+        });
     },
 
 };

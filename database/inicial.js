@@ -237,6 +237,34 @@ var fechas_etapas = [{
     ano: '2017',
     fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
     fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
+}, {
+    tblEtapaId: 3,
+    tblFacultadeId: 6,
+    semestre: 1,
+    ano: '2017',
+    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
+}, {
+    tblEtapaId: 1,
+    tblFacultadeId: 6,
+    semestre: 1,
+    ano: '2016',
+    fecha_inicial: moment("'10-06-2016", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2016", "MM-DD-YYYY")
+}, {
+    tblEtapaId: 1,
+    tblFacultadeId: 6,
+    semestre: 2,
+    ano: '2017',
+    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
+}, {
+    tblEtapaId: 2,
+    tblFacultadeId: 6,
+    semestre: 1,
+    ano: '2016',
+    fecha_inicial: moment("'10-06-2016", "MM-DD-YYYY"),
+    fecha_final: moment("'10-06-2016", "MM-DD-YYYY")
 }];
 
 var materias = [
@@ -309,7 +337,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
 function llamado_insert(datos, tabla, donde, callback) {
     tabla.sync({ force: true }).then(function () {
         for (var i = 0; i < datos.length; i++) {
-            crud.findOrCreate(tabla, datos[i], donde[i], function (argument) { });
+            crud.findOrCreate(tabla, datos[i], donde[i],null, function (argument) { });
         }
         callback()
     });

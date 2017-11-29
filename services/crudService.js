@@ -2,10 +2,11 @@ var Sequelize = require('sequelize');
 var sequelize = require('../database/config');
 module.exports = {
   //Busqueda e inserto
-  findOrCreate: function (tabla, dato, donde, callback) {
+  findOrCreate: function (tabla, dato, donde,order, callback) {
     tabla.findOrCreate({
       where: donde,
-      defaults: dato
+      defaults: dato,
+      order: order
     }).spread((tabla, created) => {
       console.log(tabla.get({
         plain: true
