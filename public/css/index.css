@@ -347,10 +347,6 @@ p.titulo{
 		height: 100%;
 	}
 
-	.leftLogueado{
-		left: 20% !important;
-	}
-
 	.closeIcon{
 		float: left;
 		margin-top: 20px;

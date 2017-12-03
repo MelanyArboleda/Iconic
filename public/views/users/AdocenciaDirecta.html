@@ -78,9 +78,11 @@
         </h5>
         <div class="row">
             <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.accion()">
-                <div class="input-field white col l12 s12">
+                <div class="input-field col l12 s12">
                     <input id="search autocomplete-input" type="search" ng-model="filter" placeholder="Filtro Asignatura" />
-                    <label class="label-icon" for="search autocomplete-input"><i class="material-icons">search</i></label>
+                    <label class="label-icon" for="search autocomplete-input">
+                        <i class="material-icons">search</i>
+                    </label>
                 </div>
                 <div class="input-field col l4 s12 cajasombra">
                     <select id="codigo_asignatura" name="codigo_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo"
@@ -133,7 +135,14 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-
-
-<script type="text/javascript" src="js/todoScript.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.innerWidth > 992) {
+            $('#slide-out').css('transform', 'translateX(0%)');
+            $('.menuPContainer').css('padding-left', '300px');
+            $('#ptdBtn').click();
+        } else {
+            $('.button-collapse').show();
+        }
+    });
+</script>

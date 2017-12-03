@@ -7,13 +7,13 @@
       <div class="col s12">
         <ul tabs class="tabs">
           <li class="tab col s4">
-            <a href="#ptd" onclick="openMenu();">Plan de Trabajo</a>
+            <a id="ptdBtn" href="#ptd" onclick="showMenu()">Plan de Trabajo</a>
           </li>
           <li class="tab col s4">
-            <a href="#reportes" onclick="openMenu();">Reportes</a>
+            <a href="#reportes" onclick="hideMenu()">Reportes</a>
           </li>
           <li class="tab col s4">
-            <a href="#usuarios" onclick="openMenu();">Usuarios</a>
+            <a href="#usuarios" onclick="hideMenu()">Usuarios</a>
           </li>
         </ul>
       </div>
@@ -187,17 +187,25 @@
 <script type="text/javascript">
   $('.button-collapse').sideNav();
 
-  function openMenu() {
-    setTimeout(function () {
-      if ($('.menuPContainer ul.tabs.ng-isolate-scope li:first-child a[class="active"]').length === 0) {
-        $('.button-collapse').hide();
+  function closeMenu() {
+    $('.button-collapse').sideNav("hide");
+  }
+
+  function showMenu() {
+    if (location.href.split('/')[5] !== 'vistaPTD') {
+      if (window.innerWidth > 992) {
+        $('#slide-out').css('transform', 'translateX(0%)');
+        $('.menuPContainer').css('padding-left', '300px');
+        $('#ptdBtn').click();
       } else {
         $('.button-collapse').show();
       }
-    }, 10);
+    }
   }
 
-  function closeMenu() {
-    $('.button-collapse').sideNav("hide");
+  function hideMenu() {
+    $('#slide-out').css('transform', 'translateX(-105%)');
+    $('.menuPContainer').css('padding-left', '0px');
+    $('.button-collapse').hide();
   }
 </script>
