@@ -1,5 +1,5 @@
 angular.module("iconic").controller("concertacionCtrl", concertacionCtrl);
-var socket = io.connect('http://10.132.40.3:3000', { 'forceNew': true });
+var socket = io.connect('http://192.168.1.19:3000', { 'forceNew': true });
 concertacionCtrl.$inject = ["loginService", "loginFactory", "ptdService", "ptdFactory", "serviceNotification", "$q", "$scope"];
 
 function concertacionCtrl(loginService, loginFactory, ptdService, ptdFactory, serviceNotification, $q, $scope) {

@@ -78,22 +78,24 @@
         </h5>
         <div class="row">
             <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.accion()">
-                <div class="input-field col l12 s12 cajasombra" id="content-asignatura">
+                <div class="input-field white col l12 s12">
+                    <input id="search autocomplete-input" type="search" ng-model="filter" placeholder="Filtro Asignatura" />
+                    <label class="label-icon" for="search autocomplete-input"><i class="material-icons">search</i></label>
                 </div>
-                <div class="input-field col l12 s12 cajasombra" id="content-asignatura">
-                    <select id="nombre_asignatura" name="nombre_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre"
-                        ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre)" material-select
-                        watch required>
-                        <option value="0" disabled>Nombre Asignatura</option>
-                        <option ng-repeat="nm in docenciaDirectaVm.materias">{{nm.nombre}}</option>
-                    </select>
-                </div>
-                <div class="input-field col l12 s12 cajasombra">
+                <div class="input-field col l4 s12 cajasombra">
                     <select id="codigo_asignatura" name="codigo_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo"
                         ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo)" material-select
                         watch required>
                         <option value="0" disabled>Código Asignatura</option>
                         <option ng-repeat="cm in docenciaDirectaVm.materias | filter: filter">{{cm.codigo}}</option>
+                    </select>
+                </div>
+                <div class="input-field col l8 s12 cajasombra" id="content-asignatura">
+                    <select id="nombre_asignatura" name="nombre_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre"
+                        ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre)" material-select
+                        watch required>
+                        <option value="0" disabled>Nombre Asignatura</option>
+                        <option ng-repeat="nm in docenciaDirectaVm.materias | filter: filter">{{nm.nombre}}</option>
                     </select>
                 </div>
                 <div class="input-field col l2 s6 cajasombra">

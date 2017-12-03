@@ -15,7 +15,8 @@ var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
 	},
 	grupo_asignatura: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		unique: true
 	},
 	numero_estudiantes: {
 		type: Sequelize.INTEGER,
