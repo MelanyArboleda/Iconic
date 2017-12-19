@@ -1,8 +1,8 @@
 angular.module("iconic").factory("ISFactory", ISFactory);
 
-ISFactory.$inject = ["ISService", "ptdFactory", "serviceNotification", "$q"];
+ISFactory.$inject = ["ISService", "ptdFactory", "$q"];
 
-function ISFactory(ISService, ptdFactory, serviceNotification, $q) {
+function ISFactory(ISService, ptdFactory, $q) {
     var factoryIS = {
         InvSem: [],
         vinculos:[],

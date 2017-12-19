@@ -1,8 +1,8 @@
 angular.module("iconic").factory("IPFactory", IPFactory);
 
-IPFactory.$inject = ["IPService", "ptdFactory", "serviceNotification", "$q"];
+IPFactory.$inject = ["IPService", "ptdFactory", "$q"];
 
-function IPFactory(IPService, ptdFactory, serviceNotification, $q) {
+function IPFactory(IPService, ptdFactory, $q) {
     var factoryIP = {
         InvPro: [],
         vinculos: [],

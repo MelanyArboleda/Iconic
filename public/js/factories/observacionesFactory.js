@@ -1,8 +1,8 @@
 angular.module("iconic").factory("asesoriasFactory", asesoriasFactory);
 
-asesoriasFactory.$inject = ["asesoriasService", "serviceNotification", "$q"];
+asesoriasFactory.$inject = ["asesoriasService", "$q"];
 
-function asesoriasFactory(asesoriasService, serviceNotification, $q) {
+function asesoriasFactory(asesoriasService, $q) {
     var factoryap = {
         aasesoria: [],
         buscarApartAP: buscarApartAP

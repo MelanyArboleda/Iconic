@@ -80,10 +80,10 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
             ano: fe.ano
         }
         fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
-            serviceNotification.success('Fecha modificada correctamente', 3000);
+            serviceNotification.success('Fecha eliminada correctamente', 3000);
             cargarFE();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la fecha de la etapa', 2000);
+            serviceNotification.error('No se elimino la fecha de la etapa', 2000);
         });
     }
 

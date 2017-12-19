@@ -1,8 +1,8 @@
 angular.module("iconic").factory("OAFactory", OAFactory);
 
-OAFactory.$inject = ["OAService", "serviceNotification", "$q"];
+OAFactory.$inject = ["OAService", "$q"];
 
-function OAFactory(OAService, serviceNotification, $q) {
+function OAFactory(OAService, $q) {
     var factoryOA = {
         OtrAct: [],
         buscarOtrasActividades:buscarOtrasActividades

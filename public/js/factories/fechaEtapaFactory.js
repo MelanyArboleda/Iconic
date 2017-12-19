@@ -1,8 +1,8 @@
 angular.module("iconic").factory("fechaEtapaFactory", fechaEtapaFactory);
 
-fechaEtapaFactory.$inject = ["fechaEtapaService", "loginFactory", "serviceNotification", "$q"];
+fechaEtapaFactory.$inject = ["fechaEtapaService", "loginFactory", "$q"];
 
-function fechaEtapaFactory(fechaEtapaService, loginFactory, serviceNotification, $q) {
+function fechaEtapaFactory(fechaEtapaService, loginFactory, $q) {
     var factoryFechaEtapa = {
         fechaEtapa: [],
         buscarFechaEtapa: buscarFechaEtapa,
@@ -15,7 +15,6 @@ function fechaEtapaFactory(fechaEtapaService, loginFactory, serviceNotification,
         var d = new Date();
         var año = d.getFullYear();
         loginFactory.cargarEstatus().then(function () {
-            console.log("Estatus--------",loginFactory.estatus);
             fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año }).then(function (result) {
                 factoryFechaEtapa.fechaEtapa = result.apartado;
                 deferred.resolve();

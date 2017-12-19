@@ -37,6 +37,7 @@ router.post('/auth/configc', controllers.UserController.cinicial);
 //rutas del ptd
 router.post('/auth/createPtd', modelos.tbl_ptds.crear_ptd);
 router.post('/auth/buscarPtd', modelos.tbl_ptds.buscar_ptd);
+router.post('/auth/buscarPtds', modelos.tbl_ptds.buscar_ptds);
 router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_ptd);
 //rutas de docencia directa
 router.post('/auth/buscarDD', modelos.tbl_docencias_directas.buscar_DD);

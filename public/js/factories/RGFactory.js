@@ -1,8 +1,8 @@
 angular.module("iconic").factory("RGFactory", RGFactory);
 
-RGFactory.$inject = ["RGService", "ptdFactory", "DDFactory", "ISFactory", "IPFactory", "AEFactory", "CEFactory", "FPFactory", "APFactory", "OAFactory", "serviceNotification", "$q"];
+RGFactory.$inject = ["RGService", "ptdFactory", "DDFactory", "ISFactory", "IPFactory", "AEFactory", "CEFactory", "FPFactory", "APFactory", "OAFactory", "$q"];
 
-function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, FPFactory, APFactory, OAFactory, serviceNotification, $q) {
+function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, FPFactory, APFactory, OAFactory, $q) {
     var factoryRG = {
         ResGen: {},
         crearResumenGeneral: crearResumenGeneral,

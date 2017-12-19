@@ -6,7 +6,7 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
     var vm = this;
     vm.prefirmar = prefirmar;
     vm.firmar = firmar;
-    vm.firma = "";
+    vm.firma = "img/firma.png";
 
     function prefirmar(event) {
         var file = event.target.files[0];

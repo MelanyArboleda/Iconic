@@ -161,7 +161,7 @@ var usuarios = [{
     contraseña: funciones.encriptar("Iconic123"),
     contraseña_firma: funciones.encriptar("0"),
     tblDedicacioneId: 1,
-    tblPerfileId: 6,
+    tblPerfileId: 2,
     tblEstadoId: 1,
     recuperar: false
 },
@@ -174,7 +174,7 @@ var usuarios = [{
     contraseña: funciones.encriptar("Iconic123"),
     contraseña_firma: funciones.encriptar("0"),
     tblDedicacioneId: 1,
-    tblPerfileId: 6,
+    tblPerfileId: 1,
     tblEstadoId: 1,
     recuperar: false
 }];

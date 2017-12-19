@@ -1,8 +1,8 @@
 angular.module("iconic").factory("CEFactory", CEFactory);
 
-CEFactory.$inject = ["CEService", "ptdFactory", "serviceNotification", "$q"];
+CEFactory.$inject = ["CEService", "ptdFactory", "$q"];
 
-function CEFactory(CEService, ptdFactory, serviceNotification, $q) {
+function CEFactory(CEService, ptdFactory, $q) {
     var factoryCE = {
         ComEst: [],
         buscarComisionEstudios: buscarComisionEstudios

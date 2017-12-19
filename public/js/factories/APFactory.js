@@ -1,8 +1,8 @@
 angular.module("iconic").factory("APFactory", APFactory);
 
-APFactory.$inject = ["APService", "ptdFactory", "serviceNotification", "$q"];
+APFactory.$inject = ["APService", "ptdFactory", "$q"];
 
-function APFactory(APService, ptdFactory, serviceNotification, $q) {
+function APFactory(APService, ptdFactory, $q) {
     var factoryAP = {
         AsePro: [],
         buscarAsesoriasProyectos: buscarAsesoriasProyectos

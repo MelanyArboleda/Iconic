@@ -1,8 +1,8 @@
 angular.module("iconic").factory("ptdFactory", ptdFactory);
 
-ptdFactory.$inject = ["ptdService", "serviceNotification", "$q"];
+ptdFactory.$inject = ["ptdService", "$q"];
 
-function ptdFactory(ptdService, serviceNotification, $q) {
+function ptdFactory(ptdService, $q) {
 
     var factory = {
         ptd: {},

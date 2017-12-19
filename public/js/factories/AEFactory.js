@@ -1,8 +1,8 @@
 angular.module("iconic").factory("AEFactory", AEFactory);
 
-AEFactory.$inject = ["AEService", "ptdFactory", "serviceNotification", "$q"];
+AEFactory.$inject = ["AEService", "ptdFactory", "$q"];
 
-function AEFactory(AEService, ptdFactory, serviceNotification, $q) {
+function AEFactory(AEService, ptdFactory, $q) {
     var factoryAE = {
         ExtPro: [],
         buscartActividadesExtension: buscartActividadesExtension

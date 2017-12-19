@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["ptdService", "ptdFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "$state", "$q"];
 
-function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFactory, RGFactory, serviceNotification, $state, $q) {
+function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -32,20 +32,40 @@ function menuPrincipalCtrl(ptdService, ptdFactory, loginFactory, fechaEtapaFacto
 		$state.go("login");
 	} else {
 		loginFactory.buscarPerfil().then(function () { });
-		loginFactory.cargarEstatus().then(function () { });
-		fechaEtapaFactory.buscarFechaEtapa().then(function () { });
 		loginFactory.buscarEtapa().then(function () { });
-		if (loginFactory.user.perfil == 1) {
-			if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
-				ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
-					console.log("PTD--------", ptd);
-					RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
-						console.log("resumen--------");
-					});
-				});
-			}
-		} else {
+		loginFactory.cargarEstatus().then(function () {
+			console.log("Estatus--------", loginFactory.estatus);
+			fechaEtapaFactory.buscarFechaEtapa().then(function () {
+				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
+				if (loginFactory.user.perfil == 1) {
+					if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
+						ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+							console.log("PTD--------", ptd);
+							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
+								console.log("resumen--------",resumen);
+							});
+						});
+					}
+				} else {
+					if (loginFactory.user.perfil == 4) {
 
+					} else {
+						var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+						planesFactory.buscarPtds({
+							id: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
+						}).then(function () {
+							console.log("ptds----------", planesFactory.ptds);
+							vm.ptds = planesFactory.ptds;
+						});
+					}
+				}
+			});
+		});
+
+		vm.cargarPTD = function(ptd){
+			ptdFactory.ptd = ptd;
+			console.log("PTD-----------",ptdFactory.ptd);
+			$state.go("menuPrincipal.AdocenciaDirecta");
 		}
 
 		vm.validFechaFinal = function (ext) {

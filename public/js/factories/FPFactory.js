@@ -1,8 +1,8 @@
 angular.module("iconic").factory("FPFactory", FPFactory);
 
-FPFactory.$inject = ["FPService", "ptdFactory", "serviceNotification", "$q"];
+FPFactory.$inject = ["FPService", "ptdFactory", "$q"];
 
-function FPFactory(FPService, ptdFactory, serviceNotification, $q) {
+function FPFactory(FPService, ptdFactory, $q) {
     var factoryFP = {
         ForPro: [],
         actores: [],

@@ -16,12 +16,14 @@
 					<form name="restablecerForm" autocomplete="off" ng-submit="restablecerVm.restablecer()">
 						<div class="row">
 							<div class="input-field col s12 cajasombra">
-								<input ng-model="restablecerVm.passwordNew" id="contraseñaNew" type="password" name="contraseñaNew" required>
+								<input ng-model="restablecerVm.passwordNew" class="validate" type="password" minlength="8" maxlength="20"
+								pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" name="contraseñaNew" required>
 								<label class="cajasombra" for="contraseñaNew">Nueva Contraseña</label>
 							</div>
 
 							<div class="input-field col s12 cajasombra">
-								<input ng-model="restablecerVm.repitepassword" id="repiteContraseña" type="password" name="repiteContraseña" required>
+								<input ng-model="restablecerVm.repitepassword" id="repiteContraseña" class="validate" type="password" minlength="8" maxlength="20"
+								pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" name="repiteContraseña" required>
 								<label class="cajasombra" for="repiteContraseña">Repite la Contraseña</label>
 							</div>
 							<br>

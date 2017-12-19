@@ -57,7 +57,7 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
 
     function editFormulacionProyectos() {
         FPService.modificarFP({ donde: vm.formFormulacionProyectos.id, datos: vm.formFormulacionProyectos }).then(function (res) {
-            serviceNotification.success('Proyecto modificada correctamente', 3000);
+            serviceNotification.success('Proyecto modificado correctamente', 3000);
             cargarFP();
         }).catch(function (err) {
             serviceNotification.error('No se modifico la Proyecto', 2000);

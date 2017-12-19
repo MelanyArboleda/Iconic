@@ -1,8 +1,8 @@
 angular.module("iconic").factory("loginFactory", loginFactory);
 
-loginFactory.$inject = ["loginService", "$state", "serviceNotification", "$q", "localStorageService"];
+loginFactory.$inject = ["loginService", "ptdFactory", "$state", "serviceNotification", "$q", "localStorageService"];
 
-function loginFactory(loginService, $state, serviceNotification, $q, localStorageService) {
+function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q, localStorageService) {
 
 	var factory = {
 		user: {},
@@ -45,6 +45,7 @@ function loginFactory(loginService, $state, serviceNotification, $q, localStorag
 
 	function logout() {
 		factory.user = {};
+		ptdFactory.ptd = {};
 		localStorageService.remove("loginToken");
 		$state.go("login");
 		factory.userLogin = false;

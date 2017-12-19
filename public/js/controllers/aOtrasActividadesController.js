@@ -7,7 +7,13 @@ function aOtrasActividadesCtrl(OAFactory, OAService, RGFactory, RGService, ptdFa
     var acciones = "";
     cargarData();
     function cargarData() {
-        ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+        var usuario;
+        if(loginFactory.perfil.id == 2){
+            usuario = ptdFactory.ptd.tblUsuarioDocIdentidad;
+        }else{
+            usuario = loginFactory.user.doc_identidad;
+        }
+        ptdFactory.createPtd({ doc_identidad: usuario }).then(function (ptd) {
             RGFactory.modificarResumenGeneral().then(function () {
                 RGFactory.buscarResumenGeneral().then(function () {
                     OAFactory.buscarOtrasActividades(RGFactory.ResGen.id).then(function () {
