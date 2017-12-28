@@ -11,6 +11,9 @@ function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceN
             APFactory.buscarAsesoriasProyectos().then(function () {
                 vm.asesoriasProyectos = APFactory.AsePro;
             });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 6;
+			});
         });
         vm.accion = accion;
         vm.llenarModal = llenarModal;

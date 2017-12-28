@@ -91,6 +91,9 @@ router.post('/auth/guardarObservaciones', modelos.tbl_observaciones.guardar_obse
 router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);
 router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//rutas de los permisos
+router.post('/auth/buscarPermisos', controllers.PtdController.buscar_Permisos);
+router.post('/auth/guardarPermisos', controllers.PtdController.guardar_Permisos);
 //obtener datos espesifico
 router.post('/auth/buscarPerfil', controllers.PtdController.buscar_Perfil);
 router.post('/auth/buscarPrograma', controllers.PtdController.buscar_Programa);

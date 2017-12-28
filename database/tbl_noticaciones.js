@@ -7,7 +7,7 @@ var tbl_notificaciones = sequelize.define('tbl_notificaciones', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    tblUsuarioDoc_identidad: {
+    tblUsuarioDocIdentidad: {
         type: Sequelize.STRING(15),
         allowNull: false
     },

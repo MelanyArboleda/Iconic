@@ -60,6 +60,9 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 					}
 				}
 			});
+			vm.permisos = loginFactory.estatus.permisos.sort(function (a, b) {
+				return (a.tblRecursoId - b.tblRecursoId)
+			});
 		});
 
 		vm.cargarPTD = function(ptd){

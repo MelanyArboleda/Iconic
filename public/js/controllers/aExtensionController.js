@@ -11,6 +11,9 @@ function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFacto
             AEFactory.buscartActividadesExtension().then(function () {
                 vm.actividadesExtension = AEFactory.ExtPro;
             });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 3;
+			});
         });
         vm.accion = accion;
         vm.llenarModal = llenarModal;

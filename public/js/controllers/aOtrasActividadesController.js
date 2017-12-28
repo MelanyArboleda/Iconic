@@ -26,6 +26,11 @@ function aOtrasActividadesCtrl(OAFactory, OAService, RGFactory, RGService, ptdFa
                 });
             });
         });
+        loginFactory.cargarEstatus().then(function () {
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 7;
+			});
+        });
         vm.accion = accion;
         vm.llenarModal = llenarModal;
         vm.vaciarMadal = vaciarMadal;

@@ -10,7 +10,7 @@
                         <th>Dedicación Horas Semanales</th>
                         <th>Dedicación Horas Semestre</th>
                         <th>Descripción y Productos</th>
-                        <th>
+                        <th ng-if="otrasActividadesVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal()" data-target='modalOActividades'
                                 modal>Nuevo</a>
                         </th>
@@ -23,12 +23,12 @@
                         <td>{{oa.horas_semanales}}</td>
                         <td>{{oa.horas_semestrales}}</td>
                         <td>{{oa.descripcion_productos}}</td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)" data-target='modalOActividades'
+                        <td ng-if="otrasActividadesVm.permiso.modificar == true || otrasActividadesVm.permiso.eliminar == true">
+                            <a ng-if="otrasActividadesVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)" data-target='modalOActividades'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
+                            <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -58,8 +58,12 @@
                         <td> Total horas de trabajo en el semestre</td>
                         <td> {{otrasActividadesVm.resumenGeneral.horas_semanales_tot}} </td>
                         <td> {{otrasActividadesVm.resumenGeneral.horas_semestrales_tot}}</td>
-                        <td>
+                        <td ng-if="otrasActividadesVm.permiso.modificar == true">
                             <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control validate"
+                            />
+                        </td>
+                        <td ng-if="otrasActividadesVm.permiso.modificar == false">
+                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control no-disabled" disabled
                             />
                         </td>
                     </tr>
@@ -67,7 +71,7 @@
             </table>
         </div>
     </div>
-    <div class="row center">
+    <div ng-if="otrasActividadesVm.permiso.modificar == true" class="row center">
         <button type="submit" ng-click="otrasActividadesVm.saveObservaciones()" class="waves-effect waves-light btn">Guardar Observación</button>
     </div>
 
@@ -116,6 +120,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-
-<script type="text/javascript" src="js/todoScript.js"></script>

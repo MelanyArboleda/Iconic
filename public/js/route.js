@@ -154,6 +154,15 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state({
+		name: "menuPrincipal.seguimientoEvaluacion",
+		templateUrl: 'views/users/AseguimientoEvaluacion.html',
+		url: "/seguimientoEvaluacion",
+		// controller:,
+		params: {
+			login: true
+		}
+	})
+	.state({
 		name: "menuPrincipal.vistaPTD",
 		templateUrl: 'views/users/vistaPTD.html',
 		url: "/vistaPTD",

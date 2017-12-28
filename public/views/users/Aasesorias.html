@@ -12,8 +12,8 @@
                         <th>Dedicación Horas Semestre</th>
                         <th>Evaluación Estudiante</th>
                         <th>Evaluación Jefe</th>
-                        <th>
-                        <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" data-target='modalAsesorias'
+                        <th ng-if="asesoriasVm.permiso.crear == true">
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" data-target='modalAsesorias'
                                 modal>Nuevo</a>
                         </th>
                     </tr>
@@ -26,11 +26,11 @@
                         <td>{{ap.horas_semestrales}}</td>
                         <td>{{ap.estudiante}}</td>
                         <td>{{ap.jefe}}</td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="asesoriasVm.llenarModal(ap)" data-target='modalAsesorias' modal>
+                        <td ng-if="asesoriasVm.permiso.modificar == true || asesoriasVm.permiso.eliminar == true">
+                            <a ng-if="asesoriasVm.permiso.modificar == true"  class="waves-effect waves-light btn p-btn blue" ng-click="asesoriasVm.llenarModal(ap)" data-target='modalAsesorias' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)">
+                            <a ng-if="asesoriasVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -39,13 +39,13 @@
             </table>
         </div>
     </div>
-        <div class="form-group">
-            <div class="fixed-action-btn add_observaciones">
-                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                    <i class="material-icons">&#xE85F;</i>
-                </a>
-            </div>
+    <div class="form-group">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                <i class="material-icons">&#xE85F;</i>
+            </a>
         </div>
+    </div>
 </div>
 
 <div id="modalAsesorias" class="modal">
@@ -56,22 +56,28 @@
         <div class="row">
             <form name="aAsesoriasForm" autocomplete="off" ng-submit="asesoriasVm.accion()">
                 <div class="input-field col l12 s12 cajasombra">
-                    <input name="integrantes" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.integrantes" placeholder="Integrntes del Equipo" required/>
+                    <input name="integrantes" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.integrantes"
+                        placeholder="Integrntes del Equipo" required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="titulo" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.titulo" placeholder="Título" required/>
+                    <input name="titulo" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.titulo" placeholder="Título"
+                        required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="aspectos" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.aspectos" placeholder="Aspectos Reelevantes" required/>
+                    <input name="aspectos" type="text" class="form-control validate" ng-model="asesoriasVm.formAsesoriasProyectos.aspectos" placeholder="Aspectos Reelevantes"
+                        required/>
                 </div>
                 <div class="input-field col l4 s4 cajasombra">
-                    <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="asesoriasVm.formAsesoriasProyectos.horas_semestrales" placeholder="Horas Semestrales" required/>
+                    <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="asesoriasVm.formAsesoriasProyectos.horas_semestrales"
+                        placeholder="Horas Semestrales" required/>
                 </div>
                 <div class="input-field col l4 s4 cajasombra hscss">
-                    <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="asesoriasVm.formAsesoriasProyectos.estudiante" placeholder="Eval. Estudiante" /> 
+                    <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="asesoriasVm.formAsesoriasProyectos.estudiante"
+                        placeholder="Eval. Estudiante" />
                 </div>
                 <div class="input-field col l4 s4 cajasombra">
-                    <input name="jefe" type="number" class="form-control validate" min="1" max="5" ng-model="asesoriasVm.formAsesoriasProyectos.jefe" placeholder="Eval. Jefe" />
+                    <input name="jefe" type="number" class="form-control validate" min="1" max="5" ng-model="asesoriasVm.formAsesoriasProyectos.jefe"
+                        placeholder="Eval. Jefe" />
                 </div>
                 <div class="input-field col l12 s12 center ">
                     <button ng-disabled="aAsesoriasForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
@@ -84,5 +90,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-<script type="text/javascript" src="js/todoScript.js"></script>

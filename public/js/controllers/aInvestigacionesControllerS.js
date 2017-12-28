@@ -21,6 +21,9 @@ function aInvestigacionesSCtrl(ISService, ISFactory, ptdService, ptdFactory, log
                 });
                 vm.vinculos = ISFactory.vinculos;
             });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 2;
+			});
         });
         vm.accion = accion;
         vm.llenarModal = llenarModal;

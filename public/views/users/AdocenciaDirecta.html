@@ -14,7 +14,7 @@
                         <th>Horas Semestre</th>
                         <th>Estudiante</th>
                         <th>Jefe</th>
-                        <th>
+                        <th ng-if="docenciaDirectaVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="docenciaDirectaVm.vaciarMadal()" data-target='modalDocenciaDirecta'
                                 modal>Nuevo</a>
                         </th>
@@ -30,12 +30,12 @@
                         <td>{{dd.horas_semestrales}}</td>
                         <td>{{dd.estudiante}}</td>
                         <td>{{dd.jefe}}</td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="docenciaDirectaVm.llenarModal(dd)" data-target='modalDocenciaDirecta'
+                        <td ng-if="docenciaDirectaVm.permiso.modificar == true || docenciaDirectaVm.permiso.eliminar == true">
+                            <a ng-if="docenciaDirectaVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="docenciaDirectaVm.llenarModal(dd)" data-target='modalDocenciaDirecta'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="docenciaDirectaVm.deleteDocenciaDirecta(dd)">
+                            <a ng-if="docenciaDirectaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="docenciaDirectaVm.deleteDocenciaDirecta(dd)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -51,13 +51,18 @@
 <div class="container white contenido">
     <form name="observaciones_dd" autocomplete="off" ng-submit="docenciaDirectaVm.saveObservaciones()">
         <div class="row">
-            <div class="input-field col s12 areaO" style="padding-right:3%;">
+            <div ng-if="docenciaDirectaVm.permiso.modificar == true"class="input-field col s12 areaO" style="padding-right:3%;">
                 <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea validate"
                     data-length="1000"></textarea>
                 <label for="observaciones_dd">Observaciones</label>
             </div>
+            <div ng-if="docenciaDirectaVm.permiso.modificar == false" class="input-field col s12 areaO" style="padding-right:3%;">
+                <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea"
+                    data-length="1000" disabled></textarea>
+                <label for="observaciones_dd">Observaciones</label>
+            </div>
         </div>
-        <div class="row center" input-field>
+        <div ng-if="docenciaDirectaVm.permiso.modificar == true" class="row center" input-field>
             <button ng-disabled="observaciones_dd.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Observación</button>
         </div>
 

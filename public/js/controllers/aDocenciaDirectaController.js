@@ -24,6 +24,9 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 				vm.materias = DDFactory.materias;
 				cargarObservacion();
 			});
+			vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 1;
+			});
 		});
 
 		vm.accion = accion;

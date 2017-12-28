@@ -13,7 +13,7 @@
                         <th>Horas Semanales</th>
                         <th>Horas Semestre</th>
                         <th>Vo. Bo. Coord. Investigación</th>
-                        <th>
+                        <th ng-if="investigacionesPVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesPVm.vaciarMadal()" data-target='modalInvestigacionesP'
                                 modal>Nuevo</a>
                         </th>
@@ -30,12 +30,12 @@
                         <td>
                             <input type="checkbox" ng-checked="{{ip.aprobado}}" disabled/>
                         </td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesPVm.llenarModal(ip)" data-target='modalInvestigacionesP'
+                        <td ng-if="investigacionesPVm.permiso.modificar == true || investigacionesPVm.permiso.eliminar == true">
+                            <a ng-if="investigacionesPVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesPVm.llenarModal(ip)" data-target='modalInvestigacionesP'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)">
+                            <a ng-if="investigacionesPVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -105,5 +105,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-<script type="text/javascript" src="js/todoScript.js"></script>

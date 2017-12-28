@@ -46,50 +46,49 @@
               <a ui-sref="menuPrincipal.AinfoGeneral" class="waves-effect">Información General</a>
             </li>
           </ul> -->
-
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[0].ver == true">
             <li>
               <a ui-sref="menuPrincipal.AdocenciaDirecta" class="waves-effect" onclick="closeMenu();">Docencia Directa</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
             <li>
               <a ui-sref="menuPrincipal.AinvestigacionesS" class="waves-effect" onclick="closeMenu();">Semilleros Investigación</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
             <li>
               <a ui-sref="menuPrincipal.AinvestigacionesP" class="waves-effect" onclick="closeMenu();">Proyectos Investigación</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[2].ver == true">
             <li>
               <a ui-sref="menuPrincipal.Aextension" class="waves-effect" onclick="closeMenu();">Extensión y Proyección</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[3].ver == true">
             <li>
               <a ui-sref="menuPrincipal.AcomisionEstudios" class="waves-effect" onclick="closeMenu();">Comisión de Estudios</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[4].ver == true">
             <li>
               <a ui-sref="menuPrincipal.Aproyectos" class="waves-effect" onclick="closeMenu();">Proyectos y Publicaciones</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[5].ver == true">
             <li>
               <a ui-sref="menuPrincipal.Aasesorias" class="waves-effect" onclick="closeMenu();">Asesorias en Proyectos</a>
             </li>
           </ul>
 
-          <ul>
+          <ul ng-if="menuPrincipalVm.permisos[6].ver == true">
             <li>
               <a ui-sref="menuPrincipal.AotrasActividades" class="waves-effect" onclick="closeMenu();">Otras Actividades Académicas</a>
             </li>
@@ -103,7 +102,7 @@
 
           <ul>
             <li>
-              <a href="#!" class="waves-effect" onclick="closeMenu();">Seguimientos y Evaluación</a>
+              <a ui-sref="menuPrincipal.seguimientoEvaluacion" class="waves-effect" onclick="closeMenu();">Seguimientos y Evaluación</a>
             </li>
           </ul>
 

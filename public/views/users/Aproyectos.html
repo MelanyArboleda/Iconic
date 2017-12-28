@@ -10,7 +10,7 @@
                         <th>Autor Principal o Coautor</th>
                         <th>Tema Principal</th>
                         <th>Dedicación Horas Semestre</th>
-                        <th>
+                        <th ng-if="proyectosVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="proyectosVm.vaciarMadal()" data-target='modalProyectos'
                                 modal>Nuevo</a>
                         </th>
@@ -22,11 +22,11 @@
                         <td>{{fp.tblActoreId}}</td>
                         <td>{{fp.tema_ppal}}</td>
                         <td>{{fp.horas_semestrales}}</td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="proyectosVm.llenarModal(fp)" data-target='modalProyectos' modal>
+                        <td ng-if="proyectosVm.permiso.modificar == true || proyectosVm.permiso.eliminar == true">
+                            <a ng-if="proyectosVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="proyectosVm.llenarModal(fp)" data-target='modalProyectos' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="proyectosVm.deleteFormulacionProyectos(fp)">
+                            <a ng-if="proyectosVm.permiso.eliminar == true"class="waves-effect waves-light btn p-btn red" ng-click="proyectosVm.deleteFormulacionProyectos(fp)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -81,5 +81,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-<script type="text/javascript" src="js/todoScript.js"></script>

@@ -13,7 +13,7 @@
                         <th>Horas Semanales</th>
                         <th>Horas Semestre</th>
                         <th>Vo. Bo. Coord. Investigación</th>
-                        <th>
+                        <th ng-if="investigacionesSVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesSVm.vaciarMadal()" data-target='modalInvestigacionesS'
                                 modal>Nuevo</a>
                         </th>
@@ -30,12 +30,12 @@
                         <td>
                             <input type="checkbox" ng-checked="{{is.aprobado}}" disabled/>
                         </td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesSVm.llenarModal(is)" data-target='modalInvestigacionesS'
+                        <td ng-if="investigacionesSVm.permiso.modificar == true || investigacionesSVm.permiso.eliminar == true">
+                            <a ng-if="investigacionesSVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesSVm.llenarModal(is)" data-target='modalInvestigacionesS'
                                 modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="investigacionesSVm.deleteInvestigacionesSemilleros(is)">
+                            <a ng-if="investigacionesSVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesSVm.deleteInvestigacionesSemilleros(is)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -104,5 +104,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-<script type="text/javascript" src="js/todoScript.js"></script>

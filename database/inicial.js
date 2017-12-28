@@ -16,6 +16,7 @@ var tbl_etapas = require('./tbl_etapas');
 var tbl_fechas_etapas = require('./tbl_fechas_etapas');
 var tbl_materias = require('./tbl_materias');
 var tbl_materias_programas = require('./tbl_materias_programas');
+var tbl_permisos_iniciales = require('./tbl_permisos_iniciales');
 const moment = require('moment');
 
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
@@ -50,14 +51,117 @@ var recursos = [
     { id: 8, recurso: "Observaciones" },
     { id: 9, recurso: "Seguimiento" },
     { id: 10, recurso: "Evaluación" },
-    { id: 11, recurso: "Observaciones decano" },
-    { id: 12, recurso: "Administración de fechas" },
-    { id: 13, recurso: "Permisos" },
-    { id: 14, recurso: "Generar reportes" },
-    { id: 15, recurso: "ver reportes" }];
+    { id: 11, recurso: "Administración de fechas" },
+    { id: 12, recurso: "Permisos" },
+    { id: 13, recurso: "reportes" },
+    { id: 14, recurso: "consertar" }];
 
 var permisos_iniciales = [
-    { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true}];
+    { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 2, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 3, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 4, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 5, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 6, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 7, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 8, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 9, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 12, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 13, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 14, tblPerfileId: 1, ver: true, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 2, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 3, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 4, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 5, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 6, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 7, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 8, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 9, tblPerfileId: 2, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 2, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 2, ver: true, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 2, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 3, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 4, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 5, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 6, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 7, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 8, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 9, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 3, ver: true, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 2, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 3, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 4, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 5, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 6, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 7, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 8, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 9, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 4, ver: true, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 2, tblPerfileId: 5, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 3, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 4, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 5, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 6, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 7, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 8, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 9, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 5, ver: false, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 5, ver: false, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 5, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 5, ver: false, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 2, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 3, tblPerfileId: 6, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 4, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 5, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 6, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 7, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 8, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 9, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 10, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 11, tblPerfileId: 6, ver: false, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 6, ver: false, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 6, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 6, ver: false, crear: true, modificar: false, eliminar: false },
+
+    { tblRecursoId: 1, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 2, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 3, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 4, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 5, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 6, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 7, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 8, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 9, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 10, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 11, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 12, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 13, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 14, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+];
 
 var facultades = [
     { id: 1, facultad: "Administración" },
@@ -139,72 +243,35 @@ var programas = [
     { codigo: "5", tblSedeId: 1, programa: "Educación Física, Recreación y Deporte", tblAreaId: 4 },
     { codigo: "6", tblSedeId: 1, programa: "Ingeniería", tblAreaId: 10 }];
 
-var usuarios = [{
-    doc_identidad: "1039470240",
-    nombre: "Gabriel",
-    apellido_1: "Arboleda",
-    apellido_2: "Tolosa",
-    correo: "gabriel_arboleda23151@elpoli.edu.co",
-    contraseña: funciones.encriptar("Iconic123"),
-    contraseña_firma: funciones.encriptar("0"),
-    tblDedicacioneId: 1,
-    tblPerfileId: 1,
-    tblEstadoId: 1,
-    recuperar: false
-},
-{
-    doc_identidad: "1152710692",
-    nombre: "Samuel Andrés",
-    apellido_1: "Vergara",
-    apellido_2: "Bedoya",
-    correo: "tolosa-321@hotmail.com",
-    contraseña: funciones.encriptar("Iconic123"),
-    contraseña_firma: funciones.encriptar("0"),
-    tblDedicacioneId: 1,
-    tblPerfileId: 2,
-    tblEstadoId: 1,
-    recuperar: false
-},
-{
-    doc_identidad: "1234567890",
-    nombre: "Melany",
-    apellido_1: "Arboleda",
-    apellido_2: "Camacho",
-    correo: "melany@hotmail.com",
-    contraseña: funciones.encriptar("Iconic123"),
-    contraseña_firma: funciones.encriptar("0"),
-    tblDedicacioneId: 1,
-    tblPerfileId: 1,
-    tblEstadoId: 1,
-    recuperar: false
-}];
+var usuarios = [
+    { doc_identidad: "1039470240", nombre: "Docente", apellido_1: "Docente", apellido_2: "Docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "docencia@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "programa@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "9786543210", nombre: "Extensión", apellido_1: "Extensión", apellido_2: "Extensión", correo: "extensión@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 6, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "3725428427", nombre: "Administrador", apellido_1: "Administrador", apellido_2: "Administrador", correo: "administrador@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 7, tblEstadoId: 3, recuperar: false }
+];
 
-var usuario_doc = [{
-    doc_identidad: "1039470240"
-}, {
-    doc_identidad: "1152710692"
-}, {
-    doc_identidad: "1234567890"
-}];
+var usuario_doc = [
+    { doc_identidad: "1039470240" },
+    { doc_identidad: "1152710692" },
+    { doc_identidad: "1234567890" },
+    { doc_identidad: "9876543210" },
+    { doc_identidad: "1324758690" },
+    { doc_identidad: "9786543210" },
+    { doc_identidad: "3725428427" }
+];
 
-var usuario_programas = [{
-    tblUsuarioDocIdentidad: "1039470240",
-    tblProgramaCodigo: "53587",
-    tblProgramaPrograma: "Tecnología en Sistematización de Datos",
-    tblProgramaSede: 1
-},
-{
-    tblUsuarioDocIdentidad: "1152710692",
-    tblProgramaCodigo: "6",
-    tblProgramaPrograma: "Ingeniería",
-    tblProgramaSede: 1
-},
-{
-    tblUsuarioDocIdentidad: "1234567890",
-    tblProgramaCodigo: "6",
-    tblProgramaPrograma: "Ingeniería",
-    tblProgramaSede: 1
-}];
+var usuario_programas = [
+    { tblUsuarioDocIdentidad: "1039470240", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1152710692", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1234567890", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1324758690", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "9786543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "3725428427", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 }
+];
 
 var vinculos = [
     { id: 1, vinculo: "Director" },
@@ -301,20 +368,20 @@ llamado_insert(estados, tbl_estados, estados, () => {
     llamado_insert(dedicaciones, tbl_dedicaciones, dedicaciones, () => {
         llamado_insert(perfiles, tbl_perfiles, perfiles, () => {
             llamado_insert(recursos, tbl_recursos, recursos, () => {
-                // llamado_insert(permisos_iniciales, tbl_permisos_iniciales, permisos_iniciales, () => {
-                llamado_insert(facultades, tbl_facultades, facultades, () => {
-                    llamado_insert(areas, tbl_areas, areas, () => {
-                        llamado_insert(sedes, tbl_sedes, sedes, () => {
-                            llamado_insert(programas, tbl_programas, programas, () => {
-                                llamado_insert(usuarios, tbl_usuarios, usuario_doc, () => {
-                                    llamado_insert(usuario_programas, tbl_usuario_programas, usuario_programas, () => {
-                                        llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
-                                            llamado_insert(actores, tbl_actores, actores, () => {
-                                                llamado_insert(etapas, tbl_etapas, etapas, () => {
-                                                    llamado_insert(fechas_etapas, tbl_fechas_etapas.tbl_fechas_etapas, fechas_etapas, () => {
-                                                        llamado_insert(materias, tbl_materias, materias, () => {
-                                                            llamado_insert(materias_programas, tbl_materias_programas, materias_programas, () => {
-
+                llamado_insert(permisos_iniciales, tbl_permisos_iniciales, permisos_iniciales, () => {
+                    llamado_insert(facultades, tbl_facultades, facultades, () => {
+                        llamado_insert(areas, tbl_areas, areas, () => {
+                            llamado_insert(sedes, tbl_sedes, sedes, () => {
+                                llamado_insert(programas, tbl_programas, programas, () => {
+                                    llamado_insert(usuarios, tbl_usuarios, usuario_doc, () => {
+                                        llamado_insert(usuario_programas, tbl_usuario_programas, usuario_programas, () => {
+                                            llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
+                                                llamado_insert(actores, tbl_actores, actores, () => {
+                                                    llamado_insert(etapas, tbl_etapas, etapas, () => {
+                                                        llamado_insert(fechas_etapas, tbl_fechas_etapas.tbl_fechas_etapas, fechas_etapas, () => {
+                                                            llamado_insert(materias, tbl_materias, materias, () => {
+                                                                llamado_insert(materias_programas, tbl_materias_programas, materias_programas, () => {
+                                                                });
                                                             });
                                                         });
                                                     });
@@ -326,7 +393,6 @@ llamado_insert(estados, tbl_estados, estados, () => {
                             });
                         });
                     });
-                    // });
                 });
             });
         });
@@ -337,7 +403,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
 function llamado_insert(datos, tabla, donde, callback) {
     tabla.sync({ force: true }).then(function () {
         for (var i = 0; i < datos.length; i++) {
-            crud.findOrCreate(tabla, datos[i], donde[i],null, function (argument) { });
+            crud.findOrCreate(tabla, datos[i], donde[i], null, function (argument) { });
         }
         callback()
     });

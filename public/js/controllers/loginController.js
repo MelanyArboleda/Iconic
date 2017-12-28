@@ -7,7 +7,7 @@ function loginCtrl(loginFactory, $state, $scope) {
 	vm.login = login;
 	vm.sendLink = sendLink;
 	vm.user = {
-		correo: "tolosa-321@hotmail.com",
+		correo: "gabriel_arboleda23151@elpoli.edu.co",
 		password: "Iconic123"
 	}
 	vm.correo = "";

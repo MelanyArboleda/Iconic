@@ -11,6 +11,9 @@ function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, s
             CEFactory.buscarComisionEstudios().then(function () {
                 vm.comisionEstudios = CEFactory.ComEst;
             });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 4;
+			});
         });
         vm.accion = accion;
         vm.llenarModal = llenarModal;

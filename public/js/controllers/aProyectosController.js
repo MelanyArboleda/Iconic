@@ -20,6 +20,9 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
                 });
                 vm.actores = FPFactory.actores;
             });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+				return permiso.tblRecursoId == 5;
+			});
         });
         vm.accion = accion;
         vm.llenarModal = llenarModal;

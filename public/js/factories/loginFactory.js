@@ -11,6 +11,7 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 		buscarPerfil: buscarPerfil,
 		cargarEstatus: cargarEstatus,
 		buscarEtapa: buscarEtapa,
+		guardarPermisos: guardarPermisos,
 		login: login,
 		logout: logout,
 		userLogin: false,
@@ -127,7 +128,9 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 			buscarArea().then(function () {
 				buscarFacultad().then(function () {
 					buscarEtapa().then(function () {
-						deferred.resolve();
+						buscarPermisos().then(function () {
+							deferred.resolve();
+						});
 					});
 				});
 			})
@@ -166,6 +169,23 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 		var deferred = $q.defer();
 		loginService.buscarEtapa().then(function (etapa) {
 			factory.estatus.etapa = etapa;
+			deferred.resolve();
+		});
+		return deferred.promise;
+	}
+
+	function buscarPermisos() {
+		var deferred = $q.defer();
+		loginService.buscarPermisos({ tblUsuarioDocIdentidad: factory.user.doc_identidad }).then(function (permisos) {
+			factory.estatus.permisos = permisos;
+			deferred.resolve();
+		});
+		return deferred.promise;
+	}
+
+	function guardarPermisos() {
+		var deferred = $q.defer();
+		loginService.guardarPermisos({ tblUsuarioDocIdentidad: factory.user.doc_identidad, tblPerfileId: factory.perfil.id }).then(function (resp) {
 			deferred.resolve();
 		});
 		return deferred.promise;

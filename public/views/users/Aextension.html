@@ -11,7 +11,7 @@
                         <th>Fecha Final</th>
                         <th>Dedicación Horas Semestre</th>
                         <th>Vo.Bo Vicerrectoría de extensión</th>
-                        <th>
+                        <th ng-if="extensionVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="extensionVm.vaciarMadal()" data-target='modalExtension'
                                 modal>Nuevo</a>
                         </th>
@@ -27,11 +27,11 @@
                         <td>
                             <input type="checkbox" ng-checked="{{ae.aprobado}}" disabled/>
                         </td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="extensionVm.llenarModal(ae)" data-target='modalExtension' modal>
+                        <td ng-if="extensionVm.permiso.modificar == true || extensionVm.permiso.eliminar == true">
+                            <a ng-if="extensionVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="extensionVm.llenarModal(ae)" data-target='modalExtension' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="extensionVm.deleteActividadesExtension(ae)">
+                            <a ng-if="extensionVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="extensionVm.deleteActividadesExtension(ae)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -92,6 +92,3 @@
         <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
     </div>
 </div>
-
-
-<script type="text/javascript" src="js/todoScript.js"></script>

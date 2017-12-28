@@ -9,23 +9,27 @@ var tbl_permisos = sequelize.define('tbl_permisos', {
 		primaryKey: true,
 		allowNull: false
 	},
-	tblUsuarioDoc_identidad: {
+	tblUsuarioDocIdentidad: {
 		type: Sequelize.STRING(15),
 		primaryKey: true,
 		allowNull: false
 	},
-	consultar: {
-		type: Sequelize.BOOLEAN,
-		allowNull: false
-	},
-	guardar: {
-		type: Sequelize.BOOLEAN,
-		allowNull: false
-	},
-	modificar: {
-		type: Sequelize.BOOLEAN,
-		allowNull: false
-	}
+	ver: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    },
+    crear: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    },
+    modificar: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    },
+    eliminar: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    }
 });
 
 tbl_recursos.hasMany(tbl_permisos);

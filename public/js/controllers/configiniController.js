@@ -18,7 +18,9 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
             loginService.compararcontraseñas(data).then(function (res) {
                 loginFactory.user = res.user;
                 serviceNotification.info('Bienvenido a ICONIC', 2000);
-                $state.go("menuPrincipal.vistaPTD");
+                $state.go("menuPrincipal.vistaPTD").then(loginFactory.buscarPerfil().then(function () {
+                    loginFactory.guardarPermisos().then(function () { });
+                }));
             }).catch(function (err) {
                 console.log(err);
                 serviceNotification.warning('No puede ser igual a la contraseña por defecto', 2000);

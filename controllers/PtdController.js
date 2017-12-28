@@ -1,4 +1,5 @@
 const crud = require('.././services/crudService');
+const funciones = require('.././services/funciones');
 const tbl_perfiles = require('.././database/tbl_perfiles');
 const tbl_usuario_programas = require('.././database/tbl_usuario_programas');
 const tbl_programas = require('.././database/tbl_programas');
@@ -8,7 +9,8 @@ const tbl_etapas = require('.././database/tbl_etapas');
 const tbl_materias = require('.././database/tbl_materias');
 const tbl_materias_programas = require('.././database/tbl_materias_programas');
 const tbl_actores = require('.././database/tbl_actores');
-
+const tbl_permisos = require('.././database/tbl_permisos');
+const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
 
 module.exports = {
     buscar_Perfil: function (req, res, next) {
@@ -69,10 +71,38 @@ module.exports = {
         })
     },
 
-    buscar_Programa_Materia:function(req, res, next) {
+    buscar_Programa_Materia: function (req, res, next) {
         tbl_materias_programas.sync().then(function () {
             crud.findAll(tbl_materias_programas, req.body, null, (resp) => {
                 res.status(200).json(resp[0].dataValues).end();
+            });
+        });
+    },
+
+    buscar_Permisos: function (req, res, next) {
+        tbl_permisos.sync().then(function () {
+            crud.findAll(tbl_permisos, { tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad }, null, (permisos) => {
+                res.status(200).json(permisos).end();
+            });
+        });
+    },
+
+    guardar_Permisos: function (req, res, next) {
+        crud.findAll(tbl_permisos_iniciales, { tblPerfileId: req.body.tblPerfileId }, null, (iniciales) => {
+            var permisos = [];
+            for (j = 0; j < iniciales.length; j++) {
+                permisos.push({ tblRecursoId: iniciales[j].tblRecursoId, tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad, ver: iniciales[j].ver, crear: iniciales[j].crear, modificar: iniciales[j].modificar, eliminar: iniciales[j].eliminar });
+            }
+            tbl_permisos.sync().then(function () {
+                for (var i = 0; i < permisos.length; i++) {
+                    crud.create(tbl_permisos, permisos[i], (resp) => {
+                        if (resp != 'error') {
+                            res.status(200).end();
+                        } else {
+                            res.sendStatus(403);
+                        }
+                    });
+                }
             });
         });
     }
