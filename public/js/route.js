@@ -154,18 +154,18 @@ function routeConfig($stateProvider, $urlRouterProvider){
 		}
 	})
 	.state({
-		name: "menuPrincipal.seguimientoEvaluacion",
-		templateUrl: 'views/users/AseguimientoEvaluacion.html',
-		url: "/seguimientoEvaluacion",
-		// controller:,
+		name: "menuPrincipal.vistaPTD",
+		templateUrl: 'views/users/vistaPTD.html',
+		url: "/vistaPTD",
 		params: {
 			login: true
 		}
 	})
 	.state({
-		name: "menuPrincipal.vistaPTD",
-		templateUrl: 'views/users/vistaPTD.html',
-		url: "/vistaPTD",
+		name: "menuPrincipal.Usuarios",
+		templateUrl: 'views/users/Usuarios.html',
+		url: "/Usuarios",
+		controller: "usuariosCtrl as usuariosVm",
 		params: {
 			login: true
 		}

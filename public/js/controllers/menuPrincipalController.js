@@ -42,7 +42,7 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 						ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
 							console.log("PTD--------", ptd);
 							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
-								console.log("resumen--------",resumen);
+								console.log("resumen--------", resumen);
 							});
 						});
 					}
@@ -65,9 +65,9 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 			});
 		});
 
-		vm.cargarPTD = function(ptd){
+		vm.cargarPTD = function (ptd) {
 			ptdFactory.ptd = ptd;
-			console.log("PTD-----------",ptdFactory.ptd);
+			console.log("PTD-----------", ptdFactory.ptd);
 			$state.go("menuPrincipal.AdocenciaDirecta");
 		}
 
@@ -84,6 +84,18 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 					}
 				}
 				// ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+			}
+		}
+
+		vm.menu = function (ruta) {
+			if(ruta == 1){
+				$state.go("menuPrincipal.vistaPTD");
+			}else{
+				if(ruta == 2){
+					$state.go("menuPrincipal.Reportes");
+				}else{
+					$state.go("menuPrincipal.Usuarios");
+				}
 			}
 		}
 	}

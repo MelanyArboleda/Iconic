@@ -241,7 +241,8 @@ var programas = [
     { codigo: "3", tblSedeId: 1, programa: "Ciencias Básicas, Sociales y Humanas", tblAreaId: 2 },
     { codigo: "4", tblSedeId: 1, programa: "Comunicación Audiovisual", tblAreaId: 3 },
     { codigo: "5", tblSedeId: 1, programa: "Educación Física, Recreación y Deporte", tblAreaId: 4 },
-    { codigo: "6", tblSedeId: 1, programa: "Ingeniería", tblAreaId: 10 }];
+    { codigo: "6", tblSedeId: 1, programa: "Ingeniería", tblAreaId: 10 }
+];
 
 var usuarios = [
     { doc_identidad: "1039470240", nombre: "Docente", apellido_1: "Docente", apellido_2: "Docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 3, recuperar: false },
