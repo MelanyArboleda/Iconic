@@ -47,7 +47,7 @@ module.exports = {
                         fecha: moment().format("MM-DD-YYYY"),
                         semestre: fechas.semestre,
                         version: 1
-                    }//si la fecha semestre es igual al año actual siga si no mandar un mensaje que diga que no se an creado las fehas
+                    }
                     tbl_ptds.sync().then(function () {
                         crud.findOrCreate(tbl_ptds, datos, { tblUsuarioDocIdentidad: datos.tblUsuarioDocIdentidad, semestre: datos.semestre }, 'version desc', (ptd, resp) => {
                             res.status(200).json({ ptd: ptd }).end();

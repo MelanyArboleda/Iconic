@@ -54,7 +54,8 @@ var recursos = [
     { id: 11, recurso: "Administración de fechas" },
     { id: 12, recurso: "Permisos" },
     { id: 13, recurso: "reportes" },
-    { id: 14, recurso: "consertar" }];
+    { id: 14, recurso: "consertar" },
+    { id: 15, recurso: "usuarios" }];
 
 var permisos_iniciales = [
     { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
@@ -71,6 +72,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 13, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 14, tblPerfileId: 1, ver: true, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
@@ -86,6 +88,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 2, ver: true, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
 
     { tblRecursoId: 1, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
@@ -101,6 +104,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 3, ver: true, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
@@ -116,6 +120,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 4, ver: true, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 5, ver: true, crear: false, modificar: false, eliminar: false },
@@ -131,6 +136,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 5, ver: false, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 5, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 5, ver: false, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
@@ -146,6 +152,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 6, ver: false, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 6, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 6, ver: false, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 15, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 2, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
@@ -161,6 +168,7 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 15, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true }
 ];
 
 var facultades = [
@@ -245,8 +253,9 @@ var programas = [
 ];
 
 var usuarios = [
-    { doc_identidad: "1039470240", nombre: "Docente", apellido_1: "Docente", apellido_2: "Docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 3, recuperar: false },
-    { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1039470240", nombre: "Docente", apellido_1: "Docente", apellido_2: "Docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "8329368363", nombre: "Docente2", apellido_1: "Docente2", apellido_2: "Docente2", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false },
     { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "docencia@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "programa@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
@@ -256,6 +265,7 @@ var usuarios = [
 
 var usuario_doc = [
     { doc_identidad: "1039470240" },
+    { doc_identidad: "8329368363" },
     { doc_identidad: "1152710692" },
     { doc_identidad: "1234567890" },
     { doc_identidad: "9876543210" },
@@ -266,6 +276,7 @@ var usuario_doc = [
 
 var usuario_programas = [
     { tblUsuarioDocIdentidad: "1039470240", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "8329368363", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "1152710692", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "1234567890", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },

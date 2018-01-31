@@ -14,8 +14,15 @@ function fechaEtapaFactory(fechaEtapaService, loginFactory, $q) {
         factoryFechaEtapa.fechaEtapa = [];
         var d = new Date();
         var año = d.getFullYear();
+        var mes = d.getMonth();
+        var semestre = 0;
+        if (mes >= 7) {
+            semestre = 2;
+        } else {
+            semestre = 1;
+        }
         loginFactory.cargarEstatus().then(function () {
-            fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año }).then(function (result) {
+            fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año, semestre: semestre }).then(function (result) {
                 factoryFechaEtapa.fechaEtapa = result.apartado;
                 deferred.resolve();
             });

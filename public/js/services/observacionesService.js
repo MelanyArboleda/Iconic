@@ -8,7 +8,7 @@ function observacionesService($http, $q, appConstant) {
 
     function buscarObservaciones(observaciones) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/buscarObservaciones", observaciones).then(function (res) {
+        $http.post("http://192.168.1.18:3000/auth/buscarObservaciones", observaciones).then(function (res) {
             console.log(res);
             deferred.resolve(res.data);
         }, function (err) {
@@ -20,9 +20,9 @@ function observacionesService($http, $q, appConstant) {
 
     function guardarObservaciones(observaciones) {
         var deferred = $q.defer();
-        $http.post("http://localhost:3000/auth/guardarObservaciones", observaciones).then(function (res) {
+        $http.post("http://192.168.1.18:3000/auth/guardarObservaciones", observaciones).then(function (res) {
             console.log(res);
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

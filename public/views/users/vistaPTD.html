@@ -19,9 +19,11 @@
         </div>
     </div>
     <br>
+    <a ng-if="menuPrincipalVm.permisoFecha.ver == true" ui-sref="menuPrincipal.fechaEtapa" class="waves-effect">Administración de Fechas</a>
+        
     <div ng-if="indexVm.loginFactory.user.perfil == 1">
         <div class="container contenido vistaPTD">
-            <ul class="collection with-header">
+            <ul class="collection with-header" ng-if="menuPrincipalVm.plan == true">
                 <li class="collection-header">
                     <h6>
                         <b>Tu Actual Plan de Trabajo</b>
@@ -32,7 +34,7 @@
                     <span class="title">FD-GC51</span>
                     <p>Plan de Trabajo Docente
                         <br> 2017-1 </p>
-                    <a ui-sref="menuPrincipal.AdocenciaDirecta" class="secondary-content">
+                    <a ng-click="menuPrincipalVm.enrutarPTD()" class="secondary-content">
                         <i class="material-icons">&#xE8F4;</i>
                     </a>
                 </li>

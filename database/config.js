@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('iconic', 'iconic', 'iconic', {
     host: 'localhost',
+    //host: '127.0.0.1',
     dialect: 'postgres',
     pool: {
         max: 9,

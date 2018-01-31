@@ -9,10 +9,10 @@
                         <th>Etapa</th>
                         <th>Facultad</th>
                         <th>Semetre</th>
-                        <th>Año</th> 
+                        <th>Año</th>
                         <th>Fecha Inicial</th>
                         <th>Fecha Final</th>
-                        <th>
+                        <th ng-if="fechaEtapaVm.permiso.crear == true">
                             <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" data-target='modalFechaEtapa'
                                 modal>Nuevo</a>
                         </th>
@@ -26,12 +26,12 @@
                         <td>{{fe.ano}}</td>
                         <td>{{fe.fecha_inicial | date}}</td>
                         <td>{{fe.fecha_final | date}}</td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" ng-click="fechaEtapaVm.llenarModal(fe)" data-target='modalFechaEtapa'
-                                modal>
+                        <td ng-if="fechaEtapaVm.permiso.modificar == true || fechaEtapaVm.permiso.eliminar == true">
+                            <a ng-if="fechaEtapaVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="fechaEtapaVm.llenarModal(fe)"
+                                data-target='modalFechaEtapa' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)">
+                            <a ng-if="fechaEtapaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -49,22 +49,23 @@
         </h5>
         <div class="row" ng-controller="menuPrincipalCtrl as mnuPVm">
             <form id="formFechaEtapa" name="fechaEtapaForm" autocomplete="off" ng-submit="fechaEtapaVm.accion()">
-                <div class="input-field col l3 offset-l1 s6 cajasombra">
-                    <select id="tblEtapaId" ng-disabled="fechaEtapaVm.acciones == 2" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
+                <div ng-if="fechaEtapaVm.acciones != 2" class="input-field col l3 offset-l1 s6 cajasombra">
+                    <select id="tblEtapaId" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId" material-select watch required>
                         <option value="0" disabled>Etapa</option>
                         <option ng-repeat="fe in fechaEtapaVm.etapas">{{fe.etapa}}</option>
                     </select>
+                </div>
+                <div ng-if="fechaEtapaVm.acciones == 2" class="input-field col l3 offset-l1 s6 cajasombra">
+                    <input id="tblEtapaId" type="text" class="no-disabled" name="tblEtapaId" ng-model="fechaEtapaVm.formfechaEtapa.tblEtapaId"
+                        required disabled>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">
                     <input id="tblFacultadeId" type="text" class="no-disabled" name="tblFacultadeId" ng-model="fechaEtapaVm.formfechaEtapa.tblFacultadeId"
                         required disabled>
                 </div>
                 <div class="input-field col l2 s6 cajasombra">
-                    <select id="semestre" ng-disabled="fechaEtapaVm.acciones == 2" name="semestre" ng-model="fechaEtapaVm.formfechaEtapa.semestre" material-select watch required>
-                        <option value="0" disabled>Semestre</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
+                    <input id="semestre" type="text" class="no-disabled" name="semestre" ng-model="fechaEtapaVm.formfechaEtapa.semestre" required
+                        disabled>
                 </div>
                 <div class="input-field col l2 s6 cajasombra">
                     <input id="ano" type="text" class="no-disabled" name="ano" ng-model="fechaEtapaVm.formfechaEtapa.ano" required disabled>
@@ -76,15 +77,15 @@
                         today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" required>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">
-                    <input input-date ng-disabled="!fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final"
-                        id="fecha_final" class="form-control fecha no-disabled" ng-model="fechaEtapaVm.formfechaEtapa.fecha_final"
-                        format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                    <input input-date ng-disabled="!fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final" id="fecha_final"
+                        class="form-control fecha no-disabled" ng-model="fechaEtapaVm.formfechaEtapa.fecha_final" format="mm/dd/yyyy"
+                        months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
                         weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{fechaEtapaVm.fechaFinalValida}}" max="{{mnuPVm.maxDateFExt}}"
                         today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" required>
                 </div>
 
                 <div class="input-field col s12 center ">
-                    <button ng-disabled="fechaEtapaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    <button ng-disabled="fechaEtapaForm.$invalid || fechaEtapaVm.formfechaEtapa.tblEtapaId == 0" type="submit" class="waves-effect btn modal-close">Guardar</button>
                 </div>
             </form>
         </div>

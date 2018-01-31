@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "serviceNotification", "$state", "$q"];
 
-function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, $state, $q) {
+function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, serviceNotification, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -34,27 +34,34 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 		loginFactory.buscarPerfil().then(function () { });
 		loginFactory.buscarEtapa().then(function () { });
 		loginFactory.cargarEstatus().then(function () {
-			console.log("Estatus--------", loginFactory.estatus);
 			fechaEtapaFactory.buscarFechaEtapa().then(function () {
 				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
 				if (loginFactory.user.perfil == 1) {
 					if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
-						ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
-							console.log("PTD--------", ptd);
-							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
-								console.log("resumen--------", resumen);
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se puede crear un plan de trabajo para este semestre', 3000);
+							vm.plan = false;
+						} else {
+							ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+								console.log("PTD--------", ptd);
+								vm.plan = true;
+								RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
+									console.log("resumen--------", resumen);
+								});
 							});
-						});
+						}
 					}
 				} else {
 					if (loginFactory.user.perfil == 4) {
-
 					} else {
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							$state.go("menuPrincipal.fechaEtapa");
+						}
 						var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
 						planesFactory.buscarPtds({
 							id: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
 						}).then(function () {
-							console.log("ptds----------", planesFactory.ptds);
+							console.log("PTDS----------", planesFactory.ptds);
 							vm.ptds = planesFactory.ptds;
 						});
 					}
@@ -63,12 +70,53 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 			vm.permisos = loginFactory.estatus.permisos.sort(function (a, b) {
 				return (a.tblRecursoId - b.tblRecursoId)
 			});
+			vm.permisoFecha = loginFactory.estatus.permisos.find(function (permiso) {
+				return permiso.tblRecursoId == 11;
+			});
+			vm.permisoConsertacion = loginFactory.estatus.permisos.find(function (permiso) {
+				return permiso.tblRecursoId == 14;
+			});
 		});
 
 		vm.cargarPTD = function (ptd) {
 			ptdFactory.ptd = ptd;
 			console.log("PTD-----------", ptdFactory.ptd);
-			$state.go("menuPrincipal.AdocenciaDirecta");
+			//$state.go("menuPrincipal.AdocenciaDirecta");
+			vm.enrutarPTD();
+		}
+
+		vm.enrutarPTD = function () {
+			var recurso = null;
+			var i = 0;
+			while (recurso == null) {
+				if (loginFactory.estatus.permisos[i].ver == true) {
+					recurso = loginFactory.estatus.permisos[i];
+				}
+				i++;
+			}
+
+			switch (recurso.tblRecursoId) {
+				case 1: $state.go("menuPrincipal.AdocenciaDirecta");
+					break;
+				case 2: $state.go("menuPrincipal.AinvestigacionesS");
+					break;
+				case 3: $state.go("menuPrincipal.Aextension");
+					break;
+				case 4: $state.go("menuPrincipal.AcomisionEstudios");
+					break;
+				case 5: $state.go("menuPrincipal.Aproyectos");
+					break;
+				case 6: $state.go("menuPrincipal.Aasesorias");
+					break;
+				case 7: $state.go("menuPrincipal.AotrasActividades");
+					break;
+				case 8: $state.go("menuPrincipal.Aobservaciones");
+					break;
+				case 9: $state.go("menuPrincipal.AdocenciaDirecta");
+					break;
+				case 10: $state.go("menuPrincipal.AdocenciaDirecta");
+					break;
+			}
 		}
 
 		vm.validFechaFinal = function (ext) {
@@ -88,12 +136,12 @@ function menuPrincipalCtrl(ptdFactory, planesFactory, loginFactory, fechaEtapaFa
 		}
 
 		vm.menu = function (ruta) {
-			if(ruta == 1){
+			if (ruta == 1) {
 				$state.go("menuPrincipal.vistaPTD");
-			}else{
-				if(ruta == 2){
-					$state.go("menuPrincipal.Reportes");
-				}else{
+			} else {
+				if (ruta == 2) {
+					$state.go("menuPrincipal.vistaPTD");
+				} else {
 					$state.go("menuPrincipal.Usuarios");
 				}
 			}

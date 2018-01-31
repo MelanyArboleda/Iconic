@@ -5,7 +5,7 @@ ptdFactory.$inject = ["ptdService", "$q"];
 function ptdFactory(ptdService, $q) {
 
     var factory = {
-        ptd: {},
+        ptd: 0,
         createPtd: createPtd,
         buscarPtd: buscarPtd
     };

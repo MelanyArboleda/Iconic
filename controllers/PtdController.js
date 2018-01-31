@@ -80,10 +80,8 @@ module.exports = {
     },
 
     buscar_Permisos: function (req, res, next) {
-        tbl_permisos.sync().then(function () {
-            crud.findAll(tbl_permisos, { tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad }, null, (permisos) => {
-                res.status(200).json(permisos).end();
-            });
+        crud.buscar_Permisos(req.body.tblUsuarioDocIdentidad, (permisos) =>{
+            res.status(200).json(permisos).end();
         });
     },
 

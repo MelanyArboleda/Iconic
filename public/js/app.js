@@ -1,7 +1,7 @@
 angular.module("iconic", ["ui.router", "ui.materialize", 'LocalStorageModule']);
 
-angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginService",
-    function ($state, $rootScope, loginFactory, loginService) {
+angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactory", "loginService",
+    function ($state, $rootScope, loginFactory, ptdFactory, loginService) {
         loginFactory.isLogin();
 
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
@@ -13,6 +13,22 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginServ
                     console.log("estado 1", loginFactory.user.estado)
                     if (name[0] != 'menuPrincipal') {
                         menuPrincipal();
+                    } else {
+                        loginFactory.cargarEstatus().then(function () {
+                            console.log("Estatus--------", loginFactory.estatus);
+                            var permiso = loginFactory.estatus.permisos.find(function (permisos) {
+                                return permisos.tblRecursoId === toState.recurso;
+                            });
+
+                            if (permiso.ver != true) {
+                                enrutador(fromState.url);
+                            }else{
+                                if(ptdFactory.ptd == 0){
+                                    enrutador(fromState.url);
+                                }
+                            }
+
+                        });
                     }
                 } else {
                     if (loginFactory.user.estado == 2) {
@@ -70,7 +86,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginServ
                 });;
             }
             function menuPrincipal() {
-                console.log("enviar vistaPTD");
+                console.log("enviar menuPrincipal");
                 var url = toState.url.substring(1);
                 event.preventDefault();
                 $state.go("menuPrincipal." + url).then(function (res) {
@@ -92,6 +108,16 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "loginServ
                 console.log("enviar configuracion");
                 event.preventDefault();
                 $state.go("configini").then(function (res) {
+                    console.log(res);
+                }).catch(function (res) {
+                    console.log(res);
+                });
+            }
+            function enrutador(ruta) {
+                console.log("enviar enrutar");
+                var url = ruta.substring(1);
+                event.preventDefault();
+                $state.go("menuPrincipal." + url).then(function (res) {
                     console.log(res);
                 }).catch(function (res) {
                     console.log(res);

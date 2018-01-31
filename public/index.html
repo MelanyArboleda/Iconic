@@ -161,18 +161,16 @@
             <i class="closeIcon material-icons modal-action modal-close ">&#xE5CD;</i>
             <h5>Observaciones al Plan de Trabajo Docente</h5>
         </div>
+        <!-- <div ng-show="observacionesDecanoForm.$pristine" class="alert alert-info contenidoObservaciones container contenido-alert">
+            <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            <strong>¡Importante!</strong> Recuerda que cada comentario que envíes no podrá ser borrado, utiliza esta herramienta,
+            únicamente para la concertación del Plan de trabajo.
+        </div> -->
         <div id="chat">
             <div id="mensajes">
-
-                <div ng-show="observacionesDecanoForm.$pristine" class="alert alert-info contenidoObservaciones container contenido-alert">
-                    <a class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-                    <strong>¡Importante!</strong> Recuerda que cada comentario que envíes no podrá ser borrado, utiliza esta herramienta,
-                    únicamente para la concertación del Plan de trabajo.
-                </div>
-
             </div>
         </div>
-        <div id="caja-mensaje">
+        <div id="caja-mensaje" ng-if="concertacionVm.permisoConsertacion.crear == true">
             <form name="observacionesDecanoForm" class="col s12">
                 <div class="row mensaje">
                     <div class="input-field col s10">
@@ -193,71 +191,72 @@
                 </div>
             </form>
         </div>
+    </div>
 
-        <!--Import jQuery before materialize.js-->
-        <script src="/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="js/minified/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="js/minified/materialize.min.js"></script>
-        <script type="text/javascript" src="js/minified/angular.min.js"></script>
-        <script type="text/javascript" src="js/minified/angular-materialize.js"></script>
-        <script type="text/javascript" src="js/minified/angular-ui-router.min.js"></script>
-        <script type="text/javascript" src="js/minified/angular-local-storage.min.js"></script>
-        <script type="text/javascript" src="js/minified/angular-sanitize.min.js"></script>
-        <script type="text/javascript" src="js/minified/select.min.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-        <script type="text/javascript" src="js/route.js"></script>
-        <script type="text/javascript" src="js/todoScript.js"></script>
-        <script type="text/javascript" src="js/constants/appConstants.js"></script>
-        <script type="text/javascript" src="js/services/loginService.js"></script>
-        <script type="text/javascript" src="js/services/notificationService.js"></script>
-        <script type="text/javascript" src="js/services/fechaEtapaService.js"></script>
-        <script type="text/javascript" src="js/services/DDService.js"></script>
-        <script type="text/javascript" src="js/services/ISService.js"></script>
-        <script type="text/javascript" src="js/services/IPService.js"></script>
-        <script type="text/javascript" src="js/services/AEService.js"></script>
-        <script type="text/javascript" src="js/services/CEService.js"></script>
-        <script type="text/javascript" src="js/services/FPService.js"></script>
-        <script type="text/javascript" src="js/services/APService.js"></script>
-        <script type="text/javascript" src="js/services/OAService.js"></script>
-        <script type="text/javascript" src="js/services/RGService.js"></script>
-        <script type="text/javascript" src="js/services/ptdService.js"></script>
-        <script type="text/javascript" src="js/services/planesService.js"></script>
-        <script type="text/javascript" src="js/services/usuariosService.js"></script>
-        <script type="text/javascript" src="js/directives/inputDirectives.js"></script>
-        <script type="text/javascript" src="js/factories/loginFactory.js"></script>
-        <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
-        <script type="text/javascript" src="js/factories/planesFactory.js"></script>
-        <script type="text/javascript" src="js/factories/fechaEtapaFactory.js"></script>
-        <script type="text/javascript" src="js/factories/DDFactory.js"></script>
-        <script type="text/javascript" src="js/factories/ISFactory.js"></script>
-        <script type="text/javascript" src="js/factories/IPFactory.js"></script>
-        <script type="text/javascript" src="js/factories/AEFactory.js"></script>
-        <script type="text/javascript" src="js/factories/CEFactory.js"></script>
-        <script type="text/javascript" src="js/factories/FPFactory.js"></script>
-        <script type="text/javascript" src="js/factories/APFactory.js"></script>
-        <script type="text/javascript" src="js/factories/OAFactory.js"></script>
-        <script type="text/javascript" src="js/factories/RGFactory.js"></script>
-        <script type="text/javascript" src="js/factories/usuariosFactory.js"></script>
-        <script type="text/javascript" src="js/controllers/loginController.js"></script>
-        <script type="text/javascript" src="js/controllers/menuPrincipalController.js"></script>
-        <script type="text/javascript" src="js/controllers/fechaEtapaController.js"></script>
-        <script type="text/javascript" src="js/controllers/indexController.js"></script>
-        <script type="text/javascript" src="js/controllers/concertacionController.js"></script>
-        <script type="text/javascript" src="js/controllers/verificacionController.js"></script>
-        <script type="text/javascript" src="js/controllers/configiniController.js"></script>
-        <script type="text/javascript" src="js/controllers/restablecerController.js"></script>
-        <script type="text/javascript" src="js/controllers/firmaController.js"></script>
-        <script type="text/javascript" src="js/controllers/aInfoGeneralController.js"></script>
-        <script type="text/javascript" src="js/controllers/aInvestigacionesControllerS.js"></script>
-        <script type="text/javascript" src="js/controllers/aInvestigacionesControllerP.js"></script>
-        <script type="text/javascript" src="js/controllers/aDocenciaDirectaController.js"></script>
-        <script type="text/javascript" src="js/controllers/aExtensionController.js"></script>
-        <script type="text/javascript" src="js/controllers/aComisionEstudiosController.js"></script>
-        <script type="text/javascript" src="js/controllers/aProyectosController.js"></script>
-        <script type="text/javascript" src="js/controllers/aAsesoriasController.js"></script>
-        <script type="text/javascript" src="js/controllers/aOtrasActividadesController.js"></script>
-        <script type="text/javascript" src="js/controllers/aObservacionesController.js"></script>
-        <script type="text/javascript" src="js/controllers/usuariosController.js"></script>
+    <!--Import jQuery before materialize.js-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/minified/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/minified/materialize.min.js"></script>
+    <script type="text/javascript" src="js/minified/angular.min.js"></script>
+    <script type="text/javascript" src="js/minified/angular-materialize.js"></script>
+    <script type="text/javascript" src="js/minified/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="js/minified/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="js/minified/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="js/minified/select.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/route.js"></script>
+    <script type="text/javascript" src="js/todoScript.js"></script>
+    <script type="text/javascript" src="js/constants/appConstants.js"></script>
+    <script type="text/javascript" src="js/services/loginService.js"></script>
+    <script type="text/javascript" src="js/services/notificationService.js"></script>
+    <script type="text/javascript" src="js/services/fechaEtapaService.js"></script>
+    <script type="text/javascript" src="js/services/DDService.js"></script>
+    <script type="text/javascript" src="js/services/ISService.js"></script>
+    <script type="text/javascript" src="js/services/IPService.js"></script>
+    <script type="text/javascript" src="js/services/AEService.js"></script>
+    <script type="text/javascript" src="js/services/CEService.js"></script>
+    <script type="text/javascript" src="js/services/FPService.js"></script>
+    <script type="text/javascript" src="js/services/APService.js"></script>
+    <script type="text/javascript" src="js/services/OAService.js"></script>
+    <script type="text/javascript" src="js/services/RGService.js"></script>
+    <script type="text/javascript" src="js/services/ptdService.js"></script>
+    <script type="text/javascript" src="js/services/planesService.js"></script>
+    <script type="text/javascript" src="js/services/usuariosService.js"></script>
+    <script type="text/javascript" src="js/directives/inputDirectives.js"></script>
+    <script type="text/javascript" src="js/factories/loginFactory.js"></script>
+    <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
+    <script type="text/javascript" src="js/factories/planesFactory.js"></script>
+    <script type="text/javascript" src="js/factories/fechaEtapaFactory.js"></script>
+    <script type="text/javascript" src="js/factories/DDFactory.js"></script>
+    <script type="text/javascript" src="js/factories/ISFactory.js"></script>
+    <script type="text/javascript" src="js/factories/IPFactory.js"></script>
+    <script type="text/javascript" src="js/factories/AEFactory.js"></script>
+    <script type="text/javascript" src="js/factories/CEFactory.js"></script>
+    <script type="text/javascript" src="js/factories/FPFactory.js"></script>
+    <script type="text/javascript" src="js/factories/APFactory.js"></script>
+    <script type="text/javascript" src="js/factories/OAFactory.js"></script>
+    <script type="text/javascript" src="js/factories/RGFactory.js"></script>
+    <script type="text/javascript" src="js/factories/usuariosFactory.js"></script>
+    <script type="text/javascript" src="js/controllers/loginController.js"></script>
+    <script type="text/javascript" src="js/controllers/menuPrincipalController.js"></script>
+    <script type="text/javascript" src="js/controllers/fechaEtapaController.js"></script>
+    <script type="text/javascript" src="js/controllers/indexController.js"></script>
+    <script type="text/javascript" src="js/controllers/concertacionController.js"></script>
+    <script type="text/javascript" src="js/controllers/verificacionController.js"></script>
+    <script type="text/javascript" src="js/controllers/configiniController.js"></script>
+    <script type="text/javascript" src="js/controllers/restablecerController.js"></script>
+    <script type="text/javascript" src="js/controllers/firmaController.js"></script>
+    <script type="text/javascript" src="js/controllers/aInfoGeneralController.js"></script>
+    <script type="text/javascript" src="js/controllers/aInvestigacionesControllerS.js"></script>
+    <script type="text/javascript" src="js/controllers/aInvestigacionesControllerP.js"></script>
+    <script type="text/javascript" src="js/controllers/aDocenciaDirectaController.js"></script>
+    <script type="text/javascript" src="js/controllers/aExtensionController.js"></script>
+    <script type="text/javascript" src="js/controllers/aComisionEstudiosController.js"></script>
+    <script type="text/javascript" src="js/controllers/aProyectosController.js"></script>
+    <script type="text/javascript" src="js/controllers/aAsesoriasController.js"></script>
+    <script type="text/javascript" src="js/controllers/aOtrasActividadesController.js"></script>
+    <script type="text/javascript" src="js/controllers/aObservacionesController.js"></script>
+    <script type="text/javascript" src="js/controllers/usuariosController.js"></script>
 </body>
 
 </html>

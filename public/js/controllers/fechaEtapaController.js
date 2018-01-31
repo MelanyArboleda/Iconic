@@ -7,30 +7,38 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
     vm.acciones = "";
     cargarFE();
     function cargarFE() {
-        fechaEtapaFactory.buscarFechaEtapa().then(function () {
-            vm.fechaEtapa = fechaEtapaFactory.fechaEtapa;
-            for (var i = 0; i < vm.fechaEtapa.length; i++) {
-                vm.fechaEtapa[i].tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
-                    return vm.fechaEtapa[i].tblEtapaId === etapa.id;
-                });
-                vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
-            }
-            vm.accion = accion;
-            vm.deleteFechaEtapa = deleteFechaEtapa;
-            vm.etapas = loginFactory.estatus.etapa;
-            vm.llenarModal = llenarModal;
-            vm.vaciarMadal = vaciarMadal;
-            año = new Date();
-            año = año.getFullYear();
-            facultad = loginFactory.estatus.facultad.facultad;
-            vm.formfechaEtapa = {
-                tblEtapaId: '0',
-                tblFacultadeId: facultad,
-                semestre: '0',
-                ano: año,
-                fecha_inicial: '',
-                fecha_final: ''
-            }
+        loginFactory.cargarEstatus().then(function () {
+            fechaEtapaFactory.buscarFechaEtapa().then(function () {
+                vm.fechaEtapa = fechaEtapaFactory.fechaEtapa;
+                for (var i = 0; i < vm.fechaEtapa.length; i++) {
+                    vm.fechaEtapa[i].tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
+                        return vm.fechaEtapa[i].tblEtapaId === etapa.id;
+                    });
+                    vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
+                }
+                vm.accion = accion;
+                vm.deleteFechaEtapa = deleteFechaEtapa;
+                vm.etapas = loginFactory.estatus.etapa;
+                vm.llenarModal = llenarModal;
+                vm.vaciarMadal = vaciarMadal;
+                año = new Date();
+                año = año.getFullYear();
+                facultad = loginFactory.estatus.facultad.facultad;
+                vm.formfechaEtapa = {
+                    tblEtapaId: '0',
+                    tblFacultadeId: facultad,
+                    semestre: '0',
+                    ano: año,
+                    fecha_inicial: '',
+                    fecha_final: ''
+                }
+                if(fechaEtapaFactory.fechaEtapa.length == 0){
+					serviceNotification.warning('No se han creado la fechas de las etapas ojo haga esa cosa ya', 5000);
+				}
+            });
+            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
+                return permiso.tblRecursoId == 11;
+            });
         });
     };
 
@@ -101,10 +109,18 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
 
     function vaciarMadal() {
         vm.acciones = "1";
+        var fecha = new Date();
+        var mes = fecha.getMonth();
+        var semestre = 0;
+        if (mes >= 7) {
+            semestre = 2;
+        } else {
+            semestre = 1;
+        }
         vm.formfechaEtapa = {
             tblEtapaId: '0',
             tblFacultadeId: facultad,
-            semestre: '0',
+            semestre: semestre,
             ano: año,
             fecha_inicial: '',
             fecha_final: ''

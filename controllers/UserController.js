@@ -1,6 +1,14 @@
 const funciones = require('.././services/funciones');
 const crud = require('.././services/crudService');
 const tbl_usuarios = require('.././database/tbl_usuarios');
+const tbl_usuario_programas = require('.././database/tbl_usuario_programas');
+const tbl_facultades = require('.././database/tbl_facultades');
+const tbl_areas = require('.././database/tbl_areas');
+const tbl_programas = require('.././database/tbl_programas');
+const tbl_estados = require('.././database/tbl_estados');
+const tbl_perfiles = require('.././database/tbl_perfiles');
+const tbl_permisos = require('.././database/tbl_permisos');
+const tbl_recursos = require('.././database/tbl_recursos');
 const path = require('path');
 const jwt = require("jwt-simple");
 const config = require("../config/config");
@@ -202,9 +210,53 @@ module.exports = {
 
     },
 
-    buscar_Usuario: function(req, res, next){
-        crud.findOne(tbl_usuarios, { doc_identidad: req.body.usuario }, null, (user) => {
-            res.status(200).json({ user: user }).end();
+    buscar_Usuarios: function (req, res, next) {
+        crud.innerUser([tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (users) => {
+            res.status(200).json({ users: users }).end();
+        })
+    },
+
+    buscar_Estados: function (req, res, next) {
+        crud.findAll(tbl_estados, null, null, (estados) => {
+            res.status(200).json({ estados: estados }).end();
+        })
+    },
+
+    buscar_Perfiles: function (req, res, next) {
+        crud.findAll(tbl_perfiles, null, null, (perfiles) => {
+            res.status(200).json({ perfiles: perfiles }).end();
+        })
+    },
+
+    modificar_Usuario: function (req, res, next) {
+        tbl_usuarios.sync().then(function () {
+            crud.update(tbl_usuarios, { doc_identidad: req.body.donde }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    modificar_Permiso: function (req, res, next) {
+        tbl_permisos.sync().then(function () {
+            crud.update(tbl_permisos, { tblRecursoId: req.body.tblRecursoId, tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad }, req.body, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    buscar_Recursos: function (req, res, next) {
+        tbl_recursos.sync().then(function () {
+            crud.findAll(tbl_recursos, null, null, (recursos) => {
+                res.status(200).json({ recursos: recursos }).end();
+            })
         });
     }
 };

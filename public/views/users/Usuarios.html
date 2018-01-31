@@ -6,28 +6,26 @@
             <table class="responsive-table">
                 <thead>
                     <tr>
-                        <th>Nombre Usuario</th>
                         <th>Documento</th>
-                        <th>Facultad</th>
+                        <th>Nombre Usuario</th>
+                        <th>Dedicación</th>
                         <th>Estado</th>
-                        <th>
-                            <a class="waves-effect waves-light btn p-btn-new green" 
-                                modal>Nuevo</a>
-                        </th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a class="waves-effect waves-light btn p-btn blue" 
-                                modal>
+                    <tr ng-repeat="user in usuariosVm.usuarios">
+                        <td>{{user.doc_identidad}}</td>
+                        <td>{{user.nombre}} {{user.apellido_1}} {{user.apellido_2}}</td>
+                        <td>{{user.tblPerfileId}}</td>
+                        <td>{{user.tblEstadoId}}</td>
+                        <td ng-if="usuariosVm.permisoUser.modificar == true || usuariosVm.permisoPermiso.ver == true">
+                            <a ng-if="usuariosVm.permisoUser.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="usuariosVm.llenarModal(user)"
+                                data-target='modalUsuarios' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a class="waves-effect waves-light btn p-btn red" >
+                            <a ng-if="usuariosVm.permisoPermiso.ver == true" class="waves-effect waves-light btn p-btn green" ng-click="usuariosVm.llenarModalPermisos(user)"
+                                data-target='modalPermisos' modal>
                                 Permisos
                             </a>
                         </td>
@@ -39,3 +37,91 @@
 </div>
 
 <br>
+
+<div id="modalUsuarios" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Usuario</strong>
+        </h5>
+        <div class="row">
+            <form name="usuariosForm" autocomplete="off" ng-submit="usuariosVm.saveUsuario()">
+                <div class="input-field col l3 s4 cajasombra">
+                    <input type="text" name="doc_identidad" class="form-control no-disabled" ng-model="usuariosVm.formUsuario.doc_identidad"
+                        disabled />
+                </div>
+                <div class="input-field col l8 s8 cajasombra">
+                    <input type="text" name="nombre" class="form-control no-disabled" ng-model="usuariosVm.formUsuario.nombre" disabled />
+                </div>
+                <div class="input-field col l7 s12 cajasombra">
+                    <input type="text" name="correo" class="form-control no-disabled" ng-model="usuariosVm.formUsuario.correo" disabled />
+                </div>
+                <div class="input-field col l4 s8 cajasombra">
+                    <input type="text" name="tblPerfileId" class="form-control no-disabled" ng-model="usuariosVm.formUsuario.tblPerfileId" disabled
+                    />
+                </div>
+                <div ng-if="usuariosVm.estado == true" class="input-field col l2 s4 cajasombra">
+                    <select id="tblEstadoId" name="tblEstadoId" ng-model="usuariosVm.formUsuario.tblEstadoId" material-select watch required>
+                        <option value="0" disabled>Estado</option>
+                        <option ng-repeat="es in usuariosVm.estados">{{es.estado}}</option>
+                    </select>
+                </div>
+                <div ng-if="usuariosVm.estado == false" class="input-field col l2 s4 cajasombra">
+                    <input type="text" name="tblEstadoId" class="form-control no-disabled" ng-model="usuariosVm.formUsuario.tblEstadoId" disabled
+                    />
+                </div>
+                <div class="input-field col l12 s12 center ">
+                    <button ng-disabled="usuariosForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>
+
+<div id="modalPermisos" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>Permisos</strong>
+        </h5>
+        <div class="row">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Ver</th>
+                        <th>Crear</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="perm in usuariosVm.permisos">
+                        <th>{{perm.tblRecursoId}}</th>
+                        <th>
+                            <input type="checkbox" ng-checked="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"/>
+                        </th>
+                        <th>
+                            <input type="checkbox" ng-checked="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            />
+                        </th>
+                        <th>
+                            <input type="checkbox" ng-checked="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            />
+                        </th>
+                        <th>
+                            <input type="checkbox" ng-checked="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            />
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>

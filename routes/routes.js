@@ -15,7 +15,7 @@ router.post('/auth/sendCode', controllers.UserController.send_Code);
 //busca el usuario para saber si esta logeado
 router.post('/auth/buscarUser', controllers.UserController.buscar_User);
 //busca el usuario para usar su informacion
-router.post('/auth/buscarUsuario', controllers.UserController.buscar_Usuario);
+//router.post('/auth/buscarUsuario', controllers.UserController.buscar_Usuario);
 //validar codigo para activar cuanta
 router.post('/auth/validarCode', controllers.UserController.validar_Code);
 //cambiar estado del usuario
@@ -110,5 +110,12 @@ router.post('/auth/buscarFechaEtapa', modelos.tbl_fechas_etapas.buscar_FechaEtap
 router.post('/auth/guardarFechaEtapa', modelos.tbl_fechas_etapas.guardar_FechaEtapa);
 router.post('/auth/modificarFechaEtapa', modelos.tbl_fechas_etapas.modificar_FechaEtapa);
 router.post('/auth/eliminarFechaEtapa', modelos.tbl_fechas_etapas.eliminar_FechaEtapa);
+//rutas de los usuarios para los permisos
+router.post('/auth/buscarUsuarios', controllers.UserController.buscar_Usuarios);
+router.post('/auth/buscarEstados', controllers.UserController.buscar_Estados);
+router.post('/auth/buscarPerfiles', controllers.UserController.buscar_Perfiles);
+router.post('/auth/modificarUsuario', controllers.UserController.modificar_Usuario);
+router.post('/auth/modificarPermiso', controllers.UserController.modificar_Permiso);
+router.post('/auth/buscarRecursos', controllers.UserController.buscar_Recursos);
 
 module.exports = router;

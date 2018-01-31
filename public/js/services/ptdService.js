@@ -34,7 +34,7 @@ function ptdService($http, $q, appConstant) {
     function guardarPtd(ptd) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarPtd", ptd).then(function (res) {
-            deferred.resolve(res.config.data.datos);
+            deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);
             console.log(err);
