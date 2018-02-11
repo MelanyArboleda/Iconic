@@ -4,10 +4,9 @@ aObservacionesCtrl.$inject = ["ptdService", "ptdFactory", "serviceNotification"]
 
     function aObservacionesCtrl(ptdService, ptdFactory, serviceNotification) {
 	var vm = this;
-	vm.aObservaciones = aObservaciones;
 	vm.observaciones = ptdFactory.aobservacion;
 	
-	function aObservaciones(){ 
+	vm.aObservaciones = function(){ 
 		vm.observaciones.tblPtdId= ptdFactory.ptd.id,
 			data = {
 				datos: vm.observaciones,

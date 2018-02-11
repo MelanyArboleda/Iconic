@@ -1,24 +1,25 @@
 angular.module("iconic").controller("aExtensionCtrl", aExtensionCtrl);
 
-aExtensionCtrl.$inject = ["AEService", "AEFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aExtensionCtrl.$inject = ["$rootScope", "AEService", "AEFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
+function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
-    cargarAE();
-    function cargarAE() {
-        loginFactory.cargarEstatus().then(function () {
-            AEFactory.buscartActividadesExtension().then(function () {
-                vm.actividadesExtension = AEFactory.ExtPro;
-            });
-            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-				return permiso.tblRecursoId == 3;
-			});
+    if ($rootScope.infoReady == true) {
+        cargarAE();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargarAE();
         });
-        vm.accion = accion;
-        vm.llenarModal = llenarModal;
-        vm.vaciarMadal = vaciarMadal;
-        vm.deleteActividadesExtension = deleteActividadesExtension;
+    }
+    function cargarAE() {
+        AEFactory.buscartActividadesExtension().then(function () {
+            vm.actividadesExtension = AEFactory.ExtPro;
+        });
+        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+            return permiso.tblRecursoId == 3;
+        });
+
         vm.formActividadesExtension = {
             nombre_actividad: '',
             fecha_inicio: '',
@@ -29,7 +30,7 @@ function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFacto
         }
     }
 
-    function accion() {
+    vm.accion = function () {
         if (acciones == "1") {
             saveActividadesExtension();
         } else {
@@ -55,7 +56,7 @@ function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFacto
         });
     }
 
-    function deleteActividadesExtension(ae) {
+    vm.deleteActividadesExtension = function (ae) {
         AEService.eliminarAE(ae).then(function (res) {
             serviceNotification.success('Actividad eliminado correctamente', 3000);
             cargarAE();
@@ -64,7 +65,7 @@ function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFacto
         });
     }
 
-    function llenarModal(ae) {
+    vm.llenarModal = function (ae) {
         acciones = "2";
         vm.formActividadesExtension = {
             id: ae.id,
@@ -77,7 +78,7 @@ function aExtensionCtrl(AEService, AEFactory, ptdService, ptdFactory, loginFacto
         }
     }
 
-    function vaciarMadal() {
+    vm.vaciarMadal = function () {
         acciones = "1";
         vm.formActividadesExtension = {
             nombre_actividad: '',

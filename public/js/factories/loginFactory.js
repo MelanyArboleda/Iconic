@@ -1,8 +1,8 @@
 angular.module("iconic").factory("loginFactory", loginFactory);
 
-loginFactory.$inject = ["loginService", "ptdFactory", "$state", "serviceNotification", "$q", "localStorageService"];
+loginFactory.$inject = ["$rootScope","loginService", "ptdFactory", "$state", "serviceNotification", "$q", "localStorageService"];
 
-function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q, localStorageService) {
+function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotification, $q, localStorageService) {
 
 	var factory = {
 		user: {},
@@ -10,7 +10,6 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 		estatus: {},
 		buscarPerfil: buscarPerfil,
 		cargarEstatus: cargarEstatus,
-		buscarEtapa: buscarEtapa,
 		guardarPermisos: guardarPermisos,
 		login: login,
 		logout: logout,
@@ -48,6 +47,8 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 		factory.user = {};
 		ptdFactory.ptd = {};
 		localStorageService.remove("loginToken");
+		$rootScope.infoReady = false;
+		$rootScope.urlReady = false;
 		$state.go("login");
 		factory.userLogin = false;
 	}
@@ -59,12 +60,11 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 			loginService.buscarUser({ token: token }).then(function (user) {
 				factory.user = user.user;
 				factory.userLogin = true;
-				deferred.resolve(factory.userLogin);
+				deferred.resolve();
 			});
 		} else {
-			$state.go("login");
+			deferred.resolve();
 		}
-
 		return deferred.promise;
 	}
 
@@ -95,45 +95,51 @@ function loginFactory(loginService, ptdFactory, $state, serviceNotification, $q,
 	}
 
 	function sendLink(correo) {
-		loginService.sendLink(correo).then(function (resp) {
-			//envio el correo
-			serviceNotification.success('Se envio un link a su correo para el restablecimiento de su cuenta', 3000);
-		}).catch(function (err) {
-			//no se pudo enviar el correo
-			if (err.status == 404) {
-				serviceNotification.error("El usuario no exitente en el sistema", 2000);
-			}
-			if (err.status == 400) {
-				serviceNotification.warning("El correo ya ha sido enviado anteriomente", 2000);
-			}
-			if (err.status == 403) {
-				serviceNotification.error("El usuario no se encuantra activo en el sistema", 2000);
-			}
-			if (err.status == 500) {
-				serviceNotification.error("El correo no pudo ser enviado", 2000);
-			}
-		});
+		if(correo.correo != ""){
+			loginService.sendLink(correo).then(function (resp) {
+				//envio el correo
+				serviceNotification.success('Se envio un link a su correo para el restablecimiento de su cuenta', 3000);
+			}).catch(function (err) {
+				//no se pudo enviar el correo
+				if (err.status == 404) {
+					serviceNotification.error("El usuario no exitente en el sistema", 2000);
+				}
+				if (err.status == 400) {
+					serviceNotification.warning("El correo ya ha sido enviado anteriomente", 2000);
+				}
+				if (err.status == 403) {
+					serviceNotification.error("El usuario no se encuantra activo en el sistema", 2000);
+				}
+				if (err.status == 500) {
+					serviceNotification.error("El correo no pudo ser enviado", 2000);
+				}
+			});
+		}
 	}
+
+	function cargarEstatus() {
+		var deferred = $q.defer();
+		buscarPerfil().then(function () {
+			buscarPrograma().then(function () {
+				buscarArea().then(function () {
+					buscarFacultad().then(function () {
+						buscarEtapa().then(function () {
+							buscarPermisos().then(function () {
+								deferred.resolve();
+							});
+						});
+					});
+				})
+			});
+		});
+		return deferred.promise;
+	}
+
 	function buscarPerfil() {
 		var deferred = $q.defer();
 		loginService.buscarPerfil({ id: factory.user.perfil }).then(function (perfil) {
 			factory.perfil = perfil;
 			deferred.resolve();
-		});
-		return deferred.promise;
-	}
-	function cargarEstatus() {
-		var deferred = $q.defer();
-		buscarPrograma().then(function () {
-			buscarArea().then(function () {
-				buscarFacultad().then(function () {
-					buscarEtapa().then(function () {
-						buscarPermisos().then(function () {
-							deferred.resolve();
-						});
-					});
-				});
-			})
 		});
 		return deferred.promise;
 	}

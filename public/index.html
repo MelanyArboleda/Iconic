@@ -88,7 +88,7 @@
                     del plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
             </div>
             <div class="row center">
-                <img class="responsive-img imagenfirma" ng-src="img/firma.png">
+                <img class="responsive-img imagenfirma" ng-src="{{firmaVm.firma}}">
             </div>
             <div class="row">
                 <form name="" autocomplete="off">
@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm">
+    <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm" ng-open="concertacionVm.room()" >
         <div id="header-chat">
             <i class="closeIcon material-icons modal-action modal-close ">&#xE5CD;</i>
             <h5>Observaciones al Plan de Trabajo Docente</h5>
@@ -170,7 +170,8 @@
             <div id="mensajes">
             </div>
         </div>
-        <div id="caja-mensaje" ng-if="concertacionVm.permisoConsertacion.crear == true">
+        <!-- <div id="caja-mensaje" ng-if="concertacionVm.permisoConsertacion.crear == true">  -->
+         <div id="caja-mensaje">
             <form name="observacionesDecanoForm" class="col s12">
                 <div class="row mensaje">
                     <div class="input-field col s10">

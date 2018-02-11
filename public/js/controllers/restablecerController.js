@@ -4,11 +4,10 @@ restablecerCtrl.$inject = ["loginService", "loginFactory", "serviceNotification"
 
 function restablecerCtrl(loginService, loginFactory, serviceNotification, $state) {
     var vm = this;
-    vm.restablecer = restablecer;
     vm.passwordNew = "";
     vm.repitepassword = "";
 
-    function restablecer() {
+    vm.restablecer = function() {
         if (vm.passwordNew === vm.repitepassword) {
             var data = {
                 password: vm.passwordNew,

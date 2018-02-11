@@ -20,7 +20,7 @@
     </div>
     <br>
     <a ng-if="menuPrincipalVm.permisoFecha.ver == true" ui-sref="menuPrincipal.fechaEtapa" class="waves-effect">Administración de Fechas</a>
-        
+
     <div ng-if="indexVm.loginFactory.user.perfil == 1">
         <div class="container contenido vistaPTD">
             <ul class="collection with-header" ng-if="menuPrincipalVm.plan == true">
@@ -92,8 +92,9 @@
             <li class="collection-item avatar" ng-repeat="ptd in menuPrincipalVm.ptds">
                 <i class="material-icons circle teal accent-4">&#xE873;</i>
                 <span class="title">FD-GC51</span>
-                <p>Plan de Trabajo Docente
-                    <br> {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}}</p>
+                <p>Plan de Trabajo Docente : {{ptd.tblUsuarioDocIdentidad}}
+                    <br> {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}} V_{{ptd.version}}
+                </p> 
                 <a class="secondary-content" ng-click="menuPrincipalVm.cargarPTD(ptd)">
                     <i class="material-icons">&#xE8F4;</i>
                 </a>

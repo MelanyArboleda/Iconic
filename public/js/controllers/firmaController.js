@@ -4,11 +4,9 @@ firmaCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$q"
 
 function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) {
     var vm = this;
-    vm.prefirmar = prefirmar;
-    vm.firmar = firmar;
     vm.firma = "img/firma.png";
 
-    function prefirmar(event) {
+    vm.prefirmar = function(event) {
         var file = event.target.files[0];
         var reader = new FileReader();
         reader.addEventListener("load", function () {
@@ -21,7 +19,7 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
         }
     }
 
-    function firmar() {
+    vm.firmar = function () {
         var formato = vm.firma.substring(vm.firma.indexOf("/")+1, vm.firma.indexOf(";"));
         vm.firma = vm.firma.replace(formato, "formato");
         loginService.guardarFirma({ doc_identidad: loginFactory.user.doc_identidad, firma: vm.firma }).then(function (res) {

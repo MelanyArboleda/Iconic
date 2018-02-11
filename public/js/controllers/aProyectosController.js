@@ -1,33 +1,33 @@
 angular.module("iconic").controller("aProyectosCtrl", aProyectosCtrl);
 
-aProyectosCtrl.$inject = ["FPService", "FPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aProyectosCtrl.$inject = ["$rootScope", "FPService", "FPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
+function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
-    cargarFP();
-    function cargarFP() {
-        loginFactory.cargarEstatus().then(function () {
-            FPFactory.buscarActor().then(function () {
-                FPFactory.buscarFormulacionProyectos().then(function () {
-                    vm.formulacionProyectos = FPFactory.ForPro;
-                    for (var i = 0; i < vm.formulacionProyectos.length; i++) {
-                        vm.formulacionProyectos[i].tblActoreId = FPFactory.actores.find(function (actor) {
-                            return vm.formulacionProyectos[i].tblActoreId == actor.id;
-                        });
-                        vm.formulacionProyectos[i].tblActoreId = vm.formulacionProyectos[i].tblActoreId.actor;
-                    }
-                });
-                vm.actores = FPFactory.actores;
-            });
-            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-				return permiso.tblRecursoId == 5;
-			});
+    if ($rootScope.infoReady == true) {
+        cargarFP();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargarFP();
         });
-        vm.accion = accion;
-        vm.llenarModal = llenarModal;
-        vm.vaciarMadal = vaciarMadal;
-        vm.deleteFormulacionProyectos = deleteFormulacionProyectos;
+    }
+    function cargarFP() {
+        FPFactory.buscarActor().then(function () {
+            FPFactory.buscarFormulacionProyectos().then(function () {
+                vm.formulacionProyectos = FPFactory.ForPro;
+                for (var i = 0; i < vm.formulacionProyectos.length; i++) {
+                    vm.formulacionProyectos[i].tblActoreId = FPFactory.actores.find(function (actor) {
+                        return vm.formulacionProyectos[i].tblActoreId == actor.id;
+                    });
+                    vm.formulacionProyectos[i].tblActoreId = vm.formulacionProyectos[i].tblActoreId.actor;
+                }
+            });
+            vm.actores = FPFactory.actores;
+        });
+        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+            return permiso.tblRecursoId == 5;
+        });
         vm.formFormulacionProyectos = {
             nombre_articulo: '',
             tblActoreId: '0',
@@ -37,11 +37,11 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
         }
     }
 
-    function accion() {
+    vm.accion = function () {
         vm.formFormulacionProyectos.tblActoreId = FPFactory.actores.find(function (actor) {
             return vm.formFormulacionProyectos.tblActoreId == actor.actor;
         });
-        vm.formFormulacionProyectos.tblActoreId = vm.formFormulacionProyectos.tblActoreId.id;        
+        vm.formFormulacionProyectos.tblActoreId = vm.formFormulacionProyectos.tblActoreId.id;
         if (acciones == "1") {
             saveFormulacionProyectos();
         } else {
@@ -67,7 +67,7 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
         });
     }
 
-    function deleteFormulacionProyectos(fp) {
+    vm.deleteFormulacionProyectos = function (fp) {
         FPService.eliminarFP(fp).then(function (res) {
             serviceNotification.success('Proyecto eliminado correctamente', 3000);
             cargarFP();
@@ -76,7 +76,7 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
         });
     }
 
-    function llenarModal(fp) {
+    vm.llenarModal = function (fp) {
         acciones = "2";
         vm.formFormulacionProyectos = {
             id: fp.id,
@@ -88,7 +88,7 @@ function aProyectosCtrl(FPService, FPFactory, ptdService, ptdFactory, loginFacto
         }
     }
 
-    function vaciarMadal() {
+    vm.vaciarMadal = function () {
         acciones = "1";
         vm.formFormulacionProyectos = {
             nombre_articulo: '',

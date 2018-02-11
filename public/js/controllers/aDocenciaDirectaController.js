@@ -1,40 +1,43 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aDocenciaDirectaCtrl.$inject = ["$rootScope", "DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "IPFactory", "ISFactory", "serviceNotification", "$q"];
 
-function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
+function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdFactory, loginFactory, IPFactory, ISFactory, serviceNotification, $q) {
 	var vm = this;
 	var acciones = "";
 	var max;
 	var min;
-	cargarDD();
+
+	if ($rootScope.infoReady == true) {
+		cargarDD();
+	} else {
+		$rootScope.$on("InfoReady", function () {
+			cargarDD();
+		});
+	}
+
 	function cargarDD() {
-		loginFactory.cargarEstatus().then(function () {
-			DDFactory.buscarMaterias().then(function () {
-				DDFactory.buscarDocenciaDirecta().then(function () {
-					vm.docenciaDirecta = DDFactory.DocDir;
-					for (var i = 0; i < vm.docenciaDirecta.length; i++) {
-						vm.docenciaDirecta[i].horas_semanales = DDFactory.materias.find(function (materia) {
-							return vm.docenciaDirecta[i].tblMateriaCodigo == materia.codigo;
-						});
-						vm.docenciaDirecta[i].horas_semanales = vm.docenciaDirecta[i].horas_semanales.horas_semanales;
-						cargarProgremaMateria({ tblMateriaCodigo: vm.docenciaDirecta[i].tblMateriaCodigo }, i);
-					}
-				});
-				vm.materias = DDFactory.materias;
-				cargarObservacion();
+		$rootScope.$emit("PtdReady");
+		$rootScope.PtdReady == true;
+		DDFactory.buscarMaterias().then(function () {
+			DDFactory.buscarDocenciaDirecta().then(function () {
+				vm.docenciaDirecta = DDFactory.DocDir;
+				calcularHorasDD();
+				for (var i = 0; i < vm.docenciaDirecta.length; i++) {
+					vm.docenciaDirecta[i].horas_semanales = DDFactory.materias.find(function (materia) {
+						return vm.docenciaDirecta[i].tblMateriaCodigo == materia.codigo;
+					});
+					vm.docenciaDirecta[i].horas_semanales = vm.docenciaDirecta[i].horas_semanales.horas_semanales;
+					cargarProgremaMateria({ tblMateriaCodigo: vm.docenciaDirecta[i].tblMateriaCodigo }, i);
+				}
 			});
-			vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-				return permiso.tblRecursoId == 1;
-			});
+			vm.materias = DDFactory.materias;
+			cargarObservacion();
+		});
+		vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+			return permiso.tblRecursoId == 1;
 		});
 
-		vm.accion = accion;
-		vm.llenarModal = llenarModal;
-		vm.vaciarMadal = vaciarMadal;
-		vm.asignarData = asignarData;
-		vm.saveObservaciones = saveObservaciones;
-		vm.deleteDocenciaDirecta = deleteDocenciaDirecta;
 		vm.formDocenciaDirecta = {
 			tblMateriaCodigo: '0',
 			tblMateriaNombre: '0',
@@ -56,13 +59,14 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		});
 	}
 
-	function accion() {
+	vm.accion = function () {
 		cargarProgremaMateria({ tblMateriaCodigo: vm.formDocenciaDirecta.tblMateriaCodigo });
 		if (acciones == "1") {
 			saveDocenciaDirecta();
 		} else {
 			editDocenciaDirecta();
 		}
+
 	}
 
 	function saveDocenciaDirecta() {
@@ -83,7 +87,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		});
 	}
 
-	function deleteDocenciaDirecta(dd) {
+	vm.deleteDocenciaDirecta = function (dd) {
 		DDService.eliminarDD(dd).then(function (res) {
 			serviceNotification.success('Asignatura eliminado correctamente', 3000);
 			cargarDD();
@@ -92,7 +96,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		});
 	}
 
-	function saveObservaciones() {
+	vm.saveObservaciones = function () {
 		ptdService.guardarPtd({ datos: vm.observacion }).then(function (res) {
 			serviceNotification.success('Observación guardada correctamente', 3000);
 			cargarObservacion();
@@ -101,7 +105,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		});
 	}
 
-	function llenarModal(fe) {
+	vm.llenarModal = function (fe) {
 		acciones = "2";
 		vm.formDocenciaDirecta = {
 			id: fe.id,
@@ -117,7 +121,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		}
 	}
 
-	function vaciarMadal() {
+	vm.vaciarMadal = function () {
 		acciones = "1";
 		vm.formDocenciaDirecta = {
 			tblMateriaCodigo: '0',
@@ -132,7 +136,7 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 		}
 	}
 
-	function asignarData(data) {
+	vm.asignarData = function (data) {
 		info = DDFactory.materias.find(function (materia) {
 			return data == materia.codigo || data == materia.nombre;
 		});
@@ -162,6 +166,33 @@ function aDocenciaDirectaCtrl(DDService, DDFactory, ptdService, ptdFactory, logi
 	(function () {
 		if (loginFactory.user.dedicacion == 1) { min = 14; max = 18; }
 		else if (loginFactory.user.dedicacion == 2) { min = 10; max = 14; }
+		else if (loginFactory.user.dedicacion == 3) { min = 12; max = 18; }
 		else { min = 8; max = 10; }
 	})();
+
+	function calcularHorasDD() {
+		IPFactory.buscarInvestigacionesProyectos().then(function () {
+			var investigacionesProyectos = sumarHoras(IPFactory.InvPro) / 2;
+			ISFactory.buscarInvestigacionesSemilleros().then(function () {
+				var investigacionesSemilleros = sumarHoras(ISFactory.InvSem) / 2;
+				var docenciaDirecta = sumarHoras(DDFactory.DocDir);
+				var docDicCompleta = docenciaDirecta + investigacionesProyectos + investigacionesSemilleros;
+				if (max < docDicCompleta) {
+					serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es mayor a la requerida', 2000);
+				}else{
+					if(min > docDicCompleta && loginFactory.perfil.id == 2){
+						serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor a la requerida', 2000);
+					}
+				}
+			});
+		});
+	}
+
+	function sumarHoras(array) {
+		var suma = 0;
+		for (i = 0; i < array.length; i++) {
+			suma += array[i].horas_semanales
+		}
+		return suma;
+	}
 };

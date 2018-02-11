@@ -82,7 +82,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.AdocenciaDirecta",
 			templateUrl: 'views/users/AdocenciaDirecta.html',
-			url: "/docenciaDirecta",
+			url: "/docenciaDirecta/:idPlanDeTrabajo",
 			controller: "aDocenciaDirectaCtrl as docenciaDirectaVm",
 			recurso: 1,
 			params: {
@@ -92,7 +92,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.AinvestigacionesS",
 			templateUrl: 'views/users/AinvestigacionesS.html',
-			url: "/investigacionesSemilleros",
+			url: "/investigacionesSemilleros/:idPlanDeTrabajo",
 			controller: "aInvestigacionesSCtrl as investigacionesSVm",
 			recurso: 2,
 			params: {
@@ -102,7 +102,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.AinvestigacionesP",
 			templateUrl: 'views/users/AinvestigacionesP.html',
-			url: "/investigacionesProyectos",
+			url: "/investigacionesProyectos/:idPlanDeTrabajo",
 			controller: "aInvestigacionesPCtrl as investigacionesPVm",
 			recurso: 2,
 			params: {
@@ -112,7 +112,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.Aextension",
 			templateUrl: 'views/users/Aextension.html',
-			url: "/extension",
+			url: "/extension/:idPlanDeTrabajo",
 			controller: "aExtensionCtrl as extensionVm",
 			recurso: 3,
 			params: {
@@ -122,7 +122,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.AcomisionEstudios",
 			templateUrl: 'views/users/AcomisionEstudios.html',
-			url: "/comisionEstudios",
+			url: "/comisionEstudios/:idPlanDeTrabajo",
 			controller: "aComisionEstudiosCtrl as comisionEstudiosVm",
 			recurso: 4,
 			params: {
@@ -132,7 +132,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.Aproyectos",
 			templateUrl: 'views/users/Aproyectos.html',
-			url: "/proyectosyPublicaciones",
+			url: "/proyectosyPublicaciones/:idPlanDeTrabajo",
 			controller: "aProyectosCtrl as proyectosVm",
 			recurso: 5,
 			params: {
@@ -142,7 +142,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.Aasesorias",
 			templateUrl: 'views/users/Aasesorias.html',
-			url: "/asesorias",
+			url: "/asesorias/:idPlanDeTrabajo",
 			controller: "aAsesoriasCtrl as asesoriasVm",
 			recurso: 6,
 			params: {
@@ -152,7 +152,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.AotrasActividades",
 			templateUrl: 'views/users/AotrasActividades.html',
-			url: "/otrasActividades",
+			url: "/otrasActividades/:idPlanDeTrabajo",
 			controller: "aOtrasActividadesCtrl as otrasActividadesVm",
 			recurso: 7,
 			params: {
@@ -162,7 +162,7 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 		.state({
 			name: "menuPrincipal.Aobservaciones",
 			templateUrl: 'views/users/Aobservaciones.html',
-			url: "/observaciones",
+			url: "/observaciones/:idPlanDeTrabajo",
 			controller: "aObservacionesCtrl as observacionesVm",
 			recurso: 8,
 			params: {

@@ -287,6 +287,11 @@ p.titulo{
 .sinfoco{
   color:rgb(247, 0, 255);
 }
+
+.cursor-point{
+	cursor: pointer;
+}
+
 @media only screen and (max-width: 992px) {
 	.side-nav {
 		top: 0px !important;

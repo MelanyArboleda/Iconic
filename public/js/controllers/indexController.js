@@ -4,10 +4,9 @@ indexCtrl.$inject = ["loginFactory"];
 
 function indexCtrl(loginFactory) {
     var vm = this;
-    vm.logout = logout;
     vm.loginFactory = loginFactory;
 
-    function logout() {
+    vm.logout = function() {
         loginFactory.logout();
     }
 }

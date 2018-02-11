@@ -1,24 +1,24 @@
 angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
-aAsesoriasCtrl.$inject = ["APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aAsesoriasCtrl.$inject = ["$rootScope", "APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
+function aAsesoriasCtrl($rootScope, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
-    cargaAP();
-    function cargaAP() {
-        loginFactory.cargarEstatus().then(function () {
-            APFactory.buscarAsesoriasProyectos().then(function () {
-                vm.asesoriasProyectos = APFactory.AsePro;
-            });
-            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-				return permiso.tblRecursoId == 6;
-			});
+    if ($rootScope.infoReady == true) {
+        cargaAP();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargaAP();
         });
-        vm.accion = accion;
-        vm.llenarModal = llenarModal;
-        vm.vaciarMadal = vaciarMadal;
-        vm.deleteAsesoriasProyectos = deleteAsesoriasProyectos;
+    }
+    function cargaAP() {
+        APFactory.buscarAsesoriasProyectos().then(function () {
+            vm.asesoriasProyectos = APFactory.AsePro;
+        });
+        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+            return permiso.tblRecursoId == 6;
+        });
         vm.formAsesoriasProyectos = {
             integrantes: '',
             titulo: '',
@@ -30,7 +30,7 @@ function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceN
         }
     }
 
-    function accion() {
+    vm.accion = function () {
         if (acciones == "1") {
             saveAsesoriasProyectos();
         } else {
@@ -56,7 +56,7 @@ function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceN
         });
     }
 
-    function deleteAsesoriasProyectos(ap) {
+    vm.deleteAsesoriasProyectos = function (ap) {
         APService.eliminarAP(ap).then(function (res) {
             serviceNotification.success('Asesoria eliminado correctamente', 3000);
             cargaAP();
@@ -65,7 +65,7 @@ function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceN
         });
     }
 
-    function llenarModal(ap) {
+    vm.llenarModal = function (ap) {
         acciones = "2";
         vm.formAsesoriasProyectos = {
             id: ap.id,
@@ -79,7 +79,7 @@ function aAsesoriasCtrl(APService, APFactory, ptdFactory, loginFactory, serviceN
         }
     }
 
-    function vaciarMadal() {
+    vm.vaciarMadal = function () {
         acciones = "1";
         vm.formAsesoriasProyectos = {
             integrantes: '',

@@ -182,17 +182,18 @@ module.exports = {
             if (err) {
                 res.sendStatus(401);
             } else {
-                res.status(200).end();
+                var firma = "./firmas/firma_" + req.body.doc_identidad + ".jpg"
+                crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { firma: firma }, function (data) {
+                     if (data == 'update') {
+                         res.status(200).end();
+                     } else {
+                         res.status(401).end();
+                     }
+                 });
             };
         });
 
-        // crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { firma: req.body.firma }, function (data) {
-        //     if (data == 'update') {
-        //         return true
-        //     } else {
-        //         return false
-        //     }
-        // });
+        
     },
 
     cinicial: function (req, res, next) {

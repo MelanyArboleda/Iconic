@@ -21,11 +21,9 @@ function fechaEtapaFactory(fechaEtapaService, loginFactory, $q) {
         } else {
             semestre = 1;
         }
-        loginFactory.cargarEstatus().then(function () {
-            fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año, semestre: semestre }).then(function (result) {
-                factoryFechaEtapa.fechaEtapa = result.apartado;
-                deferred.resolve();
-            });
+        fechaEtapaService.buscarFechaEtapa({ tblFacultadeId: loginFactory.estatus.facultad.id, ano: año, semestre: semestre }).then(function (result) {
+            factoryFechaEtapa.fechaEtapa = result.apartado;
+            deferred.resolve();
         });
         return deferred.promise;
     }

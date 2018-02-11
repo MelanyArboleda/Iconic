@@ -1,15 +1,21 @@
 angular.module("iconic").controller("usuariosCtrl", usuariosCtrl);
 
-usuariosCtrl.$inject = ["usuariosFactory", "usuariosService", "loginFactory", "serviceNotification", "$q"];
+usuariosCtrl.$inject = ["$rootScope", "usuariosFactory", "usuariosService", "loginFactory", "serviceNotification", "$q"];
 
-function usuariosCtrl(usuariosFactory, usuariosService, loginFactory, serviceNotification, $q) {
+function usuariosCtrl($rootScope,usuariosFactory, usuariosService, loginFactory, serviceNotification, $q) {
     var vm = this;
     var nombreu;
     var apellido_1u;
     var apellido_2u;
-    cargarUSER();
+    
+    if($rootScope.infoReady == true){
+		cargarUSER();
+	}else{
+		$rootScope.$on("InfoReady",function(){
+			cargarUSER();
+		});
+	}
     function cargarUSER() {
-        loginFactory.cargarEstatus().then(function () {
             usuariosFactory.buscarUsuarios().then(function () {
                 vm.usuarios = usuariosFactory.users;
                 usuariosFactory.buscarEstados().then(function () {
@@ -41,7 +47,6 @@ function usuariosCtrl(usuariosFactory, usuariosService, loginFactory, serviceNot
                     }
                 });
             });
-        });
         vm.formUsuario = {
             doc_identidad: '',
             nombre: '',

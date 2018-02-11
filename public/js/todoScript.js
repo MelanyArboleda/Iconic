@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	$('#modalolvidoclave').modal();
 	$('#modalfirmacontraseña').modal({
 		dismissible: false
 	});

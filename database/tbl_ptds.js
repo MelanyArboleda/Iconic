@@ -9,6 +9,7 @@ const tbl_programas = require('.././database/tbl_programas');
 const tbl_fechas_etapas = require('.././database/tbl_fechas_etapas');
 const moment = require('moment');
 const funciones = require('.././services/funciones');
+const groupArray = require('group-array');
 
 var tbl_ptds = sequelize.define('tbl_ptds', {
     tblUsuarioDocIdentidad: {
@@ -72,7 +73,14 @@ module.exports = {
 
     buscar_ptds: function (req, res, next) {
         tbl_ptds.sync().then(function () {
-            crud.innerPlanes([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (ptds) => {
+            crud.innerPlanes([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (resp) => {
+                var array = groupArray(resp, 'tblUsuarioDocIdentidad');
+                var ptds = [];
+                for (var obj in array) {
+                    ptds.push(array[obj].find(function (ptd) {
+                        return ptd.version == Math.max.apply(Math, array[obj].map(function (o) { return o.version }))
+                    }));
+                }
                 res.status(200).json(ptds).end();
             });
         });

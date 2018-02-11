@@ -29,7 +29,8 @@ var estados = [
 var dedicaciones = [
     { id: 1, dedicacion: "Tiempo Completo" },
     { id: 2, dedicacion: "Medio Tiempo" },
-    { id: 3, dedicacion: "Ocacional TC" }];
+    { id: 3, dedicacion: "Ocacional TC" },
+    { id: 4, dedicacion: "Ocacional MT" }];
 
 var perfiles = [
     { id: 1, perfil: "Docente" },
@@ -55,7 +56,8 @@ var recursos = [
     { id: 12, recurso: "Permisos" },
     { id: 13, recurso: "reportes" },
     { id: 14, recurso: "consertar" },
-    { id: 15, recurso: "usuarios" }];
+    { id: 15, recurso: "usuarios" },
+    { id: 16, recurso: "firmar"}];
 
 var permisos_iniciales = [
     { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
@@ -73,6 +75,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 14, tblPerfileId: 1, ver: true, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 1, ver: false, crear: true, modificar: true, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
@@ -89,6 +92,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 2, ver: true, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 16, tblPerfileId: 3, ver: false, crear: true, modificar: true, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
@@ -105,6 +109,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 3, ver: true, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
@@ -121,6 +126,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 4, ver: true, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 4, ver: false, crear: true, modificar: true, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 5, ver: true, crear: false, modificar: false, eliminar: false },
@@ -137,6 +143,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 5, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 5, ver: false, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
@@ -153,6 +160,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 6, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 6, ver: false, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 2, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
@@ -168,7 +176,8 @@ var permisos_iniciales = [
     { tblRecursoId: 12, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 13, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 15, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true }
+    { tblRecursoId: 15, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 16, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true }
 ];
 
 var facultades = [
@@ -258,7 +267,7 @@ var usuarios = [
     { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false },
     { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "docencia@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "programa@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 3, recuperar: false },
-    { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "investigacion@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "9786543210", nombre: "Extensión", apellido_1: "Extensión", apellido_2: "Extensión", correo: "extensión@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 6, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "3725428427", nombre: "Administrador", apellido_1: "Administrador", apellido_2: "Administrador", correo: "administrador@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 7, tblEstadoId: 3, recuperar: false }
 ];
@@ -301,50 +310,6 @@ var etapas = [
     { id: 3, etapa: "Aprobación" },
     { id: 4, etapa: "Seguimiento" },
     { id: 5, etapa: "Evaluación" }];
-
-var fechas_etapas = [{
-    tblEtapaId: 1,
-    tblFacultadeId: 6,
-    semestre: 1,
-    ano: '2017',
-    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
-}, {
-    tblEtapaId: 2,
-    tblFacultadeId: 6,
-    semestre: 1,
-    ano: '2017',
-    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
-}, {
-    tblEtapaId: 3,
-    tblFacultadeId: 6,
-    semestre: 1,
-    ano: '2017',
-    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
-}, {
-    tblEtapaId: 1,
-    tblFacultadeId: 6,
-    semestre: 1,
-    ano: '2016',
-    fecha_inicial: moment("'10-06-2016", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2016", "MM-DD-YYYY")
-}, {
-    tblEtapaId: 1,
-    tblFacultadeId: 6,
-    semestre: 2,
-    ano: '2017',
-    fecha_inicial: moment("'10-06-2017", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2017", "MM-DD-YYYY")
-}, {
-    tblEtapaId: 2,
-    tblFacultadeId: 6,
-    semestre: 1,
-    ano: '2016',
-    fecha_inicial: moment("'10-06-2016", "MM-DD-YYYY"),
-    fecha_final: moment("'10-06-2016", "MM-DD-YYYY")
-}];
 
 var materias = [
     { codigo: "ING00812", nombre: "Identificación del Ciclo de Vida del Software", horas_semanales: 3 },
@@ -390,10 +355,9 @@ llamado_insert(estados, tbl_estados, estados, () => {
                                             llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
                                                 llamado_insert(actores, tbl_actores, actores, () => {
                                                     llamado_insert(etapas, tbl_etapas, etapas, () => {
-                                                        llamado_insert(fechas_etapas, tbl_fechas_etapas.tbl_fechas_etapas, fechas_etapas, () => {
-                                                            llamado_insert(materias, tbl_materias, materias, () => {
-                                                                llamado_insert(materias_programas, tbl_materias_programas, materias_programas, () => {
-                                                                });
+                                                        llamado_insert(materias, tbl_materias, materias, () => {
+                                                            llamado_insert(materias_programas, tbl_materias_programas, materias_programas, () => {
+
                                                             });
                                                         });
                                                     });

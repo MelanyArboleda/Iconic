@@ -1,24 +1,25 @@
 angular.module("iconic").controller("aComisionEstudiosCtrl", aComisionEstudiosCtrl);
 
-aComisionEstudiosCtrl.$inject = ["CEService", "CEFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aComisionEstudiosCtrl.$inject = ["$rootScope", "CEService", "CEFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, serviceNotification, $q) {
+function aComisionEstudiosCtrl($rootScope, CEService, CEFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
-    cargarCE();
-    function cargarCE() {
-        loginFactory.cargarEstatus().then(function () {
-            CEFactory.buscarComisionEstudios().then(function () {
-                vm.comisionEstudios = CEFactory.ComEst;
-            });
-            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-				return permiso.tblRecursoId == 4;
-			});
+    if ($rootScope.infoReady == true) {
+        cargarCE();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargarCE();
         });
-        vm.accion = accion;
-        vm.llenarModal = llenarModal;
-        vm.vaciarMadal = vaciarMadal;
-        vm.deleteComisionEstudios = deleteComisionEstudios;
+    }
+    function cargarCE() {
+        CEFactory.buscarComisionEstudios().then(function () {
+            vm.comisionEstudios = CEFactory.ComEst;
+        });
+        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+            return permiso.tblRecursoId == 4;
+        });
+
         vm.formComisionEstudios = {
             universidad: '',
             tipo_estudio: '',
@@ -31,7 +32,7 @@ function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, s
         }
     }
 
-    function accion() {
+    vm.accion = function () {
         if (acciones == "1") {
             saveComisionEstudios();
         } else {
@@ -57,7 +58,7 @@ function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, s
         });
     }
 
-    function deleteComisionEstudios(ce) {
+    vm.deleteComisionEstudios = function (ce) {
         CEService.eliminarCE(ce).then(function (res) {
             serviceNotification.success('Comision eliminado correctamente', 3000);
             cargarCE();
@@ -66,7 +67,7 @@ function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, s
         });
     }
 
-    function llenarModal(ce) {
+    vm.llenarModal = function (ce) {
         acciones = "2";
         vm.formComisionEstudios = {
             id: ce.id,
@@ -81,7 +82,7 @@ function aComisionEstudiosCtrl(CEService, CEFactory, ptdFactory, loginFactory, s
         }
     }
 
-    function vaciarMadal() {
+    vm.vaciarMadal = function () {
         acciones = "1";
         vm.formComisionEstudios = {
             universidad: '',

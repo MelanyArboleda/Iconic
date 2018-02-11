@@ -1,48 +1,48 @@
 angular.module("iconic").controller("fechaEtapaCtrl", fechaEtapaCtrl);
 
-fechaEtapaCtrl.$inject = ["fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification"];
+fechaEtapaCtrl.$inject = ["$rootScope", "fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification"];
 
-function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
+function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
     var vm = this;
     vm.acciones = "";
-    cargarFE();
+    if ($rootScope.infoReady == true) {
+        cargarFE();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargarFE();
+        });
+    }
     function cargarFE() {
-        loginFactory.cargarEstatus().then(function () {
-            fechaEtapaFactory.buscarFechaEtapa().then(function () {
-                vm.fechaEtapa = fechaEtapaFactory.fechaEtapa;
-                for (var i = 0; i < vm.fechaEtapa.length; i++) {
-                    vm.fechaEtapa[i].tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
-                        return vm.fechaEtapa[i].tblEtapaId === etapa.id;
-                    });
-                    vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
-                }
-                vm.accion = accion;
-                vm.deleteFechaEtapa = deleteFechaEtapa;
-                vm.etapas = loginFactory.estatus.etapa;
-                vm.llenarModal = llenarModal;
-                vm.vaciarMadal = vaciarMadal;
-                año = new Date();
-                año = año.getFullYear();
-                facultad = loginFactory.estatus.facultad.facultad;
-                vm.formfechaEtapa = {
-                    tblEtapaId: '0',
-                    tblFacultadeId: facultad,
-                    semestre: '0',
-                    ano: año,
-                    fecha_inicial: '',
-                    fecha_final: ''
-                }
-                if(fechaEtapaFactory.fechaEtapa.length == 0){
-					serviceNotification.warning('No se han creado la fechas de las etapas ojo haga esa cosa ya', 5000);
-				}
-            });
-            vm.permiso = loginFactory.estatus.permisos.find(function (permiso){
-                return permiso.tblRecursoId == 11;
-            });
+        fechaEtapaFactory.buscarFechaEtapa().then(function () {
+            vm.fechaEtapa = fechaEtapaFactory.fechaEtapa;
+            for (var i = 0; i < vm.fechaEtapa.length; i++) {
+                vm.fechaEtapa[i].tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
+                    return vm.fechaEtapa[i].tblEtapaId === etapa.id;
+                });
+                vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
+            }
+            vm.etapas = loginFactory.estatus.etapa;
+            año = new Date();
+            año = año.getFullYear();
+            facultad = loginFactory.estatus.facultad.facultad;
+            vm.formfechaEtapa = {
+                tblEtapaId: '0',
+                tblFacultadeId: facultad,
+                semestre: '0',
+                ano: año,
+                fecha_inicial: '',
+                fecha_final: ''
+            }
+            if (fechaEtapaFactory.fechaEtapa.length == 0) {
+                serviceNotification.warning('No se han creado la fechas de las etapas ojo haga esa cosa ya', 5000);
+            }
+        });
+        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+            return permiso.tblRecursoId == 11;
         });
     };
 
-    function accion() {
+    vm.accion = function () {
         vm.formfechaEtapa.tblEtapaId = loginFactory.estatus.etapa.find(function (etapa) {
             return vm.formfechaEtapa.tblEtapaId === etapa.etapa;
         });
@@ -80,7 +80,7 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
         });
     }
 
-    function deleteFechaEtapa(fe) {
+    vm.deleteFechaEtapa = function (fe) {
         data = {
             tblEtapaId: fe.tblEtapaId.id,
             tblFacultadeId: fe.tblFacultadeId.id,
@@ -95,7 +95,7 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
         });
     }
 
-    function llenarModal(fe) {
+    vm.llenarModal = function (fe) {
         vm.acciones = "2";
         vm.formfechaEtapa = {
             tblEtapaId: fe.tblEtapaId.etapa,
@@ -107,7 +107,7 @@ function fechaEtapaCtrl(fechaEtapaService, fechaEtapaFactory, loginFactory, serv
         }
     }
 
-    function vaciarMadal() {
+    vm.vaciarMadal = function () {
         vm.acciones = "1";
         var fecha = new Date();
         var mes = fecha.getMonth();

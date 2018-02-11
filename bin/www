@@ -93,11 +93,31 @@ function onListening() {
 
 var messages = [];
 
+function getMessage(ptd) {
+    var mensajes=[];
+    for (var i = 0; i < messages.length; i++) {
+        if (messages[i].tblPtdId === ptd) {
+            mensajes.push(messages[i]);
+        }
+    }
+    return mensajes;
+}
+
 io.on('connection', function (socket) {
     console.log('Un cliente se ha conectado');
-    socket.emit('messages', messages);
-    socket.on('new-message', function(data) {
+    var channel = 'Alfa';
+    socket.on('new-message', function (data) {
         messages.push(data);
-        io.sockets.emit('messages', messages);
+        io.sockets.in(channel).emit('messages', getMessage(data.tblPtdId));
+    });
+    socket.on('change channel', function (newChannel) {
+        if (newChannel != channel) {
+            socket.leave(channel);
+            socket.join(newChannel);
+            channel = newChannel;
+        }
+        if (getMessage(newChannel) != null) {
+            io.sockets.in(channel).emit('messages', getMessage(newChannel));
+        }
     });
 });

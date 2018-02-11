@@ -4,11 +4,10 @@ configiniCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", 
 
 function configiniCtrl(loginService, loginFactory, serviceNotification, $state) {
     var vm = this;
-    vm.configini = configini;
     vm.passwordNew = "";
     vm.repitepassword = "";
 
-    function configini() {
+    vm.configini = function() {
         if (vm.passwordNew == vm.repitepassword) {
             var data = {
                 password: vm.passwordNew,
