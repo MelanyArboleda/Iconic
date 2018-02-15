@@ -171,7 +171,7 @@ module.exports = {
         var fs = require('fs'), base64Data, binaryData;
         if (!fs.existsSync('./firmas')) {
             fs.mkdir('./firmas', (err) => {
-                if (err) { res.sendStatus(401); }
+                if (err) { res.sendStatus(403); }
             });
         }
         base64Data = req.body.firma.replace(/^data:image\/formato;base64,/, "");
@@ -180,20 +180,31 @@ module.exports = {
 
         fs.writeFile('./firmas/firma_' + req.body.doc_identidad + '.jpg', binaryData, "binary", (err) => {
             if (err) {
-                res.sendStatus(401);
+                res.sendStatus(403);
             } else {
                 var firma = "./firmas/firma_" + req.body.doc_identidad + ".jpg"
-                crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { firma: firma }, function (data) {
-                     if (data == 'update') {
-                         res.status(200).end();
-                     } else {
-                         res.status(401).end();
-                     }
-                 });
+                crud.findOne(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, null, (user) => {
+                    //comparo si la contraseña es la misma a la contraseña de sesion
+                    if (!bcrypt.compareSync(req.body.contraseña_firma, user.contraseña)) {
+                        //si es diferente actualizo la contraseña
+                        crud.update(tbl_usuarios, { doc_identidad: req.body.doc_identidad }, { contraseña_firma: funciones.encriptar(req.body.contraseña_firma), firma: firma }, function (data) {
+                            if (data == 'update') {
+                                crud.update(tbl_permisos, { tblUsuarioDocIdentidad: req.body.doc_identidad, tblRecursoId: 16 }, { crear: false, modificar: false }, function (data) {
+                                    res.status(200).end();
+                                });
+                            } else {
+                                res.sendStatus(403);
+                            }
+                        });
+                    } else {
+                        //si es la misma no lo dejo actualizarla
+                        res.sendStatus(401);
+                    }
+                });
             };
         });
 
-        
+
     },
 
     cinicial: function (req, res, next) {

@@ -16,7 +16,6 @@ function loginService($http, $q, appConstant) {
 	this.validarCode = validarCode;
 	this.compararcontraseñas = compararcontraseñas;
 	this.buscarUser = buscarUser;
-	//this.buscarUsuario = buscarUsuario;
 	this.cambiarEstado = cambiarEstado;
 	this.sendLink = sendLink;
 	this.validarDatos = validarDatos;
@@ -156,17 +155,6 @@ function loginService($http, $q, appConstant) {
 		return deferred.promise;
 	}
 
-	// function buscarUsuario(data) {
-	// 	var deferred = $q.defer();
-	// 	$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarUsuario", data).then(function (res) {
-	// 		deferred.resolve(res.data);
-	// 	}).catch(function (err) {
-	// 		deferred.reject(err);
-	// 		console.log(err);
-	// 	});
-	// 	return deferred.promise;
-	// }
-
 	function cambiarEstado(data) {
 		var deferred = $q.defer();
 		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/cambiarEstado", data).then(function (res) {
@@ -210,5 +198,4 @@ function loginService($http, $q, appConstant) {
 		});
 		return deferred.promise;
 	}
-
 }

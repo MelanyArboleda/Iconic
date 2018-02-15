@@ -57,11 +57,8 @@
                                             </li>
                                             <div class="indicator" style="right: 430px; left: 0px;"></div>
                                             <li id="perfil">{{indexVm.loginFactory.perfil.perfil}}</li>
-                                            <li>
-                                                <a href="" id="select">Cambiar contraseña</a>
-                                            </li>
-                                            <li>
-                                                <a id="select" class="modal-action modal-close modal-trigger" href="#modalfirma">Subir firma digital</a>
+                                            <li ng-if="indexVm.permiso.modificar == true">
+                                                <a id="select" class="modal-action modal-close modal-trigger" data-target='modalfirma' modal>Subir firma digital</a>
                                             </li>
                                             <center>
                                                 <button class="waves-effect waves-light btn" id="cerrar" ng-click="indexVm.logout()">Cerrar sesión</button>
@@ -79,7 +76,7 @@
     <ui-view></ui-view>
 
     <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
-        <div class="modal-content contenido-modal">
+        <div class="modal-content contenido-modal" ng-if="!firmaVm.siguiente">
             <h5>
                 <strong>Subir Firma Digital</strong>
             </h5>
@@ -104,24 +101,14 @@
                         </div>
                     </div>
                     <div class="col s2 center">
-                        <button ng-click="firmaVm.firmar()" class="btn-floating btn-large tooltipped center" data-position="top" data-delay="20"
-                            data-tooltip="Subir Firma">
+                        <button ng-click="firmaVm.firmar()" class="btn-floating btn-large center">
                             <i class="material-icons">&#xE255;</i>
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="modal-action modal-close waves-effect waves-green btn">
-                <a href="#modalfirmacontraseña" class="siguiente">Siguiente</a>
-            </button>
-            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
-        </div>
-    </div>
-
-    <div id="modalfirmacontraseña" class="modal modal-fixed-footer">
-        <div class="modal-content">
+        <div class="modal-content" ng-if="firmaVm.siguiente">
             <h5>
                 <strong>Contraseña para firmar digitalmente</strong>
             </h5>
@@ -131,32 +118,32 @@
                 <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
             </div>
             <div class="row">
-                <form autocomplete="off">
+                <form name="passwordFirmaForm" autocomplete="off" ng-submit="firmaVm.passwordFirma()">
                     <div class="input-field col s12 cajasombra">
                         <i class="material-icons prefix ">&#xE0DA;</i>
-                        <input id="contraseñafirma" type="password" name="contraseñafirma" required>
+                        <input type="password" name="contraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.password" required>
                         <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
                     </div>
-
                     <div class="input-field col s12 cajasombra">
                         <i class="material-icons prefix ">&#xE0DA;</i>
-                        <input id="repiteContraseñafirma" type="password" name="repiteContraseñafirma" required>
+                        <input type="password" name="repiteContraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.repitepassword" required>
                         <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
                     </div>
-
-                    <div class="input-field col s12 ">
-                        <button type="submit" class="waves-effect btn">Guardar</button>
+                    <div class="input-field col s12 center">
+                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
-
         <div class="modal-footer">
-            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
         </div>
     </div>
 
-    <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm" ng-open="concertacionVm.room()" >
+    <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm"
+        ng-open="concertacionVm.room()">
         <div id="header-chat">
             <i class="closeIcon material-icons modal-action modal-close ">&#xE5CD;</i>
             <h5>Observaciones al Plan de Trabajo Docente</h5>
@@ -170,8 +157,7 @@
             <div id="mensajes">
             </div>
         </div>
-        <!-- <div id="caja-mensaje" ng-if="concertacionVm.permisoConsertacion.crear == true">  -->
-         <div id="caja-mensaje">
+        <div id="caja-mensaje">
             <form name="observacionesDecanoForm" class="col s12">
                 <div class="row mensaje">
                     <div class="input-field col s10">

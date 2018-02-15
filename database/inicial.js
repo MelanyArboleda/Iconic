@@ -92,7 +92,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 2, ver: true, crear: true, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 16, tblPerfileId: 3, ver: false, crear: true, modificar: true, eliminar: false },
+    { tblRecursoId: 16, tblPerfileId: 2, ver: false, crear: true, modificar: true, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
@@ -177,7 +177,7 @@ var permisos_iniciales = [
     { tblRecursoId: 13, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 14, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 15, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 16, tblPerfileId: 3, ver: true, crear: true, modificar: true, eliminar: true }
+    { tblRecursoId: 16, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true }
 ];
 
 var facultades = [

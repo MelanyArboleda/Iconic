@@ -44,7 +44,6 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 	}
 
 	function cargarMenu() {
-		console.log("se metio por menu", $rootScope.urlReady);
 		fechaEtapaFactory.buscarFechaEtapa().then(function () {
 			console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
 			if (loginFactory.user.perfil == 1) {

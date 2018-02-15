@@ -27,19 +27,18 @@ var tbl_usuarios = sequelize.define('tbl_usuarios', {
         unique: true
     },
     contraseña: {
-        type: Sequelize.STRING(250),
+        type: Sequelize.STRING,
         allowNull: false
     },
     contraseña_firma: {
-        type: Sequelize.STRING(250),
+        type: Sequelize.STRING,
         allowNull: false
     },
     tblDedicacioneId: {
         type: Sequelize.INTEGER
     },
     firma: {
-        type: Sequelize.BLOB,
-        //allowNull: false
+        type: Sequelize.STRING
     },
     tblPerfileId: {
         type: Sequelize.INTEGER,

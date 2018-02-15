@@ -1,11 +1,4 @@
 $(document).ready(function () {
-	$('#modalfirmacontraseña').modal({
-		dismissible: false
-	});
-	$('#modalfirma').modal();
-	$('#modalAsesorias').modal();
-	$('#modalOActividades').modal();
-	$('#modalObservaciones').modal();
 	$('textarea#observaciones_dd').characterCounter();
 	$('input#codigo_asignatura').characterCounter();
 	$('textarea#observaciones').characterCounter();

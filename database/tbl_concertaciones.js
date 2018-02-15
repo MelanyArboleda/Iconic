@@ -28,6 +28,8 @@ tbl_usuarios.hasMany(tbl_concertaciones);
 tbl_concertaciones.belongsTo(tbl_usuarios);
 tbl_ptds.tbl_ptds.hasMany(tbl_concertaciones);
 tbl_concertaciones.belongsTo(tbl_ptds.tbl_ptds);
+// sequelize.query('ALTER TABLE tbl_concertaciones ADD CONSTRAINT tbl_concertaciones_tblUsuarioDocIdentidad_fkey FOREIGN KEY (tblUsuarioDocIdentidad) REFERENCES tbl_usuarios (doc_identidad) MATCH FULL').spread((results, metadata) => {
+// });
 
 module.exports = {
     tbl_concertaciones: tbl_concertaciones,

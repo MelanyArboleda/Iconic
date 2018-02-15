@@ -38,7 +38,8 @@ tbl_ptds.tbl_ptds.hasMany(tbl_docencias_directas);
 tbl_docencias_directas.belongsTo(tbl_ptds.tbl_ptds);
 tbl_materias.hasMany(tbl_docencias_directas);
 tbl_docencias_directas.belongsTo(tbl_materias);
-
+// sequelize.query('CONSTRAINT "tbl_docencias_directas_tblMateriaCodNom_fkey" FOREIGN KEY ("tblMateriaCodNom")REFERENCES public.tbl_materias (codigo,nombre) MATCH SIMPLE').spread((results, metadata) => {
+// });
 module.exports = {
 	tbl_docencias_directas: tbl_docencias_directas,
 
