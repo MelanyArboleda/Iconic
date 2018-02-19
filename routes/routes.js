@@ -35,10 +35,12 @@ router.post('/auth/guardarConcertacion', modelos.tbl_concertaciones.guardar_Conc
 router.post('/auth/configc', controllers.UserController.cinicial);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas del ptd
-router.post('/auth/createPtd', modelos.tbl_ptds.crear_ptd);
-router.post('/auth/buscarPtd', modelos.tbl_ptds.buscar_ptd);
-router.post('/auth/buscarPtds', modelos.tbl_ptds.buscar_ptds);
-router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_ptd);
+router.post('/auth/createPtd', modelos.tbl_ptds.crear_Ptd);
+router.post('/auth/buscarPtd', modelos.tbl_ptds.buscar_Ptd);
+router.post('/auth/buscarPtdsFacultad', modelos.tbl_ptds.buscar_Ptds_Facultad);
+router.post('/auth/buscarPtdsPrograma', modelos.tbl_ptds.buscar_Ptds_Programa);
+router.post('/auth/buscarPtds', modelos.tbl_ptds.buscar_Ptds);
+router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_Ptd);
 //rutas de docencia directa
 router.post('/auth/buscarDD', modelos.tbl_docencias_directas.buscar_DD);
 router.post('/auth/guardarDD', modelos.tbl_docencias_directas.guardar_DD);

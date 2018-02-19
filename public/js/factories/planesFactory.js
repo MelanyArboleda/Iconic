@@ -6,17 +6,39 @@ function planesFactory(planesService, $q) {
 
     var factoryPlanes = {
         ptds: [],
+        buscarPtdsFacultad: buscarPtdsFacultad,
+        buscarPtdsPrograma: buscarPtdsPrograma,
         buscarPtds: buscarPtds
     };
     return factoryPlanes;
 
-    function buscarPtds(facultad) {
+    function buscarPtdsFacultad(data) {
         var deferred = $q.defer();
         factoryPlanes.ptds = [];
-        planesService.buscarPtds(facultad).then(function (result) {
+        planesService.buscarPtdsFacultad(data).then(function (result) {
             factoryPlanes.ptds = result;
             deferred.resolve();
         });
         return deferred.promise;    
+    }
+
+    function buscarPtdsPrograma(data){
+        var deferred = $q.defer();
+        factoryPlanes.ptds = [];
+        planesService.buscarPtdsPrograma(data).then(function (result) {
+            factoryPlanes.ptds = result;
+            deferred.resolve();
+        });
+        return deferred.promise;    
+    }
+
+    function buscarPtds(data){
+        var deferred = $q.defer();
+        factoryPlanes.ptds = [];
+        planesService.buscarPtds(data).then(function (result) {
+            factoryPlanes.ptds = result;
+            deferred.resolve();
+        });
+        return deferred.promise;   
     }
 }

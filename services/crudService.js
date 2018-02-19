@@ -114,8 +114,8 @@ module.exports = {
             callback();
         });
     },
-    //inner join planes
-    innerPlanes: function (tabla, donde, callback) {
+    //inner join planes facultad
+    innerPlanesFacultad: function (tabla, donde, callback) {
         tabla[0].findAll({
             where: {
                 semestre: donde.semestre,
@@ -132,12 +132,52 @@ module.exports = {
                         include: [{
                             model: tabla[4], required: true, attributes: [],
                             include: [{
-                                model: tabla[5], required: true, attributes: [], where: { id: donde.id }
+                                model: tabla[5], required: true, attributes: [], where: { id: donde.facultad }
                             }]
                         }]
                     }]
                 }]
             }]
+        }).then((tabla) => {
+            callback(tabla);
+        }).catch((err) => {
+            console.log(err);
+            callback();
+        });
+    },
+    //inner join planes programa
+    innerPlanesPrograma: function (tabla, donde, callback) {
+        tabla[0].findAll({
+            where: {
+                semestre: donde.semestre,
+                $and: [
+                    sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('tbl_ptds.fecha')), donde.ano),
+                ]
+            },
+            include: [{
+                model: tabla[1], required: true, attributes: [],
+                include: [{
+                    model: tabla[2], required: true, attributes: [],
+                    include: [{
+                        model: tabla[3], required: true, attributes: [], where: { codigo: donde.programa.codigo, tblSedeId: donde.programa.tblSedeId, programa: donde.programa.programa }
+                    }]
+                }]
+            }]
+        }).then((tabla) => {
+            callback(tabla);
+        }).catch((err) => {
+            console.log(err);
+            callback();
+        });
+    },
+    buscarPtds: function(tabla, donde, callback){
+        tabla.findAll({
+            where: {
+                semestre: donde.semestre,
+                $and: [
+                    sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('tbl_ptds.fecha')), donde.ano),
+                ]
+            }
         }).then((tabla) => {
             callback(tabla);
         }).catch((err) => {

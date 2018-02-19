@@ -121,10 +121,10 @@ var permisos_iniciales = [
     { tblRecursoId: 8, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 9, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 10, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
-    { tblRecursoId: 11, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 12, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
+    { tblRecursoId: 11, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 12, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 13, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 14, tblPerfileId: 4, ver: true, crear: true, modificar: false, eliminar: false },
+    { tblRecursoId: 14, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 15, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 4, ver: false, crear: true, modificar: true, eliminar: false },
 
@@ -263,10 +263,10 @@ var programas = [
 
 var usuarios = [
     { doc_identidad: "1039470240", nombre: "Docente", apellido_1: "Docente", apellido_2: "Docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
-    { doc_identidad: "8329368363", nombre: "Docente2", apellido_1: "Docente2", apellido_2: "Docente2", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "8329368363", nombre: "Docente2", apellido_1: "Docente2", apellido_2: "Docente2", correo: "gabotolossa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
     { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false },
-    { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "docencia@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 3, recuperar: false },
-    { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "programa@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "gabotolsosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 1, recuperar: false },
     { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "investigacion@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "9786543210", nombre: "Extensión", apellido_1: "Extensión", apellido_2: "Extensión", correo: "extensión@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 6, tblEstadoId: 3, recuperar: false },
     { doc_identidad: "3725428427", nombre: "Administrador", apellido_1: "Administrador", apellido_2: "Administrador", correo: "administrador@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 7, tblEstadoId: 3, recuperar: false }
@@ -288,7 +288,7 @@ var usuario_programas = [
     { tblUsuarioDocIdentidad: "8329368363", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "1152710692", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "1234567890", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
-    { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "1324758690", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "9786543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
     { tblUsuarioDocIdentidad: "3725428427", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 }

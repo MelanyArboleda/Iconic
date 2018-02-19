@@ -39,7 +39,7 @@ tbl_ptds.belongsTo(tbl_usuarios);
 module.exports = {
     tbl_ptds: tbl_ptds,
 
-    crear_ptd: function (req, res, next) {
+    crear_Ptd: function (req, res, next) {
         crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
             crud.innerFacultad([tbl_facultades, tbl_areas, tbl_programas], { codigo: programa.tblProgramaCodigo }, (facultad) => {
                 crud.findOne(tbl_fechas_etapas.tbl_fechas_etapas, { tblFacultadeId: facultad.id, tblEtapaId: 1 }, 'ano desc, semestre desc', (fechas) => {
@@ -59,7 +59,7 @@ module.exports = {
         });
     },
 
-    buscar_ptd: function (req, res, next) {
+    buscar_Ptd: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.findAll(tbl_ptds, { id: req.body.ptd }, null, (resp) => {
                 if (resp[0] == undefined) {
@@ -71,9 +71,9 @@ module.exports = {
         });
     },
 
-    buscar_ptds: function (req, res, next) {
+    buscar_Ptds_Facultad: function (req, res, next) {
         tbl_ptds.sync().then(function () {
-            crud.innerPlanes([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (resp) => {
+            crud.innerPlanesFacultad([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (resp) => {
                 var array = groupArray(resp, 'tblUsuarioDocIdentidad');
                 var ptds = [];
                 for (var obj in array) {
@@ -86,7 +86,37 @@ module.exports = {
         });
     },
 
-    guardar_ptd: function (req, res, next) {
+    buscar_Ptds_Programa: function (req, res, next) {
+        tbl_ptds.sync().then(function () {
+            crud.innerPlanesPrograma([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas], req.body, (resp) => {
+                var array = groupArray(resp, 'tblUsuarioDocIdentidad');
+                var ptds = [];
+                for (var obj in array) {
+                    ptds.push(array[obj].find(function (ptd) {
+                        return ptd.version == Math.max.apply(Math, array[obj].map(function (o) { return o.version }))
+                    }));
+                }
+                res.status(200).json(ptds).end();
+            });
+        });
+    },
+
+    buscar_Ptds: function (req, res, next) {
+        tbl_ptds.sync().then(function () {
+            crud.buscarPtds(tbl_ptds, req.body, (resp) => {
+                var array = groupArray(resp, 'tblUsuarioDocIdentidad');
+                var ptds = [];
+                for (var obj in array) {
+                    ptds.push(array[obj].find(function (ptd) {
+                        return ptd.version == Math.max.apply(Math, array[obj].map(function (o) { return o.version }))
+                    }));
+                }
+                res.status(200).json(ptds).end();
+            });
+        });
+    },
+
+    guardar_Ptd: function (req, res, next) {
         crud.update(tbl_ptds, { id: req.body.datos.id }, req.body.datos, (resp) => {
             if (resp == 'update') {
                 res.status(200).end();

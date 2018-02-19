@@ -66,21 +66,52 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 					emitInfoReady();
 				}
 			} else {
-				if (loginFactory.user.perfil == 4) {
-					emitInfoReady();
-				} else {
+				if (loginFactory.user.perfil == 2) {
 					if (fechaEtapaFactory.fechaEtapa.length == 0) {
 						$state.go("menuPrincipal.fechaEtapa");
 						emitInfoReady();
 					} else {
 						var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-						planesFactory.buscarPtds({
-							id: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
+						planesFactory.buscarPtdsFacultad({
+							facultad: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
 						}).then(function () {
 							console.log("PTDS----------", planesFactory.ptds);
 							vm.ptds = planesFactory.ptds;
-							emitInfoReady($rootScope.infoReady = true);
+							// emitInfoReady($rootScope.infoReady = true);
+							emitInfoReady();
 						});
+					}
+				} else {
+					if(loginFactory.user.perfil == 4){
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
+							vm.plan = false;
+							emitInfoReady();
+						}else{
+							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+							planesFactory.buscarPtdsPrograma({
+								programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
+							}).then(function () {
+								console.log("PTDS----------", planesFactory.ptds);
+								vm.ptds = planesFactory.ptds;
+								emitInfoReady();
+							});
+						}
+					}else{
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
+							vm.plan = false;
+							emitInfoReady();
+						}else{
+							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+							planesFactory.buscarPtds({
+								semestre: data.semestre, ano: data.ano
+							}).then(function () {
+								console.log("PTDS----------", planesFactory.ptds);
+								vm.ptds = planesFactory.ptds;
+								emitInfoReady();
+							});
+						}
 					}
 				}
 			}
@@ -149,18 +180,6 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 				}
 			}
 			// ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
-		}
-	}
-
-	vm.menu = function (ruta) {
-		if (ruta == 1) {
-			$state.go("menuPrincipal.vistaPTD");
-		} else {
-			if (ruta == 2) {
-				$state.go("menuPrincipal.vistaPTD");
-			} else {
-				$state.go("menuPrincipal.Usuarios");
-			}
 		}
 	}
 };
