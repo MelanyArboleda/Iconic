@@ -40,6 +40,7 @@ router.post('/auth/buscarPtd', modelos.tbl_ptds.buscar_Ptd);
 router.post('/auth/buscarPtdsFacultad', modelos.tbl_ptds.buscar_Ptds_Facultad);
 router.post('/auth/buscarPtdsPrograma', modelos.tbl_ptds.buscar_Ptds_Programa);
 router.post('/auth/buscarPtds', modelos.tbl_ptds.buscar_Ptds);
+router.post('/auth/buscarPtdsUser', modelos.tbl_ptds.buscar_Ptds_User);
 router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_Ptd);
 //rutas de docencia directa
 router.post('/auth/buscarDD', modelos.tbl_docencias_directas.buscar_DD);
@@ -85,10 +86,11 @@ router.post('/auth/buscarOA', modelos.tbl_actividades.buscar_OA);
 router.post('/auth/guardarOA', modelos.tbl_actividades.guardar_OA);
 router.post('/auth/modificarOA', modelos.tbl_actividades.modificar_OA);
 router.post('/auth/eliminarOA', modelos.tbl_actividades.eliminar_OA);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de observaciones
-router.post('/auth/buscarObservaciones', modelos.tbl_observaciones.buscar_observaciones);
-router.post('/auth/guardarObservaciones', modelos.tbl_observaciones.guardar_observaciones);
+router.post('/auth/buscarObservaciones', modelos.tbl_observaciones.buscar_Observaciones);
+router.post('/auth/crearObservaciones', modelos.tbl_observaciones.crear_Observaciones);
+router.post('/auth/guardarObservaciones', modelos.tbl_observaciones.guardar_Observaciones);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de seguimiento y evaluacion
 router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);
 router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);

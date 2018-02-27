@@ -185,6 +185,23 @@ module.exports = {
             callback();
         });
     },
+    buscarPtdsUser: function(tabla, donde, callback){
+        tabla.findAll({
+            where: {
+                tblUsuarioDocIdentidad: donde.tblUsuarioDocIdentidad,
+                semestre: donde.semestre,
+                version: {$ne: donde.version},
+                $and: [
+                    sequelize.where(sequelize.fn('date_part', 'year', sequelize.col('tbl_ptds.fecha')), donde.ano),
+                ]
+            }
+        }).then((tabla) => {
+            callback(tabla);
+        }).catch((err) => {
+            console.log(err);
+            callback();
+        });
+    },
     //inner join usuarios
     innerUser: function (tabla, donde, callback) {
         tabla[0].findAll({

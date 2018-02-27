@@ -6,6 +6,7 @@ function planesService($http, $q, appConstant) {
     this.buscarPtdsFacultad = buscarPtdsFacultad;
     this.buscarPtdsPrograma = buscarPtdsPrograma;
     this.buscarPtds = buscarPtds;
+    this.buscarPtdsUser = buscarPtdsUser;
 
     function buscarPtdsFacultad(data) {
         var deferred = $q.defer();
@@ -32,6 +33,17 @@ function planesService($http, $q, appConstant) {
     function buscarPtds(data){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarPtds", data).then(function (res) {
+            deferred.resolve(res.data);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function buscarPtdsUser(data){
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarPtdsUser", data).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);

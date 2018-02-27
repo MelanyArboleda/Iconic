@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory","ObservacionesFactory", "serviceNotification", "$state", "$q"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, serviceNotification, $state, $q) {
+function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory,ObservacionesFactory, serviceNotification, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -35,6 +35,11 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 		$rootScope.infoReady = true;
 	}
 
+	function emitPtdReady(){
+		$rootScope.$emit("PtdReady");
+		$rootScope.PtdReady == true;
+	}
+
 	if ($rootScope.urlReady == true) {
 		cargarMenu();
 	} else {
@@ -58,8 +63,12 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 							vm.plan = true;
 							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
 								console.log("resumen--------", resumen);
-								emitInfoReady();
+								ObservacionesFactory.crearObservaciones(ptd.id).then(function (){
+									emitPtdReady();
+									emitInfoReady();
+								});
 							});
+							
 						});
 					}
 				} else {
@@ -130,6 +139,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 		ptdFactory.ptd = ptd;
 		vm.ptdId = ptd.id;
 		console.log("PTD-----------", ptdFactory.ptd);
+		emitPtdReady();
 		vm.enrutarPTD();
 	}
 

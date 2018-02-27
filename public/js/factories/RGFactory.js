@@ -5,11 +5,11 @@ RGFactory.$inject = ["RGService", "ptdFactory", "DDFactory", "ISFactory", "IPFac
 function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFactory, CEFactory, FPFactory, APFactory, OAFactory, $q) {
     var factoryRG = {
         ResGen: {},
+        HorasConexas: 0,
         crearResumenGeneral: crearResumenGeneral,
         buscarResumenGeneral: buscarResumenGeneral,
         modificarResumenGeneral: modificarResumenGeneral
     }
-    var HorasConexas = 0;
     var ddSemestre = 0;
     return factoryRG;
 
@@ -81,7 +81,7 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
                                     var ap = obtenerhorasemestrales(APFactory.AsePro);
                                     OAFactory.buscarOtrasActividades(factoryRG.ResGen.id).then(function () {
                                         var oa = obtenerhorasemanales(OAFactory.OtrAct);
-                                        HorasConexas = (dd*1.5)+((is+ip)/2);
+                                        factoryRG.HorasConexas = (dd*1.5)+((is+ip)/2);
                                         var totalHorasSemana = dd + is + ip + oa;
                                         var totalHorasSemestre = ae + fp + ap + ddSemestre + (is * 22.5) + (ip * 22.5) + (oa * 22.5);// y mirar bien que actividades se multimplican por 18 o 22.5
                                         deferred.resolve({ semana: totalHorasSemana, semestre: totalHorasSemestre });

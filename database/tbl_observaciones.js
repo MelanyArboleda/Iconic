@@ -9,15 +9,15 @@ var tbl_observaciones = sequelize.define('tbl_observaciones', {
         allowNull: false
     },
     firma_consejo_facultad: {
-        type: Sequelize.BLOB,
+        type: Sequelize.BOOLEAN,
         allowNull: false
     },
     firma_coord_prog: {
-        type: Sequelize.BLOB,
+        type: Sequelize.BOOLEAN,
         allowNull: false
     },
     firma_docente: {
-        type: Sequelize.BLOB,
+        type: Sequelize.BOOLEAN,
         allowNull: false
     },
     tblPtdId: {
@@ -32,9 +32,9 @@ tbl_observaciones.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_observaciones: tbl_observaciones,
 
-    buscar_observaciones: function (req, res, next) {
+    buscar_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
-            crud.findAll(tbl_observaciones, { id: req.body.ptd }, null, (resp) => {
+            crud.findAll(tbl_observaciones, { tblPtdId: req.body.tblPtdId }, null, (resp) => {
                 if (resp[0] == undefined) {
                     res.status(200).json({ apartado: 0 }).end();
                 } else {
@@ -44,26 +44,27 @@ module.exports = {
         });
     },
 
-    guardar_observaciones: function (req, res, next) {
+    crear_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
-            if (req.body.datos.id == undefined) {
-                req.body.datos.id = null;
-                crud.create(tbl_observaciones, req.body.datos, (resp) => {
-                    if (resp != 'error') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            } else {
-                crud.update(tbl_observaciones, { id: req.body.datos.id }, req.body.datos, (resp) => {
-                    if (resp == 'update') {
-                        res.status(200).end();
-                    } else {
-                        res.sendStatus(403);
-                    }
-                });
-            }
+            crud.findOrCreate(tbl_observaciones, req.body, req.body.id,null, (resp) => {
+                if (resp != 'error') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    guardar_Observaciones: function (req, res, next) {
+        tbl_observaciones.sync().then(function () {
+            crud.update(tbl_observaciones, { id: req.body.donde }, req.body.datos, (resp) => {
+                if (resp == 'update') {
+                    res.status(200).end();
+                } else {
+                    res.sendStatus(403);
+                }
+            });
         });
     }
 };

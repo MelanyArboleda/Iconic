@@ -18,7 +18,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                             loginFactory.cargarEstatus().then(function () {
                                 console.log("Estatus--------", loginFactory.estatus);
                                 if (name[0] != 'menuPrincipal') {
-                                    emitUrlReady(menuPrincipal());
+                                    menuPrincipal();
                                 } else {
                                     if (toState.recurso != 0) {
                                         var permiso = loginFactory.estatus.permisos.find(function (permisos) {
@@ -26,10 +26,12 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                                         });
 
                                         if (permiso.ver == true) {
-                                            if (ptdFactory.ptd == 0) {
+                                            if (ptdFactory.ptd == 0 && loginFactory.user.perfil != 1) {
                                                 ptdFactory.buscarPtd({ ptd: toParams.idPlanDeTrabajo }).then(function () {
                                                     emitUrlReady();
                                                 });
+                                            } else {
+                                                emitUrlReady();
                                             }
                                         } else {
                                             enrutador(fromState.url);

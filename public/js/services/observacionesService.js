@@ -1,15 +1,15 @@
-angular.module("iconic").service("observacionesService", observacionesService);
+angular.module("iconic").service("ObservacionesService", ObservacionesService);
 
-observacionesService.$inject = ["$http", "$q", "APP_CONSTANT"];
+ObservacionesService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
-function observacionesService($http, $q, appConstant) {
+function ObservacionesService($http, $q, appConstant){
     this.buscarObservaciones = buscarObservaciones;
+    this.crearObservaciones = crearObservaciones;
     this.guardarObservaciones = guardarObservaciones;
 
-    function buscarObservaciones(observaciones) {
+    function buscarObservaciones(data){
         var deferred = $q.defer();
-        $http.post("http://192.168.1.18:3000/auth/buscarObservaciones", observaciones).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarObservaciones", data).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
@@ -17,11 +17,21 @@ function observacionesService($http, $q, appConstant) {
         });
         return deferred.promise;
     }
-
-    function guardarObservaciones(observaciones) {
+    
+    function crearObservaciones(data){
         var deferred = $q.defer();
-        $http.post("http://192.168.1.18:3000/auth/guardarObservaciones", observaciones).then(function (res) {
-            console.log(res);
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/crearObservaciones", data).then(function (res) {
+            deferred.resolve(res);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function guardarObservaciones(data){
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarObservaciones", data).then(function (res) {
             deferred.resolve(res);
         }, function (err) {
             deferred.reject(err);

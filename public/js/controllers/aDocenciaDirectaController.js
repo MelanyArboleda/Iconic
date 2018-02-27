@@ -17,8 +17,6 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 	}
 
 	function cargarDD() {
-		$rootScope.$emit("PtdReady");
-		$rootScope.PtdReady == true;
 		DDFactory.buscarMaterias().then(function () {
 			DDFactory.buscarDocenciaDirecta().then(function () {
 				vm.docenciaDirecta = DDFactory.DocDir;

@@ -9,11 +9,15 @@ var tbl_actividades = sequelize.define('tbl_actividades', {
         allowNull: false
     },
     horas_semanales: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: false
     },
     descripcion_productos: {
         type: Sequelize.STRING,
+        allowNull: false
+    },
+    conexa:{
+        type: Sequelize.BOOLEAN,
         allowNull: false
     },
     tblResumeneId: {

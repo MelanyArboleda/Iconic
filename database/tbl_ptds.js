@@ -116,6 +116,14 @@ module.exports = {
         });
     },
 
+    buscar_Ptds_User: function (req, res, next) {
+        tbl_ptds.sync().then(function () {
+            crud.buscarPtdsUser(tbl_ptds, req.body, (resp) => {
+                res.status(200).json(resp).end();
+            });
+        });
+    },
+
     guardar_Ptd: function (req, res, next) {
         crud.update(tbl_ptds, { id: req.body.datos.id }, req.body.datos, (resp) => {
             if (resp == 'update') {

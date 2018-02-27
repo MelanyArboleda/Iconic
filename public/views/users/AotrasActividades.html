@@ -11,7 +11,9 @@
                         <th>Dedicación Horas Semestre</th>
                         <th>Descripción y Productos</th>
                         <th ng-if="otrasActividadesVm.permiso.crear == true">
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal()" data-target='modalOActividades'
+                            <a ng-if="otrasActividadesVm.horasConexas > 0" class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(true)" data-target='modalOActividades'
+                                modal>Conexas</a>
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" data-target='modalOActividades'
                                 modal>Nuevo</a>
                         </th>
                     </tr>
@@ -24,8 +26,8 @@
                         <td>{{oa.horas_semestrales}}</td>
                         <td>{{oa.descripcion_productos}}</td>
                         <td ng-if="otrasActividadesVm.permiso.modificar == true || otrasActividadesVm.permiso.eliminar == true">
-                            <a ng-if="otrasActividadesVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)" data-target='modalOActividades'
-                                modal>
+                            <a ng-if="otrasActividadesVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)"
+                                data-target='modalOActividades' modal>
                                 <i class="material-icons">edit</i>
                             </a>
                             <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
@@ -63,8 +65,8 @@
                             />
                         </td>
                         <td ng-if="otrasActividadesVm.permiso.modificar == false">
-                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control no-disabled" disabled
-                            />
+                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control no-disabled"
+                                disabled />
                         </td>
                     </tr>
                 </tbody>
@@ -96,9 +98,9 @@
                         placeholder="Nombre de la Actividad" required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
-                    <input name="horas_semanales" type="number" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.horas_semanales"
-                        ng-change="otrasActividadesVm.asignarData(otrasActividadesVm.formOtrasActividades.horas_semanales)"
-                        placeholder="Horas Semanales" required/>
+                    <input name="horas_semanales" type="number" step = "any" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.horas_semanales"
+                        ng-change="otrasActividadesVm.asignarData(otrasActividadesVm.formOtrasActividades.horas_semanales)" placeholder="Horas Semanales"
+                        required/>
                 </div>
                 <div class="input-field col l6 s6 cajasombra">
                     <input name="horas_semestrales" type="number" class="form-control" ng-model="otrasActividadesVm.formOtrasActividades.horas_semestrales"

@@ -5,11 +5,11 @@ const tbl_ptds = require('./tbl_ptds');
 
 var tbl_resumenes = sequelize.define('tbl_resumenes', {
     horas_semanales_tot: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: false
     },
     horas_semestrales_tot: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: false
     },
     observaciones: {
