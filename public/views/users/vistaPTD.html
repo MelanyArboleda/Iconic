@@ -81,7 +81,6 @@
         </div>
     </div>
 
-
     <div class="container contenido vistaPTD" ng-if="indexVm.loginFactory.user.perfil != 1">
         <ul class="collection with-header">
             <li class="collection-header">
@@ -94,23 +93,17 @@
                 <span class="title">FD-GC51</span>
                 <p>Plan de Trabajo Docente : {{ptd.tblUsuarioDocIdentidad}}
                     <br> {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}} V_{{ptd.version}}
-                </p> 
+                </p>
                 <a class="secondary-content" ng-click="menuPrincipalVm.cargarPTD(ptd)">
                     <i class="material-icons">&#xE8F4;</i>
                 </a>
             </li>
         </ul>
     </div>
-
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('textarea#observaciones').characterCounter();
         $('.tooltipped').tooltip({ delay: 50 });
-
-        $('#slide-out').css('transform', 'translateX(-105%)');
-        $('.menuPContainer').css('padding-left', '0px');
-        $('#ptdBtn').click();
-        $('.button-collapse').hide();
     });
 </script>

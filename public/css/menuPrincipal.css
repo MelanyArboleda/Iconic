@@ -8,10 +8,6 @@ body{
   background-color: #26a69a;  
 }
 
-nav{  
-
-}
-
 header nav .nav-wrapper img {
     width: 100%;
   max-width: 46px;
@@ -32,21 +28,11 @@ header nav .button-collapse {
   top: 65px;
 }
 
-
-/*menú principal container*/
-.menuPContainer {
-  padding-left: 300px;
-}
-
 @media only screen and (max-width: 992px) {
-  .menuPContainer {
-    padding-left: 0px;
-  }
   .menuPContainer .colMargin {
     margin: 0 auto;
     float: initial !important;
   }
- 
 
   .formContainer {
     float: initial !important;

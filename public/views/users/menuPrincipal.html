@@ -7,154 +7,102 @@
             <div class="col s12">
                 <ul tabs class="tabs">
                     <li class="tab col s4">
-                        <a id="ptdBtn" href="#ptd" onclick="showMenu()">Plan de Trabajo</a>
+                        <a id="ptdBtn" href="#ptd">Plan de Trabajo</a>
                     </li>
                     <li class="tab col s4">
-                        <a href="#" onclick="hideMenu()">Reportes</a>
+                        <a id="rptBtn" href="#rpt">Reportes</a>
                     </li>
                     <li class="tab col s4">
-                        <a href="#" onclick="hideMenu()">Usuarios</a>
+                        <a id="usrBtn" href="#usr">Usuarios</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <!-- Menú Plan de Trabajo padding-left: 0px !important; -->
     <div id="ptd" class="col s12">
-
         <div>
             <ui-view></ui-view>
         </div>
 
-        <ul id="slide-out" class="side-nav collapsible fixed" data-collapsible="expandable">
+        <ul id="slide-out" class="side-nav fixed">
             <li>
-                <a ui-sref="menuPrincipal.vistaPTD" class="waves-effect" onclick="closeMenu();">
-                    <i class="material-icons">&#xE8E9;</i>Vista Plan de Trabajo</a>
-            </li>
+                <ul ng-if="menuPrincipalVm.permisos[0].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.AdocenciaDirecta({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Docencia Directa</a>
+                    </li>
+                </ul>
 
-            <li>
-                <div class="divider"></div>
-            </li>
+                <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.AinvestigacionesS({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Semilleros Investigación</a>
+                    </li>
+                </ul>
 
-            <li>
-                <div class="collapsible-header">
-                    <i class="material-icons">&#xE873;</i>Apartados PTD</div>
-                <div class="collapsible-body">
+                <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.AinvestigacionesP({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Proyectos Investigación</a>
+                    </li>
+                </ul>
 
-                    <!-- <ul>
-            <li>
-              <a ui-sref="menuPrincipal.AinfoGeneral" class="waves-effect">Información General</a>
-            </li>
-          </ul> -->
-                    <ul ng-if="menuPrincipalVm.permisos[0].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.AdocenciaDirecta({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Docencia Directa</a>
-                        </li>
-                    </ul>
+                <ul ng-if="menuPrincipalVm.permisos[2].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.Aextension({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Extensión y Proyección</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.AinvestigacionesS({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Semilleros Investigación</a>
-                        </li>
-                    </ul>
+                <ul ng-if="menuPrincipalVm.permisos[3].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.AcomisionEstudios({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Comisión de Estudios</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[1].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.AinvestigacionesP({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Proyectos Investigación</a>
-                        </li>
-                    </ul>
+                <ul ng-if="menuPrincipalVm.permisos[4].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.Aproyectos({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Proyectos y Publicaciones</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[2].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.Aextension({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Extensión y Proyección</a>
-                        </li>
-                    </ul>
+                <ul ng-if="menuPrincipalVm.permisos[5].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.Aasesorias({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Asesorias en Proyectos</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[3].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.AcomisionEstudios({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Comisión de Estudios</a>
-                        </li>
-                    </ul>
+                <ul ng-if="menuPrincipalVm.permisos[6].ver == true">
+                    <li>
+                        <a ui-sref="menuPrincipal.AotrasActividades({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Otras Actividades Académicas</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[4].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.Aproyectos({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Proyectos y Publicaciones</a>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <a ui-sref="menuPrincipal.Aobservaciones({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Observaciones</a>
+                    </li>
+                </ul>
 
-                    <ul ng-if="menuPrincipalVm.permisos[5].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.Aasesorias({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Asesorias en Proyectos</a>
-                        </li>
-                    </ul>
-
-                    <ul ng-if="menuPrincipalVm.permisos[6].ver == true">
-                        <li>
-                            <a ui-sref="menuPrincipal.AotrasActividades({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Otras Actividades Académicas</a>
-                        </li>
-                    </ul>
-
-                    <ul>
-                        <li>
-                            <a ui-sref="menuPrincipal.Aobservaciones({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Observaciones</a>
-                        </li>
-                    </ul>
-
-                    <ul>
-                        <li>
-                            <a ui-sref="menuPrincipal.seguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect" onclick="closeMenu();">Seguimientos y Evaluación</a>
-                        </li>
-                    </ul>
-                </div>
+                <ul>
+                    <li>
+                        <a ui-sref="menuPrincipal.seguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" class="waves-effect">Seguimientos y Evaluación</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
 
-    <!-- Menú Plan de Trabajo -- >
-    <div id="plan" class="col s12">
+
+    <!-- Menú Reportes -->
+    <div id="rpt" class="col s12">
         <div>
-            <ui-view></ui-view>
+
         </div>
     </div>
 
-    <!-- Menú Reportes -->
-    <!--<div id="reportes" class="col s12">
-        <div>
-            <ui-view></ui-view>
-        </div>
-    </div>-->
-
     <!-- Menú Usuarios -->
-    <!-- <div id="usuarios" class="col s12">
+    <div id="usr" class="col s12">
         <div>
-            <ui-view></ui-view>
+
         </div>
-    </div> -->
+    </div>
 </div>
-
-</div>
-<script type="text/javascript">
-    $('.button-collapse').sideNav();
-
-    function closeMenu() {
-        $('.button-collapse').sideNav("hide");
-    }
-
-    function showMenu() {
-        if (location.href.split('/')[5] !== 'vistaPTD') {
-            if (window.innerWidth > 992) {
-                $('#slide-out').css('transform', 'translateX(0%)');
-                $('.menuPContainer').css('padding-left', '300px');
-                $('#ptdBtn').click();
-            } else {
-                $('.button-collapse').show();
-            }
-        }
-    }
-
-    function hideMenu() {
-        $('#slide-out').css('transform', 'translateX(-105%)');
-        $('.menuPContainer').css('padding-left', '0px');
-        $('.button-collapse').hide();
-    }
-</script>

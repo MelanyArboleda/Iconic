@@ -22,10 +22,10 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
-                    <ul class="left">
+                    <ul class="left" ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
                         <li>
-                            <a href="#" class="button-collapse" data-activates="slide-out" data-sidenav="left" data-menuwidth="500">
-                                <i class="material-icons">menu</i>
+                            <a href="#" class="home-button" ui-sref="menuPrincipal.vistaPTD">
+                                <i class="material-icons">home</i>
                             </a>
                         </li>
                     </ul>
@@ -35,7 +35,7 @@
                         <span>iconic</span>
                     </div>
 
-                    <ul class="right " ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
+                    <ul class="right" ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
                         <li>
                             <a href="" class="notification-button">
                                 <i class="material-icons">&#xE7F4;
