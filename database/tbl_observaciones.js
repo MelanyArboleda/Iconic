@@ -46,7 +46,7 @@ module.exports = {
 
     crear_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
-            crud.findOrCreate(tbl_observaciones, req.body, req.body.id,null, (resp) => {
+            crud.findOrCreate(tbl_observaciones, req.body, { tblPtdId : req.body.tblPtdId },null, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
