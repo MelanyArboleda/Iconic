@@ -2,17 +2,17 @@ angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
 aAsesoriasCtrl.$inject = ["$rootScope", "APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
 
-function aAsesoriasCtrl($rootScope, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
+function aAsesoriasCtrl($rootScope, APService, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
     var acciones = "";
     if ($rootScope.infoReady == true) {
-        cargaAP();
+        cargarAP();
     } else {
         $rootScope.$on("InfoReady", function () {
-            cargaAP();
+            cargarAP();
         });
     }
-    function cargaAP() {
+    function cargarAP() {
         APFactory.buscarAsesoriasProyectos().then(function () {
             vm.asesoriasProyectos = APFactory.AsePro;
         });
@@ -41,7 +41,7 @@ function aAsesoriasCtrl($rootScope, APFactory, ptdFactory, loginFactory, service
     function saveAsesoriasProyectos() {
         APService.guardarAP(vm.formAsesoriasProyectos).then(function (res) {
             serviceNotification.success('Asesoria guardada correctamente', 3000);
-            cargaAP();
+            cargarAP();
         }).catch(function (err) {
             serviceNotification.error('No se guardó la Asesoria', 2000);
         });
@@ -50,7 +50,7 @@ function aAsesoriasCtrl($rootScope, APFactory, ptdFactory, loginFactory, service
     function editAsesoriasProyectos() {
         APService.modificarAP({ donde: vm.formAsesoriasProyectos.id, datos: vm.formAsesoriasProyectos }).then(function (res) {
             serviceNotification.success('Asesoria modificada correctamente', 3000);
-            cargaAP();
+            cargarAP();
         }).catch(function (err) {
             serviceNotification.error('No se modifico la Asesoria', 2000);
         });
@@ -59,7 +59,7 @@ function aAsesoriasCtrl($rootScope, APFactory, ptdFactory, loginFactory, service
     vm.deleteAsesoriasProyectos = function (ap) {
         APService.eliminarAP(ap).then(function (res) {
             serviceNotification.success('Asesoria eliminado correctamente', 3000);
-            cargaAP();
+            cargarAP();
         }).catch(function (err) {
             serviceNotification.error('No elimino la Asesoria', 2000);
         });
