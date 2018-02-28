@@ -13,6 +13,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                     if (loginFactory.userLogin) {
                         console.log("Usuario--------", loginFactory.user);
                         var name = toState.name.split(".");
+                        $rootScope.page = name[1];
                         if (loginFactory.user.estado == 1) {
                             console.log("estado 1", loginFactory.user.estado);
                             loginFactory.cargarEstatus().then(function () {

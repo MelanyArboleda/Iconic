@@ -49,6 +49,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 	}
 
 	function cargarMenu() {
+		vm.pageName = $rootScope.page;
 		fechaEtapaFactory.buscarFechaEtapa().then(function () {
 			console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
 			if (loginFactory.user.perfil == 1) {

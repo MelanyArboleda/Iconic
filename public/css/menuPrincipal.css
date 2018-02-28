@@ -24,36 +24,8 @@ header nav .button-collapse {
   margin-right: 20px;
 }
 
-.side-nav {
-  top: 65px;
-}
-
-@media only screen and (max-width: 992px) {
-  .menuPContainer .colMargin {
-    margin: 0 auto;
-    float: initial !important;
-  }
-
-  .formContainer {
-    float: initial !important;
-    margin: 0 auto !important;
-    width: 70% !important;
-  }
-  .formContainer .col.s7 {
-    float: initial !important;
-    width: 100%;
-    margin-top: 2rem;
-  }
-}
-@media only screen and (max-width: 490px) {
-  .formContainer {
-    width: 90% !important;
-  }
-}
-
-
-@media only screen and (max-width: 479px) {
-  
+.sidenav-container {
+  padding-left: 300px;
 }
 
 .tabs {
@@ -73,6 +45,11 @@ header nav .button-collapse {
     will-change: left, right;
 }
 
+.side-nav {
+  top: 112px;
+  height: calc(100% + 112px);
+}
+
 .side-nav li>a, .side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
   color: #616161;
   font-weight: 500;
@@ -88,6 +65,39 @@ header nav .button-collapse {
   color: #616161;
 }
 
+.no-margin{
+  margin: 0 !important;
+}
 
+@media only screen and (max-width: 992px) {
+  .menuPContainer .colMargin {
+    margin: 0 auto;
+    float: initial !important;
+  }
+
+  .formContainer {
+    float: initial !important;
+    margin: 0 auto !important;
+    width: 70% !important;
+  }
+  .formContainer .col.s7 {
+    float: initial !important;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .sidenav-container {
+    padding-left: 0;
+  }
+  .side-nav {
+		top: 0px !important;
+		padding-top: 20px;
+	}
+}
+
+@media only screen and (max-width: 490px) {
+  .formContainer {
+    width: 90% !important;
+  }
+}
 
 

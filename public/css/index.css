@@ -21,7 +21,6 @@ header nav .nav-wrapper span {
   padding-top: 3px;
 }
 
-
 #logincontainer{  
  	padding-top: 10vh; 
  	width: 100%;
@@ -290,13 +289,6 @@ p.titulo{
 
 .cursor-point{
 	cursor: pointer;
-}
-
-@media only screen and (max-width: 992px) {
-	.side-nav {
-		top: 0px !important;
-		padding-top: 20px;
-	}
 }
 
 @media only screen and (max-width: 425px) {

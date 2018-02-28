@@ -22,10 +22,10 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
-                    <ul class="left" ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
+                    <ul class="left hide-on-large-only" ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'" ng-class="{'hide' : indexVm.pageName == 'vistaPTD'}">
                         <li>
-                            <a href="#" class="home-button" ui-sref="menuPrincipal.vistaPTD">
-                                <i class="material-icons">home</i>
+                            <a href="" class="button-collapse" data-activates="slide-out">
+                                <i class="material-icons">menu</i>
                             </a>
                         </li>
                     </ul>

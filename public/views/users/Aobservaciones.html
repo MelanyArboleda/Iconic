@@ -1,58 +1,61 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
+<div class="sidenav-container">
+    <div class="container contenido planesDeTrabajo" ng-if="observacionesVm.ptds.length > 0">
+        <ul class="collection with-header">
+            <li class="collection-header">
+                <h5>Cambios Aprobados</h5>
+            </li>
+            <li class="collection-item avatar" ng-repeat="ptd in observacionesVm.ptds">
+                <i class="material-icons circle teal accent-4">&#xE873;</i>
+                <span class="title">FD-GC51</span>
+                <p>Plan de Trabajo Docente | {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}}
+                    <br> V_{{ptd.version}}</p>
+                <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" data-tooltip="Ver plan de trabajo">
+                    <i class="material-icons">&#xE8F4;</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <form name="aObservacionesForm" autocomplete="off" ng-submit="observacionesVm.saveObservaciones()">
+        <div class="container white contenido">
+            <div class="row">
+                <div class="input-field col s12 areaO" style="padding-right:3%;">
+                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" id="observacion" class="materialize-textarea"
+                        data-length="1000" required></textarea>
+                    <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row center" input-field>
+            <button ng-disabled="aObservacionesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar observaciones</button>
+        </div>
+    </form>
+    <a class="btn-floating btn-large waves-effect waves-light blue right">
+        <i class="material-icons">insert_invitation</i>
+    </a>
 
-<div class="container contenido planesDeTrabajo" ng-if="observacionesVm.ptds.length > 0">
-    <ul class="collection with-header">
-        <li class="collection-header">
-            <h5>Cambios Aprobados</h5>
-        </li>
-        <li class="collection-item avatar" ng-repeat="ptd in observacionesVm.ptds">
-            <i class="material-icons circle teal accent-4">&#xE873;</i>
-            <span class="title">FD-GC51</span>
-            <p>Plan de Trabajo Docente | {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}}
-                <br> V_{{ptd.version}}</p>
-            <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" data-tooltip="Ver plan de trabajo">
-                <i class="material-icons">&#xE8F4;</i>
-            </a>
-        </li>
-    </ul>
-</div>
-<br>
-<form name="aObservacionesForm" autocomplete="off" ng-submit="observacionesVm.saveObservaciones()">
     <div class="container white contenido">
         <div class="row">
-            <div class="input-field col s12 areaO" style="padding-right:3%;">
-                <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" id="observacion" class="materialize-textarea"
-                    data-length="1000" required></textarea>
-                <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
+            <div class="col s12 center">
+                <div class="input-field col s4">
+                    <input name="firma_docente" ng-model="observacionesVm.observaciones.firma_docente" id="docente" type="text" class="validate"
+                        required>
+                    <label for="docente">*Docente</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="firma_coord_prog" ng-model="observacionesVm.observaciones.firma_coord_prog" id="coordPrograma" type="text" class="validate"
+                        required>
+                    <label for="coordPrograma">*Coordinador de Programa</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="firma_consejo_facultad" ng-model="observacionesVm.observaciones.firma_consejo_facultad" id="consejoFacultad"
+                        type="text" class="validate" required>
+                    <label for="consejoFacultad">*Consejo de Facultad</label>
+                </div>
             </div>
         </div>
     </div>
     <br>
-    <div class="row center" input-field>
-        <button ng-disabled="aObservacionesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar observaciones</button>
-    </div>
-</form>
-<a class="btn-floating btn-large waves-effect waves-light blue right"><i class="material-icons">insert_invitation</i></a>
-
-<div class="container white contenido">
-    <div class="row">
-        <div class="col s12 center">
-            <div class="input-field col s4">
-                <input name="firma_docente" ng-model="observacionesVm.observaciones.firma_docente" id="docente" type="text" class="validate"
-                    required>
-                <label for="docente">*Docente</label>
-            </div>
-            <div class="input-field col s4">
-                <input name="firma_coord_prog" ng-model="observacionesVm.observaciones.firma_coord_prog" id="coordPrograma" type="text" class="validate"
-                    required>
-                <label for="coordPrograma">*Coordinador de Programa</label>
-            </div>
-            <div class="input-field col s4">
-                <input name="firma_consejo_facultad" ng-model="observacionesVm.observaciones.firma_consejo_facultad" id="consejoFacultad"
-                    type="text" class="validate" required>
-                <label for="consejoFacultad">*Consejo de Facultad</label>
-            </div>
-        </div>
-    </div>
 </div>
-<br>

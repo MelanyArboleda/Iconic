@@ -1,107 +1,108 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
-
-<div class="container white contenido">
-    <div class="row">
-        <div class="col s12">
-            <table class="responsive-table">
-                <thead>
-                    <tr>
-                        <th>Nombre Proyecto de Investigación (En ejecución)</th>
-                        <th>Tipo de vínculo</th>
-                        <th>Objetivo principal trabajo investigación</th>
-                        <th>Productos finales investigación</th>
-                        <th>Horas Semanales</th>
-                        <th>Horas Semestre</th>
-                        <th>Vo. Bo. Coord. Investigación</th>
-                        <th ng-if="investigacionesPVm.permiso.crear == true">
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesPVm.vaciarMadal()" data-target='modalInvestigacionesP'
-                                modal>Nuevo</a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="ip in investigacionesPVm.investigacionesProyectos">
-                        <td>{{ip.nombre_proyecto}}</td>
-                        <td>{{ip.tblVinculoId}}</td>
-                        <td>{{ip.objetivo_principal}}</td>
-                        <td>{{ip.producto}}</td>
-                        <td>{{ip.horas_semanales}}</td>
-                        <td>{{ip.horas_semestrales}}</td>
-                        <td>
-                            <input type="checkbox" ng-checked="{{ip.aprobado}}" disabled/>
-                        </td>
-                        <td ng-if="investigacionesPVm.permiso.modificar == true || investigacionesPVm.permiso.eliminar == true">
-                            <a ng-if="investigacionesPVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesPVm.llenarModal(ip)" data-target='modalInvestigacionesP'
-                                modal>
-                                <i class="material-icons">edit</i>
-                            </a>
-                            <a ng-if="investigacionesPVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)">
-                                <i class="material-icons">delete</i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
-        <div class="fixed-action-btn add_observaciones">
-            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                <i class="material-icons">&#xE85F;</i>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-<div id="modalInvestigacionesP" class="modal">
-    <div class="modal-content">
-        <h5 class="center">
-            <strong>Proyectos de Investigación</strong>
-        </h5>
+<div class="sidenav-container">
+    <div class="container white contenido">
         <div class="row">
-            <form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesPVm.accion()">
-                <div class="input-field col l12 s12 cajasombra">
-                    <input name="nombre_proyecto" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.nombre_proyecto"
-                        placeholder="Nombre Proyecto" required/>
-                </div>
-                <div class="input-field col l12 s12 cajasombra">
-                    <select id="tblVinculoId" name="tblVinculoId" ng-model="investigacionesPVm.formInvestigacionesProyectos.tblVinculoId" material-select
-                        watch required>
-                        <option value="0" disabled selected>Tipo de Vínculo</option>
-                        <option ng-repeat="nv in investigacionesPVm.vinculos">{{nv.vinculo}}</option>
-                    </select>
-                </div>
-                <div class="input-field col l12 s12 cajasombra">
-                    <input name="objetivo_principal" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.objetivo_principal"
-                        placeholder="Objetivo Principal" required/>
-                </div>
-                <div class="input-field col l12 s12 cajasombra">
-                    <input name="producto" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.producto"
-                        placeholder="Productos Investigación" required/>
-                </div>
-                <div class="input-field col l5 s5 cajasombra">
-                    <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.horas_semanales"
-                        placeholder="Horas Semanales" ng-change="investigacionesPVm.asignarData(investigacionesPVm.formInvestigacionesProyectos.horas_semanales)"
-                        required/>
-                </div>
-                <div class="input-field col l5 s5 cajasombra">
-                    <input name="horas_semestrales" type="number" class="form-control" ng-model="investigacionesPVm.formInvestigacionesProyectos.horas_semestrales"
-                        placeholder="Horas Semestrales" readonly/>
-                </div>
-                <div class="input-field col l2 s2 cajasombra">
-                    <input name="aprobado" type="checkbox" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.aprobado"
-                    />
-                </div>
-                <div class="input-field col l12 s12 center ">
-                    <button ng-disabled="aInvestigacionesForm.$invalid || investigacionesPVm.formInvestigacionesProyectos.tblVinculoId == 0"
-                        type="submit" class="waves-effect btn modal-close">Guardar</button>
-                </div>
-            </form>
+            <div class="col s12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre Proyecto de Investigación (En ejecución)</th>
+                            <th>Tipo de vínculo</th>
+                            <th>Objetivo principal trabajo investigación</th>
+                            <th>Productos finales investigación</th>
+                            <th>Horas Semanales</th>
+                            <th>Horas Semestre</th>
+                            <th>Vo. Bo. Coord. Investigación</th>
+                            <th ng-if="investigacionesPVm.permiso.crear == true">
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesPVm.vaciarMadal()" data-target='modalInvestigacionesP'
+                                    modal>Nuevo</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ip in investigacionesPVm.investigacionesProyectos">
+                            <td>{{ip.nombre_proyecto}}</td>
+                            <td>{{ip.tblVinculoId}}</td>
+                            <td>{{ip.objetivo_principal}}</td>
+                            <td>{{ip.producto}}</td>
+                            <td>{{ip.horas_semanales}}</td>
+                            <td>{{ip.horas_semestrales}}</td>
+                            <td>
+                                <input type="checkbox" ng-checked="{{ip.aprobado}}" disabled/>
+                            </td>
+                            <td ng-if="investigacionesPVm.permiso.modificar == true || investigacionesPVm.permiso.eliminar == true">
+                                <a ng-if="investigacionesPVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesPVm.llenarModal(ip)"
+                                    data-target='modalInvestigacionesP' modal>
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a ng-if="investigacionesPVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                    <i class="material-icons">&#xE85F;</i>
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="modal-footer">
-        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+
+    <div id="modalInvestigacionesP" class="modal">
+        <div class="modal-content">
+            <h5 class="center">
+                <strong>Proyectos de Investigación</strong>
+            </h5>
+            <div class="row">
+                <form name="aInvestigacionesForm" autocomplete="off" ng-submit="investigacionesPVm.accion()">
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input name="nombre_proyecto" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.nombre_proyecto"
+                            placeholder="Nombre Proyecto" required/>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <select id="tblVinculoId" name="tblVinculoId" ng-model="investigacionesPVm.formInvestigacionesProyectos.tblVinculoId" material-select
+                            watch required>
+                            <option value="0" disabled selected>Tipo de Vínculo</option>
+                            <option ng-repeat="nv in investigacionesPVm.vinculos">{{nv.vinculo}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input name="objetivo_principal" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.objetivo_principal"
+                            placeholder="Objetivo Principal" required/>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input name="producto" type="text" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.producto"
+                            placeholder="Productos Investigación" required/>
+                    </div>
+                    <div class="input-field col l5 s5 cajasombra">
+                        <input name="horas_semanales" type="number" min="1" max="40" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.horas_semanales"
+                            placeholder="Horas Semanales" ng-change="investigacionesPVm.asignarData(investigacionesPVm.formInvestigacionesProyectos.horas_semanales)"
+                            required/>
+                    </div>
+                    <div class="input-field col l5 s5 cajasombra">
+                        <input name="horas_semestrales" type="number" class="form-control" ng-model="investigacionesPVm.formInvestigacionesProyectos.horas_semestrales"
+                            placeholder="Horas Semestrales" readonly/>
+                    </div>
+                    <div class="input-field col l2 s2 cajasombra">
+                        <input name="aprobado" type="checkbox" class="form-control validate" ng-model="investigacionesPVm.formInvestigacionesProyectos.aprobado"
+                        />
+                    </div>
+                    <div class="input-field col l12 s12 center ">
+                        <button ng-disabled="aInvestigacionesForm.$invalid || investigacionesPVm.formInvestigacionesProyectos.tblVinculoId == 0"
+                            type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
     </div>
 </div>
