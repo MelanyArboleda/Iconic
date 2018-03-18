@@ -29,10 +29,10 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                                         if (permiso.ver == true) {
                                             if (ptdFactory.ptd == 0 && loginFactory.user.perfil != 1) {
                                                 ptdFactory.buscarPtd({ ptd: toParams.idPlanDeTrabajo }).then(function () {
-                                                    emitUrlReady();
+                                                    emitUrlReady($rootScope.ptd = toParams.idPlanDeTrabajo);
                                                 });
                                             } else {
-                                                emitUrlReady();
+                                                emitUrlReady($rootScope.ptd = toParams.idPlanDeTrabajo);
                                             }
                                         } else {
                                             enrutador(fromState.url);

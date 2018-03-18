@@ -15,6 +15,10 @@ var tbl_horarios = sequelize.define('tbl_horarios', {
         type: Sequelize.DATE,
         allowNull: false
     },
+    descripcion: {
+        type  : Sequelize.STRING,
+        allowNull: false
+    },
     tblObservacioneId: {
         type: Sequelize.INTEGER,
         allowNull: false

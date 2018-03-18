@@ -90,6 +90,7 @@ router.post('/auth/eliminarOA', modelos.tbl_actividades.eliminar_OA);
 router.post('/auth/buscarObservaciones', modelos.tbl_observaciones.buscar_Observaciones);
 router.post('/auth/crearObservaciones', modelos.tbl_observaciones.crear_Observaciones);
 router.post('/auth/guardarObservaciones', modelos.tbl_observaciones.guardar_Observaciones);
+router.post('/auth/guardarFirmaObservaciones', modelos.tbl_observaciones.guardar_Firma_Observaciones);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de seguimiento y evaluacion
 router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);

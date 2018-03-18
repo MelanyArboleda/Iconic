@@ -45,7 +45,7 @@
         <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
             <div class="fixed-action-btn add_observaciones">
                 <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                    <i class="material-icons">&#xE85F;</i>
+                    <i class="material-icons">message</i>
                 </a>
             </div>
         </div>
@@ -72,25 +72,24 @@
                     </div>
                     <div class="input-field col l4 s4 cajasombra">
                         <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="comisionEstudiosVm.formComisionEstudios.fecha_inicio"
-                            format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}" today="mnuPVm.today"
-                            first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Inicio"
-                            required>
+                            ng-change="mnuPVm.validFechaFinal(comisionEstudiosVm.formComisionEstudios.fecha_inicio)" format="mm/dd/yyyy"
+                            months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                            close="mnuPVm.close" select-years="15" placeholder="Fecha Inicio" required>
                     </div>
                     <div class="input-field col l4 s4 cajasombra">
-                        <input input-date type="text" name="fecha_graduacion" id="fecha_graduacion" class="form-control fecha" ng-model="comisionEstudiosVm.formComisionEstudios.fecha_graduacion"
+                        <input input-date ng-disabled="!comisionEstudiosVm.formComisionEstudios.fecha_inicio" type="text" name="fecha_graduacion"
+                            id="fecha_graduacion" class="form-control fecha" ng-model="comisionEstudiosVm.formComisionEstudios.fecha_graduacion"
                             format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}" today="mnuPVm.today"
-                            first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Graduación"
-                            required>
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateFinal}}" today="mnuPVm.today" first-day="1"
+                            clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Graduación" required>
                     </div>
                     <div class="input-field col l4 s4 cajasombra">
                         <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control fecha"
                             ng-model="comisionEstudiosVm.formComisionEstudios.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
                             months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}" today="mnuPVm.today"
-                            first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Autorización"
-                            required>
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                            close="mnuPVm.close" select-years="15" placeholder="Fecha Autorización" required>
                     </div>
                     <div class="input-field col l12 s12 cajasombra">
                         <input type="text" name="aportes_inst_obtenidos" class="form-control validate" ng-model="comisionEstudiosVm.formComisionEstudios.aportes_inst_obtenidos"

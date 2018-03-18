@@ -72,16 +72,17 @@
                 </div>
                 <div class="input-field col l3 s6 offset-l1 cajasombra">
                     <input input-date type="text" name="fecha_inicial" id="fecha_inicial" class="form-control fecha" ng-model="fechaEtapaVm.formfechaEtapa.fecha_inicial"
-                        format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                        weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateIExt}}" max="{{mnuPVm.maxDateIExt}}"
-                        today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" required>
+                        ng-change="mnuPVm.validFechaFinal(fechaEtapaVm.formfechaEtapa.fecha_inicial)" format="mm/dd/yyyy" months-full="{{mnuPVm.month}}"
+                        months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}"
+                        min="{{mnuPVm.minDate}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                        close="mnuPVm.close" select-years="15" required>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">
                     <input input-date ng-disabled="!fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final" id="fecha_final"
                         class="form-control fecha no-disabled" ng-model="fechaEtapaVm.formfechaEtapa.fecha_final" format="mm/dd/yyyy"
                         months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                        weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{fechaEtapaVm.fechaFinalValida}}" max="{{mnuPVm.maxDateFExt}}"
-                        today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" required>
+                        weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateFinal}}" max="{{mnuPVm.maxDate}}" today="mnuPVm.today"
+                        first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" required>
                 </div>
 
                 <div class="input-field col s12 center ">

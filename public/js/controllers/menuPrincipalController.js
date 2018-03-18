@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory","ObservacionesFactory", "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory,ObservacionesFactory, serviceNotification, $state, $q) {
+function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -14,28 +14,17 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 	vm.today = 'Hoy';
 	vm.clear = 'Limpiar';
 	vm.close = 'Cerrar';
-	var daysmax = 0;
-	var daysmin = 150;
-	var daysminExt = 1;
-	var daysmaxExt = 150;
+	var daysmax = 150;
+	var daysmin = 0;
 	vm.minDate = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * daysmin))).toISOString();
 	vm.maxDate = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
-
-	var fechaSel = vm.fecha_inicio;
-
-	vm.minDateIExt = (new Date(vm.currentTime.getTime() - (1000 * 60 * 60 * 24 * daysmin))).toISOString();
-	vm.maxDateIExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmax))).toISOString();
-
-	vm.minDateFExt = fechaSel;
-	vm.maxDateFExt = (new Date(vm.currentTime.getTime() + (1000 * 60 * 60 * 24 * daysmaxExt))).toISOString();
-
 
 	function emitInfoReady() {
 		$rootScope.$emit("InfoReady");
 		$rootScope.infoReady = true;
 	}
 
-	function emitPtdReady(){
+	function emitPtdReady() {
 		$rootScope.$emit("PtdReady");
 		$rootScope.PtdReady == true;
 	}
@@ -64,12 +53,12 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 							vm.plan = true;
 							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
 								console.log("resumen--------", resumen);
-								ObservacionesFactory.crearObservaciones(ptd.id).then(function (){
+								ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
 									emitPtdReady();
 									emitInfoReady();
 								});
 							});
-							
+
 						});
 					}
 				} else {
@@ -87,32 +76,33 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 						}).then(function () {
 							console.log("PTDS----------", planesFactory.ptds);
 							vm.ptds = planesFactory.ptds;
-							// emitInfoReady($rootScope.infoReady = true);
+							vm.ptdId = $rootScope.ptd;
 							emitInfoReady();
 						});
 					}
 				} else {
-					if(loginFactory.user.perfil == 4){
+					if (loginFactory.user.perfil == 4) {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
 							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
 							vm.plan = false;
 							emitInfoReady();
-						}else{
+						} else {
 							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
 							planesFactory.buscarPtdsPrograma({
 								programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
 							}).then(function () {
 								console.log("PTDS----------", planesFactory.ptds);
 								vm.ptds = planesFactory.ptds;
+								vm.ptdId = $rootScope.ptd;
 								emitInfoReady();
 							});
 						}
-					}else{
+					} else {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
 							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
 							vm.plan = false;
 							emitInfoReady();
-						}else{
+						} else {
 							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
 							planesFactory.buscarPtds({
 								semestre: data.semestre, ano: data.ano
@@ -178,19 +168,8 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 		}
 	}
 
-	vm.validFechaFinal = function (ext) {
-		if (ext.fecha_inicial) {
-			var auxFechaInicial = new Date(ext.fecha_inicial);
-			console.log(auxFechaInicial);
-			console.log(auxFechaFinal);
-			if (ext.fecha_final) {
-				var auxFechaFinal = new Date(ext.fecha_final);
-				console.log(auxFechaFinal);
-				if (auxFechaFinal < auxFechaInicial) {
-					delete ext.fecha_final;
-				}
-			}
-			// ext.fechaFinalValida = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
-		}
+	vm.validFechaFinal = function (fecha_inicial) {
+			var auxFechaInicial = new Date(fecha_inicial);
+			vm.minDateFinal = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
 	}
 };

@@ -2,6 +2,8 @@ const Sequelize = require('sequelize');
 const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
+const tbl_usuarios = require('.././database/tbl_usuarios');
+const bcrypt = require('bcryptjs');
 
 var tbl_observaciones = sequelize.define('tbl_observaciones', {
     observacion: {
@@ -46,7 +48,7 @@ module.exports = {
 
     crear_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
-            crud.findOrCreate(tbl_observaciones, req.body, { tblPtdId : req.body.tblPtdId },null, (resp) => {
+            crud.findOrCreate(tbl_observaciones, req.body, { tblPtdId: req.body.tblPtdId }, null, (resp) => {
                 if (resp != 'error') {
                     res.status(200).end();
                 } else {
@@ -63,6 +65,44 @@ module.exports = {
                     res.status(200).end();
                 } else {
                     res.sendStatus(403);
+                }
+            });
+        });
+    },
+
+    guardar_Firma_Observaciones: function (req, res, next) {
+        tbl_observaciones.sync().then(function () {
+            crud.findOne(tbl_usuarios, { doc_identidad: req.body.user }, null, (user) => {
+                if (bcrypt.compareSync(req.body.datos.firma_consejo_facultad, user.contraseña_firma)) {
+                    crud.update(tbl_observaciones, { id: req.body.donde }, { firma_consejo_facultad: true }, (resp) => {
+                        if (resp == 'update') {
+                            res.status(200).end();
+                        } else {
+                            res.sendStatus(403);
+                        }
+                    });
+                } else {
+                    if (bcrypt.compareSync(req.body.datos.firma_coord_prog, user.contraseña_firma)) {
+                        crud.update(tbl_observaciones, { id: req.body.donde }, { firma_coord_prog: true }, (resp) => {
+                            if (resp == 'update') {
+                                res.status(200).end();
+                            } else {
+                                res.sendStatus(403);
+                            }
+                        });
+                    } else {
+                        if (bcrypt.compareSync(req.body.datos.firma_docente, user.contraseña_firma)) {
+                            crud.update(tbl_observaciones, { id: req.body.donde }, { firma_docente: true }, (resp) => {
+                                if (resp == 'update') {
+                                    res.status(200).end();
+                                } else {
+                                    res.sendStatus(403);
+                                }
+                            });
+                        } else {
+                            res.sendStatus(401);
+                        }
+                    }
                 }
             });
         });

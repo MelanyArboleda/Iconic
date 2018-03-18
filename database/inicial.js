@@ -17,7 +17,6 @@ var tbl_fechas_etapas = require('./tbl_fechas_etapas');
 var tbl_materias = require('./tbl_materias');
 var tbl_materias_programas = require('./tbl_materias_programas');
 var tbl_permisos_iniciales = require('./tbl_permisos_iniciales');
-const moment = require('moment');
 
 //vectores de objetos con los datos a insertar una ves se inicie el servidor
 var estados = [

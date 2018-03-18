@@ -17,6 +17,12 @@
         </ul>
     </div>
     <br>
+    <a class="waves-effect waves-light btn p-btn-new" data-target='modalHorario' modal>
+        <i class="material-icons">insert_invitation</i> Horario
+    </a>
+
+
+
     <form name="aObservacionesForm" autocomplete="off" ng-submit="observacionesVm.saveObservaciones()">
         <div class="container white contenido">
             <div class="row">
@@ -31,31 +37,95 @@
         <div class="row center" input-field>
             <button ng-disabled="aObservacionesForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar observaciones</button>
         </div>
+        <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                    <i class="material-icons">message</i>
+                </a>
+            </div>
+        </div>
     </form>
-    <a class="btn-floating btn-large waves-effect waves-light blue right">
-        <i class="material-icons">insert_invitation</i>
-    </a>
 
-    <div class="container white contenido">
+    <div class="container white contenido" ng-if="observacionesVm.permiso">
         <div class="row">
             <div class="col s12 center">
-                <div class="input-field col s4">
-                    <input name="firma_docente" ng-model="observacionesVm.observaciones.firma_docente" id="docente" type="text" class="validate"
-                        required>
-                    <label for="docente">*Docente</label>
+                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
+                    <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
-                <div class="input-field col s4">
-                    <input name="firma_coord_prog" ng-model="observacionesVm.observaciones.firma_coord_prog" id="coordPrograma" type="text" class="validate"
-                        required>
-                    <label for="coordPrograma">*Coordinador de Programa</label>
+                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4">
+                    <button type="button" ng-click="observacionesVm.firmaCoordinador = true" ng-hide="observacionesVm.firmaCoordinador" class="waves-effect waves-light btn">Firma coordinador programa</button>
                 </div>
-                <div class="input-field col s4">
-                    <input name="firma_consejo_facultad" ng-model="observacionesVm.observaciones.firma_consejo_facultad" id="consejoFacultad"
-                        type="text" class="validate" required>
-                    <label for="consejoFacultad">*Consejo de Facultad</label>
+                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1">
+                    <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn">Firma docente</button>
                 </div>
+                <form name="FirmConsejoForm" autocomplete="off" ng-show="observacionesVm.firmaConsejo" ng-submit="observacionesVm.saveFirma()">
+                    <div class="input-field col s4">
+                        <input ng-model="observacionesVm.formFirmas.firma_consejo_facultad" class="validate" type="password" id="firma_consejo_facultad"
+                            name="firma_consejo_facultad" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" required> </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmConsejoForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+                <form name="FirmCoordinacionForm" autocomplete="off" ng-show="observacionesVm.firmaCoordinador" ng-submit="observacionesVm.saveFirma()">
+                    <div class="input-field col s4">
+                        <input ng-model="observacionesVm.formFirmas.firma_coord_prog" class="validate" type="password" id="firma_coord_prog" name="firma_coord_prog"
+                            minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required> </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmCoordinacionForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+                <form name="FirmDocenteForm" autocomplete="off" ng-show="observacionesVm.firmaDocente" ng-submit="observacionesVm.saveFirma()">
+                    <div class="input-field col s4">
+                        <input ng-model="observacionesVm.formFirmas.firma_docente" class="validate" type="password" id="firma_docente" name="firma_docente"
+                            minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required> </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmDocenteForm.$invalid" type="submit" ng-click="observacionesVm.firmaDocente = false" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <br>
+    <div id="modalHorario" class="modal">
+        <div class="modal-content">
+            <h5 class="center">
+                <strong>Horario</strong>
+            </h5>
+            <div class="row">
+                <form name="horarioForm" autocomplete="off">
+                    <div class="input-field col l4 s12 cajasombra">
+                        <select id="dia" name="dia" material-select watch required>
+                            <option value="0" selected disabled>Dia</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miercoles">Miercoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sabado">Sabado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="input-field col l4 s12 cajasombra">
+                        <label for="input_starttime">Hora inicio</label>
+                    </div>
+                    <div class="input-field col l4 s12 cajasombra">
+                        <label for="input_starttime">Hora Fin</label>
+                    </div>
+                    <div class="input-field col l4 s12 cajasombra">
+                        <input name="descripcion" type="text" class="form-control validate" placeholder="Descripcion" required/>
+                    </div>
+                    <div class="input-field col s12 center ">
+                        <button ng-disabled="horarioForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
 </div>

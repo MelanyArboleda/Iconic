@@ -44,7 +44,7 @@
         <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
             <div class="fixed-action-btn add_observaciones">
                 <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
-                    <i class="material-icons">&#xE85F;</i>
+                    <i class="material-icons">message</i>
                 </a>
             </div>
         </div>
@@ -67,18 +67,17 @@
                     </div>
                     <div class="input-field col l5 s5 cajasombra">
                         <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="extensionVm.formActividadesExtension.fecha_inicio"
-                            format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateIExt}}" max="{{mnuPVm.maxDateIExt}}"
-                            today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Inicial"
-                            required>
+                            ng-change="mnuPVm.validFechaFinal(extensionVm.formActividadesExtension.fecha_inicio)" format="mm/dd/yyyy"
+                            months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                            close="mnuPVm.close" select-years="15" placeholder="Fecha Inicial" required>
                     </div>
                     <div class="input-field col l5 s5 cajasombra">
                         <input input-date ng-disabled="!extensionVm.formActividadesExtension.fecha_inicio" type="text" name="fecha_final" id="fecha_final"
                             class="form-control fecha" ng-model="extensionVm.formActividadesExtension.fecha_final" format="mm/dd/yyyy"
                             months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
-                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{extensionVm.fechaFinalValida}}" max="{{mnuPVm.maxDateFExt}}"
-                            today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Final"
-                            required>
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateFinal}}" today="mnuPVm.today" first-day="1"
+                            clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Final" required>
                     </div>
                     <div class="input-field col l2 s2 cajasombra">
                         <input type="checkbox" name="aprobado" class="form-control validate" ng-model="extensionVm.formActividadesExtension.aprobado"

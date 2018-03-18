@@ -4,7 +4,7 @@ $(document).ready(function () {
 	$('textarea#observaciones').characterCounter();
 	$(".close").on("click", function () {
 		$('.contenido-alert').hide();
-	});
+	});    
 });
 
 

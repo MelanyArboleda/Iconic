@@ -1,9 +1,12 @@
 angular.module("iconic").controller("aObservacionesCtrl", aObservacionesCtrl);
 
-aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "ObservacionesService", "ptdFactory", "$rootScope", "serviceNotification"];
+aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "ObservacionesService", "ptdFactory", "loginFactory", "$rootScope", "serviceNotification"];
 
-function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, ObservacionesService, ptdFactory, $rootScope, serviceNotification) {
+function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, ObservacionesService, ptdFactory, loginFactory, $rootScope, serviceNotification) {
 	var vm = this;
+	vm.firmaConsejo = false;
+	vm.firmaCoordinador = false;
+	vm.firmaDocente = false;
 
 	if ($rootScope.infoReady == true) {
 		cardarObservaciones();
@@ -23,6 +26,15 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 		ObservacionesFactory.buscarObservaciones().then(function(){
 			vm.observaciones = ObservacionesFactory.observaciones;
 		});
+		vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
+			return permiso.tblRecursoId == 16;
+		});
+		vm.perfil = loginFactory.user.perfil;
+		vm.formFirmas ={
+			firma_consejo_facultad: '',
+			firma_coord_prog: '',
+			firma_docente:''
+		}
 	}
 
 	vm.saveObservaciones = function (){
@@ -31,6 +43,20 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 			cardarObservaciones();
 		}).catch(function (err) {
 			serviceNotification.error('No se guardó la observacion', 2000);
+		});
+	}
+
+	vm.saveFirma = function(){
+		ObservacionesService.guardarFirmaObservaciones({donde : vm.observaciones.id, datos: vm.formFirmas, user:loginFactory.user.doc_identidad}).then(function (res) {
+			serviceNotification.success('Firma guardada correctamente', 3000);
+			cardarObservaciones();
+		}).catch(function (err) {
+			if (err.status == 401) {
+				serviceNotification.error("La contraseña de la firma no coincide", 2000);
+			}
+			if (err.status == 403) {
+				serviceNotification.error("No se pudo guardar la firma", 2000);
+			}
 		});
 	}
 };
