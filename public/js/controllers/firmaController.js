@@ -28,7 +28,7 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
             vm.firma = vm.firma.replace(formato, "formato");
             vm.siguiente = true;
         } else {
-            serviceNotification.error('No se selecciono una firma', 2000);
+            serviceNotification.error('No se seleccionó ninguna firma', 2000);
         }
     }
 
@@ -40,14 +40,14 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
                 firma: vm.firma 
             };
             loginService.guardarFirma(data).then(function (res) {
-                serviceNotification.success('Se guardó la firma', 3000);
+                serviceNotification.success('Se guardó la firma exitosamente', 3000);
             }).catch(function (err) {
                 console.log(err);
                 if (err.status == 401) {
-                    serviceNotification.warning('No puede ser igual a la contraseña de sesion', 2000);
+                    serviceNotification.warning('La contraseña de tu firma no puede ser la misma con la que inicias sesión', 2000);
 				}
 				if (err.status == 403) {
-                    serviceNotification.error('No se guardó la firma', 2000);
+                    serviceNotification.error('No se pudo guardar la firma', 2000);
 				}
             });
         } else {

@@ -71,7 +71,7 @@ function concertacionCtrl($rootScope, loginService, loginFactory, ptdService, pt
                 vm.mensaje = "";
                 socket.emit('new-message', concertacion_new);
             }).catch(function (err) {
-                serviceNotification.error('No se pudo enviar el mensaje.', 2000);
+                serviceNotification.error('¡No se pudo enviar el mensaje!', 2000);
             });
         }
     }

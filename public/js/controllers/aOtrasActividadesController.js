@@ -22,7 +22,7 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
             RGFactory.buscarResumenGeneral().then(function () {
                 if (loginFactory.perfil.id == 2) {
                     if (RGFactory.ResGen.totalHorasSemestre != mes) {
-                        serviceNotification.warning('Las horas no coninciden con las horas establecidad por el estatuto', 2000);
+                        serviceNotification.warning('Las horas no coinciden con las horas establecidas por el Estatuto Docente', 2000);
                     }
                 }
                 OAFactory.buscarOtrasActividades(RGFactory.ResGen.id).then(function () {
@@ -66,10 +66,10 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
                     serviceNotification.success('Actividad guardada correctamente', 3000);
                     cargarData();
                 }).catch(function (err) {
-                    serviceNotification.error('No se guardó la Actividad', 2000);
+                    serviceNotification.error('No se pudo guardar la Actividad', 2000);
                 });
             } else {
-                serviceNotification.error('La suma de la horas conexas no debe superar a las horas conexas nesesarias', 2000);
+                serviceNotification.error('La suma de las horas de las actividades conexas no debe superar el màximo permitido', 2000);
             }
         }
 
@@ -82,20 +82,20 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
                     serviceNotification.success('Actividad modificada correctamente', 3000);
                     cargarData();
                 }).catch(function (err) {
-                    serviceNotification.error('No se modifico la Actividad', 2000);
+                    serviceNotification.error('No se pudo modificar la Actividad', 2000);
                 });
             } else {
-                serviceNotification.error('La suma de la horas conexas no debe superar a las horas conexas nesesarias', 2000);
+                serviceNotification.error('La suma de las horas de las actividades conexas no debe superar el màximo permitido', 2000);
             }
         }
     }
 
     vm.deleteOtrasActividades = function (oa) {
         OAService.eliminarOA(oa).then(function (res) {
-            serviceNotification.success('Actividad eliminado correctamente', 3000);
+            serviceNotification.success('Actividad eliminada correctamente', 3000);
             cargarData();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la Actividad', 2000);
+            serviceNotification.error('No se pudo eliminar la Actividad', 2000);
         });
     }
 
@@ -104,7 +104,7 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
             serviceNotification.success('Observación guardada correctamente', 3000);
             cargarData();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó la Observación', 2000);
+            serviceNotification.error('No se pudo guardar la Observación', 2000);
         });
     }
 

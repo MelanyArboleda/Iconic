@@ -59,19 +59,19 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
 
     function saveInvestigacionesProyectos() {
         IPService.guardarIP(vm.formInvestigacionesProyectos).then(function (res) {
-            serviceNotification.success('Proyecto guardada correctamente', 3000);
+            serviceNotification.success('Proyecto guardado correctamente', 3000);
             cargarIP();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó el proyecto', 2000);
+            serviceNotification.error('No se pudo guardar el proyecto', 2000);
         });
     }
 
     function editInvestigacionesProyectos() {
         IPService.modificarIP({ donde: vm.formInvestigacionesProyectos.id, datos: vm.formInvestigacionesProyectos }).then(function (res) {
-            serviceNotification.success('Proyecto modificada correctamente', 3000);
+            serviceNotification.success('Proyecto modificado correctamente', 3000);
             cargarIP();
         }).catch(function (err) {
-            serviceNotification.error('No se modifico el proyecto', 2000);
+            serviceNotification.error('No se pudo modificar el proyecto', 2000);
         });
     }
 
@@ -80,7 +80,7 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
             serviceNotification.success('Proyecto eliminado correctamente', 3000);
             cargarIP();
         }).catch(function (err) {
-            serviceNotification.error('No elimino el proyecto', 2000);
+            serviceNotification.error('No se pudo eliminar el proyecto', 2000);
         });
     }
 
@@ -137,10 +137,10 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
                     var investigacionesProyectos = sumarHoras(IPFactory.InvPro) / 2;
                     var docDicCompleta = docenciaDirecta + investigacionesProyectos + investigacionesSemilleros;
                     if (max < docDicCompleta) {
-                        serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es mayor a la requerida', 2000);
+                        serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables sobrepasa el màximo de horas permitido', 2000);
                     } else {
                         if (min > docDicCompleta && loginFactory.perfil.id == 2) {
-                            serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor a la requerida', 2000);
+                            serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor al mínimo exigido', 2000);
                         }
                     }
                 });

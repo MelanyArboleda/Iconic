@@ -34,7 +34,7 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
                 fecha_final: ''
             }
             if (fechaEtapaFactory.fechaEtapa.length == 0) {
-                serviceNotification.warning('No se han creado la fechas de las etapas ojo haga esa cosa ya', 5000);
+                serviceNotification.warning('¡AVISO! : No se han creado las fechas para las etapas de plan de trabajo', 6000);
             }
         });
         vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
@@ -58,10 +58,10 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
 
     function saveFechaEtapa() {
         fechaEtapaService.guardarFechaEtapa(vm.formfechaEtapa).then(function (res) {
-            serviceNotification.success('Fecha creada correctamente', 3000);
+            serviceNotification.success('Fecha creada correctamente', 4000);
             cargarFE();
         }).catch(function (err) {
-            serviceNotification.error('No se creo la fecha de la etapa', 2000);
+            serviceNotification.error('No se pudo crear la fecha para la etapa', 5000);
         });
     }
 
@@ -73,10 +73,10 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
             ano: vm.formfechaEtapa.ano
         }
         fechaEtapaService.modificarFechaEtapa({ donde: donde, datos: vm.formfechaEtapa }).then(function (res) {
-            serviceNotification.success('Fecha modificada correctamente', 3000);
+            serviceNotification.success('Fecha modificada correctamente', 4000);
             cargarFE();
         }).catch(function (err) {
-            serviceNotification.error('No se modifico la fecha de la etapa', 2000);
+            serviceNotification.error('No se pudo modificar la fecha para la etapa', 5000);
         });
     }
 
@@ -88,10 +88,11 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
             ano: fe.ano
         }
         fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
-            serviceNotification.success('Fecha eliminada correctamente', 3000);
-            cargarFE();
+                serviceNotification.success('Fecha eliminada correctamente', 4000);
+                cargarFE();
+            
         }).catch(function (err) {
-            serviceNotification.error('No se elimino la fecha de la etapa', 2000);
+            serviceNotification.error('No se pudo eliminar la fecha para la etapa', 5000);
         });
     }
 

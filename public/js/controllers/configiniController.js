@@ -22,7 +22,7 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
                 }));
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.warning('No puede ser igual a la contraseña por defecto', 2000);
+                serviceNotification.warning('La contraseña no debe ser la misma por defecto', 2000);
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);
