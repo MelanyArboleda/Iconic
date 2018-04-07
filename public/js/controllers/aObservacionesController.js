@@ -23,22 +23,22 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 		}).then(function () {
 			vm.ptds = ObservacionesFactory.planesUser;
 		});
-		ObservacionesFactory.buscarObservaciones().then(function(){
+		ObservacionesFactory.buscarObservaciones().then(function () {
 			vm.observaciones = ObservacionesFactory.observaciones;
 		});
 		vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
 			return permiso.tblRecursoId == 16;
 		});
 		vm.perfil = loginFactory.user.perfil;
-		vm.formFirmas ={
+		vm.formFirmas = {
 			firma_consejo_facultad: '',
 			firma_coord_prog: '',
-			firma_docente:''
+			firma_docente: ''
 		}
 	}
 
-	vm.saveObservaciones = function (){
-		ObservacionesService.guardarObservaciones({donde : vm.observaciones.id, datos: vm.observaciones}).then(function (res) {
+	vm.saveObservaciones = function () {
+		ObservacionesService.guardarObservaciones({ donde: vm.observaciones.id, datos: vm.observaciones }).then(function (res) {
 			serviceNotification.success('Observacion guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
@@ -46,11 +46,16 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 		});
 	}
 
-	vm.saveFirma = function(){
-		ObservacionesService.guardarFirmaObservaciones({donde : vm.observaciones.id, datos: vm.formFirmas, user:loginFactory.user.doc_identidad}).then(function (res) {
+	vm.saveFirma = function () {
+		ObservacionesService.guardarFirmaObservaciones({ donde: vm.observaciones.id, datos: vm.formFirmas, user: loginFactory.user.doc_identidad }).then(function (res) {
 			serviceNotification.success('Firma guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
+			vm.formFirmas = {
+				firma_consejo_facultad: '',
+				firma_coord_prog: '',
+				firma_docente: ''
+			}
 			if (err.status == 401) {
 				serviceNotification.error("La contraseña de la firma no coincide", 2000);
 			}

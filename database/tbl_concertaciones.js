@@ -38,8 +38,8 @@ module.exports = {
         tbl_concertaciones.sync().then(function () {
             crud.create(tbl_concertaciones, req.body.concertacion, (resp) => {
                 if (resp != 'error') {
-                    funciones.buscarUser(req.body.concertacion.tblUsuarioDocIdentidad, (resp2) => {
-                        res.status(200).json({ user: resp2.nombre+" "+resp2.apellido_1+" "+resp2.apellido_2, concertacion: resp }).end();
+                    crud.findOne(tbl_usuarios, { doc_identidad: req.body.concertacion.tblUsuarioDocIdentidad }, null, (resp2) => {
+                        res.status(200).json({ user: resp2.nombre + " " + resp2.apellido_1 + " " + resp2.apellido_2, concertacion: resp }).end();
                     });
                 } else {
                     res.sendStatus(403);

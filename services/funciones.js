@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const crud = require('.././services/crudService');
 const tbl_usuarios = require('.././database/tbl_usuarios');
 const tbl_permisos = require('.././database/tbl_permisos');
-//la funcion encripta cualquier dato que llegue y lo retorna
+const tbl_concertaciones = require('.././database/tbl_concertaciones');
 module.exports = {
 	encriptar: function (clave) {
 		var salt = bcrypt.genSaltSync(10);
@@ -25,5 +25,11 @@ module.exports = {
 				updated: data[0].dataValues.updatedAt
 			});
 		});
-	}
+	},
+
+	buscarMensajes: function (channel, callback) {
+		crud.findAll(tbl_concertaciones.tbl_concertaciones, { tblPtdId: channel }, "fecha ASC", (msg) => {
+			callback(msg);
+		});
+	},
 };

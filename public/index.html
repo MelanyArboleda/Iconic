@@ -132,7 +132,7 @@
                         <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
                     </div>
                     <div class="input-field col s12 center">
-                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="modal-action waves-effect btn modal-close">Guardar</button>
+                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn modal-close" ng-click="firmaVm.closeModal()">Guardar</button>
                     </div>
                 </form>
             </div>

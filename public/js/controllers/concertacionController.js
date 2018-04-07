@@ -1,5 +1,5 @@
 angular.module("iconic").controller("concertacionCtrl", concertacionCtrl);
-var socket = io.connect('http://192.168.1.17:3000', { 'forceNew': true });
+var socket = io.connect('http://192.168.1.52:3000', { 'forceNew': true });
 concertacionCtrl.$inject = ["$rootScope", "loginService", "loginFactory", "ptdService", "ptdFactory", "serviceNotification", "$q", "$scope"];
 
 function concertacionCtrl($rootScope, loginService, loginFactory, ptdService, ptdFactory, serviceNotification, $q, $scope) {
@@ -39,7 +39,6 @@ function concertacionCtrl($rootScope, loginService, loginFactory, ptdService, pt
                                 </div>
                             </div>`)
         }).join(" ");
-
         document.getElementById('mensajes').innerHTML = html;
     }
 
