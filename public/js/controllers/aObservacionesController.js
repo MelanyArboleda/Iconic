@@ -39,10 +39,10 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 
 	vm.saveObservaciones = function (){
 		ObservacionesService.guardarObservaciones({donde : vm.observaciones.id, datos: vm.observaciones}).then(function (res) {
-			serviceNotification.success('Observación guardada correctamente', 3000);
+			serviceNotification.success('Observaciï¿½n guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
-			serviceNotification.error('No se pudo guardar la observación', 2000);
+			serviceNotification.error('No se pudo guardar la observaciï¿½n', 2000);
 		});
 	}
 
@@ -51,13 +51,13 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 			serviceNotification.success('Firma guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
-			vm.formFirmas = {	
+			vm.formFirmas = {
 				firma_consejo_facultad: '',
 				firma_coord_prog: '',
 				firma_docente: ''
 			}
 			if (err.status == 401) {
-				serviceNotification.error("La contraseña de la firma es incorrecta", 2000);
+				serviceNotification.error("La contraseï¿½a de la firma es incorrecta", 2000);
 			}
 			if (err.status == 403) {
 				serviceNotification.error("No se pudo guardar la firma", 2000);
