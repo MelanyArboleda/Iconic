@@ -57,7 +57,7 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 				firma_docente: ''
 			}
 			if (err.status == 401) {
-				serviceNotification.error("La contraseña de la firma no coincide", 2000);
+				serviceNotification.error("La contraseña de la firma es incorrecta", 2000);
 			}
 			if (err.status == 403) {
 				serviceNotification.error("No se pudo guardar la firma", 2000);
