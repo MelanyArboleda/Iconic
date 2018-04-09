@@ -40,28 +40,28 @@ function aAsesoriasCtrl($rootScope, APService, APFactory, ptdFactory, loginFacto
 
     function saveAsesoriasProyectos() {
         APService.guardarAP(vm.formAsesoriasProyectos).then(function (res) {
-            serviceNotification.success('Asesoria guardada correctamente', 3000);
+            serviceNotification.success('Asesoría guardada correctamente', 4000);
             cargarAP();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó la Asesoria', 2000);
+            serviceNotification.error('No se guardó la Asesoría', 5000);
         });
     }
 
     function editAsesoriasProyectos() {
         APService.modificarAP({ donde: vm.formAsesoriasProyectos.id, datos: vm.formAsesoriasProyectos }).then(function (res) {
-            serviceNotification.success('Asesoria modificada correctamente', 3000);
+            serviceNotification.success('Asesoría ha sido modificada correctamente', 4000);
             cargarAP();
         }).catch(function (err) {
-            serviceNotification.error('No se modifico la Asesoria', 2000);
+            serviceNotification.error('No se pudo modificar la Asesoría', 5000);
         });
     }
 
     vm.deleteAsesoriasProyectos = function (ap) {
         APService.eliminarAP(ap).then(function (res) {
-            serviceNotification.success('Asesoria eliminado correctamente', 3000);
+            serviceNotification.success('Asesoría eliminada correctamente', 4000);
             cargarAP();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la Asesoria', 2000);
+            serviceNotification.error('No se pudo eliminar la Asesoría', 5000);
         });
     }
 

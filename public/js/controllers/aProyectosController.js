@@ -54,7 +54,7 @@ function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory
             serviceNotification.success('Proyecto guardado correctamente', 3000);
             cargarFP();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó el Proyecto', 2000);
+            serviceNotification.error('No se pudo guardar el Proyecto', 2000);
         });
     }
 
@@ -72,7 +72,7 @@ function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory
             serviceNotification.success('Proyecto eliminado correctamente', 3000);
             cargarFP();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la Proyecto', 2000);
+            serviceNotification.error('No pudo eliminar el Proyecto', 2000);
         });
     }
 

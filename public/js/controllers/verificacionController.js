@@ -20,10 +20,10 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 				loginFactory.user = result.user;
 				$state.go("configini");
 			}).catch(function (err) {
-				serviceNotification.error('Su cuenta no pudo ser verificada', 2000);
+				serviceNotification.error('No se puedo verificar la cuenta', 2000);
 			});
 		}).catch(function (err) {
-			serviceNotification.error('No es un código válido', 2000);
+			serviceNotification.error('El código no es válido', 2000);
 		});
 	}
 

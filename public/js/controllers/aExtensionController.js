@@ -43,7 +43,7 @@ function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory
             serviceNotification.success('Actividad guardada correctamente', 3000);
             cargarAE();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó la Actividad', 2000);
+            serviceNotification.error('No se pudo guardar la Actividad', 2000);
         });
     }
 
@@ -52,16 +52,16 @@ function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory
             serviceNotification.success('Actividad modificada correctamente', 3000);
             cargarAE();
         }).catch(function (err) {
-            serviceNotification.error('No se modifico la Actividad', 2000);
+            serviceNotification.error('No se pudo modificar la Actividad', 2000);
         });
     }
 
     vm.deleteActividadesExtension = function (ae) {
         AEService.eliminarAE(ae).then(function (res) {
-            serviceNotification.success('Actividad eliminado correctamente', 3000);
+            serviceNotification.success('Actividad eliminada correctamente', 3000);
             cargarAE();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la Actividad', 2000);
+            serviceNotification.error('No pudo eliminar la Actividad', 2000);
         });
     }
 

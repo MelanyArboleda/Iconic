@@ -42,28 +42,28 @@ function aComisionEstudiosCtrl($rootScope, CEService, CEFactory, ptdFactory, log
 
     function saveComisionEstudios() {
         CEService.guardarCE(vm.formComisionEstudios).then(function (res) {
-            serviceNotification.success('Comision guardada correctamente', 3000);
+            serviceNotification.success('Comisión guardada correctamente', 3000);
             cargarCE();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó la Comision', 2000);
+            serviceNotification.error('No se pudo guardar la Comisión', 2000);
         });
     }
 
     function editComisionEstudios() {
         CEService.modificarCE({ donde: vm.formComisionEstudios.id, datos: vm.formComisionEstudios }).then(function (res) {
-            serviceNotification.success('Comision modificada correctamente', 3000);
+            serviceNotification.success('Comisión ha sido modificada correctamente', 3000);
             cargarCE();
         }).catch(function (err) {
-            serviceNotification.error('No se modifico la Comision', 2000);
+            serviceNotification.error('No se pudo modificar la Comisión', 2000);
         });
     }
 
     vm.deleteComisionEstudios = function (ce) {
         CEService.eliminarCE(ce).then(function (res) {
-            serviceNotification.success('Comision eliminado correctamente', 3000);
+            serviceNotification.success('Comisión eliminado correctamente', 3000);
             cargarCE();
         }).catch(function (err) {
-            serviceNotification.error('No elimino la Comision', 2000);
+            serviceNotification.error('No se pudo eliminar la Comisión', 2000);
         });
     }
 

@@ -72,10 +72,10 @@ function usuariosCtrl($rootScope,usuariosFactory, usuariosService, loginFactory,
         vm.formUsuario.apellido_1 = apellido_1u;
         vm.formUsuario.apellido_2 = apellido_2u;
         usuariosService.modificarUsuario({ donde: vm.formUsuario.doc_identidad, datos: vm.formUsuario }).then(function (res) {
-            serviceNotification.success('Usuarios guardado correctamente', 3000);
+            serviceNotification.success('Usuario guardado correctamente', 3000);
             cargarUSER();
         }).catch(function (err) {
-            serviceNotification.error('No se guardó el usuario', 2000);
+            serviceNotification.error('No se pudo guardar el usuario', 2000);
         });
     }
 
@@ -120,7 +120,7 @@ function usuariosCtrl($rootScope,usuariosFactory, usuariosService, loginFactory,
             serviceNotification.success('Permiso guardado correctamente', 3000);
             vm.llenarModalPermisos({ doc_identidad: permiso.tblUsuarioDocIdentidad });
         }).catch(function (err) {
-            serviceNotification.error('No se guardó el permiso', 2000);
+            serviceNotification.error('No se pudo guardar el permiso', 2000);
         });
     }
 }

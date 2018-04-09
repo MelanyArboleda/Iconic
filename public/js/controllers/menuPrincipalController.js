@@ -44,7 +44,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 			if (loginFactory.user.perfil == 1) {
 				if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 					if (fechaEtapaFactory.fechaEtapa.length == 0) {
-						serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se puede crear un plan de trabajo para este semestre', 3000);
+						serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para la presentación de tu plan de trabajo, comunícate con ellos si tienes alguna duda', 5000);
 						vm.plan = false;
 						emitInfoReady();
 					} else {
@@ -83,7 +83,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 				} else {
 					if (loginFactory.user.perfil == 4) {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
+							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
 							vm.plan = false;
 							emitInfoReady();
 						} else {
@@ -99,7 +99,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 						}
 					} else {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('El decano no a creado las fechas de las etapas por lo tanto no se pueden ver los planes de trabajo', 3000);
+							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
 							vm.plan = false;
 							emitInfoReady();
 						} else {

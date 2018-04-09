@@ -69,28 +69,28 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 
 	function saveDocenciaDirecta() {
 		DDService.guardarDD(vm.formDocenciaDirecta).then(function (res) {
-			serviceNotification.success('Asignatura guardada correctamente', 3000);
+			serviceNotification.success('La Asignatura ha sido guardada correctamente', 3000);
 			cargarDD();
 		}).catch(function (err) {
-			serviceNotification.error('No se guardó la asignatura', 2000);
+			serviceNotification.error('No se pudo guardar la asignatura', 2000);
 		});
 	}
 
 	function editDocenciaDirecta() {
 		DDService.modificarDD({ donde: vm.formDocenciaDirecta.id, datos: vm.formDocenciaDirecta }).then(function (res) {
-			serviceNotification.success('Asignatura modificada correctamente', 3000);
+			serviceNotification.success('La Asignatura ha sido modificada correctamente', 3000);
 			cargarDD();
 		}).catch(function (err) {
-			serviceNotification.error('No se modifico la asignatura', 2000);
+			serviceNotification.error('No se pudo modificar la asignatura', 2000);
 		});
 	}
 
 	vm.deleteDocenciaDirecta = function (dd) {
 		DDService.eliminarDD(dd).then(function (res) {
-			serviceNotification.success('Asignatura eliminado correctamente', 3000);
+			serviceNotification.success('La Asignatura ha sido eliminada correctamente', 3000);
 			cargarDD();
 		}).catch(function (err) {
-			serviceNotification.error('No elimino la asignatura', 2000);
+			serviceNotification.error('No se pudo eliminar la asignatura', 2000);
 		});
 	}
 
@@ -99,7 +99,7 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 			serviceNotification.success('Observación guardada correctamente', 3000);
 			cargarObservacion();
 		}).catch(function (err) {
-			serviceNotification.error('No se guardó la Observación', 2000);
+			serviceNotification.error('No se pudo guardar la Observación', 2000);
 		});
 	}
 
@@ -176,10 +176,10 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 				var docenciaDirecta = sumarHoras(DDFactory.DocDir);
 				var docDicCompleta = docenciaDirecta + investigacionesProyectos + investigacionesSemilleros;
 				if (max < docDicCompleta) {
-					serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es mayor a la requerida', 2000);
+					serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables sobrepasa el màximo de horas permitido', 2000);
 				}else{
 					if(min > docDicCompleta && loginFactory.perfil.id == 2){
-						serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor a la requerida', 2000);
+						serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor al mínimo exigido', 2000);
 					}
 				}
 			});

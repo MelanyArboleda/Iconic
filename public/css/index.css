@@ -361,4 +361,8 @@ p.titulo{
 	.add{
 		left: 35px !important;
 	}
+
+	.toast{
+		font-size: 200px;
+	}
 }

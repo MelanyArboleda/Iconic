@@ -17,7 +17,7 @@ function restablecerCtrl(loginService, loginFactory, serviceNotification, $state
                 $state.go("login");
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.warning('No puede ser igual a la contraseña anterior o por la de defecto', 2000);
+                serviceNotification.warning('La nueva contraseña no debe ser igual a la anterior ni la por defecto', 2000);
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);
