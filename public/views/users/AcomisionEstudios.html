@@ -1,0 +1,109 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+<div class="sidenav-container">
+    <div class="container white contenido">
+        <div class="row">
+            <div class="col s12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Universidad / Centro de estudio</th>
+                            <th>Tipo de estudio</th>
+                            <th>Nombre específico del estudio</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Graduación</th>
+                            <th>Fecha Obtención de autorización</th>
+                            <th>Aportes institucionales obtenidos y/o esperados</th>
+                            <th ng-if="comisionEstudiosVm.permiso.crear == true">
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="comisionEstudiosVm.vaciarMadal()" data-target='ModalComisionEstudios'
+                                    modal>Nuevo</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ce in comisionEstudiosVm.comisionEstudios">
+                            <td>{{ce.universidad}}</td>
+                            <td>{{ce.tipo_estudio}}</td>
+                            <td>{{ce.nombre_estudio}}</td>
+                            <td>{{ce.fecha_inicio | date}}</td>
+                            <td>{{ce.fecha_graduacion | date}}</td>
+                            <td>{{ce.fecha_obtencion_autorizacion | date}}</td>
+                            <td>{{ce.aportes_inst_obtenidos}}</td>
+                            <td ng-if="comisionEstudiosVm.permiso.modificar == true || comisionEstudiosVm.permiso.eliminar == true">
+                                <a ng-if="comisionEstudiosVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="comisionEstudiosVm.llenarModal(ce)"
+                                    data-target='ModalComisionEstudios' modal>
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a ng-if="comisionEstudiosVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="comisionEstudiosVm.deleteComisionEstudios(ce)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+            <div class="fixed-action-btn add_observaciones">
+                <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                    <i class="material-icons">message</i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalComisionEstudios" class="modal">
+        <div class="modal-content">
+            <h5 class="center">
+                <strong>Comisión de Estudios</strong>
+            </h5>
+            <div class="row" ng-controller="menuPrincipalCtrl as mnuPVm">
+                <form name="aComisionEstudiosForm" autocomplete="off" ng-submit="comisionEstudiosVm.accion()">
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="universidad" type="text" class="form-control validate" ng-model="comisionEstudiosVm.formComisionEstudios.universidad"
+                            placeholder="Universidad" required/>
+                    </div>
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="tipo_estudio" type="text" class="form-control validate" ng-model="comisionEstudiosVm.formComisionEstudios.tipo_estudio"
+                            placeholder="Tipo de Estudio" required/>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input name="nombre_estudio" type="text" class="form-control validate" ng-model="comisionEstudiosVm.formComisionEstudios.nombre_estudio"
+                            placeholder="Nombre del Estudio" required/>
+                    </div>
+                    <div class="input-field col l4 s4 cajasombra">
+                        <input input-date type="text" name="fecha_inicio" id="fecha_inicio" class="form-control fecha" ng-model="comisionEstudiosVm.formComisionEstudios.fecha_inicio"
+                            ng-change="mnuPVm.validFechaFinal(comisionEstudiosVm.formComisionEstudios.fecha_inicio)" format="mm/dd/yyyy"
+                            months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                            close="mnuPVm.close" select-years="15" placeholder="Fecha Inicio" required>
+                    </div>
+                    <div class="input-field col l4 s4 cajasombra">
+                        <input input-date ng-disabled="!comisionEstudiosVm.formComisionEstudios.fecha_inicio" type="text" name="fecha_graduacion"
+                            id="fecha_graduacion" class="form-control fecha" ng-model="comisionEstudiosVm.formComisionEstudios.fecha_graduacion"
+                            format="mm/dd/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDateFinal}}" today="mnuPVm.today" first-day="1"
+                            clear="mnuPVm.clear" close="mnuPVm.close" select-years="15" placeholder="Fecha Graduación" required>
+                    </div>
+                    <div class="input-field col l4 s4 cajasombra">
+                        <input input-date type="text" name="fecha_obtencion_autorizacion" id="fecha_obtencion_autorizacion" class="form-control fecha"
+                            ng-model="comisionEstudiosVm.formComisionEstudios.fecha_obtencion_autorizacion" format="mm/dd/yyyy"
+                            months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                            weekdays-letter="{{mnuPVm.weekdaysLetter}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
+                            close="mnuPVm.close" select-years="15" placeholder="Fecha Autorización" required>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input type="text" name="aportes_inst_obtenidos" class="form-control validate" ng-model="comisionEstudiosVm.formComisionEstudios.aportes_inst_obtenidos"
+                            placeholder="Aportes Obtenidos" required/>
+                    </div>
+                    <div class="input-field col l12 s12 center ">
+                        <button ng-disabled="aComisionEstudiosForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
+</div>

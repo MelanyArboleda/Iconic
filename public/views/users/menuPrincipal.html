@@ -1,0 +1,114 @@
+<link rel="stylesheet" type="text/css" href="css/menuPrincipal.css">
+
+<div class="menuPContainer">
+
+    <div class="row white">
+        <div class="col s12">
+            <div class="col s12">
+                <ul tabs class="tabs">
+                    <li class="tab col s4">
+                        <a id="ptdBtn" href="#ptd">Plan de Trabajo</a>
+                    </li>
+                    <li class="tab col s4">
+                        <a id="rptBtn" href="#rpt">Reportes</a>
+                    </li>
+                    <li class="tab col s4">
+                        <a id="usrBtn" href="#usr">Usuarios</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú Plan de Trabajo padding-left: 0px !important; -->
+    <div id="ptd" class="col s12">
+        <div>
+            <div ui-view></div>
+        </div>
+        <ul id="slide-out" class="side-nav fixed" ng-class="{'hide' : menuPrincipalVm.pageName == 'vistaPTD' || menuPrincipalVm.pageName == 'Usuarios' || menuPrincipalVm.pageName == 'fechaEtapa'}"
+            ng-cloak>
+            <li>
+                <a ui-sref="menuPrincipal.vistaPTD">
+                    <i class="material-icons">home</i>Inicio
+                </a>
+            </li>
+            <div class="divider no-margin"></div>
+            <li ng-if="menuPrincipalVm.permisos[0].ver == true">
+                <a ui-sref="menuPrincipal.AdocenciaDirecta({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'AdocenciaDirecta'}"
+                    class="waves-effect">
+                    <i class="material-icons">class</i>Docencia Directa</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[1].ver == true">
+                <a ui-sref="menuPrincipal.AinvestigacionesS({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'AinvestigacionesS'}"
+                    class="waves-effect">
+                    <i class="material-icons">group_work </i>Semilleros Investigación</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[1].ver == true">
+                <a ui-sref="menuPrincipal.AinvestigacionesP({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'AinvestigacionesP'}"
+                    class="waves-effect">
+                    <i class="material-icons">find_in_page</i>Proyectos Investigación</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[2].ver == true">
+                <a ui-sref="menuPrincipal.Aextension({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'Aextension'}"
+                    class="waves-effect">
+                    <i class="material-icons">extension</i>Extensión y Proyección</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[3].ver == true">
+                <a ui-sref="menuPrincipal.AcomisionEstudios({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'AcomisionEstudios'}"
+                    class="waves-effect">
+                    <i class="material-icons">school</i>Comisión de Estudios</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[4].ver == true">
+                <a ui-sref="menuPrincipal.Aproyectos({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'Aproyectos'}"
+                    class="waves-effect">
+                    <i class="material-icons">work</i>Proyectos y Publicaciones</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[5].ver == true">
+                <a ui-sref="menuPrincipal.Aasesorias({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'Aasesorias'}"
+                    class="waves-effect">
+                    <i class="material-icons">supervisor_account </i>Asesorias en Proyectos</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[6].ver == true">
+                <a ui-sref="menuPrincipal.AotrasActividades({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'AotrasActividades'}"
+                    class="waves-effect">
+                    <i class="material-icons">note_add</i>Otras Actividades Académicas</a>
+            </li>
+            <li>
+                <a ui-sref="menuPrincipal.Aobservaciones({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'Aobservaciones'}"
+                    class="waves-effect">
+                    <i class="material-icons">border_color</i>Observaciones</a>
+            </li>
+            <li>
+                <a ui-sref="menuPrincipal.seguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'seguimientoEvaluacion'}"
+                    class="waves-effect">
+                    <i class="material-icons">timeline</i>Seguimientos y Evaluación</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Menú Reportes -->
+    <div id="rpt" class="col s12">
+        <div>
+            <div ui-view="rpt"></div>
+        </div>
+    </div>
+
+    <!-- Menú Usuarios -->
+    <div id="usr" class="col s12">
+        <div>
+            <div ui-view="usr"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".button-collapse").sideNav({
+        menuWidth: 300,
+        edge: 'left',
+        closeOnClick: false,
+        draggable: true
+    });
+    $("#slide-out").on("click", "a", function () {
+        $(".button-collapse").sideNav('hide');
+    });
+</script>

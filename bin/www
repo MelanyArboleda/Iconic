@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('poli:server');
 var http = require('http');
-
+const funciones = require('.././services/funciones');
 /**
  * Get port from environment and store in Express.
  */
@@ -20,12 +20,14 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var io = require('socket.io')(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, function () {
+    console.log('Servidor corriendo en http://localhost:' + port);
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -34,19 +36,19 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -54,27 +56,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -82,9 +84,71 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
 }
+
+var messages = [];
+
+function getMessage(ptd) {
+    var mensajes = [];
+    for (var i = 0; i < messages.length; i++) {
+        if (messages[i].tblPtdId === ptd) {
+            mensajes.push(messages[i]);
+        }
+    }
+    return mensajes;
+}
+
+io.on('connection', function (socket) {
+    console.log('Un cliente se ha conectado');
+    var channel = 'Alfa';
+    socket.on('new-message', function (data) {
+        messages.push(data);
+        io.sockets.in(channel).emit('messages', getMessage(data.tblPtdId));
+    });
+    socket.on('change channel', function (newChannel) {
+        if (newChannel != channel) {
+            socket.leave(channel);
+            socket.join(newChannel);
+            channel = newChannel;
+            let messagesChannel = messages.find(function (tblPtdId) {
+                return messages.tblPtdId == newChannel;
+            });
+            if (messagesChannel == undefined) {
+                funciones.buscarMensajes(newChannel, function (mensajes) {
+                    for (let i = 0; i < mensajes.length; i++) {
+                        funciones.buscarUser(mensajes[i].dataValues.tblUsuarioDocIdentidad, (user) => {
+                            var user = user;
+                            var fecha = mensajes[i].dataValues.fecha;
+                            var hora = fecha.getHours();
+                            var minuto = fecha.getMinutes();
+                            var meridiano = "AM";
+                            var dia = fecha.getDate();
+                            var mes = fecha.getMonth();
+                            var año = fecha.getFullYear();
+                            if (fecha.getHours() > 12) { hora -= 12; meridiano = "PM" }
+                            if (hora < 10) { hora = "0" + hora }
+                            if (minuto < 10) { minuto = "0" + minuto }
+                            var msg = {
+                                tblUsuarioDocIdentidad: user.nombre + " " + user.apellido_1 + " " + user.apellido_2,
+                                tblPtdId: mensajes[i].dataValues.tblPtdId,
+                                mensaje: mensajes[i].dataValues.mensaje,
+                                fecha: hora + ":" + minuto + " " + meridiano + " - " + dia + "/" + mes + "/" + año
+                            };
+                            messages.push(msg);
+                            io.sockets.in(channel).emit('messages', getMessage(newChannel));
+                        });
+                    }
+                });
+            }
+        }else{
+            if (getMessage(newChannel) != null) {
+                io.sockets.in(channel).emit('messages', getMessage(newChannel));
+            }
+        }
+    });
+});

@@ -1,0 +1,249 @@
+.alert-success{
+	background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.alert-danger {
+    color: #a94442; 
+	display: block;
+	text-align: left;
+    /*background-color: #f2dede;
+    border-color: #ebccd1;*/
+}
+
+.alert{
+	padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.fade.in {
+    opacity: 1;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+}
+
+a.close {
+    text-decoration: none !important;
+    font-size: 18px !important;
+    line-height: 1.2;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+	cursor: pointer;
+}
+
+.cabezaptd{
+	width: 100%;
+	padding-left: 1%;
+}
+
+.contenido-alert{
+	height: 10%;
+	border-radius: 10px;
+}
+
+.img-cabeza{
+	height: 45%;
+}
+
+.ptd-titulo{
+	padding-right: 15%;
+}
+
+.contenido{
+	height: 100%;
+	width: 96%;
+	padding-left: 2%;
+}
+
+.contenidoObservaciones{
+	height: 20%;
+	width: 96%;
+	padding-left: 2%;
+}
+
+div.planesDeTrabajo{
+	height: 100%;
+	width: 100%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+div.vistaPTD{
+	height: 100%;
+	width: 100%;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+div.buscaPTD{
+	height: 100%;
+	width: 100%;
+	padding-left: 4.2%;
+    padding-right: 2.8%;
+}
+
+.col.s11{
+	padding-left: 5%;
+	padding-top: 1%;
+}
+
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+	opacity: 1;
+	position: static;
+}
+
+.fixed-action-btn{
+	bottom: 45px;  
+	right: 24px;
+}
+
+.fixed-action-btn.cancel{
+	bottom: 115px;
+    right: 43px;
+}
+
+.fixed-action-btn.add{
+    right: 35px;
+}
+
+.fixed-action-btn.add_observaciones{
+    bottom: 20px;
+}
+
+.select-wrapper input.select-dropdown{
+	color: #bdbdbd;
+}
+
+.select-wrapper input.select-dropdown{
+  color: black;
+}
+
+#asig {
+   width: 20%;
+}
+
+#cod {
+   width: 10%;
+}
+
+.num {
+  width: 10%;
+}
+
+.action{
+	width: 5%;
+}
+.eval {
+	width: 3%;
+}
+
+.invnum {
+  width: 3%;
+}
+
+#gvinculo {
+	width: 15%;
+}
+
+#pvinculo {
+	width: 15%;
+}
+
+#nombrep {
+	width: 20%;
+}
+
+#vbci{width: 5%;}
+
+.act {
+	width: 25%;
+}
+
+.prod {
+	width: 25%;
+}
+
+div.areaO{
+	margin-top: 3%;
+	padding-right: 3%;
+}
+
+nav .input-field label i{
+	color: #616161;
+}
+
+.collection .collection-item.avatar{
+	min-height: 80px;
+}
+
+.collection.with-header .collection-item.avatar{
+	padding-left: 82px;
+}
+
+button, input, optgroup, select, textarea{
+	color: black;
+}
+
+
+input.ng-invalid.ng-dirty.ng-invalid-required{
+	border-bottom: 1px solid #F44336; 
+    box-shadow: 0 1px 0 0 #F44336;
+}
+
+textarea.ng-valid.ng-dirty, .fecha.ng-dirty, .select-wrapper.ng-valid.ng-dirty input.select-dropdown{
+	border-bottom: 1px solid #4CAF50;
+    box-shadow: 0 1px 0 0 #4CAF50;
+}
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.text-danger{
+	color: #F44336;
+}
+
+@media (min-width: 1200px){
+.hscss{
+	margin-left: -34% !important;
+}
+}
+
+@media only screen and (max-width: 992px){
+	table.responsive-table th {text-align: left;}
+}
+
+
+

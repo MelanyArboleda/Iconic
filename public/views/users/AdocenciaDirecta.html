@@ -1,0 +1,143 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+<div class="sidenav-container">
+    <div class="container white contenido">
+        <div class="row">
+            <div class="col s12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre Asignatura</th>
+                            <th>Código</th>
+                            <th>Grupo</th>
+                            <th>Número de Estudiantes</th>
+                            <th>Horas Semanales</th>
+                            <th>Horas Semestre</th>
+                            <th>Estudiante</th>
+                            <th>Jefe</th>
+                            <th ng-if="docenciaDirectaVm.permiso.crear == true">
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="docenciaDirectaVm.vaciarMadal()" data-target='modalDocenciaDirecta'
+                                    modal>Nuevo</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dd in docenciaDirectaVm.docenciaDirecta">
+                            <td>{{dd.tblMateriaNombre}}</td>
+                            <td>{{dd.tblMateriaCodigo}}</td>
+                            <td>{{dd.grupo_asignatura}}</td>
+                            <td>{{dd.numero_estudiantes}}</td>
+                            <td>{{dd.horas_semanales}}</td>
+                            <td>{{dd.horas_semestrales}}</td>
+                            <td>{{dd.estudiante}}</td>
+                            <td>{{dd.jefe}}</td>
+                            <td ng-if="docenciaDirectaVm.permiso.modificar == true || docenciaDirectaVm.permiso.eliminar == true">
+                                <a ng-if="docenciaDirectaVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="docenciaDirectaVm.llenarModal(dd)"
+                                    data-target='modalDocenciaDirecta' modal>
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a ng-if="docenciaDirectaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="docenciaDirectaVm.deleteDocenciaDirecta(dd)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container white contenido">
+        <form name="observaciones_dd" autocomplete="off" ng-submit="docenciaDirectaVm.saveObservaciones()">
+            <div class="row">
+                <div ng-if="docenciaDirectaVm.permiso.modificar == true" class="input-field col s12 areaO" style="padding-right:3%;">
+                    <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea validate"
+                        data-length="1000"></textarea>
+                    <label for="observaciones_dd">Observaciones</label>
+                </div>
+                <div ng-if="docenciaDirectaVm.permiso.modificar == false" class="input-field col s12 areaO" style="padding-right:3%;">
+                    <textarea ng-model="docenciaDirectaVm.observacion.observaciones_dd" name="observaciones_dd" class="materialize-textarea"
+                        data-length="1000" disabled></textarea>
+                    <label for="observaciones_dd">Observaciones</label>
+                </div>
+            </div>
+            <div ng-if="docenciaDirectaVm.permiso.modificar == true" class="row center" input-field>
+                <button ng-disabled="observaciones_dd.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Observación</button>
+            </div>
+
+            <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+                <div class="fixed-action-btn add_observaciones">
+                    <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                        <i class="material-icons">message</i>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="modalDocenciaDirecta" class="modal">
+        <div class="modal-content">
+            <h5 class="center">
+                <strong>Docencia Directa</strong>
+            </h5>
+            <div class="row">
+                <form name="aDocenciaDirectaForm" autocomplete="off" ng-submit="docenciaDirectaVm.accion()">
+                    <div class="input-field col l12 s12">
+                        <input id="search autocomplete-input" type="search" ng-model="filter" placeholder="Filtro Asignatura" />
+                        <label class="label-icon" for="search autocomplete-input">
+                            <i class="material-icons">search</i>
+                        </label>
+                    </div>
+                    <div class="input-field col l4 s12 cajasombra">
+                        <select id="codigo_asignatura" name="codigo_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo"
+                            ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaCodigo)"
+                            material-select watch required>
+                            <option value="0" disabled>Código Asignatura</option>
+                            <option ng-repeat="cm in docenciaDirectaVm.materias | filter: filter">{{cm.codigo}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col l8 s12 cajasombra" id="content-asignatura">
+                        <select id="nombre_asignatura" name="nombre_asignatura" ng-model="docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre"
+                            ng-change="docenciaDirectaVm.asignarData(docenciaDirectaVm.formDocenciaDirecta.tblMateriaNombre)"
+                            material-select watch required>
+                            <option value="0" disabled>Nombre Asignatura</option>
+                            <option ng-repeat="nm in docenciaDirectaVm.materias | filter: filter">{{nm.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col l2 s6 cajasombra">
+                        <input name="grupo_asignatura" type="number" class="form-control validate" min="1" ng-model="docenciaDirectaVm.formDocenciaDirecta.grupo_asignatura"
+                            placeholder="Grupo" required/>
+                    </div>
+                    <div class="input-field col l4 s6 cajasombra">
+                        <input name="numero_estudiantes" type="number" min="1" max="100" class="form-control validate" ng-model="docenciaDirectaVm.formDocenciaDirecta.numero_estudiantes"
+                            placeholder="Número Estudiantes" required/>
+                    </div>
+                    <div class="input-field col l3 s6 cajasombra ">
+                        <input name="horas_semanales" type="number" class="form-control no-disabled" ng-model="docenciaDirectaVm.formDocenciaDirecta.horas_semanales"
+                            placeholder="Horas Semanales" required disabled/>
+                    </div>
+                    <div class="input-field col l3 s6 cajasombra">
+                        <input name="horas_semestrales" type="number" class="form-control no-disabled" ng-model="docenciaDirectaVm.formDocenciaDirecta.horas_semestrales"
+                            placeholder="Horas Semestrales" required disabled/>
+                    </div>
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="estudiante" type="number" min="1" max="5" class="form-control validate " ng-model="docenciaDirectaVm.formDocenciaDirecta.estudiante"
+                            placeholder="Evaluación Estudiante" />
+                    </div>
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="jefe" type="number" min="1" max="5" class="form-control validate" ng-model="docenciaDirectaVm.formDocenciaDirecta.jefe"
+                            placeholder="Evaluación Jefe" />
+                    </div>
+                    <div class="input-field col l12 s12 center ">
+                        <button ng-disabled="aDocenciaDirectaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
+</div>

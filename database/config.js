@@ -1,8 +1,13 @@
-var config = {
-	host : 'localhost',
-	user : '',
-	password : '',
-	database : '' 
-};
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('iconic', 'iconic', 'iconic', {
+    host: 'localhost',
+    //host: '127.0.0.1',
+    dialect: 'postgres',
+    pool: {
+        max: 9,
+        min: 0,
+        idle: 10000
+    }
+});
 
-module.exports = config;
+module.exports = sequelize;

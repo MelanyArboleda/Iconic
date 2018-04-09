@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<div class="container">
+	<div class="row">
+		<div class="col s12" id="logincontainer">
+			<div class="card z-depth-5 ">
+				<div class="card-content">
+					<p class="justify flow-text titulo"><strong>Tu cuenta ha sido activada</strong></p>
+					<br>
+					<div class="row">
+						<p class="justify texto">¡Excelente!, tu cuenta se encuentra verificada, ahora deberás establecer la contraseña con la que ingresarás a partir
+							de ahora a Iconic.</p>
+					</div>
+
+					<form name="configIni" autocomplete="off" ng-submit="configiniVm.configini()">
+						<div class="row">
+							<div class="input-field col s12 cajasombra">
+								<input ng-model="configiniVm.passwordNew" id="passwordNew" class="validate" type="password" minlength="8" maxlength="20"
+								 pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+								 name="passwordNew" required>
+								<label class="cajasombra" for="passwordNew">Nueva Contraseña</label>
+							</div>
+
+							<div class="input-field col s12 cajasombra">
+								<input ng-model="configiniVm.repitepassword" id="repitepassword" class="validate" type="password" minlength="8" maxlength="20"
+								 pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+								 name="repitepassword" required>
+								<label class="cajasombra" for="repitepassword">Repite la Contraseña</label>
+							</div>
+							<br>
+							<br>
+							<div class="input-field col s12 cajasombra">
+								<button ng-disabled="configIni.$invalid" type="submit" class="waves-effect waves-light btn">Cambiar Contraseña</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="card-action amber lighten-1 footerlogin">
+					<p class="left">Iconic <i class="tiny material-icons">&#xE90C;</i> 2017</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#modalolvidoclave').modal();
+	});
+
+</script>
+
+<script type="text/javascript" src="js/modals.action.js"></script>

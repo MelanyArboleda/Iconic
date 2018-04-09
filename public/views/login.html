@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row">
+		<div class="col s12" id="logincontainer">
+			<div class="card z-depth-5 ">
+				<div class="card-content">
+					<p class="center flow-text "><strong>Ingreso al Sistema</strong></p>
+
+					<form id="loginform" name="loginForm" autocomplete="off" ng-submit="loginVm.login()">
+						<div class="row">
+							<div class="input-field col s12 cajasombra">
+								<i class="material-icons prefix cajasombra">account_circle</i>
+								<input ng-model="loginVm.user.correo" class="validate" type="text" id="username" name="correo" required>
+								<label class="cajasombra" for="correo">Correo</label>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="input-field col s12 cajasombra">
+								<i class="material-icons prefix cajasombra">&#xE0DA;</i>
+								<input ng-model="loginVm.user.password" class="validate" type="password" id="password" name="password" minlength="8" maxlength="20"
+								 pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+								 required>
+								<label class="cajasombra" data-error="Ingresa una contraseña válida" for="password">Contraseña</label>
+							</div>
+
+							<div class="col s12 right-align cajasombra">
+								<a class="modal-trigger cursor-point" data-target="modalolvidoclave" modal>¿Olvidaste la contraseña?</a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 center">
+								<button ng-disabled="loginForm.$invalid" type="submit" class="waves-effect waves-light btn">Iniciar Sesión</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="card-action amber lighten-1 footerlogin">
+					<p class="left">Iconic <i class="tiny material-icons">&#xE90C;</i> 2017</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal recuperar contraseña -->
+<div id="modalolvidoclave" class="modal">
+	<form name="sendLink" autocomplete="off" ng-submit="loginVm.sendLink()">
+		<div class="modal-content">
+			<h4>Restablece tu Contraseña</h4>
+			<div class="row">
+				<p>Ingresa el correo asociado a la contraseña</p>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 cajasombra">
+					<i class="material-icons prefix cajasombra">account_circle</i>
+					<input ng-model="loginVm.correo" class="validate" type="text" id="email" name="correo">
+					<label class="cajasombra" for="email">Correo</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button ng-disabled="sendLink.$invalid" type="submit" class="modal-action modal-close waves-effect waves-light btn">Acepto</button>
+		</div>
+	</form>
+</div>

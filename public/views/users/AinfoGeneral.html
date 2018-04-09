@@ -1,0 +1,67 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+<div class="sidenav-container">
+    <div class="container white contenido">
+        <div class="row cabezaptd">
+            <table>
+                <tr>
+                    <td>
+                        <img src="img/logo_poli.jpg" class="img-cabeza">
+                    </td>
+                    <td>
+                        <h6 class="center ptd-titulo">
+                            <strong>PLAN DE TRABAJO DOCENTE</strong>
+                        </h6>
+                    </td>
+                    <td class="center">Código: FD-GC51
+                        <hr> Versión: 05
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+
+    <div class="container white contenido" ng-controller="menuPrincipalCtrl as mnuPVm">
+        <div class="row">
+            <div class="col s11 formContainer">
+                <form name="aInfoGeneralForm" autocomplete="off" ng-submit="infoGeneralVm.aInfoGeneral()">
+
+                    <div class="col s11">
+                        <div class="row" input-field>
+                            <input ng-model="infoGeneralVm.infoGeneral.nombreIG" type="text" name="nombreIG" class="validate" required>
+                            <label class="active" for="nombreIG">Nombres</label>
+                        </div>
+
+                        <div class="row" input-field>
+                            <input ng-model="infoGeneralVm.infoGeneral.apellido1IG" type="text" name="apellido1IG" class="validate" required>
+                            <label class="active" for="apellido1IG">Apellido 1</label>
+                        </div>
+
+                        <div class="row" input-field>
+                            <input ng-model="infoGeneralVm.infoGeneral.apellido2IG" type="text" name="apellido2IG" class="validate">
+                            <label class="active" for="apellido2IG">Apellido 2</label>
+                        </div>
+
+                        <div class="row" input-field>
+                            <input ng-model="infoGeneralVm.infoGeneral.dedicacionIG" type="text" id="dedicacionIG" name="dedicacionIG" class="validate">
+                            <label class="active" for="dedicacionIG">Dedicación Horaria</label>
+                        </div>
+
+                        <div class="row" input-field>
+                            <input ng-model="infoGeneralVm.infoGeneral.areaIG" type="text" id="areaIG" name="areaIG" class="validate">
+                            <label class="active" for="areaIG">Área</label>
+                        </div>
+
+                        <div class="row" input-field>
+                            <label for="fechaRealizacion">Fecha de Realización</label>
+                            <input input-date type="text" name="fechaRealizacion" class="fecha" ng-model="infoGeneralVm.infoGeneral.fechaRealizacion"
+                                format="dd/mm/yyyy" months-full="{{mnuPVm.month}}" months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}"
+                                weekdays-letter="{{mnuPVm.weekdaysLetter}}" min="{{mnuPVm.minDate}}" max="{{mnuPVm.maxDate}}"
+                                today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close" select-years="15">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
