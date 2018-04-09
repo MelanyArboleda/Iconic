@@ -37,12 +37,12 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 		}
 	}
 
-	vm.saveObservaciones = function () {
-		ObservacionesService.guardarObservaciones({ donde: vm.observaciones.id, datos: vm.observaciones }).then(function (res) {
-			serviceNotification.success('Observacion guardada correctamente', 3000);
+	vm.saveObservaciones = function (){
+		ObservacionesService.guardarObservaciones({donde : vm.observaciones.id, datos: vm.observaciones}).then(function (res) {
+			serviceNotification.success('Observaci�n guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
-			serviceNotification.error('No se guardó la observacion', 2000);
+			serviceNotification.error('No se pudo guardar la observaci�n', 2000);
 		});
 	}
 
