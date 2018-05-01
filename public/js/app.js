@@ -1,4 +1,4 @@
-angular.module("iconic", ["ui.router", "ui.materialize", 'LocalStorageModule']);
+angular.module("iconic", ["ui.router", "ui.materialize", 'LocalStorageModule', 'ngMaterialize']);
 
 angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactory", "loginService",
     function ($state, $rootScope, loginFactory, ptdFactory, loginService) {

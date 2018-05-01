@@ -1,6 +1,6 @@
 angular.module("iconic").controller("fechaEtapaCtrl", fechaEtapaCtrl);
 
-fechaEtapaCtrl.$inject = ["$rootScope", "fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification"];
+fechaEtapaCtrl.$inject = ["$rootScope", "fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification", "modalNotifService"];
 
 function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
     var vm = this;
@@ -87,12 +87,14 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
             semestre: fe.semestre,
             ano: fe.ano
         }
-        fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
+    modalNotifService.openModal()
+        .then(function(){
+            fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
                 serviceNotification.success('Fecha eliminada correctamente', 4000);
                 cargarFE();
-            
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo eliminar la fecha para la etapa', 5000);
+            }).catch(function (err) {
+                serviceNotification.error('No se pudo eliminar la fecha para la etapa', 5000);
+            });
         });
     }
 

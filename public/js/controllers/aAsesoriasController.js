@@ -1,6 +1,6 @@
 angular.module("iconic").controller("aAsesoriasCtrl", aAsesoriasCtrl);
 
-aAsesoriasCtrl.$inject = ["$rootScope", "APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aAsesoriasCtrl.$inject = ["$rootScope", "APService", "APFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q", "modalNotifService"];
 
 function aAsesoriasCtrl($rootScope, APService, APFactory, ptdFactory, loginFactory, serviceNotification, $q) {
     var vm = this;
@@ -57,11 +57,14 @@ function aAsesoriasCtrl($rootScope, APService, APFactory, ptdFactory, loginFacto
     }
 
     vm.deleteAsesoriasProyectos = function (ap) {
-        APService.eliminarAP(ap).then(function (res) {
-            serviceNotification.success('Asesoría eliminada correctamente', 4000);
-            cargarAP();
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo eliminar la Asesoría', 5000);
+        modalNotifService.openModal()
+        .then(function(){
+            APService.eliminarAP(ap).then(function (res) {
+                serviceNotification.success('Asesoría eliminada correctamente', 4000);
+                cargarAP();
+            }).catch(function (err) {
+                serviceNotification.error('No se pudo eliminar la Asesoría', 5000);
+            });
         });
     }
 
