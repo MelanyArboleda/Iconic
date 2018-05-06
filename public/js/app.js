@@ -1,4 +1,4 @@
-angular.module("iconic", ["ui.router", "ui.materialize", 'LocalStorageModule']);
+angular.module("iconic", ["ui.router", "ui.materialize", 'LocalStorageModule','ngMaterialize']);
 
 angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactory", "loginService",
     function ($state, $rootScope, loginFactory, ptdFactory, loginService) {
@@ -16,32 +16,44 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                         $rootScope.page = name[1];
                         if (loginFactory.user.estado == 1) {
                             console.log("estado 1", loginFactory.user.estado);
-                            loginFactory.cargarEstatus().then(function () {
-                                console.log("Estatus--------", loginFactory.estatus);
-                                if (name[0] != 'menuPrincipal') {
-                                    menuPrincipal();
-                                } else {
-                                    if (toState.recurso != 0) {
-                                        var permiso = loginFactory.estatus.permisos.find(function (permisos) {
-                                            return permisos.tblRecursoId === toState.recurso;
-                                        });
+                            if (loginFactory.user.perfil == 7) {
+                                loginFactory.buscarPerfil().then(function () {
+                                    loginFactory.buscarPermisos().then(function () {
+                                        if (name[0] != 'menuPrincipal') {
+                                            menuPrincipal();
+                                        }else{
+                                            emitUrlReady();
+                                        }
+                                    });
+                                });
+                            } else {
+                                loginFactory.cargarEstatus().then(function () {
+                                    console.log("Estatus--------", loginFactory.estatus);
+                                    if (name[0] != 'menuPrincipal') {
+                                        menuPrincipal();
+                                    } else {
+                                        if (toState.recurso != 0) {
+                                            var permiso = loginFactory.estatus.permisos.find(function (permisos) {
+                                                return permisos.tblRecursoId === toState.recurso;
+                                            });
 
-                                        if (permiso.ver == true) {
-                                            if (ptdFactory.ptd == 0 && loginFactory.user.perfil != 1) {
-                                                ptdFactory.buscarPtd({ ptd: toParams.idPlanDeTrabajo }).then(function () {
+                                            if (permiso.ver == true) {
+                                                if (ptdFactory.ptd == 0 && loginFactory.user.perfil != 1) {
+                                                    ptdFactory.buscarPtd({ ptd: toParams.idPlanDeTrabajo }).then(function () {
+                                                        emitUrlReady($rootScope.ptd = toParams.idPlanDeTrabajo);
+                                                    });
+                                                } else {
                                                     emitUrlReady($rootScope.ptd = toParams.idPlanDeTrabajo);
-                                                });
+                                                }
                                             } else {
-                                                emitUrlReady($rootScope.ptd = toParams.idPlanDeTrabajo);
+                                                enrutador(fromState.url);
                                             }
                                         } else {
-                                            enrutador(fromState.url);
+                                            emitUrlReady();
                                         }
-                                    } else {
-                                        emitUrlReady();
                                     }
-                                }
-                            });
+                                });
+                            }
                         } else {
                             if (loginFactory.user.estado == 2) {
                                 console.log("estado 2", loginFactory.user.estado)

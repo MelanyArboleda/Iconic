@@ -11,7 +11,6 @@ function loginService($http, $q, appConstant) {
 	this.buscarFacultad = buscarFacultad;
 	this.buscarEtapa = buscarEtapa;
 	this.buscarPermisos = buscarPermisos;
-	this.guardarPermisos =guardarPermisos;
 	this.sendCode = sendCode;
 	this.validarCode = validarCode;
 	this.compararcontraseñas = compararcontraseñas;
@@ -98,16 +97,6 @@ function loginService($http, $q, appConstant) {
 			console.log(err);
 		});
 		return deferred.promise;
-	}
-
-	function guardarPermisos(data){
-		var deferred = $q.defer();
-		$http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarPermisos",data).then(function (res) {
-			deferred.resolve(res.data);
-		}, function (err) {
-			deferred.reject(err);
-			console.log(err);
-		});
 	}
 
 	function sendCode(user) {

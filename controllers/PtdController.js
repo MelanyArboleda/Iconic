@@ -83,25 +83,5 @@ module.exports = {
         crud.buscar_Permisos(req.body.tblUsuarioDocIdentidad, (permisos) =>{
             res.status(200).json(permisos).end();
         });
-    },
-
-    guardar_Permisos: function (req, res, next) {
-        crud.findAll(tbl_permisos_iniciales, { tblPerfileId: req.body.tblPerfileId }, null, (iniciales) => {
-            var permisos = [];
-            for (j = 0; j < iniciales.length; j++) {
-                permisos.push({ tblRecursoId: iniciales[j].tblRecursoId, tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad, ver: iniciales[j].ver, crear: iniciales[j].crear, modificar: iniciales[j].modificar, eliminar: iniciales[j].eliminar });
-            }
-            tbl_permisos.sync().then(function () {
-                for (var i = 0; i < permisos.length; i++) {
-                    crud.create(tbl_permisos, permisos[i], (resp) => {
-                        if (resp != 'error') {
-                            res.status(200).end();
-                        } else {
-                            res.sendStatus(403);
-                        }
-                    });
-                }
-            });
-        });
     }
 };

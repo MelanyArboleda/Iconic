@@ -9,6 +9,7 @@ function usuariosService($http, $q, appConstant) {
     this.modificarUsuario = modificarUsuario;
     this.modificarPermiso = modificarPermiso;
     this.buscarRecursos = buscarRecursos;
+    this.guardarArchivo = guardarArchivo;
 
     function buscarUsuarios(facultad) {
         var deferred = $q.defer();
@@ -76,4 +77,14 @@ function usuariosService($http, $q, appConstant) {
         return deferred.promise;
     }
     
+    function guardarArchivo(xsl) {
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarArchivo", xsl).then(function (res) {
+            deferred.resolve(res.data);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
 }

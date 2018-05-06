@@ -7,9 +7,13 @@ const tbl_facultades = require('.././database/tbl_facultades');
 const tbl_areas = require('.././database/tbl_areas');
 const tbl_programas = require('.././database/tbl_programas');
 const tbl_fechas_etapas = require('.././database/tbl_fechas_etapas');
+const tbl_sedes = require('.././database/tbl_sedes');
 const moment = require('moment');
-const funciones = require('.././services/funciones');
 const groupArray = require('group-array');
+const excelToJson = require('convert-excel-to-json');
+const fs = require('fs');
+const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
+const tbl_permisos = require('.././database/tbl_permisos');
 
 var tbl_ptds = sequelize.define('tbl_ptds', {
     tblUsuarioDocIdentidad: {
@@ -134,4 +138,167 @@ module.exports = {
         });
     },
 
+    guardar_Archivo: function (req, res, next) {
+        if (!fs.existsSync('./archivos')) {
+            fs.mkdir('./archivos', (err) => {
+                if (err) { res.sendStatus(403); }
+            });
+        }
+        var base64Data = req.body.info.replace(/^data:application\/vnd.ms-excel;base64,/, "");
+
+        fs.writeFile('./archivos/info.xls', base64Data, { encoding: 'base64' }, (err) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                const result = excelToJson({
+                    sourceFile: './archivos/info.xls'
+                });
+                var facultades = [];
+                var sedes = [];
+                for (let i = 1; i < result.Programas.length; i++) {
+                    buscarFacultad(facultades, result.Programas[i].C, (resp) => {
+                        if (resp == undefined) {
+                            facultades.push({ facultad: result.Programas[i].C });
+                        }
+                    });
+
+                    buscarSede(sedes, result.Programas[i].D, (resp => {
+                        if (resp == undefined) {
+                            sedes.push({ sede: result.Programas[i].D });
+                        }
+                    }));
+
+                }
+                insertarData(tbl_facultades, facultades, () => {
+                    insertarData(tbl_sedes, sedes, () => {
+                        llenarArea((areas) => {
+                            insertarData(tbl_areas, areas, () => {
+                                llenarPrograma(result.Programas, (programas) => {
+                                    insertarData(tbl_programas, programas, () => {
+                                        llenarUsuario(result["Datos docentes"], (usuarios) => {
+                                            insertarData(tbl_usuarios, usuarios, () => {
+                                                guardar_Permisos(()=>{
+                                                    res.status(200).end();
+                                                });
+                                                //usuario programa
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            };
+        });
+    },
 };
+
+function insertarData(tabla, datos, callback) {
+    tabla.sync().then(function () {
+        for (var i = 0; i < datos.length; i++) {
+            crud.findOrCreate(tabla, datos[i], datos[i], null, function (argument) { });
+            if (i === datos.length - 1) {
+                callback();
+            }
+        }
+    });
+}
+
+function buscarFacultad(facultades, dato, callback) {
+    callback(facultades.find((fac) => {
+        return fac.facultad === dato;
+    }));
+}
+
+function buscarSede(sedes, dato, callback) {
+    callback(sedes.find((s) => {
+        return s.sede === dato;
+    }));
+}
+
+function llenarArea(callback) {
+    crud.findAll(tbl_facultades, null, null, (facultadData) => {
+        var areas = [];
+        for (let i = 0; i < facultadData.length; i++) {
+            areas.push({ area: facultadData[i].dataValues.facultad, tblFacultadeId: facultadData[i].dataValues.id });
+            if (i === facultadData.length - 1) {
+                callback(areas);
+            }
+        }
+    });
+}
+
+function llenarPrograma(data, callback) {
+    crud.findAll(tbl_facultades, null, null, (facultadData) => {
+        crud.findAll(tbl_sedes, null, null, (sedesData) => {
+            var programas = [];
+            for (let j = 1; j < data.length; j++) {
+                programas.push({ codigo: '' + data[j].A, tblSedeId: buscarDatoSede(sedesData, data[j].D), programa: data[j].B, tblAreaId: buscarDatoFacultad(facultadData, data[j].C) });
+                if (j === data.length - 1) {
+                    callback(programas);
+                }
+            }
+        });
+    });
+}
+
+function llenarUsuario(usuario, callback) {
+    const funciones = require('.././services/funciones');
+    var usuarios = [];
+    for (let i = 1; i < usuario.length; i++) {
+        var nombreCompleto = usuario[i].B.split(" ");
+        var nombre = "";
+        for (let j = 0; j < nombreCompleto.length - 2; j++) {
+            nombre = nombre + " " + nombreCompleto[j];
+        }
+        nombre = nombre.replace(/^\s+/g, '');
+        nombre = nombre.replace(/\s+$/g, '');
+        usuarios.push({ doc_identidad: "" + usuario[i].A, nombre: nombre, apellido_1: nombreCompleto[nombreCompleto.length - 2], apellido_2: nombreCompleto[nombreCompleto.length - 1], correo: usuario[i].C, contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false });
+        if (i === usuario.length - 1) {
+            callback(usuarios);
+        }
+    }
+}
+
+function buscarDatoSede(array, dato) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].dataValues.sede === dato) {
+            return array[i].dataValues.id;
+        }
+    }
+}
+
+function buscarDatoFacultad(array, dato) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].dataValues.facultad === dato) {
+            return array[i].dataValues.id;
+        }
+    }
+}
+
+function guardar_Permisos(callback) {
+    crud.findAll(tbl_usuarios, null, null, (usuarios) => {
+        for (let i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].dataValues.tblPerfileId != 7) {
+                crud.findAll(tbl_permisos_iniciales, { tblPerfileId: usuarios[i].dataValues.tblPerfileId }, null, (iniciales) => {
+                    var permisos = [];
+                    for (j = 0; j < iniciales.length; j++) {
+                        permisos.push({ tblRecursoId: iniciales[j].tblRecursoId, tblUsuarioDocIdentidad: usuarios[i].dataValues.doc_identidad, ver: iniciales[j].ver, crear: iniciales[j].crear, modificar: iniciales[j].modificar, eliminar: iniciales[j].eliminar });
+                    }
+                    tbl_permisos.sync().then(function () {
+                        for (var i = 0; i < permisos.length; i++) {
+                            crud.create(tbl_permisos, permisos[i], (resp) => {
+                                if (resp != 'error') {
+                                    callback();
+                                } else {
+                                    res.sendStatus(403);
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+        }
+    });
+}

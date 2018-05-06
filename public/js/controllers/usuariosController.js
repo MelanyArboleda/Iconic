@@ -1,52 +1,53 @@
 angular.module("iconic").controller("usuariosCtrl", usuariosCtrl);
+    
+usuariosCtrl.$inject = ["$rootScope", "usuariosFactory", "usuariosService", "loginFactory", "serviceNotification", "$q", "$scope"];
 
-usuariosCtrl.$inject = ["$rootScope", "usuariosFactory", "usuariosService", "loginFactory", "serviceNotification", "$q"];
-
-function usuariosCtrl($rootScope,usuariosFactory, usuariosService, loginFactory, serviceNotification, $q) {
+function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory, serviceNotification, $q, $scope) {
     var vm = this;
     var nombreu;
     var apellido_1u;
     var apellido_2u;
-    
-    if($rootScope.infoReady == true){
-		cargarUSER();
-	}else{
-		$rootScope.$on("InfoReady",function(){
-			cargarUSER();
-		});
-	}
+    vm.info = "";
+
+    if ($rootScope.infoReady == true) {
+        cargarUSER();
+    } else {
+        $rootScope.$on("InfoReady", function () {
+            cargarUSER();
+        });
+    }
     function cargarUSER() {
-            usuariosFactory.buscarUsuarios().then(function () {
-                vm.usuarios = usuariosFactory.users;
-                usuariosFactory.buscarEstados().then(function () {
-                    for (var i = 0; i < vm.usuarios.length; i++) {
-                        vm.usuarios[i].tblEstadoId = usuariosFactory.estados.find(function (estado) {
-                            return vm.usuarios[i].tblEstadoId === estado.id;
-                        });
-                        vm.usuarios[i].tblEstadoId = vm.usuarios[i].tblEstadoId.estado;
+        usuariosFactory.buscarUsuarios().then(function () {
+            vm.usuarios = usuariosFactory.users;
+            usuariosFactory.buscarEstados().then(function () {
+                for (var i = 0; i < vm.usuarios.length; i++) {
+                    vm.usuarios[i].tblEstadoId = usuariosFactory.estados.find(function (estado) {
+                        return vm.usuarios[i].tblEstadoId === estado.id;
+                    });
+                    vm.usuarios[i].tblEstadoId = vm.usuarios[i].tblEstadoId.estado;
+                }
+                vm.estados = [];
+                for (var i = 0; i < usuariosFactory.estados.length; i++) {
+                    if (usuariosFactory.estados[i].id == 1 || usuariosFactory.estados[i].id == 2) {
+                        vm.estados.push(usuariosFactory.estados[i]);
                     }
-                    vm.estados = [];
-                    for (var i = 0; i < usuariosFactory.estados.length; i++) {
-                        if (usuariosFactory.estados[i].id == 1 || usuariosFactory.estados[i].id == 2) {
-                            vm.estados.push(usuariosFactory.estados[i]);
-                        }
-                    }
-                });
-                vm.permisoUser = loginFactory.estatus.permisos.find(function (permiso) {
-                    return permiso.tblRecursoId == 15;
-                });
-                vm.permisoPermiso = loginFactory.estatus.permisos.find(function (permiso) {
-                    return permiso.tblRecursoId == 12;
-                });
-                usuariosFactory.buscarPerfiles().then(function () {
-                    for (var i = 0; i < vm.usuarios.length; i++) {
-                        vm.usuarios[i].tblPerfileId = usuariosFactory.perfiles.find(function (perfil) {
-                            return vm.usuarios[i].tblPerfileId === perfil.id;
-                        });
-                        vm.usuarios[i].tblPerfileId = vm.usuarios[i].tblPerfileId.perfil;
-                    }
-                });
+                }
             });
+            vm.permisoUser = loginFactory.estatus.permisos.find(function (permiso) {
+                return permiso.tblRecursoId == 15;
+            });
+            vm.permisoPermiso = loginFactory.estatus.permisos.find(function (permiso) {
+                return permiso.tblRecursoId == 12;
+            });
+            usuariosFactory.buscarPerfiles().then(function () {
+                for (var i = 0; i < vm.usuarios.length; i++) {
+                    vm.usuarios[i].tblPerfileId = usuariosFactory.perfiles.find(function (perfil) {
+                        return vm.usuarios[i].tblPerfileId === perfil.id;
+                    });
+                    vm.usuarios[i].tblPerfileId = vm.usuarios[i].tblPerfileId.perfil;
+                }
+            });
+        });
         vm.formUsuario = {
             doc_identidad: '',
             nombre: '',
@@ -122,5 +123,30 @@ function usuariosCtrl($rootScope,usuariosFactory, usuariosService, loginFactory,
         }).catch(function (err) {
             serviceNotification.error('No se pudo guardar el permiso', 2000);
         });
+    }
+
+    vm.preInfo = function (event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+            $scope.$apply(function () {
+                vm.info = reader.result;
+            });
+        }, false);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    vm.subirInfo = function () {
+        if (vm.info != "") {
+            usuariosService.guardarArchivo({ info: vm.info }).then(function (resp) {
+                serviceNotification.success('Archivo guardado correctamente', 3000);
+            }).catch(function (err) {
+                serviceNotification.error('No se pudo guardar el archivo', 2000);
+            });
+        } else {
+            serviceNotification.error('No se seleccionó ninguna archivo', 2000);
+        }
     }
 }

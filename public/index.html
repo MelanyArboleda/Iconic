@@ -6,6 +6,8 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/waves.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/ng-materialize.min.css" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -57,9 +59,6 @@
                                             </li>
                                             <div class="indicator" style="right: 430px; left: 0px;"></div>
                                             <li id="perfil">{{indexVm.loginFactory.perfil.perfil}}</li>
-                                            <li ng-if="indexVm.permiso.modificar == true">
-                                                <a id="select" class="modal-action modal-close modal-trigger" data-target='modalfirma' modal>Subir firma digital</a>
-                                            </li>
                                             <center>
                                                 <button class="waves-effect waves-light btn" id="cerrar" ng-click="indexVm.logout()">Cerrar sesión</button>
                                             </center>
@@ -75,7 +74,7 @@
     </header>
     <ui-view></ui-view>
 
-    <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
+    <!-- <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
         <div class="modal-content contenido-modal" ng-if="!firmaVm.siguiente">
             <h5>
                 <strong>Subir Firma Digital</strong>
@@ -140,7 +139,7 @@
         <div class="modal-footer">
             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
         </div>
-    </div>
+    </div> -->
 
     <div id="modalObservaciones" class="modal" style="overflow-y: hidden;" ng-controller="concertacionCtrl as concertacionVm"
         ng-open="concertacionVm.room()">
@@ -190,6 +189,9 @@
     <script type="text/javascript" src="js/minified/angular-local-storage.min.js"></script>
     <script type="text/javascript" src="js/minified/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="js/minified/select.min.js"></script>
+    <script type="text/javascript" src="js/minified/angular-animate.min.js"></script>
+    <script type="text/javascript" src="js/minified/waves.min.js"></script>
+    <script type="text/javascript" src="js/minified/ng-materialize.min.js"></script>    
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/route.js"></script>
     <script type="text/javascript" src="js/todoScript.js"></script>
@@ -210,6 +212,7 @@
     <script type="text/javascript" src="js/services/ptdService.js"></script>
     <script type="text/javascript" src="js/services/planesService.js"></script>
     <script type="text/javascript" src="js/services/usuariosService.js"></script>
+    <script type="text/javascript" src="js/services/modalNotifService.js"></script>
     <script type="text/javascript" src="js/directives/inputDirectives.js"></script>
     <script type="text/javascript" src="js/factories/loginFactory.js"></script>
     <script type="text/javascript" src="js/factories/ptdFactory.js"></script>
@@ -246,6 +249,7 @@
     <script type="text/javascript" src="js/controllers/aOtrasActividadesController.js"></script>
     <script type="text/javascript" src="js/controllers/aObservacionesController.js"></script>
     <script type="text/javascript" src="js/controllers/usuariosController.js"></script>
+    <script type="text/javascript" src="js/controllers/modalNotifController.js"></script>
 </body>
 
 </html>

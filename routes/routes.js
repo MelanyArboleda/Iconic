@@ -30,6 +30,8 @@ router.post('/auth/validarPassword', controllers.UserController.validar_password
 router.post('/auth/guardarFirma', controllers.UserController.guardar_Firma);
 //guardar comentario concertacion
 router.post('/auth/guardarConcertacion', modelos.tbl_concertaciones.guardar_Concertacion);
+//guardar archivo con informacion para la base de datos
+router.post('/auth/guardarArchivo', modelos.tbl_ptds.guardar_Archivo);
 
 
 router.post('/auth/configc', controllers.UserController.cinicial);
@@ -98,7 +100,6 @@ router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de los permisos
 router.post('/auth/buscarPermisos', controllers.PtdController.buscar_Permisos);
-router.post('/auth/guardarPermisos', controllers.PtdController.guardar_Permisos);
 //obtener datos espesifico
 router.post('/auth/buscarPerfil', controllers.PtdController.buscar_Perfil);
 router.post('/auth/buscarPrograma', controllers.PtdController.buscar_Programa);

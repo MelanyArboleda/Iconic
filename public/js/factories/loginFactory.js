@@ -10,7 +10,6 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 		estatus: {},
 		buscarPerfil: buscarPerfil,
 		cargarEstatus: cargarEstatus,
-		guardarPermisos: guardarPermisos,
 		login: login,
 		logout: logout,
 		userLogin: false,
@@ -189,11 +188,4 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 		return deferred.promise;
 	}
 
-	function guardarPermisos() {
-		var deferred = $q.defer();
-		loginService.guardarPermisos({ tblUsuarioDocIdentidad: factory.user.doc_identidad, tblPerfileId: factory.perfil.id }).then(function (resp) {
-			deferred.resolve();
-		});
-		return deferred.promise;
-	}
 }

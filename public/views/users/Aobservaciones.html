@@ -45,10 +45,16 @@
             </div>
         </div>
     </form>
-
-    <div class="container white contenido" ng-if="observacionesVm.permiso">
+{{observacionesVm.permiso}}
+    <div class="container white contenido" ng-if="observacionesVm.permiso.ver">
         <div class="row">
-            <div class="col s12 center">
+            <div class="col s12 center" ng-if="indexVm.permiso.crear == true">
+                Para poder fimar el plan de trabajo, debes de subir primero la firma digital
+                <div class="input-field col s4">
+                    <button type="button" class="waves-effect waves-light btn" data-target='modalfirma' modal>Subir firma digital</button>
+                </div>
+            </div>
+            <div class="col s12 center" ng-if="indexVm.permiso.crear == false">
                 <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
                     <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
@@ -126,6 +132,72 @@
 
         <div class="modal-footer">
             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
+    <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
+        <div class="modal-content contenido-modal" ng-if="!firmaVm.siguiente">
+            <h5>
+                <strong>Subir Firma Digital</strong>
+            </h5>
+            <div class="row">
+                <p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados
+                    del plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+            </div>
+            <div class="row center">
+                <img class="responsive-img imagenfirma" ng-src="{{firmaVm.firma}}">
+            </div>
+            <div class="row">
+                <form name="" autocomplete="off">
+                    <div class="col s10">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Cargar</span>
+                                <input type="file" ng-model="firmaVm.firma" ng-file-on-change="firmaVm.prefirmar">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s2 center">
+                        <button ng-click="firmaVm.firmar()" class="btn-floating btn-large center">
+                            <i class="material-icons">&#xE255;</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-content" ng-if="firmaVm.siguiente">
+            <h5>
+                <strong>Contraseña para firmar digitalmente</strong>
+            </h5>
+            <div class="row">
+                <p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta
+                    contraseña cada vez que vayas a firmar un plan de trabajo.</p>
+                <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
+            </div>
+            <div class="row">
+                <form name="passwordFirmaForm" autocomplete="off" ng-submit="firmaVm.passwordFirma()">
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input type="password" name="contraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.password" required>
+                        <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input type="password" name="repiteContraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.repitepassword" required>
+                        <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s12 center">
+                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
         </div>
     </div>
 </div>

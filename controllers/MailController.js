@@ -33,7 +33,7 @@ module.exports = {
                     fecha = dateEnt.toString('base64');
                     var asunto = 'restablecer contraseña';
                     var html = linkRecuperarHtml;
-                    html = html.replace("url", "http://192.168.1.52:3000/#!/restablecer/" + doc_identidad + "/" + fecha);
+                    html = html.replace("url", "http://192.168.1.55:3000/#!/restablecer/" + doc_identidad + "/" + fecha);
                     html = html.replace("Usuario", "" + nombre);
 
                     var resp = mail(req.body.correo, asunto, html);
