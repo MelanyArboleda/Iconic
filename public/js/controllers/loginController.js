@@ -14,7 +14,11 @@ function loginCtrl(loginFactory, $state, $scope) {
 		loginFactory.login(vm.user).then(function (isLogin) {
 			if (isLogin) {
 				if (loginFactory.user.estado === 1) {
-					$state.go("menuPrincipal.vistaPTD");
+					if (loginFactory.user.perfil == 7) {
+						$state.go("menuPrincipal.Usuarios");
+					}else{
+						$state.go("menuPrincipal.vistaPTD");
+					}
 				} else if (loginFactory.user.estado === 3) {
 					if (loginFactory.codigoVerificacion == null) {
 						loginFactory.sendCode().then(function (resp) {

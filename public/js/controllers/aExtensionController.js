@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aExtensionCtrl", aExtensionCtrl);
 
-aExtensionCtrl.$inject = ["$rootScope", "AEService", "AEFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aExtensionCtrl.$inject = ["$rootScope", "AEService", "AEFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q", "modalNotifService"];
 
-function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
+function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q, modalNotifService) {
     var vm = this;
     var acciones = "";
     if ($rootScope.infoReady == true) {
@@ -57,11 +57,15 @@ function aExtensionCtrl($rootScope, AEService, AEFactory, ptdService, ptdFactory
     }
 
     vm.deleteActividadesExtension = function (ae) {
-        AEService.eliminarAE(ae).then(function (res) {
-            serviceNotification.success('Actividad eliminada correctamente', 3000);
-            cargarAE();
-        }).catch(function (err) {
-            serviceNotification.error('No pudo eliminar la Actividad', 2000);
+        modalNotifService.openModal('Esta seguro de eliminar la Actividad de extensión?').then(function (bool) {
+            if (bool) {
+                AEService.eliminarAE(ae).then(function (res) {
+                    serviceNotification.success('Actividad eliminada correctamente', 3000);
+                    cargarAE();
+                }).catch(function (err) {
+                    serviceNotification.error('No pudo eliminar la Actividad', 2000);
+                });
+            }
         });
     }
 

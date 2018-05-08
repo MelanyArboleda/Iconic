@@ -1,8 +1,8 @@
 angular.module("iconic").controller("fechaEtapaCtrl", fechaEtapaCtrl);
 
-fechaEtapaCtrl.$inject = ["$rootScope", "fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification"];
+fechaEtapaCtrl.$inject = ["$rootScope", "fechaEtapaService", "fechaEtapaFactory", "loginFactory", "serviceNotification", "modalNotifService"];
 
-function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification) {
+function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginFactory, serviceNotification, modalNotifService) {
     var vm = this;
     vm.acciones = "";
     if ($rootScope.infoReady == true) {
@@ -34,7 +34,7 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
                 fecha_final: ''
             }
             if (fechaEtapaFactory.fechaEtapa.length == 0) {
-                serviceNotification.warning('¡AVISO! : No se han creado las fechas para las etapas de plan de trabajo', 6000);
+                modalNotifService.openModal('¡AVISO! : No se han creado las fechas para las etapas de plan de trabajo', 6000);
             }
         });
         vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
@@ -87,12 +87,16 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
             semestre: fe.semestre,
             ano: fe.ano
         }
-        fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
-                serviceNotification.success('Fecha eliminada correctamente', 4000);
-                cargarFE();
-            
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo eliminar la fecha para la etapa', 5000);
+        modalNotifService.openModal('Esta seguro de eliminar la fecha para la etapa?').then(function (bool) {
+            if (bool) {
+                fechaEtapaService.eliminarFechaEtapa(data).then(function (res) {
+                    serviceNotification.success('Fecha eliminada correctamente', 4000);
+                    cargarFE();
+
+                }).catch(function (err) {
+                    serviceNotification.error('No se pudo eliminar la fecha para la etapa', 5000);
+                });
+            }
         });
     }
 

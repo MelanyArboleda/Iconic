@@ -32,7 +32,7 @@ router.post('/auth/guardarFirma', controllers.UserController.guardar_Firma);
 router.post('/auth/guardarConcertacion', modelos.tbl_concertaciones.guardar_Concertacion);
 //guardar archivo con informacion para la base de datos
 router.post('/auth/guardarArchivo', modelos.tbl_ptds.guardar_Archivo);
-
+router.post('/auth/llenarDataBase', modelos.tbl_ptds.llenar_DataBase);
 
 router.post('/auth/configc', controllers.UserController.cinicial);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,15 +100,14 @@ router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de los permisos
 router.post('/auth/buscarPermisos', controllers.PtdController.buscar_Permisos);
+router.post('/auth/guardarPermisos', controllers.PtdController.guardar_Permisos);
 //obtener datos espesifico
 router.post('/auth/buscarPerfil', controllers.PtdController.buscar_Perfil);
 router.post('/auth/buscarPrograma', controllers.PtdController.buscar_Programa);
-router.post('/auth/buscarMaterias', controllers.PtdController.buscar_Materias);
 router.post('/auth/buscarArea', controllers.PtdController.buscar_Area);
 router.post('/auth/buscarFacultad', controllers.PtdController.buscar_Facultad);
 router.post('/auth/buscarEtapa', controllers.PtdController.buscar_Etapa);
 router.post('/auth/buscarActor', controllers.PtdController.buscar_Actor);
-router.post('/auth/buscarProgramaMateria', controllers.PtdController.buscar_Programa_Materia);
 router.post('/auth/buscarVinculosP', modelos.tbl_vinculos.buscar_VinculosP);
 router.post('/auth/buscarVinculosS', modelos.tbl_vinculos.buscar_VinculosS);
 //rutas de fechas para las etapas
@@ -118,6 +117,7 @@ router.post('/auth/modificarFechaEtapa', modelos.tbl_fechas_etapas.modificar_Fec
 router.post('/auth/eliminarFechaEtapa', modelos.tbl_fechas_etapas.eliminar_FechaEtapa);
 //rutas de los usuarios para los permisos
 router.post('/auth/buscarUsuarios', controllers.UserController.buscar_Usuarios);
+router.post('/auth/buscarUsuariosAdmin', controllers.UserController.buscar_Usuarios_Admin);
 router.post('/auth/buscarEstados', controllers.UserController.buscar_Estados);
 router.post('/auth/buscarPerfiles', controllers.UserController.buscar_Perfiles);
 router.post('/auth/modificarUsuario', controllers.UserController.modificar_Usuario);

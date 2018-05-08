@@ -16,10 +16,6 @@ var tbl_actividades = sequelize.define('tbl_actividades', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    conexa:{
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-    },
     tblResumeneId: {
         type: Sequelize.INTEGER,
         allowNull: false

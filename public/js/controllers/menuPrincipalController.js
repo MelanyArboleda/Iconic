@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q","modalNotifService"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q) {
+function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q,modalNotifService) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -39,57 +39,45 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 
 	function cargarMenu() {
 		vm.pageName = $rootScope.page;
-		fechaEtapaFactory.buscarFechaEtapa().then(function () {
-			console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
-			if (loginFactory.user.perfil == 1) {
-				if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
-					if (fechaEtapaFactory.fechaEtapa.length == 0) {
-						serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para la presentación de tu plan de trabajo, comunícate con ellos si tienes alguna duda', 5000);
-						vm.plan = false;
-						emitInfoReady();
-					} else {
-						ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
-							console.log("PTD--------", ptd);
-							vm.plan = true;
-							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
-								console.log("resumen--------", resumen);
-								ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
-									emitPtdReady();
-									emitInfoReady();
-								});
-							});
-
-						});
-					}
-				} else {
-					emitInfoReady();
-				}
-			} else {
-				if (loginFactory.user.perfil == 2) {
-					if (fechaEtapaFactory.fechaEtapa.length == 0) {
-						$state.go("menuPrincipal.fechaEtapa");
-						emitInfoReady();
-					} else {
-						var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-						planesFactory.buscarPtdsFacultad({
-							facultad: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
-						}).then(function () {
-							console.log("PTDS----------", planesFactory.ptds);
-							vm.ptds = planesFactory.ptds;
-							vm.ptdId = $rootScope.ptd;
-							emitInfoReady();
-						});
-					}
-				} else {
-					if (loginFactory.user.perfil == 4) {
+		vm.perfilUser = loginFactory.user.perfil;
+		if(loginFactory.user.perfil == 7){
+			vm.plan = false;
+			emitInfoReady();
+		}else{
+			fechaEtapaFactory.buscarFechaEtapa().then(function () {
+				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
+				if (loginFactory.user.perfil == 1) {
+					if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
+							modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para la presentación de tu plan de trabajo, comunícate con ellos si tienes alguna duda');
 							vm.plan = false;
 							emitInfoReady();
 						} else {
+							ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+								console.log("PTD--------", ptd);
+								vm.plan = true;
+								RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
+									console.log("resumen--------", resumen);
+									ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
+										emitPtdReady();
+										emitInfoReady();
+									});
+								});
+	
+							});
+						}
+					} else {
+						emitInfoReady();
+					}
+				} else {
+					if (loginFactory.user.perfil == 2) {
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							$state.go("menuPrincipal.fechaEtapa");
+							emitInfoReady();
+						} else {
 							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-							planesFactory.buscarPtdsPrograma({
-								programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
+							planesFactory.buscarPtdsFacultad({
+								facultad: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
 							}).then(function () {
 								console.log("PTDS----------", planesFactory.ptds);
 								vm.ptds = planesFactory.ptds;
@@ -98,24 +86,42 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 							});
 						}
 					} else {
-						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
-							vm.plan = false;
-							emitInfoReady();
-						} else {
-							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-							planesFactory.buscarPtds({
-								semestre: data.semestre, ano: data.ano
-							}).then(function () {
-								console.log("PTDS----------", planesFactory.ptds);
-								vm.ptds = planesFactory.ptds;
+						if (loginFactory.user.perfil == 4) {
+							if (fechaEtapaFactory.fechaEtapa.length == 0) {
+								modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda');
+								vm.plan = false;
 								emitInfoReady();
-							});
+							} else {
+								var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+								planesFactory.buscarPtdsPrograma({
+									programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
+								}).then(function () {
+									console.log("PTDS----------", planesFactory.ptds);
+									vm.ptds = planesFactory.ptds;
+									vm.ptdId = $rootScope.ptd;
+									emitInfoReady();
+								});
+							}
+						} else {
+							if (fechaEtapaFactory.fechaEtapa.length == 0) {
+								modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda');
+								vm.plan = false;
+								emitInfoReady();
+							} else {
+								var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+								planesFactory.buscarPtds({
+									semestre: data.semestre, ano: data.ano
+								}).then(function () {
+									console.log("PTDS----------", planesFactory.ptds);
+									vm.ptds = planesFactory.ptds;
+									emitInfoReady();
+								});
+							}
 						}
 					}
 				}
-			}
-		});
+			});
+		}
 		vm.permisos = loginFactory.estatus.permisos.sort(function (a, b) {
 			return (a.tblRecursoId - b.tblRecursoId)
 		});

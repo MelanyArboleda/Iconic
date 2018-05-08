@@ -7,7 +7,7 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
     vm.passwordNew = "";
     vm.repitepassword = "";
 
-    vm.configini = function() {
+    vm.configini = function () {
         if (vm.passwordNew == vm.repitepassword) {
             var data = {
                 password: vm.passwordNew,
@@ -17,10 +17,12 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
             loginService.compararcontraseñas(data).then(function (res) {
                 loginFactory.user = res.user;
                 serviceNotification.info('Bienvenido a ICONIC', 2000);
-                $state.go("menuPrincipal.vistaPTD");
+                $state.go("menuPrincipal.vistaPTD").then(loginFactory.buscarPerfil().then(function () {
+                    loginFactory.guardarPermisos().then(function () { });
+                }));
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.warning('La contraseña no debe ser la misma por defecto', 2000);
+                modalNotifService.openModal('Hola, La contraseña no debe ser la misma por defecto.');
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);

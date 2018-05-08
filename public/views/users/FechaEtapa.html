@@ -1,5 +1,8 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
-
+<center>
+    <a ui-sref="menuPrincipal.vistaPTD" class="waves-effect waves-light btn p-btn-new blue">Volver</a>
+</center>
+<br>
 <div class="container white contenido">
     <div class="row">
         <div class="col s12">
@@ -74,8 +77,8 @@
                     <input input-date type="text" name="fecha_inicial" id="fecha_inicial" class="form-control fecha" ng-model="fechaEtapaVm.formfechaEtapa.fecha_inicial"
                         ng-change="mnuPVm.validFechaFinal(fechaEtapaVm.formfechaEtapa.fecha_inicial)" format="mm/dd/yyyy" months-full="{{mnuPVm.month}}"
                         months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}"
-                        min="{{mnuPVm.minDate}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
-                        close="mnuPVm.close" select-years="15" required>
+                        min="{{mnuPVm.minDate}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close"
+                        select-years="15" required>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">
                     <input input-date ng-disabled="!fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final" id="fecha_final"

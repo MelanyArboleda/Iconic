@@ -196,30 +196,46 @@ var etapas = [
     { id: 5, etapa: "Evaluación" }];
 
 var usuarios = [
-    { doc_identidad: "3725428427", nombre: "Administrador", apellido_1: "Administrador", apellido_2: "Administrador", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 7, tblEstadoId: 1, recuperar: false }
+    { doc_identidad: "3725428427", nombre: "Administrador", apellido_1: "Administrador", apellido_2: "Administrador", correo: "tolosa-321@hotmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 7, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "1039470240", nombre: "docente", apellido_1: "docente", apellido_2: "docente", correo: "gabriel_arboleda23151@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "1152710692", nombre: "Decano", apellido_1: "Decano", apellido_2: "Decano", correo: "gabotolosa97@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false },
+    { doc_identidad: "1234567890", nombre: "Docencia", apellido_1: "Docencia", apellido_2: "Docencia", correo: "melany1@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 3, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "9876543210", nombre: "Programa", apellido_1: "Programa", apellido_2: "Programa", correo: "programa@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 4, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "1324758690", nombre: "Investigación", apellido_1: "Investigación", apellido_2: "Investigación", correo: "investigacion@gmail.com", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 5, tblEstadoId: 3, recuperar: false },
+    { doc_identidad: "9786543210", nombre: "Extensión", apellido_1: "Extensión", apellido_2: "Extensión", correo: "extensión@elpoli.edu.co", contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 6, tblEstadoId: 3, recuperar: false }
 ];
 
 var usuario_doc = [
-    { doc_identidad: "3725428427" }
+    { doc_identidad: "3725428427" },
+    { doc_identidad: "1039470240" },
+    { doc_identidad: "1152710692" },
+    { doc_identidad: "1234567890" },
+    { doc_identidad: "9876543210" },
+    { doc_identidad: "1324758690" },
+    { doc_identidad: "9786543210" }
 ];
-var permisosAdmin = [];
-var permisos = permisos_iniciales.find(function (permiso) {
-    return permiso.tblPerfileId === 7;
-});
-for (j = 0; j < permisos.length; j++) {
-    permisosAdmin.push({ tblRecursoId: permisos[j].tblRecursoId, tblUsuarioDocIdentidad: "3725428427", ver: permisos[j].ver, crear: permisos[j].crear, modificar: permisos[j].modificar, eliminar: permisos[j].eliminar });
+
+function llenarPermisos(callback) {
+    var permisosAdmin = [];
+    crud.findAll(tbl_permisos_iniciales, { tblPerfileId: 7 }, null, (iniciales) => {
+        for (j = 0; j < iniciales.length; j++) {
+            permisosAdmin.push({ tblRecursoId: iniciales[j].tblRecursoId, tblUsuarioDocIdentidad: "3725428427", ver: iniciales[j].ver, crear: iniciales[j].crear, modificar: iniciales[j].modificar, eliminar: iniciales[j].eliminar });
+            if (j === iniciales.length - 1) {
+                callback(permisosAdmin);
+            }
+        }
+    });
 }
 
-// var usuario_programas = [
-//     { tblUsuarioDocIdentidad: "1039470240", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "8329368363", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "1152710692", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "1234567890", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "53587", tblProgramaPrograma: "Tecnología en Sistematización de Datos", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "1324758690", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "9786543210", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 },
-//     { tblUsuarioDocIdentidad: "3725428427", tblProgramaCodigo: "6", tblProgramaPrograma: "Ingeniería", tblProgramaSede: 1 }
-// ];
+var usuario_programas = [
+    { tblUsuarioDocIdentidad: "1039470240", tblProgramaCodigo: "23", tblProgramaPrograma: "TÉCNICO PROF. EN PROG. DE SISTEMAS DE INFORMACIÓN (CICLO PRO. CON TSD)", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1152710692", tblProgramaCodigo: "A6", tblProgramaPrograma: "FACULTAD DE INGENIERIAS", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1234567890", tblProgramaCodigo: "A6", tblProgramaPrograma: "FACULTAD DE INGENIERIAS", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "9876543210", tblProgramaCodigo: "23", tblProgramaPrograma: "TÉCNICO PROF. EN PROG. DE SISTEMAS DE INFORMACIÓN (CICLO PRO. CON TSD)", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "1324758690", tblProgramaCodigo: "A6", tblProgramaPrograma: "FACULTAD DE INGENIERIAS", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "9786543210", tblProgramaCodigo: "A6", tblProgramaPrograma: "FACULTAD DE INGENIERIAS", tblProgramaSede: 1 },
+    { tblUsuarioDocIdentidad: "3725428427", tblProgramaCodigo: "A6", tblProgramaPrograma: "FACULTAD DE INGENIERIAS", tblProgramaSede: 1 }
+];
 
 //llamados de insercion para cada tabla
 llamado_insert(estados, tbl_estados, estados, () => {
@@ -228,10 +244,14 @@ llamado_insert(estados, tbl_estados, estados, () => {
             llamado_insert(recursos, tbl_recursos, recursos, () => {
                 llamado_insert(permisos_iniciales, tbl_permisos_iniciales, permisos_iniciales, () => {
                     llamado_insert(usuarios, tbl_usuarios, usuario_doc, () => {
-                        llamado_insert(permisosAdmin, tbl_permisos, permisosAdmin, () => {
-                            llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
-                                llamado_insert(actores, tbl_actores, actores, () => {
-                                    llamado_insert(etapas, tbl_etapas, etapas, () => {
+                        llamado_insert(usuario_programas, tbl_usuario_programas, usuario_programas, () => {
+                            llenarPermisos((permisosAdmin) => {
+                                llamado_insert(permisosAdmin, tbl_permisos, permisosAdmin, () => {
+                                    llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
+                                        llamado_insert(actores, tbl_actores, actores, () => {
+                                            llamado_insert(etapas, tbl_etapas, etapas, () => {
+                                            });
+                                        });
                                     });
                                 });
                             });
@@ -245,7 +265,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
 
 //funcion que llama el metodo insertar
 function llamado_insert(datos, tabla, donde, callback) {
-    tabla.sync({ force: true }).then(function () {
+    tabla.sync().then(function () {
         for (var i = 0; i < datos.length; i++) {
             crud.findOrCreate(tabla, datos[i], donde[i], null, function (argument) { });
         }

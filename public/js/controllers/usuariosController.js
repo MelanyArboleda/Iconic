@@ -1,5 +1,5 @@
 angular.module("iconic").controller("usuariosCtrl", usuariosCtrl);
-    
+
 usuariosCtrl.$inject = ["$rootScope", "usuariosFactory", "usuariosService", "loginFactory", "serviceNotification", "$q", "$scope"];
 
 function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory, serviceNotification, $q, $scope) {
@@ -7,6 +7,7 @@ function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory
     var nombreu;
     var apellido_1u;
     var apellido_2u;
+    vm.perfilUser;
     vm.info = "";
 
     if ($rootScope.infoReady == true) {
@@ -19,6 +20,7 @@ function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory
     function cargarUSER() {
         usuariosFactory.buscarUsuarios().then(function () {
             vm.usuarios = usuariosFactory.users;
+            vm.perfilUser = loginFactory.user.perfil;
             usuariosFactory.buscarEstados().then(function () {
                 for (var i = 0; i < vm.usuarios.length; i++) {
                     vm.usuarios[i].tblEstadoId = usuariosFactory.estados.find(function (estado) {
@@ -142,6 +144,11 @@ function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory
         if (vm.info != "") {
             usuariosService.guardarArchivo({ info: vm.info }).then(function (resp) {
                 serviceNotification.success('Archivo guardado correctamente', 3000);
+                usuariosService.llenarDataBase().then(function (resp) {
+                    serviceNotification.success('Información guardado correctamente', 3000);
+                }).catch(function (err) {
+                    serviceNotification.error('No se pudo guardar la información correctamente', 2000);
+                });
             }).catch(function (err) {
                 serviceNotification.error('No se pudo guardar el archivo', 2000);
             });

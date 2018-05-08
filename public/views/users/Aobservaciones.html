@@ -17,9 +17,9 @@
         </ul>
     </div>
     <br>
-    <a class="waves-effect waves-light btn p-btn-new" data-target='modalHorario' modal>
+    <!-- <a class="waves-effect waves-light btn p-btn-new" data-target='modalHorario' modal>
         <i class="material-icons">insert_invitation</i> Horario
-    </a>
+    </a> -->
 
 
 
@@ -27,7 +27,7 @@
         <div class="container white contenido">
             <div class="row">
                 <div class="input-field col s12 areaO" style="padding-right:3%;">
-                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" id="observacion" class="materialize-textarea"
+                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion"  class="materialize-textarea"
                         data-length="1000" required></textarea>
                     <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
                 </div>
@@ -45,23 +45,27 @@
             </div>
         </div>
     </form>
-{{observacionesVm.permiso}}
     <div class="container white contenido" ng-if="observacionesVm.permiso.ver">
         <div class="row">
-            <div class="col s12 center" ng-if="indexVm.permiso.crear == true">
-                Para poder fimar el plan de trabajo, debes de subir primero la firma digital
-                <div class="input-field col s4">
-                    <button type="button" class="waves-effect waves-light btn" data-target='modalfirma' modal>Subir firma digital</button>
-                </div>
+            <div class="col s12 center" ng-if="observacionesVm.permiso.crear == true">
+                <br>
+                <center>
+                    <b>Para poder fimar el plan de trabajo, debes de subir primero la firma digital</b>
+                </center>
+                <center>
+                    <div class="input-field col s12">
+                        <button type="button" class="waves-effect waves-light btn" data-target='modalfirma' modal>Subir firma digital</button>
+                    </div>
+                </center>
             </div>
-            <div class="col s12 center" ng-if="indexVm.permiso.crear == false">
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
+            <div class="col s12 center" ng-if="observacionesVm.permiso.crear == false">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
                     <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4">
                     <button type="button" ng-click="observacionesVm.firmaCoordinador = true" ng-hide="observacionesVm.firmaCoordinador" class="waves-effect waves-light btn">Firma coordinador programa</button>
                 </div>
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1">
                     <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn">Firma docente</button>
                 </div>
                 <form name="FirmConsejoForm" autocomplete="off" ng-show="observacionesVm.firmaConsejo" ng-submit="observacionesVm.saveFirma()">
@@ -134,7 +138,7 @@
             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
         </div>
     </div>
-    <div id="modalfirma" class="modal modal-fixed-footer" ng-controller="firmaCtrl as firmaVm">
+    <div id="modalfirma" class="modal" ng-controller="firmaCtrl as firmaVm">
         <div class="modal-content contenido-modal" ng-if="!firmaVm.siguiente">
             <h5>
                 <strong>Subir Firma Digital</strong>
@@ -190,8 +194,8 @@
                             ng-model="firmaVm.repitepassword" required>
                         <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
                     </div>
-                    <div class="input-field col s12 center">
-                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    <div class="input-field col s12 center modal-close">
+                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn">Guardar</button>
                     </div>
                 </form>
             </div>

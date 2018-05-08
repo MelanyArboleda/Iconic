@@ -1,7 +1,8 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
-<a class="waves-effect waves-light btn p-btn green" data-target='modalInfo' modal>
-    Subir Info
-</a>
+<center>
+    <a ng-if="usuariosVm.perfilUser == 7"  class="waves-effect waves-light btn p-btn green" data-target='modalInfo' modal> Subir Info </a>
+</center>
+<br>
 <div class="container white contenido">
     <div class="row">
         <div class="col s12">
@@ -137,8 +138,8 @@
             <p>A continuación podrás subir la información. </p>
         </div>
         <div class="row center">
-                <img class="responsive-img imagenfirma" ng-src="img/logoExcel.png">
-            </div>
+            <img class="responsive-img imagenfirma" ng-src="img/logoExcel.png">
+        </div>
         <div class="row">
             <form name="" autocomplete="off">
                 <div class="col s10">
@@ -153,7 +154,7 @@
                     </div>
                 </div>
                 <div class="col s2 center">
-                    <button ng-click="usuariosVm.subirInfo()" class="btn-floating btn-large center">
+                    <button ng-click="usuariosVm.subirInfo()" class="btn-floating btn-large center modal-close">
                         <i class="material-icons">&#xE255;</i>
                     </button>
                 </div>

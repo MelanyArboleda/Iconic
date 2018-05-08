@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aObservacionesCtrl", aObservacionesCtrl);
 
-aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "ObservacionesService", "ptdFactory", "loginFactory", "$rootScope", "serviceNotification"];
+aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "ObservacionesService", "ptdFactory", "loginFactory", "$rootScope", "serviceNotification", "modalNotifService"];
 
-function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, ObservacionesService, ptdFactory, loginFactory, $rootScope, serviceNotification) {
+function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, ObservacionesService, ptdFactory, loginFactory, $rootScope, serviceNotification, modalNotifService) {
 	var vm = this;
 	vm.firmaConsejo = false;
 	vm.firmaCoordinador = false;
@@ -37,12 +37,12 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 		}
 	}
 
-	vm.saveObservaciones = function (){
-		ObservacionesService.guardarObservaciones({donde : vm.observaciones.id, datos: vm.observaciones}).then(function (res) {
-			serviceNotification.success('Observaci�n guardada correctamente', 3000);
+	vm.saveObservaciones = function () {
+		ObservacionesService.guardarObservaciones({ donde: vm.observaciones.id, datos: vm.observaciones }).then(function (res) {
+			serviceNotification.success('Observación guardada correctamente', 3000);
 			cardarObservaciones();
 		}).catch(function (err) {
-			serviceNotification.error('No se pudo guardar la observaci�n', 2000);
+			serviceNotification.error('No se pudo guardar la observación', 2000);
 		});
 	}
 
@@ -57,7 +57,7 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 				firma_docente: ''
 			}
 			if (err.status == 401) {
-				serviceNotification.error("La contrase�a de la firma es incorrecta", 2000);
+				modalNotifService.openModal("La contraseña de la firma es incorrecta");
 			}
 			if (err.status == 403) {
 				serviceNotification.error("No se pudo guardar la firma", 2000);

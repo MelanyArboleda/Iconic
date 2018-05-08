@@ -1,6 +1,6 @@
 angular.module("iconic").factory("loginFactory", loginFactory);
 
-loginFactory.$inject = ["$rootScope","loginService", "ptdFactory", "$state", "serviceNotification", "$q", "localStorageService"];
+loginFactory.$inject = ["$rootScope", "loginService", "ptdFactory", "$state", "serviceNotification", "$q", "localStorageService"];
 
 function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotification, $q, localStorageService) {
 
@@ -10,6 +10,8 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 		estatus: {},
 		buscarPerfil: buscarPerfil,
 		cargarEstatus: cargarEstatus,
+		guardarPermisos: guardarPermisos,
+		buscarPermisos: buscarPermisos,
 		login: login,
 		logout: logout,
 		userLogin: false,
@@ -35,7 +37,7 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 			if (err.data.estado != 2) {
 				serviceNotification.error("Ingresa los datos correctamente", 2000);
 			} else {
-				serviceNotification.warning("Cuenta inactiva", 2000);
+				modalNotifService.openModal('Hola, la cuanta a la que estas intentado acceder esta actualmente inactiva.');
 			}
 		});
 
@@ -94,7 +96,7 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 	}
 
 	function sendLink(correo) {
-		if(correo.correo != ""){
+		if (correo.correo != "") {
 			loginService.sendLink(correo).then(function (resp) {
 				//envio el correo
 				serviceNotification.success('Se envio un link a su correo para el restablecimiento de su cuenta', 3000);
@@ -183,6 +185,14 @@ function loginFactory($rootScope, loginService, ptdFactory, $state, serviceNotif
 		var deferred = $q.defer();
 		loginService.buscarPermisos({ tblUsuarioDocIdentidad: factory.user.doc_identidad }).then(function (permisos) {
 			factory.estatus.permisos = permisos;
+			deferred.resolve();
+		});
+		return deferred.promise;
+	}
+
+	function guardarPermisos() {
+		var deferred = $q.defer();
+		loginService.guardarPermisos({ tblUsuarioDocIdentidad: factory.user.doc_identidad, tblPerfileId: factory.perfil.id }).then(function (resp) {
 			deferred.resolve();
 		});
 		return deferred.promise;

@@ -7,7 +7,6 @@ function ptdService($http, $q, appConstant) {
     this.buscarPtd = buscarPtd;
     this.guardarPtd = guardarPtd;
     this.guardarConcertacion = guardarConcertacion;
-    this.buscarProgramaMateria =buscarProgramaMateria;
 
     function createPtd(user) {
         var deferred = $q.defer();
@@ -45,17 +44,6 @@ function ptdService($http, $q, appConstant) {
     function guardarConcertacion(concertacion){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarConcertacion", concertacion).then(function (res) {
-            deferred.resolve(res.data);
-        }, function (err) {
-            deferred.reject(err);
-            console.log(err);
-        });
-        return deferred.promise;
-    }
-
-    function buscarProgramaMateria(materia){
-        var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarProgramaMateria", materia).then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);

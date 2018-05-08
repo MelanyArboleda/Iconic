@@ -11,8 +11,6 @@
                             <th>Dedicación Horas Semestre</th>
                             <th>Descripción y Productos</th>
                             <th ng-if="otrasActividadesVm.permiso.crear == true">
-                                <a ng-if="otrasActividadesVm.horasConexas > 0" class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(true)"
-                                    data-target='modalOActividades' modal>Conexas</a>
                                 <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" data-target='modalOActividades'
                                     modal>Nuevo</a>
                             </th>

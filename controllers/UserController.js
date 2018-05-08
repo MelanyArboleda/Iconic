@@ -228,6 +228,12 @@ module.exports = {
         })
     },
 
+    buscar_Usuarios_Admin: function (req, res, next) {
+        crud.findAll(tbl_usuarios, null, null, (users) => {
+            res.status(200).json({ users: users }).end();
+        })
+    },
+
     buscar_Estados: function (req, res, next) {
         crud.findAll(tbl_estados, null, null, (estados) => {
             res.status(200).json({ estados: estados }).end();

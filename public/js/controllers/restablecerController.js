@@ -1,13 +1,13 @@
 angular.module("iconic").controller("restablecerCtrl", restablecerCtrl);
 
-restablecerCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$state"];
+restablecerCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$state", "modalNotifService"];
 
-function restablecerCtrl(loginService, loginFactory, serviceNotification, $state) {
+function restablecerCtrl(loginService, loginFactory, serviceNotification, $state, modalNotifService) {
     var vm = this;
     vm.passwordNew = "";
     vm.repitepassword = "";
 
-    vm.restablecer = function() {
+    vm.restablecer = function () {
         if (vm.passwordNew === vm.repitepassword) {
             var data = {
                 password: vm.passwordNew,
@@ -17,7 +17,7 @@ function restablecerCtrl(loginService, loginFactory, serviceNotification, $state
                 $state.go("login");
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.warning('La nueva contraseña no debe ser igual a la anterior ni la por defecto', 2000);
+                modalNotifService.openModal('Hola, La nueva contraseña no debe ser igual a la anterior ni la por defecto.');
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);

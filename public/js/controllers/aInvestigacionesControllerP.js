@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aInvestigacionesPCtrl", aInvestigacionesPCtrl);
 
-aInvestigacionesPCtrl.$inject = ["$rootScope", "IPService", "IPFactory", "ptdService", "ptdFactory", "loginFactory", "DDFactory", "ISFactory", "serviceNotification", "$q"];
+aInvestigacionesPCtrl.$inject = ["$rootScope", "IPService", "IPFactory", "ptdService", "ptdFactory", "loginFactory", "DDFactory", "ISFactory", "serviceNotification", "$q", "modalNotifService"];
 
-function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptdFactory, loginFactory, DDFactory, ISFactory, serviceNotification, $q) {
+function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptdFactory, loginFactory, DDFactory, ISFactory, serviceNotification, $q, modalNotifService) {
     var vm = this;
     var acciones = "";
     var max;
@@ -18,7 +18,6 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
         IPFactory.buscarVinculosP().then(function () {
             IPFactory.buscarInvestigacionesProyectos().then(function () {
                 vm.investigacionesProyectos = IPFactory.InvPro;
-                calcularHorasDD()
                 for (var i = 0; i < vm.investigacionesProyectos.length; i++) {
                     vm.investigacionesProyectos[i].tblVinculoId = IPFactory.vinculos.find(function (vinculo) {
                         return vm.investigacionesProyectos[i].tblVinculoId == vinculo.id;
@@ -76,11 +75,15 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
     }
 
     vm.deleteInvestigacionesProyectos = function (ip) {
-        IPService.eliminarIP(ip).then(function (res) {
-            serviceNotification.success('Proyecto eliminado correctamente', 3000);
-            cargarIP();
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo eliminar el proyecto', 2000);
+        modalNotifService.openModal('Esta seguro de eliminar el Proyecto de investigación?').then(function (bool) {
+            if (bool) {
+                IPService.eliminarIP(ip).then(function (res) {
+                    serviceNotification.success('Proyecto eliminado correctamente', 3000);
+                    cargarIP();
+                }).catch(function (err) {
+                    serviceNotification.error('No se pudo eliminar el proyecto', 2000);
+                });
+            }
         });
     }
 
@@ -93,7 +96,7 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
             objetivo_principal: ip.objetivo_principal,
             producto: ip.producto,
             horas_semanales: ip.horas_semanales,
-            horas_semestrales: ip.horas_semestrales,
+            horas_semestrales: calculahoras(ip.horas_semanales),
             aprobado: ip.aprobado,
             tblPtdId: ip.tblPtdId
         }
@@ -120,41 +123,6 @@ function aInvestigacionesPCtrl($rootScope, IPService, IPFactory, ptdService, ptd
     function calculahoras(horas_semanales) {
         return horas_semanales * 22.5;
     };
-
-    function calcularHorasDD() {
-        DDFactory.buscarMaterias().then(function () {
-            DDFactory.buscarDocenciaDirecta().then(function () {
-                var docenciaDirecta = DDFactory.DocDir;
-                for (var i = 0; i < docenciaDirecta.length; i++) {
-                    docenciaDirecta[i].horas_semanales = DDFactory.materias.find(function (materia) {
-                        return docenciaDirecta[i].tblMateriaCodigo == materia.codigo;
-                    });
-                    docenciaDirecta[i].horas_semanales = docenciaDirecta[i].horas_semanales.horas_semanales;
-                }
-                docenciaDirecta = sumarHoras(DDFactory.DocDir);
-                ISFactory.buscarInvestigacionesSemilleros().then(function () {
-                    var investigacionesSemilleros = sumarHoras(ISFactory.InvSem) / 2;
-                    var investigacionesProyectos = sumarHoras(IPFactory.InvPro) / 2;
-                    var docDicCompleta = docenciaDirecta + investigacionesProyectos + investigacionesSemilleros;
-                    if (max < docDicCompleta) {
-                        serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables sobrepasa el màximo de horas permitido', 2000);
-                    } else {
-                        if (min > docDicCompleta && loginFactory.perfil.id == 2) {
-                            serviceNotification.warning('la suma de las horas de docencia directa y sus asimilables es menor al mínimo exigido', 2000);
-                        }
-                    }
-                });
-            });
-        });
-    }
-
-    function sumarHoras(array) {
-        var suma = 0;
-        for (i = 0; i < array.length; i++) {
-            suma += array[i].horas_semanales
-        }
-        return suma;
-    }
 
     (function () {
         if (loginFactory.user.dedicacion == 1) { min = 14; max = 18; }

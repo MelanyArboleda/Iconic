@@ -7,7 +7,6 @@ function DDService($http, $q, appConstant) {
     this.guardarDD = guardarDD;
     this.modificarDD = modificarDD;
     this.eliminarDD = eliminarDD;
-    this.buscarMaterias = buscarMaterias;
 
     function buscarDD(dd) {
         var deferred = $q.defer();
@@ -46,17 +45,6 @@ function DDService($http, $q, appConstant) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/eliminarDD", dd).then(function (res) {
             deferred.resolve(res);
-        }, function (err) {
-            deferred.reject(err);
-            console.log(err);
-        });
-        return deferred.promise;
-    }
-
-    function buscarMaterias(dd) {
-        var deferred = $q.defer();
-        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarMaterias", dd).then(function (res) {
-            deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
             console.log(err);

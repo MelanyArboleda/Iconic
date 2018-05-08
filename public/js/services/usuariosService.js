@@ -4,16 +4,29 @@ usuariosService.$inject = ["$http", "$q", "APP_CONSTANT"];
 
 function usuariosService($http, $q, appConstant) {
     this.buscarUsuarios = buscarUsuarios;
+    this.buscarUsuariosAdmin = buscarUsuariosAdmin;
     this.buscarEstados = buscarEstados;
     this.buscarPerfiles = buscarPerfiles;
     this.modificarUsuario = modificarUsuario;
     this.modificarPermiso = modificarPermiso;
     this.buscarRecursos = buscarRecursos;
     this.guardarArchivo = guardarArchivo;
+    this.llenarDataBase = llenarDataBase;
 
     function buscarUsuarios(facultad) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarUsuarios", facultad).then(function (res) {
+            deferred.resolve(res.data);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function buscarUsuariosAdmin(){
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarUsuariosAdmin").then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);
@@ -80,6 +93,17 @@ function usuariosService($http, $q, appConstant) {
     function guardarArchivo(xsl) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarArchivo", xsl).then(function (res) {
+            deferred.resolve(res.data);
+        }, function (err) {
+            deferred.reject(err);
+            console.log(err);
+        });
+        return deferred.promise;
+    }
+
+    function llenarDataBase(){
+        var deferred = $q.defer();
+        $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/llenarDataBase").then(function (res) {
             deferred.resolve(res.data);
         }, function (err) {
             deferred.reject(err);

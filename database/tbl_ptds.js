@@ -150,37 +150,42 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
-                const result = excelToJson({
-                    sourceFile: './archivos/info.xls'
-                });
-                var facultades = [];
-                var sedes = [];
-                for (let i = 1; i < result.Programas.length; i++) {
-                    buscarFacultad(facultades, result.Programas[i].C, (resp) => {
-                        if (resp == undefined) {
-                            facultades.push({ facultad: result.Programas[i].C });
-                        }
-                    });
+                res.status(200).end();
+            };
+        });
+    },
 
-                    buscarSede(sedes, result.Programas[i].D, (resp => {
-                        if (resp == undefined) {
-                            sedes.push({ sede: result.Programas[i].D });
-                        }
-                    }));
-
+    llenar_DataBase: function (req, res, next) {
+        const result = excelToJson({
+            sourceFile: './archivos/info.xls'
+        });
+        var facultades = [];
+        var sedes = [];
+        for (let i = 1; i < result.Programas.length; i++) {
+            buscarFacultad(facultades, result.Programas[i].C, (resp) => {
+                if (resp == undefined) {
+                    facultades.push({ facultad: result.Programas[i].C });
                 }
-                insertarData(tbl_facultades, facultades, () => {
-                    insertarData(tbl_sedes, sedes, () => {
-                        llenarArea((areas) => {
-                            insertarData(tbl_areas, areas, () => {
-                                llenarPrograma(result.Programas, (programas) => {
-                                    insertarData(tbl_programas, programas, () => {
+            });
+
+            buscarSede(sedes, result.Programas[i].D, (resp => {
+                if (resp == undefined) {
+                    sedes.push({ sede: result.Programas[i].D });
+                }
+            }));
+
+        }
+        insertarData(tbl_facultades, facultades, () => {
+            insertarData(tbl_sedes, sedes, () => {
+                llenarArea((areas) => {
+                    insertarData(tbl_areas, areas, () => {
+                        llenarPrograma(result.Programas, (programas) => {
+                            insertarData(tbl_programas, programas, () => {
+                                llenarProgramaAreaFacultad((programasAreaFacultad) => {
+                                    insertarData(tbl_programas, programasAreaFacultad, () => {
                                         llenarUsuario(result["Datos docentes"], (usuarios) => {
                                             insertarData(tbl_usuarios, usuarios, () => {
-                                                guardar_Permisos(()=>{
-                                                    res.status(200).end();
-                                                });
-                                                //usuario programa
+                                                res.status(200).end();
                                             });
                                         });
                                     });
@@ -189,9 +194,9 @@ module.exports = {
                         });
                     });
                 });
-            };
+            });
         });
-    },
+    }
 };
 
 function insertarData(tabla, datos, callback) {
@@ -243,6 +248,18 @@ function llenarPrograma(data, callback) {
     });
 }
 
+function llenarProgramaAreaFacultad(callback) {
+    crud.findAll(tbl_areas, null, null, (areaData) => {
+        var programas = [];
+        for (let i = 0; i < areaData.length; i++) {
+            programas.push({ codigo: 'A' + areaData[i].dataValues.id, tblSedeId: 1, programa: areaData[i].dataValues.area, tblAreaId: areaData[i].dataValues.id });
+            if (i === areaData.length - 1) {
+                callback(programas);
+            }
+        }
+    });
+}
+
 function llenarUsuario(usuario, callback) {
     const funciones = require('.././services/funciones');
     var usuarios = [];
@@ -254,7 +271,7 @@ function llenarUsuario(usuario, callback) {
         }
         nombre = nombre.replace(/^\s+/g, '');
         nombre = nombre.replace(/\s+$/g, '');
-        usuarios.push({ doc_identidad: "" + usuario[i].A, nombre: nombre, apellido_1: nombreCompleto[nombreCompleto.length - 2], apellido_2: nombreCompleto[nombreCompleto.length - 1], correo: usuario[i].C, contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 2, tblEstadoId: 1, recuperar: false });
+        usuarios.push({ doc_identidad: "" + usuario[i].A, nombre: nombre, apellido_1: nombreCompleto[nombreCompleto.length - 2], apellido_2: nombreCompleto[nombreCompleto.length - 1], correo: usuario[i].C, contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 3, recuperar: false });
         if (i === usuario.length - 1) {
             callback(usuarios);
         }
@@ -275,30 +292,4 @@ function buscarDatoFacultad(array, dato) {
             return array[i].dataValues.id;
         }
     }
-}
-
-function guardar_Permisos(callback) {
-    crud.findAll(tbl_usuarios, null, null, (usuarios) => {
-        for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].dataValues.tblPerfileId != 7) {
-                crud.findAll(tbl_permisos_iniciales, { tblPerfileId: usuarios[i].dataValues.tblPerfileId }, null, (iniciales) => {
-                    var permisos = [];
-                    for (j = 0; j < iniciales.length; j++) {
-                        permisos.push({ tblRecursoId: iniciales[j].tblRecursoId, tblUsuarioDocIdentidad: usuarios[i].dataValues.doc_identidad, ver: iniciales[j].ver, crear: iniciales[j].crear, modificar: iniciales[j].modificar, eliminar: iniciales[j].eliminar });
-                    }
-                    tbl_permisos.sync().then(function () {
-                        for (var i = 0; i < permisos.length; i++) {
-                            crud.create(tbl_permisos, permisos[i], (resp) => {
-                                if (resp != 'error') {
-                                    callback();
-                                } else {
-                                    res.sendStatus(403);
-                                }
-                            });
-                        }
-                    });
-                });
-            }
-        }
-    });
 }

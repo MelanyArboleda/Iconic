@@ -2,14 +2,13 @@ const Sequelize = require('sequelize');
 const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
-const tbl_materias = require('./tbl_materias');
 
 var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
-	tblMateriaCodigo: {
+	codigo_asignatura: {
 		type: Sequelize.STRING(15),
 		allowNull: false
 	},
-	tblMateriaNombre: {
+	nombre_asignatura: {
 		type: Sequelize.STRING(100),
 		allowNull: false
 	},
@@ -19,6 +18,10 @@ var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
 		unique: true
 	},
 	numero_estudiantes: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	horas_semanales: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
@@ -36,10 +39,7 @@ var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
 
 tbl_ptds.tbl_ptds.hasMany(tbl_docencias_directas);
 tbl_docencias_directas.belongsTo(tbl_ptds.tbl_ptds);
-tbl_materias.hasMany(tbl_docencias_directas);
-tbl_docencias_directas.belongsTo(tbl_materias);
-// sequelize.query('CONSTRAINT "tbl_docencias_directas_tblMateriaCodNom_fkey" FOREIGN KEY ("tblMateriaCodNom")REFERENCES public.tbl_materias (codigo,nombre) MATCH SIMPLE').spread((results, metadata) => {
-// });
+
 module.exports = {
 	tbl_docencias_directas: tbl_docencias_directas,
 

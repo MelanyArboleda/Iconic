@@ -19,7 +19,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                             if (loginFactory.user.perfil == 7) {
                                 loginFactory.buscarPerfil().then(function () {
                                     loginFactory.buscarPermisos().then(function () {
-                                        if (name[0] != 'menuPrincipal') {
+                                        if (name[0] != 'menuPrincipal' || name[1] != 'Usuarios') {
                                             menuPrincipal();
                                         }else{
                                             emitUrlReady();
@@ -112,6 +112,9 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                 var url = toState.url.substring(1);
                 if (url == "login") {
                     url = "vistaPTD"
+                }
+                if (loginFactory.user.perfil == 7) {
+                    url = "Usuarios"
                 }
                 event.preventDefault();
                 $state.go("menuPrincipal." + url).then(function (res) {
