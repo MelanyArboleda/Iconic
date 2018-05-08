@@ -3,6 +3,7 @@ const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 
+// modelo de las asesorias de los proyectos
 var tbl_asesoria_proyectos = sequelize.define('tbl_asesoria_proyectos', {
     integrantes: {
         type: Sequelize.STRING,
@@ -38,6 +39,7 @@ tbl_asesoria_proyectos.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_asesoria_proyectos: tbl_asesoria_proyectos,
 
+    // buscador de las asesorias de los proyectos
     buscar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
             crud.findAll(tbl_asesoria_proyectos, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -46,7 +48,7 @@ module.exports = {
         });
     },
 
-
+    // guardador de las asesorias de los proyectos
     guardar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
             crud.create(tbl_asesoria_proyectos, req.body, (resp) => {
@@ -59,6 +61,7 @@ module.exports = {
         });
     },
 
+    // modificador de de las asesorias de los proyectos
     modificar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
             crud.update(tbl_asesoria_proyectos, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -71,6 +74,7 @@ module.exports = {
         });
     },
 
+    // eliminador de las asesorias de los proyectos
     eliminar_AP: function (req, res, next) {
         tbl_asesoria_proyectos.sync().then(function () {
             crud.delete(tbl_asesoria_proyectos, { id: req.body.id }, (resp) => {

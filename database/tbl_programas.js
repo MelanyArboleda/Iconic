@@ -4,6 +4,7 @@ const tbl_areas = require('./tbl_areas');
 const tbl_sedes = require('./tbl_sedes');
 const crud = require('.././services/crudService');
 
+// modelo de los programas institucionales
 var tbl_programas = sequelize.define('tbl_programas', {
     codigo: {
         type: Sequelize.STRING(10),

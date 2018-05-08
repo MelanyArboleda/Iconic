@@ -6,6 +6,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
             $rootScope.$emit("UrlReady");
             $rootScope.urlReady = true;
         }
+        // enrutador del sistema dependiendo del estado, perfil y privilegios
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
             console.log("Rutas", toState, toParams, fromState);
             loginFactory.isLogin().then(function () {
@@ -98,6 +99,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                 }
             });
 
+            // envia al login
             function login() {
                 console.log("enviar al login");
                 event.preventDefault();
@@ -107,6 +109,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                     console.log(res);
                 });;
             }
+            // envia al menu principal
             function menuPrincipal() {
                 console.log("enviar menuPrincipal");
                 var url = toState.url.substring(1);
@@ -123,6 +126,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                     console.log(res);
                 });
             }
+            // envia a la vista de verificacion de cuenta
             function verificacion() {
                 console.log("enviar varificar");
                 event.preventDefault();
@@ -132,6 +136,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                     console.log(res);
                 });
             }
+            // envia a la ruta de configuracion inicial
             function configini() {
                 console.log("enviar configuracion");
                 event.preventDefault();
@@ -141,6 +146,7 @@ angular.module("iconic").run(["$state", "$rootScope", "loginFactory", "ptdFactor
                     console.log(res);
                 });
             }
+            // envia a la vista que se necesita
             function enrutador(ruta) {
                 console.log("enviar enrutar");
                 var url = ruta.substring(1);

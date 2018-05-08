@@ -5,6 +5,7 @@ const tbl_ptds = require('./tbl_ptds');
 const tbl_usuarios = require('.././database/tbl_usuarios');
 const bcrypt = require('bcryptjs');
 
+// modelo de las observaciones de los planes de trabajo en el apartado otras actividades
 var tbl_observaciones = sequelize.define('tbl_observaciones', {
     observacion: {
         type: Sequelize.STRING,
@@ -34,6 +35,7 @@ tbl_observaciones.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_observaciones: tbl_observaciones,
 
+    // buscador de observaciones del plan de trabajo
     buscar_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
             crud.findAll(tbl_observaciones, { tblPtdId: req.body.tblPtdId }, null, (resp) => {
@@ -46,6 +48,7 @@ module.exports = {
         });
     },
 
+    // creador de observaciones del plan de trabajo
     crear_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
             crud.findOrCreate(tbl_observaciones, req.body, { tblPtdId: req.body.tblPtdId }, null, (resp) => {
@@ -58,6 +61,7 @@ module.exports = {
         });
     },
 
+    //guardador de observaciones del plan de trabajo
     guardar_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
             crud.update(tbl_observaciones, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -70,6 +74,7 @@ module.exports = {
         });
     },
 
+    // guardador de firmas en este apartado
     guardar_Firma_Observaciones: function (req, res, next) {
         tbl_observaciones.sync().then(function () {
             crud.findOne(tbl_usuarios, { doc_identidad: req.body.user }, null, (user) => {

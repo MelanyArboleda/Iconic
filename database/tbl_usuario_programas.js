@@ -3,6 +3,7 @@ const sequelize = require('./config');
 const tbl_usuarios = require('./tbl_usuarios');
 const tbl_programas = require('./tbl_programas');
 
+// modelo de los porgramas de los usuarios
 var tbl_usuario_programas = sequelize.define('tbl_usuario_programas', {
     tblUsuarioDocIdentidad: {
         type: Sequelize.STRING(15),

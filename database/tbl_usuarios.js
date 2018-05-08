@@ -4,6 +4,7 @@ var tbl_estados = require('./tbl_estados');
 var tbl_dedicaciones = require('./tbl_dedicaciones');
 var tbl_perfiles = require('./tbl_perfiles');
 
+// modelos de los usuarios
 var tbl_usuarios = sequelize.define('tbl_usuarios', {
     doc_identidad: {
         type: Sequelize.STRING(15),

@@ -3,6 +3,7 @@ const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 
+// modelo de lo seguimientos y evaluaciones
 var tbl_seguimientos_evaluacion = sequelize.define('tbl_seguimientos_evaluacion', {
     semana: {
         type: Sequelize.INTEGER,
@@ -35,7 +36,7 @@ tbl_seguimientos_evaluacion.belongsTo(tbl_ptds.tbl_ptds);
 
 module.exports = {
     tbl_seguimientos_evaluacion: tbl_seguimientos_evaluacion,
-
+    //buscaar los seguimientos y las evaluaciones
     buscar_SE: function (req, res, next) {
         tbl_seguimientos_evaluacion.sync().then(function () {
             crud.findAll(tbl_seguimientos_evaluacion, { id: req.body.ptd }, null, (resp) => {
@@ -47,7 +48,7 @@ module.exports = {
             });
         });
     },
-
+    //guardar los seguimientos y las evaluaciones
     guardar_SE: function (req, res, next) {
         tbl_seguimientos_evaluacion.sync().then(function () {
             if (req.body.datos.id == undefined) {

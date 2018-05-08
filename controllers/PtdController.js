@@ -11,12 +11,14 @@ const tbl_permisos = require('.././database/tbl_permisos');
 const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
 
 module.exports = {
+    // buscador de los perfiles de los usuarios
     buscar_Perfil: function (req, res, next) {
         crud.findOne(tbl_perfiles, { id: req.body.id }, null, (perfil) => {
             res.status(200).json(perfil).end();
         });
     },
 
+    // buscador de los programas
     buscar_Programa: function (req, res, next) {
         tbl_usuario_programas.sync().then(function () {
             crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
@@ -29,6 +31,7 @@ module.exports = {
         });
     },
 
+    // buscador de las areas
     buscar_Area: function (req, res, next) {
         tbl_areas.sync().then(function () {
             crud.findOne(tbl_areas, { id: req.body.id }, null, (resp) => {
@@ -37,6 +40,7 @@ module.exports = {
         });
     },
 
+    // buscador de las facultades
     buscar_Facultad: function (req, res, next) {
         tbl_facultades.sync().then(function () {
             crud.findOne(tbl_facultades, { id: req.body.id }, null, (resp) => {
@@ -45,6 +49,7 @@ module.exports = {
         });
     },
 
+    // buscador de las etapas del plan de trabajo
     buscar_Etapa: function (req, res, next) {
         tbl_etapas.sync().then(function () {
             crud.findAll(tbl_etapas, null, "id ASC", (resp) => {
@@ -53,7 +58,7 @@ module.exports = {
         });
     },
 
-
+    // buscador de los actorores
     buscar_Actor: function (req, res, next) {
         tbl_actores.sync().then(function () {
             crud.findAll(tbl_actores, null, "id ASC", (resp) => {
@@ -62,12 +67,14 @@ module.exports = {
         })
     },
 
+    // buscador de los permidos de los usuarios
     buscar_Permisos: function (req, res, next) {
         crud.buscar_Permisos(req.body.tblUsuarioDocIdentidad, (permisos) => {
             res.status(200).json(permisos).end();
         });
     },
 
+    // guardador de los permisos de los usuarios
     guardar_Permisos: function (req, res, next) {
         crud.findAll(tbl_permisos_iniciales, { tblPerfileId: req.body.tblPerfileId }, null, (iniciales) => {
             var permisos = [];

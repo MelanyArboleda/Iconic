@@ -4,6 +4,7 @@ const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 const tbl_vinculos = require('./tbl_vinculos');
 
+// modelo de las investigaciones de los semilleros
 var tbl_investigaciones_semilleros = sequelize.define('tbl_investigaciones_semilleros', {
     nombre_semillero: {
         type: Sequelize.STRING(500),
@@ -42,6 +43,7 @@ tbl_investigaciones_semilleros.belongsTo(tbl_vinculos.tbl_vinculos);
 module.exports = {
     tbl_investigaciones_semilleros: tbl_investigaciones_semilleros,
 
+    // buscador de las investigaciones de los semilleros
     buscar_IS: function (req, res, next) {
         tbl_investigaciones_semilleros.sync().then(function () {
             crud.findAll(tbl_investigaciones_semilleros, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -50,6 +52,7 @@ module.exports = {
         });
     },
 
+    // guardador de las investigaciones de los semilleros
     guardar_IS: function (req, res, next) {
         tbl_investigaciones_semilleros.sync().then(function () {
             crud.create(tbl_investigaciones_semilleros, req.body, (resp) => {
@@ -62,6 +65,7 @@ module.exports = {
         });
     },
 
+    // modificador de las investigaciones de los semilleros
     modificar_IS: function (req, res, next) {
         tbl_investigaciones_semilleros.sync().then(function () {
             crud.update(tbl_investigaciones_semilleros, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -74,6 +78,7 @@ module.exports = {
         });
     },
 
+    // eliminador de las investigaciones de los semilleros
     eliminar_IS: function (req, res, next) {
         tbl_investigaciones_semilleros.sync().then(function () {
             crud.delete(tbl_investigaciones_semilleros, { id: req.body.id }, (resp) => {

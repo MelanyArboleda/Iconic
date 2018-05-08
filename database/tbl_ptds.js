@@ -15,6 +15,7 @@ const fs = require('fs');
 const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
 const tbl_permisos = require('.././database/tbl_permisos');
 
+// modelos de los planes de trabajo
 var tbl_ptds = sequelize.define('tbl_ptds', {
     tblUsuarioDocIdentidad: {
         type: Sequelize.STRING(15),
@@ -43,6 +44,7 @@ tbl_ptds.belongsTo(tbl_usuarios);
 module.exports = {
     tbl_ptds: tbl_ptds,
 
+    // creador de los planes de trabajo
     crear_Ptd: function (req, res, next) {
         crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
             crud.innerFacultad([tbl_facultades, tbl_areas, tbl_programas], { codigo: programa.tblProgramaCodigo }, (facultad) => {
@@ -63,6 +65,7 @@ module.exports = {
         });
     },
 
+    // buscador de un plan de trabajo en espesifico
     buscar_Ptd: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.findAll(tbl_ptds, { id: req.body.ptd }, null, (resp) => {
@@ -75,6 +78,7 @@ module.exports = {
         });
     },
 
+    // buscadores de los planes de trabajo filtrados por facultad
     buscar_Ptds_Facultad: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.innerPlanesFacultad([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (resp) => {
@@ -90,6 +94,7 @@ module.exports = {
         });
     },
 
+    // buscadores de los planes de trabajo filtrados por programa
     buscar_Ptds_Programa: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.innerPlanesPrograma([tbl_ptds, tbl_usuarios, tbl_usuario_programas, tbl_programas], req.body, (resp) => {
@@ -105,6 +110,7 @@ module.exports = {
         });
     },
 
+    // buscadores de los planes de trabajo
     buscar_Ptds: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.buscarPtds(tbl_ptds, req.body, (resp) => {
@@ -120,6 +126,7 @@ module.exports = {
         });
     },
 
+    // buscar todos los planes de trabajo de un docente
     buscar_Ptds_User: function (req, res, next) {
         tbl_ptds.sync().then(function () {
             crud.buscarPtdsUser(tbl_ptds, req.body, (resp) => {
@@ -128,6 +135,7 @@ module.exports = {
         });
     },
 
+    // guardardor de planes de trabajo
     guardar_Ptd: function (req, res, next) {
         crud.update(tbl_ptds, { id: req.body.datos.id }, req.body.datos, (resp) => {
             if (resp == 'update') {
@@ -138,6 +146,7 @@ module.exports = {
         });
     },
 
+    // guardador de archivos iniciales que cargan la base de datos
     guardar_Archivo: function (req, res, next) {
         if (!fs.existsSync('./archivos')) {
             fs.mkdir('./archivos', (err) => {
@@ -155,12 +164,15 @@ module.exports = {
         });
     },
 
+    //llenador de base de datos
     llenar_DataBase: function (req, res, next) {
+        // lee el archivo guardado anteriomente
         const result = excelToJson({
             sourceFile: './archivos/info.xls'
         });
         var facultades = [];
         var sedes = [];
+        //recorre pestaña de programas
         for (let i = 1; i < result.Programas.length; i++) {
             buscarFacultad(facultades, result.Programas[i].C, (resp) => {
                 if (resp == undefined) {
@@ -175,6 +187,7 @@ module.exports = {
             }));
 
         }
+        // inserta los diferentes datos encontrados en el archivo
         insertarData(tbl_facultades, facultades, () => {
             insertarData(tbl_sedes, sedes, () => {
                 llenarArea((areas) => {
@@ -199,6 +212,7 @@ module.exports = {
     }
 };
 
+// inserta los datos que son enviados de otras fuanciones a la base de datos
 function insertarData(tabla, datos, callback) {
     tabla.sync().then(function () {
         for (var i = 0; i < datos.length; i++) {
@@ -210,18 +224,21 @@ function insertarData(tabla, datos, callback) {
     });
 }
 
+// filtra las facultades
 function buscarFacultad(facultades, dato, callback) {
     callback(facultades.find((fac) => {
         return fac.facultad === dato;
     }));
 }
 
+// filtra las sedes
 function buscarSede(sedes, dato, callback) {
     callback(sedes.find((s) => {
         return s.sede === dato;
     }));
 }
 
+// crear el objero de area
 function llenarArea(callback) {
     crud.findAll(tbl_facultades, null, null, (facultadData) => {
         var areas = [];
@@ -234,6 +251,7 @@ function llenarArea(callback) {
     });
 }
 
+// crea el objeto de programa
 function llenarPrograma(data, callback) {
     crud.findAll(tbl_facultades, null, null, (facultadData) => {
         crud.findAll(tbl_sedes, null, null, (sedesData) => {
@@ -248,6 +266,7 @@ function llenarPrograma(data, callback) {
     });
 }
 
+// crea el objeto de programa referente a las a areas referente a la facultad
 function llenarProgramaAreaFacultad(callback) {
     crud.findAll(tbl_areas, null, null, (areaData) => {
         var programas = [];
@@ -260,6 +279,7 @@ function llenarProgramaAreaFacultad(callback) {
     });
 }
 
+// crea el objero de usuarios
 function llenarUsuario(usuario, callback) {
     const funciones = require('.././services/funciones');
     var usuarios = [];
@@ -278,6 +298,7 @@ function llenarUsuario(usuario, callback) {
     }
 }
 
+// filtra sede con datos que llegan de funciones externas
 function buscarDatoSede(array, dato) {
     for (let i = 0; i < array.length; i++) {
         if (array[i].dataValues.sede === dato) {
@@ -286,6 +307,7 @@ function buscarDatoSede(array, dato) {
     }
 }
 
+// filtra faculdad con datos que llegan de funciones externas
 function buscarDatoFacultad(array, dato) {
     for (let i = 0; i < array.length; i++) {
         if (array[i].dataValues.facultad === dato) {

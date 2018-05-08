@@ -8,6 +8,7 @@ function ObservacionesService($http, $q, appConstant){
     this.guardarObservaciones = guardarObservaciones;
     this.guardarFirmaObservaciones = guardarFirmaObservaciones;
 
+    // llama servicio de buscar observaciones
     function buscarObservaciones(data){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/buscarObservaciones", data).then(function (res) {
@@ -19,6 +20,7 @@ function ObservacionesService($http, $q, appConstant){
         return deferred.promise;
     }
     
+    // llama servicio de crear observaciones
     function crearObservaciones(data){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/crearObservaciones", data).then(function (res) {
@@ -30,6 +32,7 @@ function ObservacionesService($http, $q, appConstant){
         return deferred.promise;
     }
 
+    // llama servicio de guardar observaiones
     function guardarObservaciones(data){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarObservaciones", data).then(function (res) {
@@ -41,6 +44,7 @@ function ObservacionesService($http, $q, appConstant){
         return deferred.promise;
     }
 
+    // llama servicio de guardar firma de la observacion
     function guardarFirmaObservaciones(data){
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT + "/guardarFirmaObservaciones", data).then(function (res) {

@@ -1,3 +1,4 @@
+// configuracion de la conexion con la base de datos
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('iconic', 'iconic', 'iconic', {
     host: 'localhost',

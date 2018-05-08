@@ -69,6 +69,7 @@ module.exports = {
         });
     },
 
+    // generador de codigos a azar
     codigo: function (correo, nombre) {
 
         var random = new Array('mayus', 'minus', 'numeros', 'mayus', 'minus');

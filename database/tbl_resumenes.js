@@ -3,6 +3,7 @@ const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 
+// modelo de los resumenes generales
 var tbl_resumenes = sequelize.define('tbl_resumenes', {
     horas_semanales_tot: {
         type: Sequelize.DOUBLE,

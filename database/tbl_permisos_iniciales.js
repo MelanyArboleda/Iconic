@@ -3,6 +3,7 @@ var sequelize = require('./config');
 var tbl_recursos = require('./tbl_recursos');
 var tbl_perfiles = require('./tbl_perfiles');
 
+// modelo de los prermisos iniciales de los usuarios
 var tbl_permisos_iniciales = sequelize.define('tbl_permisos_iniciales', {
     tblRecursoId: {
         type: Sequelize.INTEGER,

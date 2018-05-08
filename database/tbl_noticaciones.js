@@ -2,6 +2,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('./config');
 var tbl_usuarios = require('./tbl_usuarios');
 
+// modelo de las notificaciones
 var tbl_notificaciones = sequelize.define('tbl_notificaciones', {
     mensaje: {
         type: Sequelize.STRING,

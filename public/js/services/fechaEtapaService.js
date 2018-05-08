@@ -8,6 +8,7 @@ function fechaEtapaService($http, $q, appConstant) {
     this.modificarFechaEtapa = modificarFechaEtapa;
     this.eliminarFechaEtapa = eliminarFechaEtapa;
 
+    // llama servicio de buscar fecha de las etapas
     function buscarFechaEtapa(data) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarFechaEtapa", data).then(function (res) {
@@ -19,6 +20,7 @@ function fechaEtapaService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de guardar fecha de las etapas
     function guardarFechaEtapa(data) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarFechaEtapa", data).then(function (res) {
@@ -30,6 +32,7 @@ function fechaEtapaService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de modificar fecha de las etapas
     function modificarFechaEtapa(data) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarFechaEtapa", data).then(function (res) {
@@ -41,6 +44,7 @@ function fechaEtapaService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de eliminar fecha de las etapas
     function eliminarFechaEtapa(data) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarFechaEtapa", data).then(function (res) {

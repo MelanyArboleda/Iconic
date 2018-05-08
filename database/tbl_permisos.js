@@ -3,6 +3,7 @@ var sequelize = require('./config');
 var tbl_recursos = require('./tbl_recursos');
 var tbl_usuarios = require('./tbl_usuarios');
 
+// modelo de los permisos de los usuarios
 var tbl_permisos = sequelize.define('tbl_permisos', {
 	tblRecursoId: {
 		type: Sequelize.INTEGER,
