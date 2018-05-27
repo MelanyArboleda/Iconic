@@ -5,7 +5,7 @@ var tbl_seguimientos_evaluacion = require('./tbl_seguimientos_evaluacion');
 // modelo de las evidencias
 var tbl_evidencias = sequelize.define('tbl_evidencias', {
     evidencia: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
     },
     tblSeguimientos_evaluacionId: {
         type: Sequelize.INTEGER

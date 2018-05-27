@@ -11,7 +11,7 @@
                             <th>Dedicación Horas Semestre</th>
                             <th>Descripción y Productos</th>
                             <th ng-if="otrasActividadesVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" data-target='modalOActividades'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" data-tooltip="Crear nueva actividad" data-target='modalOActividades'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -25,10 +25,10 @@
                             <td>{{oa.descripcion_productos}}</td>
                             <td ng-if="otrasActividadesVm.permiso.modificar == true || otrasActividadesVm.permiso.eliminar == true">
                                 <a ng-if="otrasActividadesVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)"
-                                    data-target='modalOActividades' modal>
+                                data-tooltip="Editar la actividad" data-target='modalOActividades' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
+                                <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)" data-tooltip="Eliminar la actividad">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>

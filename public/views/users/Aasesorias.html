@@ -13,7 +13,7 @@
                             <th>Evaluación Estudiante</th>
                             <th>Evaluación Jefe</th>
                             <th ng-if="asesoriasVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" data-target='modalAsesorias'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" data-tooltip="Crear nueva asesoría" data-target='modalAsesorias'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -28,10 +28,10 @@
                             <td>{{ap.jefe}}</td>
                             <td ng-if="asesoriasVm.permiso.modificar == true || asesoriasVm.permiso.eliminar == true">
                                 <a ng-if="asesoriasVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="asesoriasVm.llenarModal(ap)"
-                                    data-target='modalAsesorias' modal>
+                                data-tooltip="Editar la asesoría" data-target='modalAsesorias' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="asesoriasVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)">
+                                <a ng-if="asesoriasVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)" data-tooltip="Eliminar la asesoría">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>

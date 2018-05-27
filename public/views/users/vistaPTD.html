@@ -65,16 +65,21 @@
     </div>
 
     <div class="container contenido vistaPTD" ng-if="indexVm.loginFactory.user.perfil != 1">
+        <div class="input-field col s6">
+            <input id="first_name" ng-model="search" type="text" class="validate">
+            <label for="first_name">Filtro por nombre</label>
+        </div>
         <ul class="collection with-header">
             <li class="collection-header">
                 <h6>
                     <b>Planes de Trabajo</b>
                 </h6>
             </li>
-            <li class="collection-item avatar" ng-repeat="ptd in menuPrincipalVm.ptds">
+            <li class="collection-item avatar" ng-repeat="ptd in menuPrincipalVm.ptds | filter:search">
                 <i class="material-icons circle teal accent-4">&#xE873;</i>
                 <span class="title">FD-GC51</span>
                 <p>Plan de Trabajo Docente : {{ptd.tblUsuarioDocIdentidad}}
+                    <br>{{ptd.nombre}}
                     <br> {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}} V_{{ptd.version}}
                 </p>
                 <a class="secondary-content" ng-click="menuPrincipalVm.cargarPTD(ptd)">
@@ -84,9 +89,9 @@
         </ul>
     </div>
 </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function () {
         $('textarea#observaciones').characterCounter();
         $('.tooltipped').tooltip({ delay: 50 });
     });
-</script>
+</script> -->

@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aDocenciaDirectaCtrl", aDocenciaDirectaCtrl);
 
-aDocenciaDirectaCtrl.$inject = ["$rootScope", "DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "IPFactory", "ISFactory", "serviceNotification", "$q","modalNotifService"];
+aDocenciaDirectaCtrl.$inject = ["$rootScope", "DDService", "DDFactory", "ptdService", "ptdFactory", "loginFactory", "IPFactory", "ISFactory", "serviceNotification", "$q", "modalNotifService"];
 
-function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdFactory, loginFactory, IPFactory, ISFactory, serviceNotification, $q,modalNotifService) {
+function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdFactory, loginFactory, IPFactory, ISFactory, serviceNotification, $q, modalNotifService) {
 	var vm = this;
 	var acciones = "";
 	var max;
@@ -19,6 +19,11 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 	function cargarDD() {
 		DDFactory.buscarDocenciaDirecta().then(function () {
 			vm.docenciaDirecta = DDFactory.DocDir;
+			if (vm.docenciaDirecta.length == 0) {
+				DDService.guardarDD({ ptd: ptdFactory.ptd.id, doc_ident: ptdFactory.ptd.tblUsuarioDocIdentidad }).then(function () {
+					cargarDD();
+				});
+			}
 			for (let i = 0; i < vm.docenciaDirecta.length; i++) {
 				vm.docenciaDirecta[i].horas_semestrales = calculahoras(vm.docenciaDirecta[i].horas_semanales)
 			}

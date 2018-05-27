@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 <center>
-    <a ng-if="usuariosVm.perfilUser == 7"  class="waves-effect waves-light btn p-btn green" data-target='modalInfo' modal> Subir Info </a>
+    <a ng-if="usuariosVm.perfilUser == 7" class="waves-effect waves-light btn p-btn green" data-target='modalInfo' modal> Subir Info </a>
 </center>
 <br>
 <div class="container white contenido">
@@ -104,20 +104,28 @@
                     <tr ng-repeat="perm in usuariosVm.permisos">
                         <th>{{perm.tblRecursoId}}</th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            <input type="button" value="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
                             />
+                            <!-- <input type="checkbox" ng-checked="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)"
-                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" />
+                            <input type="button" value="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            />
+                            <!-- <input type="checkbox" ng-checked="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)"
+                            <input type="button" value="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)"
                                 ng-disabled="usuariosVm.permisoPermiso.modificar == false" />
+                            <!-- <input type="checkbox" ng-checked="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)"
+                            <input type="button" value="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)"
                                 ng-disabled="usuariosVm.permisoPermiso.modificar == false" />
+                            <!-- <input type="checkbox" ng-checked="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                     </tr>
                 </tbody>

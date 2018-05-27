@@ -27,8 +27,8 @@
         <div class="container white contenido">
             <div class="row">
                 <div class="input-field col s12 areaO" style="padding-right:3%;">
-                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion"  class="materialize-textarea"
-                        data-length="1000" required></textarea>
+                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" class="materialize-textarea" data-length="1000"
+                        required></textarea>
                     <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
                 </div>
             </div>
@@ -59,6 +59,7 @@
                 </center>
             </div>
             <div class="col s12 center" ng-if="observacionesVm.permiso.crear == false">
+                <br>
                 <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
                     <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
@@ -69,32 +70,68 @@
                     <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn">Firma docente</button>
                 </div>
                 <form name="FirmConsejoForm" autocomplete="off" ng-show="observacionesVm.firmaConsejo" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_consejo_facultad" class="validate" type="password" id="firma_consejo_facultad"
                             name="firma_consejo_facultad" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" required> </div>
+                            title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmConsejoForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
                 <form name="FirmCoordinacionForm" autocomplete="off" ng-show="observacionesVm.firmaCoordinador" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_coord_prog" class="validate" type="password" id="firma_coord_prog" name="firma_coord_prog"
                             minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
-                            required> </div>
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmCoordinacionForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
                 <form name="FirmDocenteForm" autocomplete="off" ng-show="observacionesVm.firmaDocente" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_docente" class="validate" type="password" id="firma_docente" name="firma_docente"
                             minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
-                            required> </div>
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmDocenteForm.$invalid" type="submit" ng-click="observacionesVm.firmaDocente = false" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
+            </div>
+            <div class="row">
+                <br><br><br><br><br>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_consejo_facultad">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_consejo_facultad">
+                    </center>
+                    <hr>
+                    <center>CONSEJO DE FACULTAD</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_coord_prog">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_coord_prog">
+                    </center>
+                    <hr>
+                    <center>CORDINADOR DE PROGRAMA</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_docente">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_docente">
+                    </center>
+                    <hr>
+                    <center>DOCENTE</center>
+                </div>
             </div>
         </div>
     </div>

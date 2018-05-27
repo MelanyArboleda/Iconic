@@ -176,7 +176,7 @@ module.exports = {
         for (let i = 1; i < result.Programas.length; i++) {
             buscarFacultad(facultades, result.Programas[i].C, (resp) => {
                 if (resp == undefined) {
-                    facultades.push({ facultad: result.Programas[i].C });
+                    facultades.push({ id: result.Programas[i].E, facultad: result.Programas[i].C });
                 }
             });
 
@@ -198,7 +198,15 @@ module.exports = {
                                     insertarData(tbl_programas, programasAreaFacultad, () => {
                                         llenarUsuario(result["Datos docentes"], (usuarios) => {
                                             insertarData(tbl_usuarios, usuarios, () => {
-                                                res.status(200).end();
+                                                llenarUsuariosPrograma(result["Datos docentes"], (usuariosPrograma) => {
+                                                    insertarData(tbl_usuario_programas, usuariosPrograma, () => {
+                                                        llenarPermisos(result["Datos docentes"], (permisos) => {
+                                                            insertarData(tbl_permisos, permisos, () => {
+                                                                res.status(200).end();
+                                                            });
+                                                        });
+                                                    });
+                                                })
                                             });
                                         });
                                     });
@@ -240,7 +248,7 @@ function buscarSede(sedes, dato, callback) {
 
 // crear el objero de area
 function llenarArea(callback) {
-    crud.findAll(tbl_facultades, null, null, (facultadData) => {
+    crud.findAll(tbl_facultades, null, "id asc", (facultadData) => {
         var areas = [];
         for (let i = 0; i < facultadData.length; i++) {
             areas.push({ area: facultadData[i].dataValues.facultad, tblFacultadeId: facultadData[i].dataValues.id });
@@ -268,7 +276,7 @@ function llenarPrograma(data, callback) {
 
 // crea el objeto de programa referente a las a areas referente a la facultad
 function llenarProgramaAreaFacultad(callback) {
-    crud.findAll(tbl_areas, null, null, (areaData) => {
+    crud.findAll(tbl_areas, null,"id asc" , (areaData) => {
         var programas = [];
         for (let i = 0; i < areaData.length; i++) {
             programas.push({ codigo: 'A' + areaData[i].dataValues.id, tblSedeId: 1, programa: areaData[i].dataValues.area, tblAreaId: areaData[i].dataValues.id });
@@ -283,6 +291,7 @@ function llenarProgramaAreaFacultad(callback) {
 function llenarUsuario(usuario, callback) {
     const funciones = require('.././services/funciones');
     var usuarios = [];
+
     for (let i = 1; i < usuario.length; i++) {
         var nombreCompleto = usuario[i].B.split(" ");
         var nombre = "";
@@ -291,9 +300,33 @@ function llenarUsuario(usuario, callback) {
         }
         nombre = nombre.replace(/^\s+/g, '');
         nombre = nombre.replace(/\s+$/g, '');
-        usuarios.push({ doc_identidad: "" + usuario[i].A, nombre: nombre, apellido_1: nombreCompleto[nombreCompleto.length - 2], apellido_2: nombreCompleto[nombreCompleto.length - 1], correo: usuario[i].C, contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 3, recuperar: false });
+        usuarios.push({ doc_identidad: "" + usuario[i].A, nombre: nombre, apellido_1: nombreCompleto[nombreCompleto.length - 2], apellido_2: nombreCompleto[nombreCompleto.length - 1], correo: usuario[i].C, contraseña: funciones.encriptar("Iconic123"), contraseña_firma: funciones.encriptar("0"), tblDedicacioneId: 1, tblPerfileId: 1, tblEstadoId: 1, recuperar: false });
         if (i === usuario.length - 1) {
             callback(usuarios);
+        }
+    }
+}
+
+function llenarPermisos(usuarios, callback) {
+    var permisos = [];
+    crud.findAll(tbl_permisos_iniciales, { tblPerfileId: 1 }, null, (iniciales) => {
+        for (i = 1; i < usuarios.length; i++) {
+            for (j = 0; j < iniciales.length; j++) {
+                permisos.push({ tblRecursoId: iniciales[j].dataValues.tblRecursoId, tblUsuarioDocIdentidad: '' + usuarios[i].A, ver: iniciales[j].dataValues.ver, crear: iniciales[j].dataValues.crear, modificar: iniciales[j].dataValues.modificar, eliminar: iniciales[j].dataValues.eliminar });
+            }
+            if (i === usuarios.length - 1) {
+                callback(permisos);
+            }
+        }
+    });
+}
+
+function llenarUsuariosPrograma(userPrograma, callback) {
+    var usuariosPrograma = [];
+    for (let j = 1; j < userPrograma.length; j++) {
+        usuariosPrograma.push({ tblUsuarioDocIdentidad: '' + userPrograma[j].A, tblProgramaCodigo: '' + userPrograma[j].F, tblProgramaPrograma: userPrograma[j].E, tblProgramaSede: 1 });
+        if (j === userPrograma.length - 1) {
+            callback(usuariosPrograma);
         }
     }
 }

@@ -14,7 +14,7 @@
                             <th>Horas Semestre</th>
                             <th>Vo. Bo. Coord. Investigación</th>
                             <th ng-if="investigacionesSVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesSVm.vaciarMadal()" data-target='modalInvestigacionesS'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesSVm.vaciarMadal()" data-tooltip="Crear nuevo semillero" data-target='modalInvestigacionesS'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -32,10 +32,10 @@
                             </td>
                             <td ng-if="investigacionesSVm.permiso.modificar == true || investigacionesSVm.permiso.eliminar == true">
                                 <a ng-if="investigacionesSVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesSVm.llenarModal(is)"
-                                    data-target='modalInvestigacionesS' modal>
+                                data-tooltip="Editar el semillero" data-target='modalInvestigacionesS' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="investigacionesSVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesSVm.deleteInvestigacionesSemilleros(is)">
+                                <a ng-if="investigacionesSVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesSVm.deleteInvestigacionesSemilleros(is)" data-tooltip="Eliminar el semillero">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>

@@ -21,7 +21,16 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
                 });
                 vm.fechaEtapa[i].tblFacultadeId = loginFactory.estatus.facultad;
             }
-            vm.etapas = loginFactory.estatus.etapa;
+            if (vm.fechaEtapa.length == 0) {
+                var etapa = loginFactory.estatus.etapa.find((etapa) => {
+                    return etapa.id == 1;
+                });
+                vm.etapas = [];
+                vm.etapas.push(etapa);
+            } else {
+                vm.etapas = loginFactory.estatus.etapa;
+            }
+
             año = new Date();
             año = año.getFullYear();
             facultad = loginFactory.estatus.facultad.facultad;
@@ -34,7 +43,7 @@ function fechaEtapaCtrl($rootScope, fechaEtapaService, fechaEtapaFactory, loginF
                 fecha_final: ''
             }
             if (fechaEtapaFactory.fechaEtapa.length == 0) {
-                modalNotifService.openModal('¡AVISO! : No se han creado las fechas para las etapas de plan de trabajo', 6000);
+                modalNotifService.openModal('¡AVISO! : No se han creado las fechas para las etapas de plan de trabajo');
             }
         });
         vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {

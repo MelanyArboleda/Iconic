@@ -49,6 +49,9 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 	vm.saveFirma = function () {
 		ObservacionesService.guardarFirmaObservaciones({ donde: vm.observaciones.id, datos: vm.formFirmas, user: loginFactory.user.doc_identidad }).then(function (res) {
 			serviceNotification.success('Firma guardada correctamente', 3000);
+			vm.firmaConsejo = false;
+			vm.firmaCoordinador = false;
+			vm.firmaDocente = false;
 			cardarObservaciones();
 		}).catch(function (err) {
 			vm.formFirmas = {

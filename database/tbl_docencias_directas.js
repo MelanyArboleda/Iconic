@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
+const excelToJson = require('convert-excel-to-json');
 
 // modelo de las docencias directas
 var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
@@ -15,8 +16,7 @@ var tbl_docencias_directas = sequelize.define('tbl_docencias_directas', {
 	},
 	grupo_asignatura: {
 		type: Sequelize.INTEGER,
-		allowNull: false,
-		unique: true
+		allowNull: false
 	},
 	numero_estudiantes: {
 		type: Sequelize.INTEGER,
@@ -56,13 +56,21 @@ module.exports = {
 	// guardador de docencias directras
 	guardar_DD: function (req, res, next) {
 		tbl_docencias_directas.sync().then(function () {
-			crud.create(tbl_docencias_directas, req.body, (resp) => {
-				if (resp != 'error') {
-					res.status(200).end();
-				} else {
-					res.sendStatus(403);
-				}
+			const result = excelToJson({
+				sourceFile: './archivos/info.xls'
 			});
+			var asignaturas = [];
+			var asig = result["Asignaturas matriculadas"];
+			for (let i = 1; i < asig.length; i++) {
+				if (req.body.doc_ident === asig[i].D.toString()){
+					asignaturas.push({codigo_asignatura:asig[i].A, nombre_asignatura:asig[i].C, grupo_asignatura:parseInt(asig[i].B), numero_estudiantes:asig[i].G, horas_semanales:asig[i].F, estudiante:null, jefe:null, tblPtdId:req.body.ptd});
+				};	
+				if (i === asig.length - 1) {
+					insertarData(tbl_docencias_directas,asignaturas,()=>{
+						res.status(200).end();
+					});
+				}
+			}
 		});
 	},
 
@@ -92,3 +100,14 @@ module.exports = {
 		});
 	}
 };
+
+function insertarData(tabla, datos, callback) {
+    tabla.sync().then(function () {
+        for (var i = 0; i < datos.length; i++) {
+			crud.create(tabla, datos[i],()=>{});
+            if (i === datos.length - 1) {
+                callback();
+            }
+        }
+    });
+}

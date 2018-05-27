@@ -46,6 +46,7 @@ router.post('/auth/buscarPtdsUser', modelos.tbl_ptds.buscar_Ptds_User);
 router.post('/auth/guardarPtd', modelos.tbl_ptds.guardar_Ptd);
 //rutas de docencia directa
 router.post('/auth/buscarDD', modelos.tbl_docencias_directas.buscar_DD);
+router.post('/auth/guardarDD', modelos.tbl_docencias_directas.guardar_DD);
 //rutas de investigaciones de semillero
 router.post('/auth/buscarIS', modelos.tbl_investigaciones_semilleros.buscar_IS);
 router.post('/auth/guardarIS', modelos.tbl_investigaciones_semilleros.guardar_IS);

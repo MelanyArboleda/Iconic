@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q","modalNotifService"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "usuariosFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q", "modalNotifService"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q,modalNotifService) {
+function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q, modalNotifService) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -40,10 +40,10 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 	function cargarMenu() {
 		vm.pageName = $rootScope.page;
 		vm.perfilUser = loginFactory.user.perfil;
-		if(loginFactory.user.perfil == 7){
+		if (loginFactory.user.perfil == 7) {
 			vm.plan = false;
 			emitInfoReady();
-		}else{
+		} else {
 			fechaEtapaFactory.buscarFechaEtapa().then(function () {
 				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
 				if (loginFactory.user.perfil == 1) {
@@ -63,7 +63,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 										emitInfoReady();
 									});
 								});
-	
+
 							});
 						}
 					} else {
@@ -81,6 +81,19 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 							}).then(function () {
 								console.log("PTDS----------", planesFactory.ptds);
 								vm.ptds = planesFactory.ptds;
+								usuariosFactory.buscarUsuarios().then(() => {
+									vm.usersPtd = [];
+									var userPtdV = usuariosFactory.users.find((user) => {
+										return user.tblPerfileId == 1;
+									});				
+									vm.usersPtd.push(userPtdV);				
+									for (let i = 0; i < vm.ptds.length; i++) {
+										var nombre = vm.usersPtd.find((user)=>{
+											return user.doc_identidad == vm.ptds[i].tblUsuarioDocIdentidad;
+										});
+										vm.ptds[i].nombre = nombre.nombre;
+									}
+								});
 								vm.ptdId = $rootScope.ptd;
 								emitInfoReady();
 							});
@@ -98,6 +111,19 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 								}).then(function () {
 									console.log("PTDS----------", planesFactory.ptds);
 									vm.ptds = planesFactory.ptds;
+									usuariosFactory.buscarUsuarios().then(() => {
+										vm.usersPtd = [];
+										var userPtdV = usuariosFactory.users.find((user) => {
+											return user.tblPerfileId == 1;
+										});				
+										vm.usersPtd.push(userPtdV);				
+										for (let i = 0; i < vm.ptds.length; i++) {
+											var nombre = vm.usersPtd.find((user)=>{
+												return user.doc_identidad == vm.ptds[i].tblUsuarioDocIdentidad;
+											});
+											vm.ptds[i].nombre = nombre.nombre;
+										}
+									});
 									vm.ptdId = $rootScope.ptd;
 									emitInfoReady();
 								});
@@ -175,7 +201,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 	}
 
 	vm.validFechaFinal = function (fecha_inicial) {
-			var auxFechaInicial = new Date(fecha_inicial);
-			vm.minDateFinal = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+		var auxFechaInicial = new Date(fecha_inicial);
+		vm.minDateFinal = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
 	}
 };

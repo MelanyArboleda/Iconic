@@ -37,15 +37,21 @@
                         <span>iconic</span>
                     </div>
 
-                    <ul class="right" ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
+                    <ul class="right">
                         <li>
-                            <a href="" class="notification-button">
-                                <i class="material-icons">&#xE7F4;
-                                    <small class="notification-badge">5</small>
+                            <a href="./img/ICONIC_Manual_Usuario.pdf" download class="notification-button">
+                                <i class="material-icons">help
                                 </i>
                             </a>
                         </li>
-                        <li>
+                        <li ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
+                            <a href="" class="notification-button">
+                                <i class="material-icons">&#xE7F4;
+                                    <small class="notification-badge">2</small>
+                                </i>
+                            </a>
+                        </li>
+                        <li ng-if="indexVm.loginFactory.userLogin && indexVm.loginFactory.user.estado == '1'">
                             <a href="">
                                 <i class="material-icons">&#xE853;</i>
                             </a>
@@ -191,7 +197,7 @@
     <script type="text/javascript" src="js/minified/select.min.js"></script>
     <script type="text/javascript" src="js/minified/angular-animate.min.js"></script>
     <script type="text/javascript" src="js/minified/waves.min.js"></script>
-    <script type="text/javascript" src="js/minified/ng-materialize.min.js"></script>    
+    <script type="text/javascript" src="js/minified/ng-materialize.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/route.js"></script>
     <script type="text/javascript" src="js/todoScript.js"></script>

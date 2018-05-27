@@ -109,7 +109,7 @@ function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory
                         return vm.permisos[i].tblRecursoId === recurso.id;
                     });
                     vm.permisos[i].tblRecursoId = vm.permisos[i].tblRecursoId.recurso;
-                }
+                }                
             });
         });
     }
