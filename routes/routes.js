@@ -121,5 +121,6 @@ router.post('/auth/buscarPerfiles', controllers.UserController.buscar_Perfiles);
 router.post('/auth/modificarUsuario', controllers.UserController.modificar_Usuario);
 router.post('/auth/modificarPermiso', controllers.UserController.modificar_Permiso);
 router.post('/auth/buscarRecursos', controllers.UserController.buscar_Recursos);
-
+//rutas de enviar el plan de trabajo
+router.post('/auth/enviarPtd', controllers.PtdController.enviar_Ptd);
 module.exports = router;

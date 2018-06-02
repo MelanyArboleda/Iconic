@@ -20,7 +20,7 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
         RGFactory.modificarResumenGeneral().then(function () {
             RGFactory.buscarResumenGeneral().then(function () {
                 if (loginFactory.perfil.id == 2) {
-                    if (RGFactory.ResGen.totalHorasSemestre != mes) {
+                    if (RGFactory.ResGen.horas_semestrales_tot != mes) {
                         modalNotifService.openModal('Las horas no coinciden con las horas establecidas por el Estatuto Docente');
                     }
                 }

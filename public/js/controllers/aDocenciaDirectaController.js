@@ -7,18 +7,18 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 	var acciones = "";
 	var max;
 	var min;
-	calcularMinMax();
-	if ($rootScope.infoReady == true) {
+	if ($rootScope.infoReady == true) {		
 		cargarDD();
 	} else {
 		$rootScope.$on("InfoReady", function () {
 			cargarDD();
 		});
 	}
-
+	
 	function cargarDD() {
 		DDFactory.buscarDocenciaDirecta().then(function () {
 			vm.docenciaDirecta = DDFactory.DocDir;
+			calcularMinMax();
 			if (vm.docenciaDirecta.length == 0) {
 				DDService.guardarDD({ ptd: ptdFactory.ptd.id, doc_ident: ptdFactory.ptd.tblUsuarioDocIdentidad }).then(function () {
 					cargarDD();

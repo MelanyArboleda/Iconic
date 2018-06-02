@@ -14,7 +14,7 @@
                             <th>Horas Semestre</th>
                             <th>Vo. Bo. Coord. Investigación</th>
                             <th ng-if="investigacionesPVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesPVm.vaciarMadal()" data-tooltip="Crear nuevo proyecto" data-target='modalInvestigacionesP'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="investigacionesPVm.vaciarMadal()" title="Crear nuevo proyecto" data-target='modalInvestigacionesP'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -32,10 +32,10 @@
                             </td>
                             <td ng-if="investigacionesPVm.permiso.modificar == true || investigacionesPVm.permiso.eliminar == true">
                                 <a ng-if="investigacionesPVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="investigacionesPVm.llenarModal(ip)"
-                                data-tooltip="Editar el proyecto" data-target='modalInvestigacionesP' modal>
+                                title="Editar el proyecto" data-target='modalInvestigacionesP' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="investigacionesPVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)" data-tooltip="Eliminar el proyecto">
+                                <a ng-if="investigacionesPVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="investigacionesPVm.deleteInvestigacionesProyectos(ip)" title="Eliminar el proyecto">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>

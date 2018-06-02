@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aObservacionesCtrl", aObservacionesCtrl);
 
-aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "ObservacionesService", "ptdFactory", "loginFactory", "$rootScope", "serviceNotification", "modalNotifService"];
+aObservacionesCtrl.$inject = ["ObservacionesFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesService", "ptdFactory", "loginFactory", "$rootScope", "serviceNotification", "modalNotifService"];
 
-function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, ObservacionesService, ptdFactory, loginFactory, $rootScope, serviceNotification, modalNotifService) {
+function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, ObservacionesService, ptdFactory, loginFactory, $rootScope, serviceNotification, modalNotifService) {
 	var vm = this;
 	vm.firmaConsejo = false;
 	vm.firmaCoordinador = false;
@@ -35,6 +35,19 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 			firma_coord_prog: '',
 			firma_docente: ''
 		}
+		RGFactory.modificarResumenGeneral().then(function () {
+            RGFactory.buscarResumenGeneral().then(function () {
+					if (loginFactory.user.dedicacion == 1) { mes = 900 }
+					else if (loginFactory.user.dedicacion == 2) { mes = 450 }
+					else if (loginFactory.user.dedicacion == 3) { mes = 900 }
+					else { mes = 450 }
+				if (RGFactory.ResGen.horas_semestrales_tot != mes) {
+					vm.firme = false;
+				}else{
+					vm.firme = true;
+				}				
+			});
+		});
 	}
 
 	vm.saveObservaciones = function () {
@@ -66,6 +79,10 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, Observacion
 				serviceNotification.error("No se pudo guardar la firma", 2000);
 			}
 		});
+	}
+
+	vm.enviarPtd = function(){
+		ObservacionesService.enviarPtd();
 	}
 };
 

@@ -13,7 +13,7 @@
                             <th>Evaluación Estudiante</th>
                             <th>Evaluación Jefe</th>
                             <th ng-if="asesoriasVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" data-tooltip="Crear nueva asesoría" data-target='modalAsesorias'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="asesoriasVm.vaciarMadal()" title="AÑADIR NUEVA ASESORÍA DE PROYECTO" data-target='modalAsesorias'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -31,7 +31,7 @@
                                 data-tooltip="Editar la asesoría" data-target='modalAsesorias' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="asesoriasVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)" data-tooltip="Eliminar la asesoría">
+                                <a ng-if="asesoriasVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="asesoriasVm.deleteAsesoriasProyectos(ap)" title="ELIMINAR ESTA ASESORÍA">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>
@@ -72,7 +72,7 @@
                         <input name="horas_semestrales" type="number" class="form-control validate" min="1" max="900" ng-model="asesoriasVm.formAsesoriasProyectos.horas_semestrales"
                             placeholder="Horas Semestrales" required/>
                     </div>
-                    <div class="input-field col l4 s4 cajasombra hscss">
+                    <div class="input-field col l4 s4 cajasombra">
                         <input name="estudiante" type="number" class="form-control validate" min="1" max="5" ng-model="asesoriasVm.formAsesoriasProyectos.estudiante"
                             placeholder="Eval. Estudiante" />
                     </div>

@@ -96,9 +96,9 @@ function RGFactory(RGService, ptdFactory, DDFactory, ISFactory, IPFactory, AEFac
     function obtenerhorasemanalesinv(apartado) {
         var acum = 0;
         for (var i = 0; i < apartado.length; i++) {
-            if (apartado[i].tblVinculoId == 1 || apartado[i].tblVinculoId == 3) {
+            // if (apartado[i].tblVinculoId == 1 || apartado[i].tblVinculoId == 3) {
                 acum += apartado[i].horas_semanales;
-            }
+            // }
         }
         return acum
     }

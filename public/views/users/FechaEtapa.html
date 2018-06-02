@@ -16,7 +16,7 @@
                         <th>Fecha Inicial</th>
                         <th>Fecha Final</th>
                         <th ng-if="fechaEtapaVm.permiso.crear == true">
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" data-tooltip="Crear nueva fecha" data-target='modalFechaEtapa'
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" title="Crear nueva fecha" data-target='modalFechaEtapa'
                                 modal>Nuevo</a>
                         </th>
                     </tr>
@@ -31,10 +31,10 @@
                         <td>{{fe.fecha_final | date}}</td>
                         <td ng-if="fechaEtapaVm.permiso.modificar == true || fechaEtapaVm.permiso.eliminar == true">
                             <a ng-if="fechaEtapaVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="fechaEtapaVm.llenarModal(fe)"
-                            data-tooltip="Editar la fecha" data-target='modalFechaEtapa' modal>
+                            title="Editar la fecha" data-target='modalFechaEtapa' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a ng-if="fechaEtapaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)" data-tooltip="Eliminar la fecha">
+                            <a ng-if="fechaEtapaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)" title="Eliminar la fecha">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>

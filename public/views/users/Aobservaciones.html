@@ -10,7 +10,7 @@
                 <span class="title">FD-GC51</span>
                 <p>Plan de Trabajo Docente | {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}}
                     <br> V_{{ptd.version}}</p>
-                <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" data-tooltip="Ver plan de trabajo">
+                <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" title="Ver plan de trabajo">
                     <i class="material-icons">&#xE8F4;</i>
                 </a>
             </li>
@@ -60,13 +60,22 @@
             </div>
             <div class="col s12 center" ng-if="observacionesVm.permiso.crear == false">
                 <br>
-                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
+                <b ng-if="!menuPrincipalVm.firme && observacionesVm.perfil != 1">
+                    La opción de firmar se activara en las fechas establecidas para la etapa de aprobación.
+                </b>
+                <b ng-if="!observacionesVm.firme && observacionesVm.perfil == 1">
+                    La opción de firmar se activara cuando cumplas con las horas requeridas por el estatuto docente.
+                </b>
+                <b ng-if="!observacionesVm.observaciones.firma_docente && menuPrincipalVm.firme && observacionesVm.perfil != 1">
+                    La opción de firmar se activara cuando el docente firme el plan de trabajo.
+                </b>
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2 && menuPrincipalVm.firme && observacionesVm.observaciones.firma_docente">
                     <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
-                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4 && menuPrincipalVm.firme && observacionesVm.observaciones.firma_docente">
                     <button type="button" ng-click="observacionesVm.firmaCoordinador = true" ng-hide="observacionesVm.firmaCoordinador" class="waves-effect waves-light btn">Firma coordinador programa</button>
                 </div>
-                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1 && observacionesVm.firme">
                     <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn">Firma docente</button>
                 </div>
                 <form name="FirmConsejoForm" autocomplete="off" ng-show="observacionesVm.firmaConsejo" ng-submit="observacionesVm.saveFirma()">
@@ -134,6 +143,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row center" input-field ng-if="observacionesVm.perfil == 1">
+        <button ng-disabled="!observacionesVm.observaciones.firma_docente" type="button" ng-click="observacionesVm.enviarPtd()" class="waves-effect waves-light btn">Guardar plan de trabajo</button>
     </div>
     <br>
     <div id="modalHorario" class="modal">

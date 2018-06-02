@@ -278,7 +278,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
 
 //funcion que llama el metodo insertar  
 function llamado_insert(datos, tabla, donde, callback) {
-    tabla.sync({ force: true }).then(function () {
+    tabla.sync().then(function () {
         for (var i = 0; i < datos.length; i++) {
             crud.findOrCreate(tabla, datos[i], donde[i], null, function (argument) { });
         }

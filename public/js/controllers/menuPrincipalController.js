@@ -46,6 +46,18 @@ function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactor
 		} else {
 			fechaEtapaFactory.buscarFechaEtapa().then(function () {
 				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
+				var fechaApro = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 3;
+				});
+				
+				if (fechaApro) {
+					if (new Date(fechaApro.fecha_inicial) <  new Date() && new Date(fechaApro.fecha_final) >  new Date() ) {
+						vm.firme = true;
+					}else{
+						vm.firme = false;
+					}
+				}
+				
 				if (loginFactory.user.perfil == 1) {
 					if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {

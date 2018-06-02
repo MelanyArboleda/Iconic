@@ -145,6 +145,7 @@ function usuariosCtrl($rootScope, usuariosFactory, usuariosService, loginFactory
             usuariosService.guardarArchivo({ info: vm.info }).then(function (resp) {
                 serviceNotification.success('Archivo guardado correctamente', 3000);
                 usuariosService.llenarDataBase().then(function (resp) {
+                    cargarUSER();
                     serviceNotification.success('Información guardado correctamente', 3000);
                 }).catch(function (err) {
                     serviceNotification.error('No se pudo guardar la información correctamente', 2000);

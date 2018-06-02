@@ -12,7 +12,7 @@
                             <th>Dedicación Horas Semestre</th>
                             <th>Vo.Bo Vicerrectoría de extensión</th>
                             <th ng-if="extensionVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="extensionVm.vaciarMadal()" data-tooltip="Crear nueva actividad" data-target='modalExtension'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="extensionVm.vaciarMadal()" title="Crear nueva actividad" data-target='modalExtension'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -29,10 +29,10 @@
                             </td>
                             <td ng-if="extensionVm.permiso.modificar == true || extensionVm.permiso.eliminar == true">
                                 <a ng-if="extensionVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="extensionVm.llenarModal(ae)"
-                                data-tooltip="Editar la actividad" data-target='modalExtension' modal>
+                                title="Editar la actividad" data-target='modalExtension' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="extensionVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="extensionVm.deleteActividadesExtension(ae)" data-tooltip="Eliminar la actividad">
+                                <a ng-if="extensionVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="extensionVm.deleteActividadesExtension(ae)" title="Eliminar la actividad">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>
