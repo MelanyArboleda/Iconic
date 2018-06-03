@@ -144,8 +144,8 @@
             </div>
         </div>
     </div>
-    <div class="row center" input-field ng-if="observacionesVm.perfil == 1">
-        <button ng-disabled="!observacionesVm.observaciones.firma_docente" type="button" ng-click="observacionesVm.enviarPtd()" class="waves-effect waves-light btn">Guardar plan de trabajo</button>
+    <div class="row center" input-field ng-if="observacionesVm.permisoEnviar.ver">
+        <button ng-disabled="!observacionesVm.observaciones.firma_docente" type="button" ng-click="observacionesVm.enviarPtd()" class="waves-effect waves-light btn">Enviar plan de trabajo</button>
     </div>
     <br>
     <div id="modalHorario" class="modal">

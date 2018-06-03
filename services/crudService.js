@@ -214,5 +214,18 @@ module.exports = {
         sequelize.query('SELECT "tblRecursoId", "tblUsuarioDocIdentidad", "ver", "crear", "modificar", "eliminar", "createdAt", "updatedAt" FROM "tbl_permisos" AS "tbl_permisos" WHERE "tbl_permisos"."tblUsuarioDocIdentidad" = ' + "'" + donde + "'" + ' ORDER BY "tblRecursoId" ASC;').spread((results, metadata) => {
             callback(results);
         });
+    },
+
+    innerDecano: function(tabla, donde,callback){
+        tabla[0].findAll({
+            include: [{
+                model: tabla[1], required: true, attributes: [],where: { tblProgramaCodigo: 'A'+donde }
+            }]
+        }).then((tabla) => {
+            callback(tabla);
+        }).catch((err) => {
+            console.log(err);
+            callback();
+        });
     }
 }

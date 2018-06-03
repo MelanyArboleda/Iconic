@@ -29,6 +29,11 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, 
 		vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
 			return permiso.tblRecursoId == 16;
 		});
+		vm.permisoEnviar = loginFactory.estatus.permisos.find(function (permiso) {
+			return permiso.tblRecursoId == 17;
+		});
+		console.log(vm.permisoEnviar,"eeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		
 		vm.perfil = loginFactory.user.perfil;
 		vm.formFirmas = {
 			firma_consejo_facultad: '',
@@ -36,16 +41,16 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, 
 			firma_docente: ''
 		}
 		RGFactory.modificarResumenGeneral().then(function () {
-            RGFactory.buscarResumenGeneral().then(function () {
-					if (loginFactory.user.dedicacion == 1) { mes = 900 }
-					else if (loginFactory.user.dedicacion == 2) { mes = 450 }
-					else if (loginFactory.user.dedicacion == 3) { mes = 900 }
-					else { mes = 450 }
+			RGFactory.buscarResumenGeneral().then(function () {
+				if (loginFactory.user.dedicacion == 1) { mes = 900 }
+				else if (loginFactory.user.dedicacion == 2) { mes = 450 }
+				else if (loginFactory.user.dedicacion == 3) { mes = 900 }
+				else { mes = 450 }
 				if (RGFactory.ResGen.horas_semestrales_tot != mes) {
 					vm.firme = false;
-				}else{
+				} else {
 					vm.firme = true;
-				}				
+				}
 			});
 		});
 	}
@@ -81,8 +86,19 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, 
 		});
 	}
 
-	vm.enviarPtd = function(){
-		ObservacionesService.enviarPtd();
+	vm.enviarPtd = function () {
+		data = {
+			doncente: loginFactory.user.nombre + ' ' + loginFactory.user.apellido_1,
+			ptd: ptdFactory.ptd.id,
+			facultad: loginFactory.estatus.facultad.id,
+			doc_identidad: loginFactory.user.doc_identidad
+		}
+		ObservacionesService.enviarPtd(data).then(function () {
+			cardarObservaciones();
+			modalNotifService.openModal("El plan de trabajo fue enviado correctamente");
+		}).catch(function (err) {
+			modalNotifService.openModal("El plan de trabajo no se envio correctamente");
+		});
 	}
 };
 

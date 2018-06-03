@@ -9,6 +9,7 @@ const tbl_etapas = require('.././database/tbl_etapas');
 const tbl_actores = require('.././database/tbl_actores');
 const tbl_permisos = require('.././database/tbl_permisos');
 const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
+const tbl_noticaciones = require('.././database/tbl_noticaciones');
 
 module.exports = {
     // buscador de los perfiles de los usuarios
@@ -92,6 +93,25 @@ module.exports = {
                     });
                 }
             });
+        });
+    },
+
+    enviar_Ptd: function (req, res, next) {
+        funciones.buscarDecano(req.body.facultad, (decano) => {
+            data = {
+                mensaje: 'El docente ' + req.body.docente + ' te ha enviado su plan de trabajo',
+                tblUsuarioDocIdentidad: decano,
+                fecha: new Date(),
+                ptd: req.body.ptd,
+                visto: false
+            }
+            tbl_noticaciones.sync().then(function () {
+                crud.create(tbl_noticaciones, data, () => {
+                    crud.update(tbl_permisos, { tblRecursoId: 17, tblUsuarioDocIdentidad: req.body.doc_identidad }, { ver: false }, () => {
+                        res.status(200).end();
+                    })
+                })
+            })
         });
     }
 };

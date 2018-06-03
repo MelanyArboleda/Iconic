@@ -16,6 +16,10 @@ var tbl_notificaciones = sequelize.define('tbl_notificaciones', {
         type: Sequelize.DATE,
         allowNull: false
     },
+    ptd:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     visto: {
         type: Sequelize.BOOLEAN,
         allowNull: false

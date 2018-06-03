@@ -7,7 +7,7 @@ function ObservacionesService($http, $q, appConstant){
     this.crearObservaciones = crearObservaciones;
     this.guardarObservaciones = guardarObservaciones;
     this.guardarFirmaObservaciones = guardarFirmaObservaciones;
-    this.enviarptd = enviarptd;
+    this.enviarPtd = enviarPtd;
 
     // llama servicio de buscar observaciones
     function buscarObservaciones(data){

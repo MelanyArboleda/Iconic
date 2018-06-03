@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const crud = require('.././services/crudService');
 const tbl_usuarios = require('.././database/tbl_usuarios');
+const tbl_usuario_programas = require('.././database/tbl_usuario_programas');
 const tbl_concertaciones = require('.././database/tbl_concertaciones');
 module.exports = {
 	// encriptador de los mensajes que llegan a la funcion
@@ -35,5 +36,12 @@ module.exports = {
 				callback(msg);
 			});
 		});
+	},
+
+	//buscar decano
+	buscarDecano: function(facultad,callback){
+		crud.innerDecano([tbl_usuarios,tbl_usuario_programas],facultad,(decano)=>{
+			callback(decano[0].dataValues.doc_identidad);
+		})
 	}
 };
