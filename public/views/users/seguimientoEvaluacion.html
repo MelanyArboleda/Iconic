@@ -56,7 +56,7 @@
                 <form name="FirmCoordinacionForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaCoordinador" ng-submit="SeguimientoEvaluacionVm.saveFirmaS()">
                     <b>Ahora puedes firmar el seguimiento ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
-                        <input ng-model="SeguimientoEvaluacionVm.formFirmasEva.firma_coord_prog" class="validate" type="password" id="firma_coord_prog"
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasSeg.firma_coord_prog" class="validate" type="password" id="firma_coord_prog"
                             name="firma_coord_prog" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
                             required>
                         <label for="first_name">Contraseña para firmar</label>
@@ -68,7 +68,7 @@
                 <form name="FirmDocenteForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaDocente" ng-submit="SeguimientoEvaluacionVm.saveFirmaS()">
                     <b>Ahora puedes firmar el seguimiento ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
-                        <input ng-model="SeguimientoEvaluacionVm.formFirmasEva.firma_docente" class="validate" type="password" id="firma_docente"
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasSeg.firma_docente" class="validate" type="password" id="firma_docente"
                             name="firma_docente" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
                             required>
                         <label for="first_name">Contraseña para firmar</label>
