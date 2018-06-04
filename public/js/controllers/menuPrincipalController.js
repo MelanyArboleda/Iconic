@@ -236,6 +236,9 @@ function menuPrincipalCtrl($rootScope, ptdFactory, SEFactory, usuariosFactory, p
 				break;
 			case 9: $state.go("menuPrincipal.SeguimientoEvaluacion", { idPlanDeTrabajo: ptdFactory.ptd.id });
 				break;
+			case 17: $state.go("menuPrincipal.ResumenGeneral", { idPlanDeTrabajo: ptdFactory.ptd.id });
+			break;
+
 		}
 	}
 

@@ -49,14 +49,14 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope, 
                 vm.repitepassword = "";
                 $modalInstance.close();
                 if (err.status == 401) {
-                    modalNotifService.openModal('La contraseña de tu firma no puede ser la misma con la que inicias sesión');
+                    serviceNotification.error('La contraseña de tu firma no puede ser la misma con la que inicias sesión', 3000);
                 }
                 if (err.status == 403) {
                     serviceNotification.error('No se pudo guardar la firma', 2000);
                 }
             });
         } else {
-            modalNotifService.openModal('Las Contraseñas no coinciden');
+            serviceNotification.error('Las Contraseñas no coinciden', 3000);
         }
     }
 
