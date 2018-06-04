@@ -86,8 +86,8 @@
                     class="waves-effect">
                     <i class="material-icons">border_color</i>Observaciones</a>
             </li>
-            <li ng-if="menuPrincipalVm.permisos[8].ver == true">
-                <a ui-sref="menuPrincipal.seguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'seguimientoEvaluacion'}"
+            <li ng-if="(menuPrincipalVm.seguimiento && menuPrincipalVm.permisos[8].ver == true) || (menuPrincipalVm.permisos[9].ver == true && menuPrincipalVm.evaluacion)">
+                <a ui-sref="menuPrincipal.SeguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'seguimientoEvaluacion'}"
                     class="waves-effect">
                     <i class="material-icons">timeline</i>Seguimientos y Evaluación</a>
             </li>

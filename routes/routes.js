@@ -94,7 +94,10 @@ router.post('/auth/guardarFirmaObservaciones', modelos.tbl_observaciones.guardar
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de seguimiento y evaluacion
 router.post('/auth/buscarSE', modelos.tbl_seguimientos_evaluacion.buscar_SE);
+router.post('/auth/crearSE', modelos.tbl_seguimientos_evaluacion.crear_SE);
 router.post('/auth/guardarSE', modelos.tbl_seguimientos_evaluacion.guardar_SE);
+router.post('/auth/guardarFirmaSE', modelos.tbl_seguimientos_evaluacion.guardar_Firma_SE);
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rutas de los permisos
 router.post('/auth/buscarPermisos', controllers.PtdController.buscar_Permisos);

@@ -29,10 +29,10 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, 
 		vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
 			return permiso.tblRecursoId == 16;
 		});
+		
 		vm.permisoEnviar = loginFactory.estatus.permisos.find(function (permiso) {
 			return permiso.tblRecursoId == 17;
 		});
-		console.log(vm.permisoEnviar,"eeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 		
 		vm.perfil = loginFactory.user.perfil;
 		vm.formFirmas = {

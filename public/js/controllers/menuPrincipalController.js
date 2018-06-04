@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "usuariosFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q", "modalNotifService"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "SEFactory", "usuariosFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q", "modalNotifService"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q, modalNotifService) {
+function menuPrincipalCtrl($rootScope, ptdFactory, SEFactory, usuariosFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q, modalNotifService) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -50,6 +50,31 @@ function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactor
 					return fecha.tblEtapaId == 3;
 				});
 				
+				var fechaSeg = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 4;
+				});
+
+				var fechaEva = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 5;
+				});
+
+				if (fechaSeg) {
+					if (new Date(fechaSeg.fecha_inicial) <  new Date() && new Date(fechaSeg.fecha_final) >  new Date() ) {
+						vm.seguimiento = true;
+					}else{
+						vm.seguimiento = false;
+					}
+				}
+
+				if (fechaEva) {
+					if (new Date(fechaEva.fecha_inicial) <  new Date() && new Date(fechaEva.fecha_final) >  new Date() ) {
+						vm.evaluacion = true;
+					}else{
+						vm.evaluacion = false;
+					}
+				}
+				
+
 				if (fechaApro) {
 					if (new Date(fechaApro.fecha_inicial) <  new Date() && new Date(fechaApro.fecha_final) >  new Date() ) {
 						vm.firme = true;
@@ -71,8 +96,12 @@ function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactor
 								RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
 									console.log("resumen--------", resumen);
 									ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
-										emitPtdReady();
-										emitInfoReady();
+										SEFactory.crearSE(ptd.id,6).then(function(){
+											SEFactory.crearSE(ptd.id,23).then(function(){
+												emitPtdReady();
+												emitInfoReady();
+											})
+										})
 									});
 								});
 
@@ -205,9 +234,7 @@ function menuPrincipalCtrl($rootScope, ptdFactory, usuariosFactory, planesFactor
 				break;
 			case 8: $state.go("menuPrincipal.Aobservaciones", { idPlanDeTrabajo: ptdFactory.ptd.id });
 				break;
-			case 9: $state.go("menuPrincipal.AdocenciaDirecta", { idPlanDeTrabajo: ptdFactory.ptd.id });
-				break;
-			case 10: $state.go("menuPrincipal.AdocenciaDirecta", { idPlanDeTrabajo: ptdFactory.ptd.id });
+			case 9: $state.go("menuPrincipal.SeguimientoEvaluacion", { idPlanDeTrabajo: ptdFactory.ptd.id });
 				break;
 		}
 	}

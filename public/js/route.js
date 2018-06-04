@@ -188,4 +188,14 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 				login: true
 			}
 		})
+		.state({
+			name: "menuPrincipal.SeguimientoEvaluacion",
+			templateUrl: 'views/users/seguimientoEvaluacion.html',
+			url: "/SeguimientoEvaluacion",
+			controller: "SeguimientoEvaluacionCtrl as SeguimientoEvaluacionVm",
+			recurso: 9,
+			params: {
+				login: true
+			}
+		})
 }
