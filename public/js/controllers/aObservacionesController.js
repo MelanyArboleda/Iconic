@@ -78,7 +78,7 @@ function aObservacionesCtrl(ObservacionesFactory, fechaEtapaFactory, RGFactory, 
 				firma_docente: ''
 			}
 			if (err.status == 401) {
-				modalNotifService.openModal("La contraseña de la firma es incorrecta");
+				serviceNotification.error("La contraseña de la firma es incorrecta", 3000);
 			}
 			if (err.status == 403) {
 				serviceNotification.error("No se pudo guardar la firma", 2000);

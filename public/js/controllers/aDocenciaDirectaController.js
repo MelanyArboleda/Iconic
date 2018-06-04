@@ -18,6 +18,7 @@ function aDocenciaDirectaCtrl($rootScope, DDService, DDFactory, ptdService, ptdF
 	function cargarDD() {
 		DDFactory.buscarDocenciaDirecta().then(function () {
 			vm.docenciaDirecta = DDFactory.DocDir;
+			console.log(vm.docenciaDirecta);
 			calcularMinMax();
 			if (vm.docenciaDirecta.length == 0) {
 				DDService.guardarDD({ ptd: ptdFactory.ptd.id, doc_ident: ptdFactory.ptd.tblUsuarioDocIdentidad }).then(function () {

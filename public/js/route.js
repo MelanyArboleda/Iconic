@@ -160,6 +160,16 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 			}
 		})
 		.state({
+			name: "menuPrincipal.ResumenGeneral",
+			templateUrl: 'views/users/ResumenGeneral.html',
+			url: "/ResumenGeneral/:idPlanDeTrabajo",
+			controller: "aOtrasActividadesCtrl as otrasActividadesVm",
+			recurso: 17,
+			params: {
+				login: true
+			}
+		})
+		.state({
 			name: "menuPrincipal.Aobservaciones",
 			templateUrl: 'views/users/Aobservaciones.html',
 			url: "/observaciones/:idPlanDeTrabajo",
