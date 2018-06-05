@@ -7,6 +7,9 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
     var acciones = "";
     var max;
     var mes;
+    vm.actCnx = [
+        "ATENCIÓN ESTUDIANTES", "PREPARACIÓN DE CLASES", "CALIFICACIONES DE EXÁMENES"
+    ]
 
     if ($rootScope.infoReady == true) {
         cargarData();
@@ -28,6 +31,12 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
                     vm.otrasActividades = OAFactory.OtrAct;
                     for (var i = 0; i < vm.otrasActividades.length; i++) {
                         vm.otrasActividades[i].horas_semestrales = calculahoras(vm.otrasActividades[i].horas_semanales);
+                        if (i+1 == vm.otrasActividades.length) {
+                            vm.actCnx = [
+                                "ATENCIÓN ESTUDIANTES", "PREPARACIÓN DE CLASES", "CALIFICACIONES DE EXÁMENES"
+                            ]
+                            actuliazarselect();   
+                        }
                     }
                 });
                 vm.resumenGeneral = RGFactory.ResGen;
@@ -55,12 +64,27 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
     }
 
     function saveOtrasActividades() {
-        OAService.guardarOA(vm.formOtrasActividades).then(function (res) {
-            serviceNotification.success('Actividad guardada correctamente', 3000);
-            cargarData();
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo guardar la Actividad', 2000);
-        });
+        var hcx = horasConexas();
+        if (vm.formOtrasActividades.nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
+            vm.formOtrasActividades.nombre_actividad == "PREPARACIÓN DE CLASES" ||
+            vm.formOtrasActividades.nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
+            if (vm.formOtrasActividades.horas_semanales + hcx <= RGFactory.horasCnx) {
+                OAService.guardarOA(vm.formOtrasActividades).then(function (res) {
+                    serviceNotification.success('Actividad guardada correctamente', 3000);
+                    // if (vm.formOtrasActividades.nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
+                    //     vm.formOtrasActividades.nombre_actividad == "PREPARACIÓN DE CLASES" ||
+                    //     vm.formOtrasActividades.nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
+                    //     var pos = vm.actCnx.indexOf(vm.formOtrasActividades.nombre_actividad);
+                    //     vm.actCnx.splice(pos, 1);
+                    // }
+                    cargarData();
+                }).catch(function (err) {
+                    serviceNotification.error('No se pudo guardar la Actividad', 2000);
+                });
+            } else {
+                modalNotifService.openModal('Las horas conexas no pueden superar un numero de ' + RGFactory.horasCnx);
+            }
+        }
     }
 
     function editOtrasActividades() {
@@ -77,6 +101,11 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
             if (bool) {
                 OAService.eliminarOA(oa).then(function (res) {
                     serviceNotification.success('Actividad eliminada correctamente', 3000);
+                    if (oa.nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
+                        oa.nombre_actividad == "PREPARACIÓN DE CLASES" ||
+                        oa.nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
+                        vm.actCnx.push(oa.nombre_actividad);
+                    }
                     cargarData();
                 }).catch(function (err) {
                     serviceNotification.error('No se pudo eliminar la Actividad', 2000);
@@ -131,4 +160,37 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
         else if (loginFactory.user.dedicacion == 3) { mes = 900 }
         else { mes = 450 }
     })();
+
+    function horasConexas() {
+        var horascnx = 0;
+        if (vm.otrasActividades[0] != undefined) {
+            for (let i = 0; i < vm.otrasActividades.length; i++) {
+                if (vm.otrasActividades[i].nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
+                    vm.otrasActividades[i].nombre_actividad == "PREPARACIÓN DE CLASES" ||
+                    vm.otrasActividades[i].nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
+                    horascnx = horascnx + vm.otrasActividades[i].horas_semanales;
+                    if (i + 1 == vm.otrasActividades.length) {
+                        return horascnx;
+                    }
+                } else {
+                    if (i + 1 == vm.otrasActividades.length) {
+                        return horascnx;
+                    }
+                }
+            }
+        } else {
+            return horascnx;
+        }
+    }
+
+    function actuliazarselect(is) {
+        for (let i = 0; i < vm.otrasActividades.length; i++) {            
+            if (vm.otrasActividades[i].nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
+            vm.otrasActividades[i].nombre_actividad == "PREPARACIÓN DE CLASES" ||
+            vm.otrasActividades[i].nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
+                var pos = vm.actCnx.indexOf(vm.otrasActividades[i].nombre_actividad);                
+                vm.actCnx.splice(pos, 1);
+            }
+        }
+    }
 };
