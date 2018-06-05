@@ -227,5 +227,34 @@ module.exports = {
             console.log(err);
             callback();
         });
+    },
+
+    reporte: function (callback) {
+        resp = [];
+        sequelize.query('SELECT sum(tbl_docencias_directas.horas_semanales), tbl_areas.area  FROM tbl_docencias_directas INNER JOIN tbl_ptds on (tbl_docencias_directas."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on (tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on (tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on (tbl_usuario_programas."tblProgramaCodigo"= tbl_programas.codigo) INNER JOIN tbl_areas ON (tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area').spread((results, metadata) => {
+            resp.push(results);
+            sequelize.query('SELECT sum(tbl_investigaciones_proyectos.horas_semanales), tbl_areas.area FROM tbl_investigaciones_proyectos INNER JOIN tbl_ptds on(tbl_investigaciones_proyectos."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area; ').spread((results, metadata) => {
+                resp.push(results);
+                sequelize.query('SELECT sum(tbl_investigaciones_semilleros.horas_semanales), tbl_areas.area FROM tbl_investigaciones_semilleros INNER JOIN tbl_ptds on(tbl_investigaciones_semilleros."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area; ').spread((results, metadata) => {
+                    resp.push(results);
+                    sequelize.query('SELECT count(tbl_comision_estudios.id), tbl_areas.area FROM tbl_comision_estudios INNER JOIN tbl_ptds on(tbl_comision_estudios."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area; ').spread((results, metadata) => {
+                        resp.push(results);
+                        sequelize.query('SELECT sum(tbl_actividades.horas_semanales), tbl_areas.area FROM tbl_actividades INNER JOIN tbl_resumenes on (tbl_actividades."tblResumeneId" = tbl_resumenes.id) INNER JOIN tbl_ptds on (tbl_resumenes."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on (tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on (tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on (tbl_usuario_programas."tblProgramaCodigo"= tbl_programas.codigo) INNER JOIN tbl_areas ON (tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area;').spread((results, metadata) => {
+                            resp.push(results);
+                            sequelize.query('SELECT sum(tbl_actividades_extensions.horas_semestrales), tbl_areas.area FROM tbl_actividades_extensions  INNER JOIN tbl_ptds on(tbl_actividades_extensions."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area; ').spread((results, metadata) => {
+                                resp.push(results);
+                                sequelize.query('SELECT sum(tbl_asesoria_proyectos.horas_semestrales), tbl_areas.area FROM tbl_asesoria_proyectos INNER JOIN tbl_ptds on(tbl_asesoria_proyectos."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id) Group by tbl_areas.area; ').spread((results, metadata) => {
+                                    resp.push(results);
+                                    sequelize.query('SELECT sum(tbl_formulacion_proyectos.horas_semestrales), tbl_areas.area FROM tbl_formulacion_proyectos INNER JOIN tbl_ptds on(tbl_formulacion_proyectos."tblPtdId" = tbl_ptds.id) INNER JOIN tbl_usuarios on(tbl_ptds."tblUsuarioDocIdentidad" = tbl_usuarios.doc_identidad) INNER JOIN tbl_usuario_programas on(tbl_usuarios.doc_identidad = tbl_usuario_programas."tblUsuarioDocIdentidad") INNER JOIN tbl_programas on(tbl_usuario_programas."tblProgramaCodigo" = tbl_programas.codigo) INNER JOIN tbl_areas ON(tbl_programas."tblAreaId" = tbl_areas.id)  Group by tbl_areas.area; ').spread((results, metadata) => {
+                                        resp.push(results);
+                                        callback(resp);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
     }
 }

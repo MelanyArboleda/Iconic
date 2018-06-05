@@ -33,7 +33,7 @@ module.exports = {
                     fecha = dateEnt.toString('base64');
                     var asunto = 'restablecer contraseña';
                     var html = linkRecuperarHtml;
-                    html = html.replace("url", "http://http://iconic-iconic.a3c1.starter-us-west-1.openshiftapps.com:8080/#!/restablecer/" + doc_identidad + "/" + fecha);
+                    html = html.replace("url", " http://iconic-iconic.a3c1.starter-us-west-1.openshiftapps.com:8080/#!/restablecer/" + doc_identidad + "/" + fecha);
                     html = html.replace("Usuario", "" + nombre);
 
                     var resp = mail(req.body.correo, asunto, html);

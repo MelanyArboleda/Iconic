@@ -56,7 +56,8 @@ var recursos = [
     { id: 14, recurso: "consertar" },
     { id: 15, recurso: "usuarios" },
     { id: 16, recurso: "firmar" },
-    { id: 17, recurso: "enviar plan de trabajo"}];
+    { id: 17, recurso: "enviar plan de trabajo"},
+    { id: 18, recurso: "Reportes"}];
 
 var permisos_iniciales = [
     { tblRecursoId: 1, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: true },
@@ -76,6 +77,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 1, ver: true, crear: true, modificar: true, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 1, ver: true, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 1, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 2, ver: true, crear: false, modificar: false, eliminar: false },
@@ -94,6 +96,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 16, tblPerfileId: 2, ver: true, crear: true, modificar: true, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 2, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 2, ver: true, crear: true, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
@@ -112,6 +115,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 3, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 3, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 3, ver: true, crear: true, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 4, ver: true, crear: false, modificar: false, eliminar: false },
@@ -130,6 +134,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 4, ver: true, crear: true, modificar: true, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 4, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 5, ver: true, crear: false, modificar: false, eliminar: false },
@@ -148,6 +153,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 5, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 2, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
@@ -166,6 +172,7 @@ var permisos_iniciales = [
     { tblRecursoId: 15, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 16, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
     { tblRecursoId: 17, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 6, ver: false, crear: false, modificar: false, eliminar: false },
 
     { tblRecursoId: 1, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 2, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
@@ -183,7 +190,8 @@ var permisos_iniciales = [
     { tblRecursoId: 14, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 15, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
     { tblRecursoId: 16, tblPerfileId: 7, ver: true, crear: true, modificar: true, eliminar: true },
-    { tblRecursoId: 17, tblPerfileId: 7, ver: false, crear: false, modificar: false, eliminar: false }    
+    { tblRecursoId: 17, tblPerfileId: 7, ver: false, crear: false, modificar: false, eliminar: false },
+    { tblRecursoId: 18, tblPerfileId: 7, ver: false, crear: false, modificar: false, eliminar: false },    
 ];
 
 var vinculos = [
@@ -270,6 +278,7 @@ llamado_insert(estados, tbl_estados, estados, () => {
                                         llamado_insert(vinculos, tbl_vinculos.tbl_vinculos, vinculos, () => {
                                             llamado_insert(actores, tbl_actores, actores, () => {
                                                 llamado_insert(etapas, tbl_etapas, etapas, () => {
+                                                    
                                                 });
                                             });
                                         });

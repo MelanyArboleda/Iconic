@@ -1,5 +1,5 @@
 angular.module("iconic").controller("concertacionCtrl", concertacionCtrl);
-var socket = io.connect('http://http://iconic-iconic.a3c1.starter-us-west-1.openshiftapps.com:8080', { 'forceNew': true });
+var socket = io.connect(' http://iconic-iconic.a3c1.starter-us-west-1.openshiftapps.com:8080', { 'forceNew': true });
 concertacionCtrl.$inject = ["$rootScope", "loginService", "loginFactory", "ptdService", "ptdFactory", "serviceNotification", "$q", "$scope"];
 
 function concertacionCtrl($rootScope, loginService, loginFactory, ptdService, ptdFactory, serviceNotification, $q, $scope) {

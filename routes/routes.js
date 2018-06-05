@@ -126,4 +126,5 @@ router.post('/auth/modificarPermiso', controllers.UserController.modificar_Permi
 router.post('/auth/buscarRecursos', controllers.UserController.buscar_Recursos);
 //rutas de enviar el plan de trabajo
 router.post('/auth/enviarPtd', controllers.PtdController.enviar_Ptd);
+router.post('/auth/reportes', controllers.PtdController.reportes);
 module.exports = router;

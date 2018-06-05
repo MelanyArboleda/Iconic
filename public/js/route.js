@@ -208,4 +208,14 @@ function routeConfig($stateProvider, $urlRouterProvider) {
 				login: true
 			}
 		})
+		.state({
+			name: "menuPrincipal.Reportes",
+			templateUrl: 'views/users/Reportes.html',
+			url: "/Reportes",
+			controller: "ReportesCtrl as ReportesVm",
+			recurso: 18,
+			params: {
+				login: true
+			}
+		})
 }

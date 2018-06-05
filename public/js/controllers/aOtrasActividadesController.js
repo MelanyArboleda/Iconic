@@ -71,12 +71,6 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
             if (vm.formOtrasActividades.horas_semanales + hcx <= RGFactory.horasCnx) {
                 OAService.guardarOA(vm.formOtrasActividades).then(function (res) {
                     serviceNotification.success('Actividad guardada correctamente', 3000);
-                    // if (vm.formOtrasActividades.nombre_actividad == "ATENCIÓN ESTUDIANTES" ||
-                    //     vm.formOtrasActividades.nombre_actividad == "PREPARACIÓN DE CLASES" ||
-                    //     vm.formOtrasActividades.nombre_actividad == "CALIFICACIONES DE EXÁMENES") {
-                    //     var pos = vm.actCnx.indexOf(vm.formOtrasActividades.nombre_actividad);
-                    //     vm.actCnx.splice(pos, 1);
-                    // }
                     cargarData();
                 }).catch(function (err) {
                     serviceNotification.error('No se pudo guardar la Actividad', 2000);
@@ -84,6 +78,13 @@ function aOtrasActividadesCtrl($rootScope, OAFactory, OAService, RGFactory, RGSe
             } else {
                 modalNotifService.openModal('Las horas conexas no pueden superar un numero de ' + RGFactory.horasCnx);
             }
+        }else{
+            OAService.guardarOA(vm.formOtrasActividades).then(function (res) {
+                serviceNotification.success('Actividad guardada correctamente', 3000);
+                cargarData();
+            }).catch(function (err) {
+                serviceNotification.error('No se pudo guardar la Actividad', 2000);
+            });
         }
     }
 

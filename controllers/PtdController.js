@@ -113,5 +113,11 @@ module.exports = {
                 })
             })
         });
+    },
+
+    reportes: function (req, res, next) {
+        crud.reporte((resp) => {
+            res.status(200).json(permisos).end();
+        })
     }
 };
