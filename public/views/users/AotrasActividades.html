@@ -11,10 +11,10 @@
                             <th>Dedicación Horas Semestre</th>
                             <th>Descripción y Productos</th>
                             <th ng-if="otrasActividadesVm.permiso.crear == true">
-                                <a ng-if="otrasActividadesVm.horasConexas > 0" class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(true)"
-                                    data-target='modalOActividades' modal>Conexas</a>
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" data-target='modalOActividades'
-                                    modal>Nuevo</a>
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" title="Crear nueva actividad"
+                                    data-target='modalOActividades' modal>Nuevo</a>
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="otrasActividadesVm.vaciarMadal(false)" title="Crear nueva actividad Conexa"
+                                    data-target='modalOActividadesConexas' modal>Conexa</a>
                             </th>
                         </tr>
                     </thead>
@@ -27,10 +27,11 @@
                             <td>{{oa.descripcion_productos}}</td>
                             <td ng-if="otrasActividadesVm.permiso.modificar == true || otrasActividadesVm.permiso.eliminar == true">
                                 <a ng-if="otrasActividadesVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="otrasActividadesVm.llenarModal(oa)"
-                                    data-target='modalOActividades' modal>
+                                    title="Editar la actividad" data-target='modalOActividades' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)">
+                                <a ng-if="otrasActividadesVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="otrasActividadesVm.deleteOtrasActividades(oa)"
+                                    title="Eliminar la actividad">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>
@@ -41,7 +42,7 @@
         </div>
     </div>
     <br>
-    <!-- resumen general -->
+    <!-- resumen general 
     <div class="container white contenido">
         <div class="row">
             <div class="col s12">
@@ -85,7 +86,7 @@
             </div>
         </div>
     </div>
-
+-->
     <div id="modalOActividades" class="modal">
         <div class="modal-content">
             <h5 class="center">
@@ -96,6 +97,46 @@
                     <div class="input-field col l12 s12 cajasombra">
                         <input name="nombre_actividad" type="text" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.nombre_actividad"
                             placeholder="Nombre de la Actividad" required/>
+                    </div>
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="horas_semanales" type="number" step="any" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.horas_semanales"
+                            ng-change="otrasActividadesVm.asignarData(otrasActividadesVm.formOtrasActividades.horas_semanales)"
+                            placeholder="Horas Semanales" required/>
+                    </div>
+                    <div class="input-field col l6 s6 cajasombra">
+                        <input name="horas_semestrales" type="number" class="form-control" ng-model="otrasActividadesVm.formOtrasActividades.horas_semestrales"
+                            placeholder="Horas Semestrales" readonly/>
+                    </div>
+                    <div class="input-field col l12 s12 cajasombra">
+                        <input name="descripcion_productos" type="text" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.descripcion_productos"
+                            placeholder="Descripción de Productos" required/>
+                    </div>
+
+                    <div class="input-field col l12 s12 center ">
+                        <button ng-disabled="aOtrasActividadesForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modalOActividadesConexas" class="modal">
+        <div class="modal-content">
+            <h5 class="center">
+                <strong>Otras Actividades Académicas Conexas</strong>
+            </h5>
+            <div class="row">
+                <form name="aOtrasActividadesForm" autocomplete="off" ng-submit="otrasActividadesVm.accion()">
+                    <div class="input-field col l12 s12 cajasombra">
+                            <select id="nombre_actividad" name="nombre_actividad" ng-model="otrasActividadesVm.formOtrasActividades.nombre_actividad" material-select
+                            watch required>
+                            <option value="" disabled selected>Nombre Actividad</option>
+                            <option ng-repeat="ac in otrasActividadesVm.actCnx">{{ac}}</option>
+                        </select>
                     </div>
                     <div class="input-field col l6 s6 cajasombra">
                         <input name="horas_semanales" type="number" step="any" class="form-control validate" ng-model="otrasActividadesVm.formOtrasActividades.horas_semanales"

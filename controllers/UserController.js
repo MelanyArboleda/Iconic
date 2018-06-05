@@ -207,6 +207,7 @@ module.exports = {
 
     },
 
+    // cambiar el estado a activo para poder ingresar al sistema
     cinicial: function (req, res, next) {
         if (req.res.req.user.contraseña != req.body.contraseña_firma) {
             crud.update(tbl_usuarios, { doc_identidad: req.res.req.user.doc_identidad }, { contraseña_firma: funciones.encriptar(req.body.contraseña_firma) }, function (data) {
@@ -222,24 +223,35 @@ module.exports = {
 
     },
 
+    // buscador de los usuarios 
     buscar_Usuarios: function (req, res, next) {
         crud.innerUser([tbl_usuarios, tbl_usuario_programas, tbl_programas, tbl_areas, tbl_facultades], req.body, (users) => {
             res.status(200).json({ users: users }).end();
         })
     },
 
+    // buscador de todos los usuarios
+    buscar_Usuarios_Admin: function (req, res, next) {
+        crud.findAll(tbl_usuarios, null, null, (users) => {
+            res.status(200).json({ users: users }).end();
+        })
+    },
+
+    // buscador de estados
     buscar_Estados: function (req, res, next) {
         crud.findAll(tbl_estados, null, null, (estados) => {
             res.status(200).json({ estados: estados }).end();
         })
     },
 
+    // buscador de perfiles
     buscar_Perfiles: function (req, res, next) {
         crud.findAll(tbl_perfiles, null, null, (perfiles) => {
             res.status(200).json({ perfiles: perfiles }).end();
         })
     },
 
+    // modificador de los usuarios
     modificar_Usuario: function (req, res, next) {
         tbl_usuarios.sync().then(function () {
             crud.update(tbl_usuarios, { doc_identidad: req.body.donde }, req.body.datos, (resp) => {
@@ -252,6 +264,7 @@ module.exports = {
         });
     },
 
+    // modificador de los permisos
     modificar_Permiso: function (req, res, next) {
         tbl_permisos.sync().then(function () {
             crud.update(tbl_permisos, { tblRecursoId: req.body.tblRecursoId, tblUsuarioDocIdentidad: req.body.tblUsuarioDocIdentidad }, req.body, (resp) => {
@@ -264,6 +277,7 @@ module.exports = {
         });
     },
 
+    // buscador de los recursos del sistema
     buscar_Recursos: function (req, res, next) {
         tbl_recursos.sync().then(function () {
             crud.findAll(tbl_recursos, null, null, (recursos) => {

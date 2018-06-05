@@ -21,6 +21,14 @@ header nav .nav-wrapper span {
   padding-top: 3px;
 }
 
+.side-nav li {
+  padding: 0px;
+	padding-left: 15px;
+}
+.side-nav a, .side-nav.fixed a {
+	padding: 0px;
+}
+
 #logincontainer{  
  	padding-top: 10vh; 
  	width: 100%;

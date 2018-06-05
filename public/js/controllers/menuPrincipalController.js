@@ -1,8 +1,8 @@
 var app = angular.module("iconic").controller("menuPrincipalCtrl", menuPrincipalCtrl);
 
-menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q"];
+menuPrincipalCtrl.$inject = ["$rootScope", "ptdFactory", "SEFactory", "usuariosFactory", "planesFactory", "loginFactory", "fechaEtapaFactory", "RGFactory", "ObservacionesFactory", "serviceNotification", "$state", "$q", "modalNotifService"];
 
-function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q) {
+function menuPrincipalCtrl($rootScope, ptdFactory, SEFactory, usuariosFactory, planesFactory, loginFactory, fechaEtapaFactory, RGFactory, ObservacionesFactory, serviceNotification, $state, $q, modalNotifService) {
 	var vm = this;
 	var currentTime = new Date();
 	vm.currentTime = currentTime;
@@ -39,83 +39,156 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 
 	function cargarMenu() {
 		vm.pageName = $rootScope.page;
-		fechaEtapaFactory.buscarFechaEtapa().then(function () {
-			console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
-			if (loginFactory.user.perfil == 1) {
-				if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
-					if (fechaEtapaFactory.fechaEtapa.length == 0) {
-						serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para la presentación de tu plan de trabajo, comunícate con ellos si tienes alguna duda', 5000);
-						vm.plan = false;
-						emitInfoReady();
-					} else {
-						ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
-							console.log("PTD--------", ptd);
-							vm.plan = true;
-							RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
-								console.log("resumen--------", resumen);
-								ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
-									emitPtdReady();
-									emitInfoReady();
-								});
-							});
+		vm.perfilUser = loginFactory.user.perfil;
+		if (loginFactory.user.perfil == 7) {
+			vm.plan = false;
+			emitInfoReady();
+		} else {
+			fechaEtapaFactory.buscarFechaEtapa().then(function () {
+				console.log("Fechas--------", fechaEtapaFactory.fechaEtapa);
+				var fechaApro = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 3;
+				});
+				
+				var fechaSeg = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 4;
+				});
 
-						});
+				var fechaEva = fechaEtapaFactory.fechaEtapa.find((fecha)=>{
+					return fecha.tblEtapaId == 5;
+				});
+
+				if (fechaSeg) {
+					if (new Date(fechaSeg.fecha_inicial) <  new Date() && new Date(fechaSeg.fecha_final) >  new Date() ) {
+						vm.seguimiento = true;
+					}else{
+						vm.seguimiento = false;
 					}
-				} else {
-					emitInfoReady();
 				}
-			} else {
-				if (loginFactory.user.perfil == 2) {
-					if (fechaEtapaFactory.fechaEtapa.length == 0) {
-						$state.go("menuPrincipal.fechaEtapa");
-						emitInfoReady();
-					} else {
-						var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-						planesFactory.buscarPtdsFacultad({
-							facultad: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
-						}).then(function () {
-							console.log("PTDS----------", planesFactory.ptds);
-							vm.ptds = planesFactory.ptds;
-							vm.ptdId = $rootScope.ptd;
-							emitInfoReady();
-						});
+
+				if (fechaEva) {
+					if (new Date(fechaEva.fecha_inicial) <  new Date() && new Date(fechaEva.fecha_final) >  new Date() ) {
+						vm.evaluacion = true;
+					}else{
+						vm.evaluacion = false;
 					}
-				} else {
-					if (loginFactory.user.perfil == 4) {
+				}
+				
+
+				if (fechaApro) {
+					if (new Date(fechaApro.fecha_inicial) <  new Date() && new Date(fechaApro.fecha_final) >  new Date() ) {
+						vm.firme = true;
+					}else{
+						vm.firme = false;
+					}
+				}
+				
+				if (loginFactory.user.perfil == 1) {
+					if (ptdFactory.ptd.id == undefined || ptdFactory.ptd.tblUsuarioDocIdentidad != loginFactory.user.doc_identidad) {
 						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
+							modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para la presentación de tu plan de trabajo, comunícate con ellos si tienes alguna duda');
 							vm.plan = false;
 							emitInfoReady();
 						} else {
+							ptdFactory.createPtd({ doc_identidad: loginFactory.user.doc_identidad }).then(function (ptd) {
+								console.log("PTD--------", ptd);
+								vm.plan = true;
+								RGFactory.crearResumenGeneral(ptd.id).then(function (resumen) {
+									console.log("resumen--------", resumen);
+									ObservacionesFactory.crearObservaciones(ptd.id).then(function () {
+										SEFactory.crearSE(ptd.id,6).then(function(){
+											SEFactory.crearSE(ptd.id,23).then(function(){
+												emitPtdReady();
+												emitInfoReady();
+											})
+										})
+									});
+								});
+
+							});
+						}
+					} else {
+						emitInfoReady();
+					}
+				} else {
+					if (loginFactory.user.perfil == 2) {
+						if (fechaEtapaFactory.fechaEtapa.length == 0) {
+							$state.go("menuPrincipal.fechaEtapa");
+							emitInfoReady();
+						} else {
 							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-							planesFactory.buscarPtdsPrograma({
-								programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
+							planesFactory.buscarPtdsFacultad({
+								facultad: loginFactory.estatus.facultad.id, semestre: data.semestre, ano: data.ano
 							}).then(function () {
 								console.log("PTDS----------", planesFactory.ptds);
 								vm.ptds = planesFactory.ptds;
+								usuariosFactory.buscarUsuarios().then(() => {
+									vm.usersPtd = [];
+									var userPtdV = usuariosFactory.users.find((user) => {
+										return user.tblPerfileId == 1;
+									});				
+									vm.usersPtd.push(userPtdV);				
+									for (let i = 0; i < vm.ptds.length; i++) {
+										var nombre = vm.usersPtd.find((user)=>{
+											return user.doc_identidad == vm.ptds[i].tblUsuarioDocIdentidad;
+										});
+										vm.ptds[i].nombre = nombre.nombre;
+									}
+								});
 								vm.ptdId = $rootScope.ptd;
 								emitInfoReady();
 							});
 						}
 					} else {
-						if (fechaEtapaFactory.fechaEtapa.length == 0) {
-							serviceNotification.info('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda', 5000);
-							vm.plan = false;
-							emitInfoReady();
-						} else {
-							var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
-							planesFactory.buscarPtds({
-								semestre: data.semestre, ano: data.ano
-							}).then(function () {
-								console.log("PTDS----------", planesFactory.ptds);
-								vm.ptds = planesFactory.ptds;
+						if (loginFactory.user.perfil == 4) {
+							if (fechaEtapaFactory.fechaEtapa.length == 0) {
+								modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda');
+								vm.plan = false;
 								emitInfoReady();
-							});
+							} else {
+								var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+								planesFactory.buscarPtdsPrograma({
+									programa: loginFactory.estatus.programa, semestre: data.semestre, ano: data.ano
+								}).then(function () {
+									console.log("PTDS----------", planesFactory.ptds);
+									vm.ptds = planesFactory.ptds;
+									usuariosFactory.buscarUsuarios().then(() => {
+										vm.usersPtd = [];
+										var userPtdV = usuariosFactory.users.find((user) => {
+											return user.tblPerfileId == 1;
+										});				
+										vm.usersPtd.push(userPtdV);				
+										for (let i = 0; i < vm.ptds.length; i++) {
+											var nombre = vm.usersPtd.find((user)=>{
+												return user.doc_identidad == vm.ptds[i].tblUsuarioDocIdentidad;
+											});
+											vm.ptds[i].nombre = nombre.nombre;
+										}
+									});
+									vm.ptdId = $rootScope.ptd;
+									emitInfoReady();
+								});
+							}
+						} else {
+							if (fechaEtapaFactory.fechaEtapa.length == 0) {
+								modalNotifService.openModal('¡Hola!, Aún no han sido creadas desde tu facultad las fechas para modificar tu plan de trabajo, Comunícate con ellos si tienes alguna duda');
+								vm.plan = false;
+								emitInfoReady();
+							} else {
+								var data = fechaEtapaFactory.fechaEtapa[fechaEtapaFactory.fechaEtapa.length - 1];
+								planesFactory.buscarPtds({
+									semestre: data.semestre, ano: data.ano
+								}).then(function () {
+									console.log("PTDS----------", planesFactory.ptds);
+									vm.ptds = planesFactory.ptds;
+									emitInfoReady();
+								});
+							}
 						}
 					}
 				}
-			}
-		});
+			});
+		}
 		vm.permisos = loginFactory.estatus.permisos.sort(function (a, b) {
 			return (a.tblRecursoId - b.tblRecursoId)
 		});
@@ -161,15 +234,16 @@ function menuPrincipalCtrl($rootScope, ptdFactory, planesFactory, loginFactory, 
 				break;
 			case 8: $state.go("menuPrincipal.Aobservaciones", { idPlanDeTrabajo: ptdFactory.ptd.id });
 				break;
-			case 9: $state.go("menuPrincipal.AdocenciaDirecta", { idPlanDeTrabajo: ptdFactory.ptd.id });
+			case 9: $state.go("menuPrincipal.SeguimientoEvaluacion", { idPlanDeTrabajo: ptdFactory.ptd.id });
 				break;
-			case 10: $state.go("menuPrincipal.AdocenciaDirecta", { idPlanDeTrabajo: ptdFactory.ptd.id });
-				break;
+			case 17: $state.go("menuPrincipal.ResumenGeneral", { idPlanDeTrabajo: ptdFactory.ptd.id });
+			break;
+
 		}
 	}
 
 	vm.validFechaFinal = function (fecha_inicial) {
-			var auxFechaInicial = new Date(fecha_inicial);
-			vm.minDateFinal = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
+		var auxFechaInicial = new Date(fecha_inicial);
+		vm.minDateFinal = (new Date(auxFechaInicial.getTime() + (1000 * 60 * 60 * 24 * 1))).toISOString();
 	}
 };

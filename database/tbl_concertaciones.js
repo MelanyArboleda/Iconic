@@ -5,6 +5,7 @@ const funciones = require('.././services/funciones');
 const tbl_ptds = require('./tbl_ptds');
 const crud = require('.././services/crudService');
 
+// modelo de concertaciones con el decano
 var tbl_concertaciones = sequelize.define('tbl_concertaciones', {
     tblUsuarioDocIdentidad: {
         type: Sequelize.STRING(15),
@@ -34,6 +35,7 @@ tbl_concertaciones.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_concertaciones: tbl_concertaciones,
 
+    // guardador de mensajes de los usuarios
     guardar_Concertacion: function (req, res, next) {
         tbl_concertaciones.sync().then(function () {
             crud.create(tbl_concertaciones, req.body.concertacion, (resp) => {

@@ -1,0 +1,190 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+<div class="sidenav-container">
+    <form ng-if="menuPrincipalVm.seguimiento" name="seguimientoForm" autocomplete="off" ng-submit="SeguimientoEvaluacionVm.saveS()">
+        <div class="container white contenido">
+            <div class="row">
+                <div class="input-field col s12 areaO" style="padding-right:3%;">
+                    <textarea name="seguimiento" ng-model="SeguimientoEvaluacionVm.seguimiento.descripcion" class="materialize-textarea" data-length="1000"
+                        required></textarea>
+                    <label for="seguimiento">Seguimiento</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row center" input-field>
+            <button ng-disabled="seguimientoForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Evaluación</button>
+        </div>
+    </form>
+    <form ng-if="menuPrincipalVm.evaluacion" name="evaluacionForm" autocomplete="off" ng-submit="SeguimientoEvaluacionVm.saveE()">
+        <div class="container white contenido">
+            <div class="row">
+                <div class="input-field col s12 areaO" style="padding-right:3%;">
+                    <textarea name="evaluacion" ng-model="SeguimientoEvaluacionVm.evaluacion.descripcion" class="materialize-textarea" data-length="1000"
+                        required></textarea>
+                    <label for="evaluacion">Evaluación</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row center" input-field>
+            <button ng-disabled="evaluacionForm.$invalid" type="submit" class="waves-effect waves-light btn">Guardar Seguimiento</button>
+        </div>
+    </form>
+    <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" data-target='modalObservaciones' modal>
+                <i class="material-icons">message</i>
+            </a>
+        </div>
+    </div>
+    <!-- seguimiento -->
+    <div class="container white contenido" ng-if="SeguimientoEvaluacionVm.permisoSeg.ver && menuPrincipalVm.seguimiento">
+        <div class="row">
+            <br>
+            <div class="col s12 center" ng-if="(SeguimientoEvaluacionVm.perfil == 4 && !SeguimientoEvaluacionVm.seguimiento.firma_coord_prog) || (SeguimientoEvaluacionVm.perfil == 1 && !SeguimientoEvaluacionVm.seguimiento.firma_docente)">
+                <b ng-if="!SeguimientoEvaluacionVm.seguimiento.firma_docente && menuPrincipalVm.seguimiento && SeguimientoEvaluacionVm.perfil != 1">
+                    La opción de firmar se activara cuando el docente firme el seguimiento.
+                </b>
+                <div class="input-field col s12" ng-if="!SeguimientoEvaluacionVm.seguimiento.firma_coord_prog && SeguimientoEvaluacionVm.perfil == 4 && menuPrincipalVm.seguimiento && SeguimientoEvaluacionVm.seguimiento.firma_docente">
+                    <button type="button" ng-click="SeguimientoEvaluacionVm.firmaCoordinador = true" ng-hide="SeguimientoEvaluacionVm.firmaCoordinador"
+                        class="waves-effect waves-light btn">Firma coordinador programa</button>
+                </div>
+                <div class="input-field col s12" ng-if="!SeguimientoEvaluacionVm.seguimiento.firma_docente && SeguimientoEvaluacionVm.perfil == 1">
+                    <button type="button" ng-click="SeguimientoEvaluacionVm.firmaDocente = true" ng-hide="SeguimientoEvaluacionVm.firmaDocente"
+                        class="waves-effect waves-light btn">Firma docente</button>
+                </div>
+                <form name="FirmCoordinacionForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaCoordinador" ng-submit="SeguimientoEvaluacionVm.saveFirmaS()">
+                    <b>Ahora puedes firmar el seguimiento ingresando tu contraseña para firmar</b>
+                    <div class="input-field col s4">
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasSeg.firma_coord_prog" class="validate" type="password" id="firma_coord_prog"
+                            name="firma_coord_prog" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmCoordinacionForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+                <form name="FirmDocenteForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaDocente" ng-submit="SeguimientoEvaluacionVm.saveFirmaS()">
+                    <b>Ahora puedes firmar el seguimiento ingresando tu contraseña para firmar</b>
+                    <div class="input-field col s4">
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasSeg.firma_docente" class="validate" type="password" id="firma_docente"
+                            name="firma_docente" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmDocenteForm.$invalid" type="submit" ng-click="SeguimientoEvaluacionVm.firmaDocente = false" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="SeguimientoEvaluacionVm.seguimiento.firma_coord_prog">
+                        <img src="../../img/guion.png" width="95px" ng-if="!SeguimientoEvaluacionVm.seguimiento.firma_coord_prog">
+                    </center>
+                    <hr>
+                    <center>CORDINADOR DE PROGRAMA</center>
+                </div>
+                <div class="col s4">
+                    <br>
+                    <br>
+                    <center>
+                        <b>{{SeguimientoEvaluacionVm.seguimiento.fecha | date}}S</b>
+                    </center>
+                    <hr>
+                    <center>FECHA</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="SeguimientoEvaluacionVm.seguimiento.firma_docente">
+                        <img src="../../img/guion.png" width="95px" ng-if="!SeguimientoEvaluacionVm.seguimiento.firma_docente">
+                    </center>
+                    <hr>
+                    <center>DOCENTE</center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Evaluacion -->
+    <div class="container white contenido" ng-if="SeguimientoEvaluacionVm.permisoEva.ver && menuPrincipalVm.evaluacion">
+        <div class="row">
+            <br>
+            <div class="col s12 center" ng-if="(SeguimientoEvaluacionVm.perfil == 4 && !SeguimientoEvaluacionVm.evaluacion.firma_coord_prog) || (SeguimientoEvaluacionVm.perfil == 1 && !SeguimientoEvaluacionVm.evaluacion.firma_docente)">
+                <b ng-if="!SeguimientoEvaluacionVm.evaluacion.firma_docente && menuPrincipalVm.evaluacion && SeguimientoEvaluacionVm.perfil != 1">
+                    La opción de firmar se activara cuando el docente firme la evaluación.
+                </b>
+                <div class="input-field col s12" ng-if="!SeguimientoEvaluacionVm.evaluacion.firma_coord_prog && SeguimientoEvaluacionVm.perfil == 4 && menuPrincipalVm.evaluacion && SeguimientoEvaluacionVm.evaluacion.firma_docente">
+                    <button type="button" ng-click="SeguimientoEvaluacionVm.firmaCoordinador = true" ng-hide="SeguimientoEvaluacionVm.firmaCoordinador"
+                        class="waves-effect waves-light btn">Firma coordinador programa</button>
+                </div>
+                <div class="input-field col s12" ng-if="!SeguimientoEvaluacionVm.evaluacion.firma_docente && SeguimientoEvaluacionVm.perfil == 1">
+                    <button type="button" ng-click="SeguimientoEvaluacionVm.firmaDocente = true" ng-hide="SeguimientoEvaluacionVm.firmaDocente"
+                        class="waves-effect waves-light btn">Firma docente</button>
+                </div>
+                <form name="FirmCoordinacionForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaCoordinador" ng-submit="SeguimientoEvaluacionVm.saveFirmaE()">
+                    <b>Ahora puedes firmar la evaluación ingresando tu contraseña para firmar</b>
+                    <div class="input-field col s4">
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasEva.firma_coord_prog" class="validate" type="password" id="firma_coord_prog"
+                            name="firma_coord_prog" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmCoordinacionForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+                <form name="FirmDocenteForm" autocomplete="off" ng-show="SeguimientoEvaluacionVm.firmaDocente" ng-submit="SeguimientoEvaluacionVm.saveFirmaE()">
+                    <b>Ahora puedes firmar la evaluación ingresando tu contraseña para firmar</b>
+                    <div class="input-field col s4">
+                        <input ng-model="SeguimientoEvaluacionVm.formFirmasEva.firma_docente" class="validate" type="password" id="firma_docente"
+                            name="firma_docente" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <button ng-disabled="FirmDocenteForm.$invalid" type="submit" ng-click="SeguimientoEvaluacionVm.firmaDocente = false" class="waves-effect btn modal-close">Guardar Firma</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="SeguimientoEvaluacionVm.evaluacion.firma_coord_prog">
+                        <img src="../../img/guion.png" width="95px" ng-if="!SeguimientoEvaluacionVm.evaluacion.firma_coord_prog">
+                    </center>
+                    <hr>
+                    <center>CORDINADOR DE PROGRAMA</center>
+                </div>
+                <div class="col s4">
+                    <br>
+                    <br>
+                    <center>
+                        <b>{{SeguimientoEvaluacionVm.evaluacion.fecha | date}}</b>
+                    </center>
+                    <hr>
+                    <center>FECHA</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="SeguimientoEvaluacionVm.evaluacion.firma_docente">
+                        <img src="../../img/guion.png" width="95px" ng-if="!SeguimientoEvaluacionVm.evaluacion.firma_docente">
+                    </center>
+                    <hr>
+                    <center>DOCENTE</center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,8 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
-
+<center>
+    <a ng-if="usuariosVm.perfilUser == 7" class="waves-effect waves-light btn p-btn green" title="SUBIR INFORMACIÓN PARA EL SISTEMA" data-target='modalInfo' modal> Subir Información</a>
+</center>
+<br>
 <div class="container white contenido">
     <div class="row">
         <div class="col s12">
@@ -21,11 +24,11 @@
                         <td>{{user.tblEstadoId}}</td>
                         <td ng-if="usuariosVm.permisoUser.modificar == true || usuariosVm.permisoPermiso.ver == true">
                             <a ng-if="usuariosVm.permisoUser.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="usuariosVm.llenarModal(user)"
-                                data-target='modalUsuarios' modal>
+                             title="EDITAR USUARIO" data-target='modalUsuarios' modal>
                                 <i class="material-icons">edit</i>
                             </a>
                             <a ng-if="usuariosVm.permisoPermiso.ver == true" class="waves-effect waves-light btn p-btn green" ng-click="usuariosVm.llenarModalPermisos(user)"
-                                data-target='modalPermisos' modal>
+                                title="VER PERMISOS DEL USUARIO" data-target='modalPermisos' modal>
                                 Permisos
                             </a>
                         </td>
@@ -101,23 +104,69 @@
                     <tr ng-repeat="perm in usuariosVm.permisos">
                         <th>{{perm.tblRecursoId}}</th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"/>
+                            <input type="button" value="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            />
+                            <!-- <input type="checkbox" ng-checked="{{perm.ver}}" ng-click="usuariosVm.modificarPermiso(perm,perm.ver = !perm.ver)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
+                            <input type="button" value="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
                             />
+                            <!-- <input type="checkbox" ng-checked="{{perm.crear}}" ng-click="usuariosVm.modificarPermiso(perm,perm.crear = !perm.crear)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
-                            />
+                            <input type="button" value="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" />
+                            <!-- <input type="checkbox" ng-checked="{{perm.modificar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.modificar = !perm.modificar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                         <th>
-                            <input type="checkbox" ng-checked="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)" ng-disabled="usuariosVm.permisoPermiso.modificar == false"
-                            />
+                            <input type="button" value="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" />
+                            <!-- <input type="checkbox" ng-checked="{{perm.eliminar}}" ng-click="usuariosVm.modificarPermiso(perm,perm.eliminar = !perm.eliminar)"
+                                ng-disabled="usuariosVm.permisoPermiso.modificar == false" /> -->
                         </th>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+    </div>
+</div>
+<div id="modalInfo" class="modal">
+    <div class="modal-content">
+        <h5 class="center">
+            <strong>SUBIR INFORMACIÓN</strong>
+        </h5>
+        <div class="row">
+            <p>A continuación podrás seleccionar el archivo en formato Excel que contiene la información de los docentes, asignaturas, facultades y programas que añadiras al sistema. </p>
+        </div>
+        <div class="row center">
+            <img class="responsive-img imagenfirma" ng-src="img/logoExcel.png">
+        </div>
+        <div class="row">
+            <form name="" autocomplete="off">
+                <div class="col s10">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Cargar</span>
+                            <input type="file" ng-model="usuariosVm.info" title="SELECCIONAR ARCHIVO A CARGAR" ng-file-on-change="usuariosVm.preInfo">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col s2 center">
+                    <button ng-click="usuariosVm.subirInfo()" class="btn-floating btn-large center modal-close" title="SUBIR ARCHIVO A ICONIC">
+                        <i class="material-icons">&#xE255;</i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

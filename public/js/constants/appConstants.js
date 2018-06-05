@@ -1,5 +1,5 @@
 (function(){
     angular.module("iconic").constant("APP_CONSTANT", {
-        LOCAL_SERVICE_ENDPOINT: 'http://192.168.1.52:3000/auth'
+        LOCAL_SERVICE_ENDPOINT: 'http://http://iconic-iconic.a3c1.starter-us-west-1.openshiftapps.com:8080/auth'
     });
 })();

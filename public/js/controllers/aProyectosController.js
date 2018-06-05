@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aProyectosCtrl", aProyectosCtrl);
 
-aProyectosCtrl.$inject = ["$rootScope", "FPService", "FPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aProyectosCtrl.$inject = ["$rootScope", "FPService", "FPFactory", "ptdService", "ptdFactory", "loginFactory", "serviceNotification", "$q", "modalNotifService"];
 
-function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q) {
+function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory, loginFactory, serviceNotification, $q, modalNotifService) {
     var vm = this;
     var acciones = "";
     if ($rootScope.infoReady == true) {
@@ -68,11 +68,15 @@ function aProyectosCtrl($rootScope, FPService, FPFactory, ptdService, ptdFactory
     }
 
     vm.deleteFormulacionProyectos = function (fp) {
-        FPService.eliminarFP(fp).then(function (res) {
-            serviceNotification.success('Proyecto eliminado correctamente', 3000);
-            cargarFP();
-        }).catch(function (err) {
-            serviceNotification.error('No pudo eliminar el Proyecto', 2000);
+        modalNotifService.openModal('Esta seguro de eliminar el Proyecto?').then(function (bool) {
+            if (bool) {
+                FPService.eliminarFP(fp).then(function (res) {
+                    serviceNotification.success('Proyecto eliminado correctamente', 3000);
+                    cargarFP();
+                }).catch(function (err) {
+                    serviceNotification.error('No pudo eliminar el Proyecto', 2000);
+                });
+            }
         });
     }
 

@@ -1,0 +1,47 @@
+<link rel="stylesheet" type="text/css" href="css/apartados.css">
+<!-- resumen general -->
+<div class="sidenav-container">
+<div class="container white contenido">
+    <div class="row">
+        <div class="col s12">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>*Resumen</th>
+                        <th>*Dedicación Horas Semanales</th>
+                        <th>*Dedicación Horas Semestre</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td> Total horas de trabajo en el semestre</td>
+                        <td> {{otrasActividadesVm.resumenGeneral.horas_semanales_tot}} </td>
+                        <td> {{otrasActividadesVm.resumenGeneral.horas_semestrales_tot}}</td>
+                        <td ng-if="otrasActividadesVm.permiso.modificar == true">
+                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control validate"
+                            />
+                        </td>
+                        <td ng-if="otrasActividadesVm.permiso.modificar == false">
+                            <input name="observaciones" type="text" ng-model="otrasActividadesVm.resumenGeneral.observaciones" class="form-control no-disabled"
+                                disabled />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-if="otrasActividadesVm.permiso.modificar == true" class="row center">
+        <button type="submit" ng-click="otrasActividadesVm.saveObservaciones()" class="waves-effect waves-light btn">Guardar Observación</button>
+    </div>
+
+    <div class="form-group" ng-if="menuPrincipalVm.permisoConsertacion.ver == true">
+        <div class="fixed-action-btn add_observaciones">
+            <a class="btn-floating btn-large waves-effect waves-light blue modal-trigger btn" title="ENVIAR UNA OBSERVACIÓN" data-target='modalObservaciones' modal>
+                <i class="material-icons">message</i>
+            </a>
+        </div>
+    </div>
+</div>
+</div>

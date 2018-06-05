@@ -10,16 +10,16 @@
                 <span class="title">FD-GC51</span>
                 <p>Plan de Trabajo Docente | {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}}
                     <br> V_{{ptd.version}}</p>
-                <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" data-tooltip="Ver plan de trabajo">
+                <a href="#!" class="secondary-content tooltipped" data-position="left" data-delay="50" title="Ver plan de trabajo">
                     <i class="material-icons">&#xE8F4;</i>
                 </a>
             </li>
         </ul>
     </div>
     <br>
-    <a class="waves-effect waves-light btn p-btn-new" data-target='modalHorario' modal>
+    <!-- <a class="waves-effect waves-light btn p-btn-new" data-target='modalHorario' modal>
         <i class="material-icons">insert_invitation</i> Horario
-    </a>
+    </a> -->
 
 
 
@@ -27,8 +27,8 @@
         <div class="container white contenido">
             <div class="row">
                 <div class="input-field col s12 areaO" style="padding-right:3%;">
-                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" id="observacion" class="materialize-textarea"
-                        data-length="1000" required></textarea>
+                    <textarea name="observacion" ng-model="observacionesVm.observaciones.observacion" class="materialize-textarea" data-length="1000"
+                        required></textarea>
                     <label for="observciones">Observaciones (Ampliación, Aclaración)</label>
                 </div>
             </div>
@@ -45,48 +45,107 @@
             </div>
         </div>
     </form>
-
-    <div class="container white contenido" ng-if="observacionesVm.permiso">
+    <div class="container white contenido" ng-if="observacionesVm.permiso.ver">
         <div class="row">
-            <div class="col s12 center">
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2">
+            <div class="col s12 center" ng-if="observacionesVm.permiso.crear == true">
+                <br>
+                <center>
+                    <b>Para poder fimar el plan de trabajo, debes de subir primero la firma digital</b>
+                </center>
+                <center>
+                    <div class="input-field col s12">
+                        <button type="button" class="waves-effect waves-light btn" data-target='modalfirma' modal>Subir firma digital</button>
+                    </div>
+                </center>
+            </div>
+            <div class="col s12 center" ng-if="observacionesVm.permiso.crear == false">
+                <br>
+                <b ng-if="!menuPrincipalVm.firme && observacionesVm.perfil != 1">
+                    La opción de firmar se activara en las fechas establecidas para la etapa de aprobación.
+                </b>
+                <b ng-if="!observacionesVm.firme && observacionesVm.perfil == 1">
+                    La opción de firmar se activara cuando cumplas con las horas requeridas por el estatuto docente.
+                </b>
+                <b ng-if="!observacionesVm.observaciones.firma_docente && menuPrincipalVm.firme && observacionesVm.perfil != 1">
+                    La opción de firmar se activara cuando el docente firme el plan de trabajo.
+                </b>
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_consejo_facultad && observacionesVm.perfil == 2 && menuPrincipalVm.firme && observacionesVm.observaciones.firma_docente">
                     <button type="button" ng-click="observacionesVm.firmaConsejo = true" ng-hide="observacionesVm.firmaConsejo" class="waves-effect waves-light btn">Firma consejo facultad</button>
                 </div>
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4">
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_coord_prog && observacionesVm.perfil == 4 && menuPrincipalVm.firme && observacionesVm.observaciones.firma_docente">
                     <button type="button" ng-click="observacionesVm.firmaCoordinador = true" ng-hide="observacionesVm.firmaCoordinador" class="waves-effect waves-light btn">Firma coordinador programa</button>
                 </div>
-                <div class="input-field col s4" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1">
-                    <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn">Firma docente</button>
+                <div class="input-field col s12" ng-if="!observacionesVm.observaciones.firma_docente && observacionesVm.perfil == 1 && observacionesVm.firme">
+                    <button type="button" ng-click="observacionesVm.firmaDocente = true" ng-hide="observacionesVm.firmaDocente" class="waves-effect waves-light btn" title="FIRMAR EL PLAN DE TRABAJO">Firma docente</button>
                 </div>
                 <form name="FirmConsejoForm" autocomplete="off" ng-show="observacionesVm.firmaConsejo" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_consejo_facultad" class="validate" type="password" id="firma_consejo_facultad"
                             name="firma_consejo_facultad" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" required> </div>
+                            title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales" required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmConsejoForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
                 <form name="FirmCoordinacionForm" autocomplete="off" ng-show="observacionesVm.firmaCoordinador" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_coord_prog" class="validate" type="password" id="firma_coord_prog" name="firma_coord_prog"
                             minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
-                            required> </div>
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmCoordinacionForm.$invalid" type="submit" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
                 <form name="FirmDocenteForm" autocomplete="off" ng-show="observacionesVm.firmaDocente" ng-submit="observacionesVm.saveFirma()">
+                    <b>Ahora puedes firmar el plan de trabajo ingresando tu contraseña para firmar</b>
                     <div class="input-field col s4">
                         <input ng-model="observacionesVm.formFirmas.firma_docente" class="validate" type="password" id="firma_docente" name="firma_docente"
                             minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
-                            required> </div>
+                            required>
+                        <label for="first_name">Contraseña para firmar</label>
+                    </div>
                     <div class="input-field col s4">
                         <button ng-disabled="FirmDocenteForm.$invalid" type="submit" ng-click="observacionesVm.firmaDocente = false" class="waves-effect btn modal-close">Guardar Firma</button>
                     </div>
                 </form>
             </div>
+            <div class="row">
+                <br><br><br><br><br>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_consejo_facultad">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_consejo_facultad">
+                    </center>
+                    <hr>
+                    <center>CONSEJO DE FACULTAD</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_coord_prog">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_coord_prog">
+                    </center>
+                    <hr>
+                    <center>COORDINADOR DE PROGRAMA</center>
+                </div>
+                <div class="col s4">
+                    <center>
+                        <img src="../../img/firmado.png" width="60px" ng-if="observacionesVm.observaciones.firma_docente">
+                        <img src="../../img/guion.png" width="95px" ng-if="!observacionesVm.observaciones.firma_docente">
+                    </center>
+                    <hr>
+                    <center>DOCENTE</center>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="row center" input-field ng-if="observacionesVm.permisoEnviar.ver">
+        <button ng-disabled="!observacionesVm.observaciones.firma_docente" type="button" ng-click="observacionesVm.enviarPtd()" class="waves-effect waves-light btn">Enviar plan de trabajo</button>
     </div>
     <br>
     <div id="modalHorario" class="modal">
@@ -126,6 +185,72 @@
 
         <div class="modal-footer">
             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cerrar</button>
+        </div>
+    </div>
+    <div id="modalfirma" class="modal" ng-controller="firmaCtrl as firmaVm">
+        <div class="modal-content contenido-modal" ng-if="!firmaVm.siguiente">
+            <h5>
+                <strong>Subir Firma Digital</strong>
+            </h5>
+            <div class="row">
+                <p>A continuación podrás subir la imágen de tu firma digital, ésta será la que utilices para firmar los apartados
+                    del plan de trabajo, recuerda que primero debes cargar la firma y después subirla. </p>
+            </div>
+            <div class="row center">
+                <img class="responsive-img imagenfirma" ng-src="{{firmaVm.firma}}">
+            </div>
+            <div class="row">
+                <form name="" autocomplete="off">
+                    <div class="col s10">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Cargar</span>
+                                <input type="file" title="SELECCIONAR IMAGEN DE LA FIRMA A CARGAR" ng-model="firmaVm.firma" ng-file-on-change="firmaVm.prefirmar">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s2 center">
+                        <button ng-click="firmaVm.firmar()" class="btn-floating btn-large center" title="CARGAR LA IMAGEN DE LA FIRMA AL SISTEMA">
+                            <i class="material-icons">&#xE255;</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-content" ng-if="firmaVm.siguiente">
+            <h5>
+                <strong>Contraseña para firmar digitalmente</strong>
+            </h5>
+            <div class="row">
+                <p>Ahora que cargaste la firma digital deberás protegerla con una contraseña única para firmar, utilizarás esta
+                    contraseña cada vez que vayas a firmar un plan de trabajo.</p>
+                <p>Recuerda que la contraseña de inicio de sesión y la contraseña para firmar deben ser diferentes.</p>
+            </div>
+            <div class="row">
+                <form name="passwordFirmaForm" autocomplete="off" ng-submit="firmaVm.passwordFirma()">
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input type="password" name="contraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.password" required>
+                        <label class="cajasombra" for="contraseñafirma">Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s12 cajasombra">
+                        <i class="material-icons prefix ">&#xE0DA;</i>
+                        <input type="password" name="repiteContraseñafirma" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mínimo 8 caracteres, mayúsculas, minúsculas, números y caracteres especiales"
+                            ng-model="firmaVm.repitepassword" required>
+                        <label class="cajasombra" for="repiteContraseñafirma">Repite la Contraseña para firmar</label>
+                    </div>
+                    <div class="input-field col s12 center modal-close">
+                        <button ng-disabled="passwordFirmaForm.$invalid" type="submit" class="waves-effect btn">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</button>
         </div>
     </div>
 </div>

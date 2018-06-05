@@ -3,6 +3,7 @@ var sequelize = require('./config');
 const crud = require('.././services/crudService');
 var tbl_ptds = require('./tbl_ptds');
 
+// modelo de las comisiones de estudio
 var tbl_comision_estudios = sequelize.define('tbl_comision_estudios', {
     universidad: {
         type: Sequelize.STRING,
@@ -44,6 +45,7 @@ tbl_comision_estudios.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_comision_estudios: tbl_comision_estudios,
     
+    // buscador de las comisiones de estudio
     buscar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
             crud.findAll(tbl_comision_estudios, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -52,6 +54,7 @@ module.exports = {
         });
     },
 
+    // guardador de las comisiones de estudio
     guardar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
             crud.create(tbl_comision_estudios, req.body, (resp) => {
@@ -64,6 +67,7 @@ module.exports = {
         });
     },
 
+    // modificador de las comisiones de estudio
     modificar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
             crud.update(tbl_comision_estudios, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -76,6 +80,7 @@ module.exports = {
         });
     },
 
+    // eliminador de las comisiones de estudio
     eliminar_CE: function (req, res, next) {
         tbl_comision_estudios.sync().then(function () {
             crud.delete(tbl_comision_estudios, { id: req.body.id }, (resp) => {

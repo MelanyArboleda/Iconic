@@ -1,26 +1,9 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
 
 <div ng-controller="indexCtrl as indexVm">
-    <div class="container buscaPTD">
-        <div class="row" style="padding-right: 2%;">
-            <nav>
-                <div class="nav-wrapper">
-                    <form>
-                        <div class="input-field white">
-                            <input id="search autocomplete-input" type="search" class="autocomplete" required>
-                            <label class="label-icon" for="search autocomplete-input">
-                                <i class="material-icons">search</i>
-                            </label>
-                            <i class="material-icons">close</i>
-                        </div>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <br>
-    <a ng-if="menuPrincipalVm.permisoFecha.ver == true" ui-sref="menuPrincipal.fechaEtapa" class="waves-effect">Administración de Fechas</a>
-
+    <center>
+        <a ng-if="menuPrincipalVm.permisoFecha.ver == true" ui-sref="menuPrincipal.fechaEtapa" class="waves-effect waves-light btn p-btn-new blue">Administración de Fechas</a>
+    </center>
     <div ng-if="indexVm.loginFactory.user.perfil == 1">
         <div class="container contenido vistaPTD">
             <ul class="collection with-header" ng-if="menuPrincipalVm.plan == true">
@@ -82,16 +65,21 @@
     </div>
 
     <div class="container contenido vistaPTD" ng-if="indexVm.loginFactory.user.perfil != 1">
+        <div class="input-field col s6">
+            <input id="first_name" ng-model="search" type="text" class="validate">
+            <label for="first_name">Filtro por nombre</label>
+        </div>
         <ul class="collection with-header">
             <li class="collection-header">
                 <h6>
                     <b>Planes de Trabajo</b>
                 </h6>
             </li>
-            <li class="collection-item avatar" ng-repeat="ptd in menuPrincipalVm.ptds">
+            <li class="collection-item avatar" ng-repeat="ptd in menuPrincipalVm.ptds | filter:search">
                 <i class="material-icons circle teal accent-4">&#xE873;</i>
                 <span class="title">FD-GC51</span>
                 <p>Plan de Trabajo Docente : {{ptd.tblUsuarioDocIdentidad}}
+                    <br>{{ptd.nombre}}
                     <br> {{ptd.fecha | date : 'yyyy'}}-{{ptd.semestre}} V_{{ptd.version}}
                 </p>
                 <a class="secondary-content" ng-click="menuPrincipalVm.cargarPTD(ptd)">
@@ -101,9 +89,9 @@
         </ul>
     </div>
 </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function () {
         $('textarea#observaciones').characterCounter();
         $('.tooltipped').tooltip({ delay: 50 });
     });
-</script>
+</script> -->

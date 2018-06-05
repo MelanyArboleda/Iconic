@@ -4,6 +4,7 @@ var tbl_etapas = require('./tbl_etapas');
 var tbl_facultades = require('./tbl_facultades');
 const crud = require('.././services/crudService');
 
+// modelo de las fechas para las etapas
 var tbl_fechas_etapas = sequelize.define('tbl_fechas_etapas', {
     tblEtapaId: {
         type: Sequelize.INTEGER,
@@ -44,6 +45,7 @@ tbl_fechas_etapas.belongsTo(tbl_facultades);
 module.exports = {
     tbl_fechas_etapas: tbl_fechas_etapas,
 
+    // buscador de las fechas de la estapas
     buscar_FechaEtapa: function (req, res, next) {
         tbl_fechas_etapas.sync().then(function () {
             crud.findAll(tbl_fechas_etapas, req.body, 'semestre ASC', (resp) => {
@@ -52,6 +54,7 @@ module.exports = {
         });
     },
 
+    // guardador de las fechas de las etapas
     guardar_FechaEtapa: function (req, res, next) {
         tbl_fechas_etapas.sync().then(function () {
             crud.create(tbl_fechas_etapas, req.body, (resp) => {
@@ -64,6 +67,7 @@ module.exports = {
         });
     },
 
+    // modificador de las fechas de las etapas
     modificar_FechaEtapa: function (req, res, next) {
         tbl_fechas_etapas.sync().then(function () {
             crud.update(tbl_fechas_etapas, req.body.donde, req.body.datos, (resp) => {
@@ -76,6 +80,7 @@ module.exports = {
         });
     },
 
+    // eliminador de las fechas de las etapas
     eliminar_FechaEtapa: function (req, res, next) {
         tbl_fechas_etapas.sync().then(function () {
             crud.delete(tbl_fechas_etapas, req.body, (resp) => {

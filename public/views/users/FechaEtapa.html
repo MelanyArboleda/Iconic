@@ -1,5 +1,8 @@
 <link rel="stylesheet" type="text/css" href="css/apartados.css">
-
+<center>
+    <a ui-sref="menuPrincipal.vistaPTD" class="waves-effect waves-light btn p-btn-new blue">Volver</a>
+</center>
+<br>
 <div class="container white contenido">
     <div class="row">
         <div class="col s12">
@@ -13,7 +16,7 @@
                         <th>Fecha Inicial</th>
                         <th>Fecha Final</th>
                         <th ng-if="fechaEtapaVm.permiso.crear == true">
-                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" data-target='modalFechaEtapa'
+                            <a class="waves-effect waves-light btn p-btn-new green" ng-click="fechaEtapaVm.vaciarMadal()" title="Crear nueva fecha" data-target='modalFechaEtapa'
                                 modal>Nuevo</a>
                         </th>
                     </tr>
@@ -28,10 +31,10 @@
                         <td>{{fe.fecha_final | date}}</td>
                         <td ng-if="fechaEtapaVm.permiso.modificar == true || fechaEtapaVm.permiso.eliminar == true">
                             <a ng-if="fechaEtapaVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="fechaEtapaVm.llenarModal(fe)"
-                                data-target='modalFechaEtapa' modal>
+                            title="Editar la fecha" data-target='modalFechaEtapa' modal>
                                 <i class="material-icons">edit</i>
                             </a>
-                            <a ng-if="fechaEtapaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)">
+                            <a ng-if="fechaEtapaVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="fechaEtapaVm.deleteFechaEtapa(fe)" title="Eliminar la fecha">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>
@@ -74,8 +77,8 @@
                     <input input-date type="text" name="fecha_inicial" id="fecha_inicial" class="form-control fecha" ng-model="fechaEtapaVm.formfechaEtapa.fecha_inicial"
                         ng-change="mnuPVm.validFechaFinal(fechaEtapaVm.formfechaEtapa.fecha_inicial)" format="mm/dd/yyyy" months-full="{{mnuPVm.month}}"
                         months-short="{{mnuPVm.monthShort}}" weekdays-full="{{mnuPVm.weekdaysFull}}" weekdays-letter="{{mnuPVm.weekdaysLetter}}"
-                        min="{{mnuPVm.minDate}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear"
-                        close="mnuPVm.close" select-years="15" required>
+                        min="{{mnuPVm.minDate}}" today="mnuPVm.today" first-day="1" clear="mnuPVm.clear" close="mnuPVm.close"
+                        select-years="15" required>
                 </div>
                 <div class="input-field col l3 s6 cajasombra">
                     <input input-date ng-disabled="!fechaEtapaVm.formfechaEtapa.fecha_inicial" type="text" name="fecha_final" id="fecha_final"

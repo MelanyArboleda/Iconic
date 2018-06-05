@@ -1,8 +1,8 @@
 angular.module("iconic").controller("verificacionCtrl", verificacionCtrl);
 
-verificacionCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$state"];
+verificacionCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$state", "modalNotifService"];
 
-function verificacionCtrl(loginService, loginFactory, serviceNotification, $state) {
+function verificacionCtrl(loginService, loginFactory, serviceNotification, $state, modalNotifService) {
 	var vm = this;
 	vm.codigo = "";
 
@@ -30,7 +30,7 @@ function verificacionCtrl(loginService, loginFactory, serviceNotification, $stat
 	vm.reenviar = function () {
 		loginFactory.sendCode().then(function (resp) {
 			if (resp) {
-				serviceNotification.success('Código enviado', 2000);
+				modalNotifService.openModal('Hola, se ha enviado a tu correo institucional un código de verificación, introdúcelo a continuación para proceder con la verificación de tu cuenta.');
 			}
 		});
 	}

@@ -1,8 +1,8 @@
 angular.module("iconic").controller("aComisionEstudiosCtrl", aComisionEstudiosCtrl);
 
-aComisionEstudiosCtrl.$inject = ["$rootScope", "CEService", "CEFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q"];
+aComisionEstudiosCtrl.$inject = ["$rootScope", "CEService", "CEFactory", "ptdFactory", "loginFactory", "serviceNotification", "$q", "modalNotifService"];
 
-function aComisionEstudiosCtrl($rootScope, CEService, CEFactory, ptdFactory, loginFactory, serviceNotification, $q) {
+function aComisionEstudiosCtrl($rootScope, CEService, CEFactory, ptdFactory, loginFactory, serviceNotification, $q, modalNotifService) {
     var vm = this;
     var acciones = "";
     if ($rootScope.infoReady == true) {
@@ -59,11 +59,15 @@ function aComisionEstudiosCtrl($rootScope, CEService, CEFactory, ptdFactory, log
     }
 
     vm.deleteComisionEstudios = function (ce) {
-        CEService.eliminarCE(ce).then(function (res) {
-            serviceNotification.success('Comisión eliminado correctamente', 3000);
-            cargarCE();
-        }).catch(function (err) {
-            serviceNotification.error('No se pudo eliminar la Comisión', 2000);
+        modalNotifService.openModal('Esta seguro de eliminar la comisión de estudios?').then(function (bool) {
+            if (bool) {
+                CEService.eliminarCE(ce).then(function (res) {
+                    serviceNotification.success('Comisión eliminado correctamente', 3000);
+                    cargarCE();
+                }).catch(function (err) {
+                    serviceNotification.error('No se pudo eliminar la Comisión', 2000);
+                });
+            }
         });
     }
 

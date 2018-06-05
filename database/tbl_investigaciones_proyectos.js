@@ -4,6 +4,7 @@ const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 const tbl_vinculos = require('./tbl_vinculos');
 
+// modelo de investigaciones de proyectos
 var tbl_investigaciones_proyectos = sequelize.define('tbl_investigaciones_proyectos', {
     nombre_proyecto: {
         type: Sequelize.STRING(500),
@@ -42,6 +43,7 @@ tbl_investigaciones_proyectos.belongsTo(tbl_vinculos.tbl_vinculos);
 module.exports = {
     tbl_investigaciones_proyectos: tbl_investigaciones_proyectos,
 
+    // buscador de investigaciones de los proyectos
     buscar_IP: function (req, res, next) {
         tbl_investigaciones_proyectos.sync().then(function () {
             crud.findAll(tbl_investigaciones_proyectos, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -50,6 +52,7 @@ module.exports = {
         });
     },
 
+    // guardador de investigaciones de los proyectos
     guardar_IP: function (req, res, next) {
         tbl_investigaciones_proyectos.sync().then(function () {
             crud.create(tbl_investigaciones_proyectos, req.body, (resp) => {
@@ -62,6 +65,7 @@ module.exports = {
         });
     },
 
+    // modificador de investigaciones de los proyectos
     modificar_IP: function (req, res, next) {
         tbl_investigaciones_proyectos.sync().then(function () {
             crud.update(tbl_investigaciones_proyectos, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -74,6 +78,7 @@ module.exports = {
         });
     },
 
+    // eliminador de investigaciones de los proyectos
     eliminar_IP: function (req, res, next) {
         tbl_investigaciones_proyectos.sync().then(function () {
             crud.delete(tbl_investigaciones_proyectos, { id: req.body.id }, (resp) => {

@@ -3,6 +3,7 @@ const sequelize = require('./config');
 const crud = require('.././services/crudService');
 const tbl_ptds = require('./tbl_ptds');
 
+// modelo de las actividades de extension
 var tbl_actividades_extension = sequelize.define('tbl_actividades_extension', {
     nombre_actividad: {
         type: Sequelize.STRING(100),
@@ -36,6 +37,7 @@ tbl_actividades_extension.belongsTo(tbl_ptds.tbl_ptds);
 module.exports = {
     tbl_actividades_extension: tbl_actividades_extension,
 
+    // buscardor de las actividades de extension
     buscar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
             crud.findAll(tbl_actividades_extension, { tblPtdId: req.body.ptd }, 'id ASC', (resp) => {
@@ -44,6 +46,7 @@ module.exports = {
         });
     },
 
+    // guardador de las actividades de extension
     guardar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
             crud.create(tbl_actividades_extension, req.body, (resp) => {
@@ -56,6 +59,7 @@ module.exports = {
         });
     },
 
+    // modificador de las actividades de extension
     modificar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
             crud.update(tbl_actividades_extension, { id: req.body.donde }, req.body.datos, (resp) => {
@@ -68,6 +72,7 @@ module.exports = {
         });
     },
 
+    // eliminador de las actividades de extension
     eliminar_AE: function (req, res, next) {
         tbl_actividades_extension.sync().then(function () {
             crud.delete(tbl_actividades_extension, { id: req.body.id }, (resp) => {

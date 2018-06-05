@@ -14,7 +14,7 @@
                             <th>Fecha Obtención de autorización</th>
                             <th>Aportes institucionales obtenidos y/o esperados</th>
                             <th ng-if="comisionEstudiosVm.permiso.crear == true">
-                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="comisionEstudiosVm.vaciarMadal()" data-target='ModalComisionEstudios'
+                                <a class="waves-effect waves-light btn p-btn-new green" ng-click="comisionEstudiosVm.vaciarMadal()" title="AÑADIR NUEVA COMISIÓN DE ESTUDIOS" data-target='ModalComisionEstudios'
                                     modal>Nuevo</a>
                             </th>
                         </tr>
@@ -30,10 +30,10 @@
                             <td>{{ce.aportes_inst_obtenidos}}</td>
                             <td ng-if="comisionEstudiosVm.permiso.modificar == true || comisionEstudiosVm.permiso.eliminar == true">
                                 <a ng-if="comisionEstudiosVm.permiso.modificar == true" class="waves-effect waves-light btn p-btn blue" ng-click="comisionEstudiosVm.llenarModal(ce)"
-                                    data-target='ModalComisionEstudios' modal>
+                                title="MODIFICAR ESTA COMISIÓN DE ESTUDIOS" data-target='ModalComisionEstudios' modal>
                                     <i class="material-icons">edit</i>
                                 </a>
-                                <a ng-if="comisionEstudiosVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="comisionEstudiosVm.deleteComisionEstudios(ce)">
+                                <a ng-if="comisionEstudiosVm.permiso.eliminar == true" class="waves-effect waves-light btn p-btn red" ng-click="comisionEstudiosVm.deleteComisionEstudios(ce)" title="ELIMINAR ESTA COMISIÓN DE ESTUDIOS">
                                     <i class="material-icons">delete</i>
                                 </a>
                             </td>

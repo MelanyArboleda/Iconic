@@ -5,15 +5,23 @@
     <div class="row white">
         <div class="col s12">
             <div class="col s12">
-                <ul tabs class="tabs">
-                    <li class="tab col s4">
-                        <a id="ptdBtn" href="#ptd">Plan de Trabajo</a>
+                <ul class="tabs">
+                    <li ng-if="menuPrincipalVm.perfilUser != 7 && menuPrincipalVm.perfilUser != 1" class="tab col s4">
+                        <a id="ptdBtn" ui-sref="menuPrincipal.vistaPTD" href="#ptd">Plan de Trabajo</a>
                     </li>
-                    <li class="tab col s4">
-                        <a id="rptBtn" href="#rpt">Reportes</a>
+                    <li ng-if="menuPrincipalVm.perfilUser != 7 && menuPrincipalVm.perfilUser != 1" class="tab col s4">
+                        <a id="rptBtn" ui-sref="menuPrincipal.vistaPTD" href="#rpt">Reportes</a>
                     </li>
-                    <li class="tab col s4">
-                        <a id="usrBtn" href="#usr">Usuarios</a>
+                    <li ng-if="menuPrincipalVm.perfilUser != 7 && menuPrincipalVm.perfilUser != 1" class="tab col s4">
+                        <a id="usrBtn" ui-sref="menuPrincipal.Usuarios" href="#usr">Usuarios</a>
+                    </li>
+                    <!-- menu administrador -->
+                    <li ng-if="menuPrincipalVm.perfilUser == 7" class="tab col s12">
+                        <a id="usrBtn" ui-sref="menuPrincipal.Usuarios" href="#usr">Usuarios</a>
+                    </li>
+                    <!-- menu docente -->
+                    <li ng-if="menuPrincipalVm.perfilUser == 1" class="tab col s12">
+                        <a id="ptdBtn" ui-sref="menuPrincipal.vistaPTD" href="#ptd">Plan de Trabajo</a>
                     </li>
                 </ul>
             </div>
@@ -73,13 +81,18 @@
                     class="waves-effect">
                     <i class="material-icons">note_add</i>Otras Actividades Académicas</a>
             </li>
-            <li>
+            <li ng-if="menuPrincipalVm.permisos[16].ver == true">
+                <a ui-sref="menuPrincipal.ResumenGeneral({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'ResumenGeneral'}"
+                    class="waves-effect">
+                    <i class="material-icons">note_add</i>Resumen general</a>
+            </li>
+            <li ng-if="menuPrincipalVm.permisos[7].ver == true">
                 <a ui-sref="menuPrincipal.Aobservaciones({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'Aobservaciones'}"
                     class="waves-effect">
-                    <i class="material-icons">border_color</i>Observaciones</a>
+                    <i class="material-icons">border_color</i>Observaciones y firmas</a>
             </li>
-            <li>
-                <a ui-sref="menuPrincipal.seguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'seguimientoEvaluacion'}"
+            <li ng-if="(menuPrincipalVm.seguimiento && menuPrincipalVm.permisos[8].ver == true) || (menuPrincipalVm.permisos[9].ver == true && menuPrincipalVm.evaluacion)">
+                <a ui-sref="menuPrincipal.SeguimientoEvaluacion({ idPlanDeTrabajo: menuPrincipalVm.ptdId })" ng-class="{'grey lighten-2' : menuPrincipalVm.pageName == 'seguimientoEvaluacion'}"
                     class="waves-effect">
                     <i class="material-icons">timeline</i>Seguimientos y Evaluación</a>
             </li>

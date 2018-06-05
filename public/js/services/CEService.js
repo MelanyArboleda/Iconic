@@ -8,6 +8,7 @@ function CEService($http, $q, appConstant) {
     this.modificarCE = modificarCE;
     this.eliminarCE = eliminarCE;
 
+    // llama servicio de buscar comosion de estudios
     function buscarCE(ce) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarCE", ce).then(function (res) {
@@ -19,6 +20,7 @@ function CEService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de guardar comosion de estudios
     function guardarCE(ce) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarCE", ce).then(function (res) {
@@ -30,6 +32,7 @@ function CEService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de modificar comosion de estudios
     function modificarCE(ce) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarCE", ce).then(function (res) {
@@ -41,6 +44,7 @@ function CEService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de eliminar comosion de estudios
     function eliminarCE(ce) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarCE", ce).then(function (res) {

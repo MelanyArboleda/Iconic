@@ -2,6 +2,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('./config');
 var tbl_observaciones = require('./tbl_observaciones');
 
+// modelo de horarios academicos de los docentes
 var tbl_horarios = sequelize.define('tbl_horarios', {
     dia: {
         type: Sequelize.INTEGER,

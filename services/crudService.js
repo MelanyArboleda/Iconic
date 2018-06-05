@@ -97,23 +97,6 @@ module.exports = {
             callback();
         });
     },
-    //inner join materia
-    innerMateria: function (tabla, donde, callback) {
-        tabla[0].findAll({
-            attributes: ['codigo', 'nombre', 'horas_semanales'],
-            include: [{
-                model: tabla[1], required: true, attributes: [],
-                include: [{
-                    model: tabla[2], required: true, attributes: [], where: donde
-                }]
-            }]
-        }).then((tabla) => {
-            callback(tabla);
-        }).catch((err) => {
-            console.log(err);
-            callback();
-        });
-    },
     //inner join planes facultad
     innerPlanesFacultad: function (tabla, donde, callback) {
         tabla[0].findAll({
@@ -230,6 +213,19 @@ module.exports = {
     buscar_Permisos: function (donde, callback) {
         sequelize.query('SELECT "tblRecursoId", "tblUsuarioDocIdentidad", "ver", "crear", "modificar", "eliminar", "createdAt", "updatedAt" FROM "tbl_permisos" AS "tbl_permisos" WHERE "tbl_permisos"."tblUsuarioDocIdentidad" = ' + "'" + donde + "'" + ' ORDER BY "tblRecursoId" ASC;').spread((results, metadata) => {
             callback(results);
+        });
+    },
+
+    innerDecano: function(tabla, donde,callback){
+        tabla[0].findAll({
+            include: [{
+                model: tabla[1], required: true, attributes: [],where: { tblProgramaCodigo: 'A'+donde }
+            }]
+        }).then((tabla) => {
+            callback(tabla);
+        }).catch((err) => {
+            console.log(err);
+            callback();
         });
     }
 }

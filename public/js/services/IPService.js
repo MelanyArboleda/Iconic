@@ -9,6 +9,7 @@ function IPService($http, $q, appConstant) {
     this.eliminarIP = eliminarIP;
     this.buscarVinculosP = buscarVinculosP;
 
+    // llama servicio de buscar investigaciones de proyectos
     function buscarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarIP", ip).then(function (res) {
@@ -20,6 +21,7 @@ function IPService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de guardar investigaciones de proyectos
     function guardarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/guardarIP", ip).then(function (res) {
@@ -31,6 +33,7 @@ function IPService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de modificar investigaciones de proyectos
     function modificarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/modificarIP", ip).then(function (res) {
@@ -42,6 +45,7 @@ function IPService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de eliminar investigaciones de proyectos
     function eliminarIP(ip) {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/eliminarIP", ip).then(function (res) {
@@ -53,6 +57,7 @@ function IPService($http, $q, appConstant) {
         return deferred.promise;
     }
 
+    // llama servicio de buscar vinculos por investigaciones de proyectos
     function buscarVinculosP() {
         var deferred = $q.defer();
         $http.post(appConstant.LOCAL_SERVICE_ENDPOINT+"/buscarVinculosP").then(function (res) {

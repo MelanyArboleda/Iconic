@@ -14,9 +14,6 @@ function indexCtrl($rootScope,loginFactory) {
     }
     function cargarPermiso(){
         vm.pageName = $rootScope.page;
-        vm.permiso = loginFactory.estatus.permisos.find(function (permiso) {
-            return permiso.tblRecursoId == 16;
-        });
     }
     
 

@@ -1,8 +1,8 @@
 angular.module("iconic").controller("firmaCtrl", firmaCtrl);
 
-firmaCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$q", "$scope"];
+firmaCtrl.$inject = ["loginService", "loginFactory", "serviceNotification", "$q", "$scope", "modalNotifService"];
 
-function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) {
+function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope, modalNotifService) {
     var vm = this;
     vm.firma = "img/firma.png";
     vm.siguiente = false;
@@ -32,30 +32,35 @@ function firmaCtrl(loginService, loginFactory, serviceNotification, $q, $scope) 
         }
     }
 
-    vm.passwordFirma = function() {
+    vm.passwordFirma = function () {
         if (vm.password == vm.repitepassword) {
             var data = {
                 contraseña_firma: vm.password,
                 doc_identidad: loginFactory.user.doc_identidad,
-                firma: vm.firma 
+                firma: vm.firma
             };
             loginService.guardarFirma(data).then(function (res) {
                 serviceNotification.success('Se guardó la firma exitosamente', 3000);
             }).catch(function (err) {
                 console.log(err);
+                vm.firma = "img/firma.png";
+                vm.siguiente = false;
+                vm.password = "";
+                vm.repitepassword = "";
+                $modalInstance.close();
                 if (err.status == 401) {
-                    serviceNotification.warning('La contraseña de tu firma no puede ser la misma con la que inicias sesión', 2000);
-				}
-				if (err.status == 403) {
+                    serviceNotification.error('La contraseña de tu firma no puede ser la misma con la que inicias sesión', 3000);
+                }
+                if (err.status == 403) {
                     serviceNotification.error('No se pudo guardar la firma', 2000);
-				}
+                }
             });
         } else {
-            serviceNotification.error('Las Contraseñas no coinciden', 2000);
+            serviceNotification.error('Las Contraseñas no coinciden', 3000);
         }
     }
 
-    vm.borrar = function(){
+    vm.borrar = function () {
         vm.firma = "img/firma.png";
         vm.siguiente = false;
     }

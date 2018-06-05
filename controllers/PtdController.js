@@ -6,19 +6,20 @@ const tbl_programas = require('.././database/tbl_programas');
 const tbl_areas = require('.././database/tbl_areas');
 const tbl_facultades = require('.././database/tbl_facultades');
 const tbl_etapas = require('.././database/tbl_etapas');
-const tbl_materias = require('.././database/tbl_materias');
-const tbl_materias_programas = require('.././database/tbl_materias_programas');
 const tbl_actores = require('.././database/tbl_actores');
 const tbl_permisos = require('.././database/tbl_permisos');
 const tbl_permisos_iniciales = require('.././database/tbl_permisos_iniciales');
+const tbl_noticaciones = require('.././database/tbl_noticaciones');
 
 module.exports = {
+    // buscador de los perfiles de los usuarios
     buscar_Perfil: function (req, res, next) {
         crud.findOne(tbl_perfiles, { id: req.body.id }, null, (perfil) => {
             res.status(200).json(perfil).end();
         });
     },
 
+    // buscador de los programas
     buscar_Programa: function (req, res, next) {
         tbl_usuario_programas.sync().then(function () {
             crud.findOne(tbl_usuario_programas, { tblUsuarioDocIdentidad: req.body.doc_identidad }, null, (programa) => {
@@ -31,6 +32,7 @@ module.exports = {
         });
     },
 
+    // buscador de las areas
     buscar_Area: function (req, res, next) {
         tbl_areas.sync().then(function () {
             crud.findOne(tbl_areas, { id: req.body.id }, null, (resp) => {
@@ -39,6 +41,7 @@ module.exports = {
         });
     },
 
+    // buscador de las facultades
     buscar_Facultad: function (req, res, next) {
         tbl_facultades.sync().then(function () {
             crud.findOne(tbl_facultades, { id: req.body.id }, null, (resp) => {
@@ -47,6 +50,7 @@ module.exports = {
         });
     },
 
+    // buscador de las etapas del plan de trabajo
     buscar_Etapa: function (req, res, next) {
         tbl_etapas.sync().then(function () {
             crud.findAll(tbl_etapas, null, "id ASC", (resp) => {
@@ -55,14 +59,7 @@ module.exports = {
         });
     },
 
-    buscar_Materias: function (req, res, next) {
-        tbl_materias.sync().then(function () {
-            crud.innerMateria([tbl_materias, tbl_materias_programas, tbl_programas], { tblAreaId: req.body.id }, (resp) => {
-                res.status(200).json(resp).end();
-            });
-        });
-    },
-
+    // buscador de los actorores
     buscar_Actor: function (req, res, next) {
         tbl_actores.sync().then(function () {
             crud.findAll(tbl_actores, null, "id ASC", (resp) => {
@@ -71,20 +68,14 @@ module.exports = {
         })
     },
 
-    buscar_Programa_Materia: function (req, res, next) {
-        tbl_materias_programas.sync().then(function () {
-            crud.findAll(tbl_materias_programas, req.body, null, (resp) => {
-                res.status(200).json(resp[0].dataValues).end();
-            });
-        });
-    },
-
+    // buscador de los permidos de los usuarios
     buscar_Permisos: function (req, res, next) {
-        crud.buscar_Permisos(req.body.tblUsuarioDocIdentidad, (permisos) =>{
+        crud.buscar_Permisos(req.body.tblUsuarioDocIdentidad, (permisos) => {
             res.status(200).json(permisos).end();
         });
     },
 
+    // guardador de los permisos de los usuarios
     guardar_Permisos: function (req, res, next) {
         crud.findAll(tbl_permisos_iniciales, { tblPerfileId: req.body.tblPerfileId }, null, (iniciales) => {
             var permisos = [];
@@ -102,6 +93,25 @@ module.exports = {
                     });
                 }
             });
+        });
+    },
+
+    enviar_Ptd: function (req, res, next) {
+        funciones.buscarDecano(req.body.facultad, (decano) => {
+            data = {
+                mensaje: 'El docente ' + req.body.docente + ' te ha enviado su plan de trabajo',
+                tblUsuarioDocIdentidad: decano,
+                fecha: new Date(),
+                ptd: req.body.ptd,
+                visto: false
+            }
+            tbl_noticaciones.sync().then(function () {
+                crud.create(tbl_noticaciones, data, () => {
+                    crud.update(tbl_permisos, { tblRecursoId: 17, tblUsuarioDocIdentidad: req.body.doc_identidad }, { ver: false }, () => {
+                        res.status(200).end();
+                    })
+                })
+            })
         });
     }
 };

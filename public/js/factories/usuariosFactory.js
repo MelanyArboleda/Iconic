@@ -20,10 +20,17 @@ function usuariosFactory(usuariosService, loginService, loginFactory, $q) {
     function buscarUsuarios(){
         var deferred = $q.defer();
         factoryUser.users = [];
-        usuariosService.buscarUsuarios({id: loginFactory.estatus.facultad.id}).then(function (result) {
-            factoryUser.users = result.users;
-            deferred.resolve();
-        });
+        if (loginFactory.user.perfil == 7) {
+            usuariosService.buscarUsuariosAdmin().then(function (result) {
+                factoryUser.users = result.users;
+                deferred.resolve();
+            });
+        }else{
+            usuariosService.buscarUsuarios({id: loginFactory.estatus.facultad.id}).then(function (result) {
+                factoryUser.users = result.users;
+                deferred.resolve();
+            });
+        }
         return deferred.promise;
     }
 

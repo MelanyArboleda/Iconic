@@ -7,7 +7,7 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
     vm.passwordNew = "";
     vm.repitepassword = "";
 
-    vm.configini = function() {
+    vm.configini = function () {
         if (vm.passwordNew == vm.repitepassword) {
             var data = {
                 password: vm.passwordNew,
@@ -22,7 +22,7 @@ function configiniCtrl(loginService, loginFactory, serviceNotification, $state) 
                 }));
             }).catch(function (err) {
                 console.log(err);
-                serviceNotification.warning('La contraseña no debe ser la misma por defecto', 2000);
+                modalNotifService.openModal('Hola, La contraseña no debe ser la misma por defecto.');
             });
         } else {
             serviceNotification.error('Las Contraseñas no coinciden', 2000);
